@@ -1,0 +1,33 @@
+{
+  "name": "MathBina",
+  "short_name": "MathBina",
+  "description": "Permainan matematik dan pembina rumah voxel 3D untuk murid Tahun 5 dan Tahun 6.",
+  "id": "/math-quest-pdpr/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0284c7",
+  "theme_color": "#0284c7",
+  "lang": "ms",
+  "icons": [
+    {
+      "src": "mathbina-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "mathbina-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "mathbina-icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

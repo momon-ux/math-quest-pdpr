@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>MATH CRAFT & SHOOTER — Misi Bina Rumah Impian SK Ranggu Tawau</title>
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>MathBina — Misi Bina Rumah Impian SK Ranggu Tawau</title>
+  <meta name="application-name" content="MathBina">
+  <meta name="apple-mobile-web-app-title" content="MathBina">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="mathbina-icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="mathbina-apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -38,6 +46,7 @@
     html, body {
       width: 100%;
       height: 100%;
+      min-height: 100dvh;
       overflow: hidden;
       background: #0284c7;
       color: #0f172a;
@@ -47,6 +56,7 @@
       position: relative;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -147,6 +157,16 @@
       border-bottom: 2px dashed #cbd5e1;
       padding-bottom: 8px;
     }
+    .brand-title-lockup { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .brand-app-icon {
+      width: 58px;
+      height: 58px;
+      flex: 0 0 58px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid #facc15;
+      box-shadow: 0 3px 0 #92400e;
+    }
     .credit-badge {
       font-size: 0.68rem;
       font-weight: 800;
@@ -211,6 +231,63 @@
       color: #0f172a;
       cursor: pointer;
     }
+    .name-entry-card {
+      border: 2px solid #38bdf8;
+      border-radius: 14px;
+      background: #f0f9ff;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: end;
+    }
+    .student-name-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 9px 11px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      border-radius: 10px;
+      border: 2px solid #7dd3fc;
+      background: #fff;
+      color: #0f172a;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .name-entry-status {
+      grid-column: 1 / -1;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #0369a1;
+    }
+    .profile-preview-card {
+      grid-column: 1 / -1;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 13px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #0284c7, #2563eb 58%, #4f46e5);
+      color: #fff;
+      border: 2px solid #7dd3fc;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 4px 10px rgba(2,132,199,.2);
+    }
+    .profile-preview-avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fef08a;
+      border: 3px solid #fff;
+      font-size: 1.7rem;
+      box-shadow: 0 3px 8px rgba(15,23,42,.25);
+    }
+    .profile-preview-kicker { font-size: .58rem; font-weight: 900; color: #bae6fd; text-transform: uppercase; letter-spacing: .7px; }
+    .profile-preview-name { font-size: 1rem; font-weight: 900; line-height: 1.15; overflow-wrap: anywhere; }
+    .profile-preview-meta { margin-top: 2px; font-size: .66rem; font-weight: 800; color: #e0f2fe; }
     .roster-card {
       border: 2px solid #38bdf8;
       border-radius: 14px;
@@ -330,6 +407,7 @@
       display: none;
       flex-direction: column;
       z-index: 20;
+      min-height: 0;
     }
 
     /* Top Sandbox HUD */
@@ -343,6 +421,7 @@
       padding: 0 12px;
       z-index: 50;
       box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      flex: 0 0 auto;
     }
     .player-hud-badge {
       display: flex;
@@ -414,6 +493,7 @@
       backdrop-filter: blur(4px);
       z-index: 40;
       overflow-x: auto;
+      flex: 0 0 auto;
     }
     .ribbon-btn {
       padding: 6px 12px;
@@ -473,6 +553,7 @@
       justify-content: center;
       overflow: hidden;
       padding: 6px;
+      min-height: 0;
     }
     #sandbox-grid-canvas {
       max-width: 100%;
@@ -538,7 +619,20 @@
       overflow-x: auto;
       z-index: 50;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.12);
+      flex: 0 0 auto;
     }
+    .developer-credit-bar {
+      flex: 0 0 auto;
+      background: rgba(15, 23, 42, 0.92);
+      color: #e0f2fe;
+      text-align: center;
+      padding: 3px 8px calc(3px + env(safe-area-inset-bottom));
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1px;
+      z-index: 55;
+    }
+    .developer-credit-bar b { color: #fde047; }
     .dock-title-label {
       font-size: 0.72rem;
       font-weight: 900;
@@ -909,6 +1003,133 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
+    /* Paparan telefon: semua kawalan utama kekal boleh dicapai tanpa terpotong. */
+    @media (max-width: 700px) {
+      #view-lobby {
+        justify-content: flex-start;
+        padding: max(8px, env(safe-area-inset-top)) 8px max(12px, env(safe-area-inset-bottom));
+      }
+      .lobby-box {
+        max-height: none;
+        min-height: min-content;
+        padding: 10px;
+        gap: 8px;
+        border-width: 3px;
+        border-radius: 14px;
+      }
+      .lobby-header { align-items: flex-start; gap: 8px; }
+      .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
+      .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
+      .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
+      .credit-badge { font-size: 0.56rem; padding: 4px 6px; max-width: 44%; }
+      .name-entry-card { grid-template-columns: 1fr; }
+      .profile-preview-card { min-height: 68px; padding: 8px 10px; }
+      .profile-preview-avatar { width: 46px; height: 46px; flex-basis: 46px; font-size: 1.45rem; }
+      .avatar-picker-row { display: grid; grid-template-columns: 1fr 1fr; }
+      .avatar-chip { max-width: none; min-height: 42px; padding: 5px 7px; font-size: 0.68rem; }
+      .btn-enter-world { min-height: 48px; padding: 9px; font-size: 0.92rem; }
+
+      .sandbox-top-hud {
+        height: auto;
+        min-height: 48px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 4px 6px;
+        padding: max(4px, env(safe-area-inset-top)) 6px 4px;
+      }
+      .player-hud-badge { min-width: 0; gap: 5px; }
+      .avatar-icon-bubble { width: 28px; height: 28px; font-size: 0.95rem; }
+      .hud-name-label { max-width: 42vw; font-size: 0.7rem; }
+      .hud-class-tag { font-size: 0.56rem; }
+      .hud-stats-group {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px !important;
+        width: 100%;
+      }
+      .hud-wallet-pill, .hud-blocks-count {
+        min-width: 0;
+        justify-content: center;
+        padding: 3px 4px;
+        font-size: 0.65rem;
+        white-space: nowrap;
+      }
+      .hud-actions-group { gap: 3px !important; align-self: start; }
+      .hud-actions-group button { width: 29px !important; height: 29px !important; }
+      .sandbox-action-ribbon {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+        overflow: visible;
+        padding: 4px;
+      }
+      .ribbon-btn {
+        width: 100%;
+        min-width: 0;
+        min-height: 35px;
+        justify-content: center;
+        padding: 3px 4px;
+        font-size: 0.5rem;
+        line-height: 1.05;
+        white-space: normal;
+        text-align: center;
+        border-width: 1.5px;
+        border-radius: 7px;
+      }
+      .level-control { min-height: 35px; justify-content: center; padding: 1px 2px; }
+      .level-control button { width: 24px; height: 28px; }
+      #build-level-label { min-width: 43px; font-size: 0.55rem; }
+      .sandbox-canvas-wrapper { padding: 2px 3px; }
+      .voxel-stage { min-height: 150px; border-width: 2px; }
+      .build-status-card { max-width: 70%; font-size: 0.62rem; }
+      .sandbox-bottom-dock { height: 58px; gap: 5px; padding: 0 5px; }
+      .dock-title-label { display: none; }
+      .palette-item-slot { min-width: 48px; height: 48px; }
+      .developer-credit-bar { font-size: 0.52rem; }
+
+      .game-modal-overlay { padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom)); }
+      .game-modal-box { max-height: 96dvh; padding: 10px; border-width: 3px; border-radius: 14px; }
+      .modal-title { font-size: 0.92rem; }
+      .shop-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 58dvh; }
+      .leader-record-row { align-items: flex-start !important; gap: 7px; }
+      .leader-record-score { min-width: 86px; }
+
+      #view-wheel { justify-content: flex-start; overflow-y: auto; padding: max(6px, env(safe-area-inset-top)) 6px max(8px, env(safe-area-inset-bottom)); }
+      .wheel-card-container { max-height: none; padding: 10px; gap: 8px; border-width: 3px; }
+      .wheel-spinner-row { gap: 8px; flex-direction: column; flex-wrap: nowrap; }
+      #wheel-canvas { width: min(190px, 55vw); height: min(190px, 55vw); }
+      .wheel-right-panel { min-width: 0; width: 100%; }
+      .wheel-options-group { flex-wrap: wrap; }
+      .wheel-opt-btn { min-width: 30%; }
+
+      .shooter-top-hud { height: auto; min-height: 44px; padding: max(4px, env(safe-area-inset-top)) 6px 4px; }
+      .shooter-question-banner { top: 54px; min-width: 0; width: calc(100% - 20px); padding: 6px 10px; }
+      .shooter-bottom-answers { width: calc(100% - 12px); bottom: max(8px, env(safe-area-inset-bottom)); gap: 5px; }
+      .btn-answer-balloon { flex: 1; justify-content: center; min-width: 0; padding: 7px 5px; border-width: 2px; }
+    }
+
+    @media (max-width: 420px) {
+      .lobby-header { flex-direction: column; }
+      .credit-badge { max-width: none; width: 100%; text-align: left; }
+      .lobby-row-grid { gap: 7px; }
+      .grade-chip { padding: 6px; font-size: 0.76rem; }
+      .custom-select { min-height: 42px; }
+      .sandbox-action-ribbon { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .build-status-card { max-width: 82%; }
+    }
+
+    @media (max-height: 560px) and (orientation: landscape) {
+      .sandbox-top-hud { min-height: 38px; padding-top: 2px; padding-bottom: 2px; }
+      .hud-stats-group { grid-column: auto; grid-row: auto; display: flex !important; width: auto; }
+      .sandbox-action-ribbon { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+      .ribbon-btn { min-height: 31px; }
+      .sandbox-bottom-dock { height: 50px; }
+      .palette-item-slot { min-width: 43px; height: 43px; }
+      .developer-credit-bar { padding-top: 1px; padding-bottom: calc(1px + env(safe-area-inset-bottom)); }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
 </head>
@@ -928,9 +1149,12 @@
     <div id="view-lobby">
       <div class="lobby-box">
         <div class="lobby-header">
-          <div>
-            <div class="game-title-logo">🏡 MATH CRAFT & SHOOTER</div>
-            <div class="sub-badge">Kelab Bina Rumah Impian — SK Ranggu Tawau</div>
+          <div class="brand-title-lockup">
+            <img class="brand-app-icon" src="mathbina-icon-192.png" alt="Ikon MathBina">
+            <div>
+              <div class="game-title-logo">MATHBINA</div>
+              <div class="sub-badge">Misi Bina Rumah Impian — SK Ranggu Tawau</div>
+            </div>
           </div>
           <div class="credit-badge">
             👨‍💻 Pembangun Sistem:<br>
@@ -957,17 +1181,21 @@
           </div>
         </div>
 
-        <!-- Scrollable Student Name Picker -->
-        <div class="roster-card">
-          <div class="roster-top-row">
-            <span class="form-label" id="roster-counter-title">3. SCROLL & KLIK NAMA ANDA:</span>
-            <input type="text" id="input-roster-search" class="roster-search" placeholder="🔍 Cari nama murid..." oninput="filterRosterSearch(this.value)">
+        <!-- Murid mengisi nama sendiri; tiada senarai nama dipaparkan atau ditanam dalam kod. -->
+        <div class="name-entry-card">
+          <div class="form-group">
+            <label class="form-label" for="input-student-name">3. ISI NAMA PENUH ANDA:</label>
+            <input type="text" id="input-student-name" class="student-name-input" maxlength="80" autocomplete="name" inputmode="text" placeholder="Taip nama penuh anda" oninput="updateStudentNameInput(this.value)" onkeydown="if(event.key==='Enter') enterBuildingPlot()">
           </div>
-          <div class="roster-scroll-grid" id="roster-grid-list">
-            <!-- 287 murid rasmi -->
-          </div>
-          <div class="chosen-status-bar" id="roster-status-banner">
-            ⚠️ Sila scroll dan klik nama anda daripada senarai di atas
+          <div style="font-size: 1.8rem; align-self: center;" aria-hidden="true">✍️</div>
+          <div class="name-entry-status" id="student-name-status">Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.</div>
+          <div class="profile-preview-card" aria-live="polite">
+            <div class="profile-preview-avatar" id="profile-preview-avatar">👷‍♂️</div>
+            <div>
+              <div class="profile-preview-kicker">Profil Pemain MathBina</div>
+              <div class="profile-preview-name" id="profile-preview-name">Nama anda akan muncul di sini</div>
+              <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • 5 Khoir</div>
+            </div>
           </div>
         </div>
 
@@ -995,9 +1223,10 @@
           🚀 MASUK KE PADANG RUMAH IMPIAN!
         </button>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; gap: 8px; flex-wrap: wrap;">
           <button onclick="openLeaderboardModal()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">📅 Papan Skor Kalendar</button>
-          <button onclick="openAdminModal()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">⚙️ Tetapan Guru (Admin)</button>
+          <button onclick="downloadRecordTemplateCSV()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #0369a1; cursor: pointer;">📄 Templat Semakan Rekod</button>
+          <button onclick="openAdminModal()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">⚙️ Alat Guru</button>
         </div>
       </div>
     </div>
@@ -1016,7 +1245,7 @@
           </div>
         </div>
 
-        <div style="display: flex; gap: 8px; align-items: center;">
+        <div class="hud-stats-group" style="display: flex; gap: 8px; align-items: center;">
           <div class="hud-wallet-pill">
             <span>⭐</span> <span id="hud-sandbox-xp">150 XP</span>
           </div>
@@ -1028,7 +1257,7 @@
           </div>
         </div>
 
-        <div style="display: flex; gap: 6px;">
+        <div class="hud-actions-group" style="display: flex; gap: 6px;">
           <button onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
           <button onclick="openLeaderboardModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;">📅</button>
           <button onclick="openAdminModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;">⚙️</button>
@@ -1087,6 +1316,7 @@
           + BELI LAGI BLOK
         </button>
       </div>
+      <div class="developer-credit-bar">👨‍💻 Pembangun Sistem: <b>Mohammad Fikrey bin Abdul Gapar</b></div>
     </div>
 
     <!-- ==============================================================
@@ -1218,7 +1448,9 @@
           <!-- Populated -->
         </div>
 
-        <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #e2e8f0; padding-top: 6px;">
+        <div style="font-size:0.68rem; color:#64748b;">ℹ️ Rekod di bawah hanya daripada pelayar/peranti ini. Gunakan templat untuk menggabungkan semakan daripada peranti lain.</div>
+        <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #e2e8f0; padding-top: 6px; flex-wrap: wrap;">
+          <button onclick="downloadRecordTemplateCSV()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #fef9c3; color: #854d0e; border: 1px solid #eab308; border-radius: 8px; cursor: pointer;">📄 Templat Kosong</button>
           <button onclick="exportLeaderboardCSV()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #e0f2fe; color: #0284c7; border: 1px solid #38bdf8; border-radius: 8px; cursor: pointer;">📥 Muat Turun CSV</button>
           <button onclick="copyLeaderboardWhatsApp()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #dcfce7; color: #166534; border: 1px solid #22c55e; border-radius: 8px; cursor: pointer;">📋 Salin WhatsApp Cikgu</button>
         </div>
@@ -1235,7 +1467,7 @@
           <button class="modal-close-btn" onclick="closeAdminAuth()">✕</button>
         </div>
         <div style="font-size: 0.75rem; color: #64748b;">
-          Sila masukkan kod akses rahsia guru untuk mengurus kelas dan senarai murid SK Ranggu:
+          Sila masukkan kod akses guru untuk membuka alat semakan rekod pada peranti ini:
         </div>
         <input type="password" id="admin-passcode-input" placeholder="••••••••••" style="width: 100%; padding: 8px; font-size: 0.9rem; border-radius: 8px; border: 2px solid #cbd5e1;" onkeydown="if(event.key==='Enter') verifyAdminCode()">
         <div style="display: flex; gap: 8px; justify-content: flex-end;">
@@ -1248,47 +1480,27 @@
     <div class="game-modal-overlay" id="modal-admin-panel">
       <div class="game-modal-box" style="max-width: 680px;">
         <div class="modal-head">
-          <div class="modal-title">⚙️ Panel Kawalan Guru — SK Ranggu</div>
+          <div class="modal-title">⚙️ Alat Semakan Rekod Guru — SK Ranggu</div>
           <button class="modal-close-btn" onclick="closeAdminPanel()">✕</button>
         </div>
 
-        <div style="display: flex; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-          <button id="admin-tab-stu" class="shop-tab-chip active" onclick="switchAdminTab('students')">👥 Pengurusan Murid</button>
-          <button id="admin-tab-cls" class="shop-tab-chip" onclick="switchAdminTab('classes')">🏫 Pengurusan Kelas</button>
+        <div style="background:#eff6ff; border:1.5px solid #60a5fa; border-radius:10px; padding:9px; font-size:0.75rem; color:#1e3a8a; line-height:1.45;">
+          Murid menaip nama sendiri. Permainan tidak lagi mengandungi senarai nama murid. Rekod permainan disimpan pada pelayar/peranti yang digunakan, bukan disegerakkan antara telefon.
         </div>
 
-        <div id="admin-sec-students" style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <label style="font-size: 0.75rem; font-weight: 800;">Pilih Kelas:</label>
-            <select id="admin-cls-select" class="custom-select" style="flex:1;" onchange="renderAdminStudentListView(this.value)"></select>
-          </div>
-          <div style="display: flex; gap: 6px;">
-            <input type="text" id="admin-add-stu-input" placeholder="Tambah nama murid baharu..." style="flex:1; padding: 6px 10px; font-size: 0.75rem; border-radius: 8px; border: 1.5px solid #cbd5e1;">
-            <button onclick="adminAddStudentSingle()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;">+ Tambah</button>
-          </div>
-          <details style="font-size: 0.75rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px;">
-            <summary style="font-weight: 800; cursor: pointer;">📋 Import Pukal (Tampal Nama APDM / Excel)</summary>
-            <textarea id="admin-bulk-stu-area" rows="3" placeholder="Tampal nama murid setiap baris..." style="width: 100%; margin-top: 6px; padding: 6px; font-size: 0.72rem; border-radius: 6px; border: 1px solid #cbd5e1;"></textarea>
-            <button onclick="adminBulkImportStudents()" style="margin-top: 4px; padding: 4px 10px; font-size: 0.72rem; font-weight: 800; background: #38bdf8; color: #0284c7; border: 1px solid #0284c7; border-radius: 6px; cursor: pointer;">Muat Naik Senarai</button>
-          </details>
-          <div style="max-height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px;" id="admin-students-scroll-box"></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px;">
+          <button onclick="downloadRecordTemplateCSV()" style="padding:12px; font-size:0.78rem; font-weight:900; background:#e0f2fe; color:#0369a1; border:2px solid #38bdf8; border-radius:10px; cursor:pointer;">📄 Muat Turun Templat Rekod Kosong</button>
+          <button onclick="exportLeaderboardCSV()" style="padding:12px; font-size:0.78rem; font-weight:900; background:#dcfce7; color:#166534; border:2px solid #22c55e; border-radius:10px; cursor:pointer;">📥 Eksport Rekod Peranti Ini</button>
+          <button onclick="copyLeaderboardWhatsApp()" style="padding:12px; font-size:0.78rem; font-weight:900; background:#fef9c3; color:#854d0e; border:2px solid #eab308; border-radius:10px; cursor:pointer;">📋 Salin Ringkasan WhatsApp</button>
         </div>
 
-        <div id="admin-sec-classes" style="display: none; flex-direction: column; gap: 8px;">
-          <div style="display: flex; gap: 6px;">
-            <select id="admin-new-cls-year" class="custom-select" style="max-width: 110px;">
-              <option value="5">Tahun 5</option>
-              <option value="6">Tahun 6</option>
-            </select>
-            <input type="text" id="admin-new-cls-name" placeholder="Cth: 5 Cemerlang" style="flex:1; padding: 6px 10px; font-size: 0.75rem; border-radius: 8px; border: 1.5px solid #cbd5e1;">
-            <button onclick="adminCreateClass()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;">Cipta Kelas</button>
-          </div>
-          <div id="admin-classes-badge-box" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+        <div style="font-size:0.7rem; color:#475569; line-height:1.45;">
+          <b>Medan templat:</b> nama murid, kelas, tahun, XP, syiling, jumlah soalan, ketepatan, tahap rumah, kemajuan rumah, blok terbina, tarikh dan masa.
         </div>
 
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 6px;">
-          <button onclick="adminResetRostersToDefault()" style="background: none; border: 1px dashed #ef4444; color: #b91c1c; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; cursor: pointer;">🔄 Set Semula Senarai 8 Kelas SK Ranggu</button>
-          <button onclick="closeAdminPanel()" style="padding: 6px 14px; font-size: 0.75rem; font-weight: 900; background: #0f172a; color: #fff; border-radius: 8px; cursor: pointer;">Selesai</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px solid #e2e8f0; padding-top:8px; flex-wrap:wrap;">
+          <span style="font-size:0.68rem; color:#64748b;">Pembangun Sistem: <b>Mohammad Fikrey bin Abdul Gapar</b></span>
+          <button onclick="closeAdminPanel()" style="padding:7px 15px; font-size:0.75rem; font-weight:900; background:#0f172a; color:#fff; border-radius:8px; cursor:pointer;">Selesai</button>
         </div>
       </div>
     </div>
@@ -1402,329 +1614,25 @@
     }
 
     /* ==============================================================
-       PENGKALAN DATA KELAS & SENARAI NAMA MURID SK RANGGU TAWAU
+       SENARAI KELAS SAHAJA — MURID MENGISI NAMA SENDIRI
        ============================================================== */
-const DEFAULT_ROSTERS = {
-      grade5: {
-        "5 Khoir": [
-          "Adib Qayyum Syazwan bin Abdul Rahmat",
-          "Aisyah Ayudia Inara binti Punanwi",
-          "Amani Qistina binti Abdillah",
-          "Aryan Zihni bin Sudirman",
-          "Asyrafa Qurratuain binti Raman",
-          "Izzat Izzuedin bin Arman",
-          "Maimunah binti Jukdin",
-          "Mas Elly Khushairy bin Masli",
-          "Mohamad Muzillsyah bin Mohd Musa",
-          "Mohammad Azaim Firdaus bin Yasri",
-          "Muhammad Aqil Danish bin Maslan",
-          "Muhammad Arif Lutfil bin Masudi",
-          "Muhammad Arif Zikri bin Herman",
-          "Muhammad Fayyadh Farhan bin Darwis",
-          "Muhammad Haziq Uqasyah bin Mohd Nasdrul Ikram",
-          "Muhammad Nifael Danish bin Azmen",
-          "Muhammad Razaq bin Firdaus",
-          "Muhammad Rizman bin James",
-          "Muhammad Syah Hidayatullah bin Abdul Rahman",
-          "Nabil Najmi bin Mohammad Razali",
-          "Nur Aisyah binti Abdullah",
-          "Nur Aleesya Dania binti Asdi",
-          "Nur Alieya Safya",
-          "Nur Arissa Sofia binti Abdullah",
-          "Nur Azirah binti Aidi",
-          "Nur Faiq Isham bin Shahruddin",
-          "Nur Qaireen Damia binti Maksud",
-          "Nur Shaza Syuhadah binti Azman",
-          "Nur Syaqilah Syazwani binti Ardiadi",
-          "Nur Zahira binti Kamarudin",
-          "Nurul Afiqah Adawiyah binti Mohd Faizal",
-          "Nurul Umairah binti Mohd Ghazali",
-          "Nuwairah Qalbiya binti Arsip",
-          "Qalesya Qistina binti Francis",
-          "Qatreennada Nur Shahabiah binti Mu'ammar",
-          "Ummu Masyitah binti Kamal"
-        ],
-        "5 Mumtaz": [
-          "Ab Muhammad Nurasyraf bin Ab Azis",
-          "Abdullah bin Saini",
-          "Afifah Fitriyah binti Abraham",
-          "Ahmad Ali Rizqi bin Mohd Sabri",
-          "Davina Zaviera binti Rizan Hardinata",
-          "Dayang Izz Ryna binti Ahmad",
-          "Dayang Nur Shafiyyah binti Nasip",
-          "Erisha Damia binti Nasrih",
-          "Hamisya Amani binti Hamsah",
-          "Lina Afiqah binti Abdullah",
-          "Mohamad Dzaqierul Hamzah bin Mohamad Ridwan",
-          "Mohammad Harith Mikail bin Ismail",
-          "Mohammad Shaqri bin Saripuddin",
-          "Mohammad Thaqif Harraz bin Sabri",
-          "Muhamad Izzat bin Muhamad Sufri",
-          "Muhammad Arsyad Maliq bin Sahrul",
-          "Muhammad Arsyad Miqhael bin Sahrul",
-          "Muhammad Faiz Daim bin Syamsuddin",
-          "Muhammad Hadiff bin Sambran",
-          "Muhammad Kamarul bin Kamal",
-          "Muhammad Naufal Luthfi bin Mohd Syazwan",
-          "Muhammad Syafiq Aiman bin Ahmad",
-          "Muhammad Syahfiq bin Jupri",
-          "Muhammad Syahrizan Uqasya bin Reduwan",
-          "Muhammad Zahir Arrayyan bin Azman",
-          "Nur Aisyah Zulaikha binti Mohd Rosman",
-          "Nur Damia Qaisara binti Ramlan",
-          "Nur Fitri Syafiyah binti Adzhar Khan",
-          "Nur Izara Zulaiqah binti Abdullah",
-          "Nur Qisya Adelia binti Hussien",
-          "Nurul Shafiqah Senrose binti Asbidun",
-          "Rayyan bin Suhaimi",
-          "Razieq Azfar bin Ruslan",
-          "Risqah Adriana binti Rais",
-          "Siti Syazwanie binti Abdullah"
-        ],
-        "5 Jahid": [
-          "Ameera Nur Izzatunnisa binti Amirullah",
-          "Amzar Imtiyaz bin Muslihadir",
-          "Andi Mohammad Syahir bin Andi Saharudin",
-          "Aniq Khairiy Azhar bin Agus",
-          "Ardiyani Syahzilah binti Mohd Arfian",
-          "Devvieyona Elvira Herodiun",
-          "Fatimah Azzahra binti Razaleh",
-          "Ilham Razak bin Redwan",
-          "Indrieyana Arendella binti Chrys",
-          "Insyirah Rashanah binti Abdullah",
-          "Mohammad Amirul bin Saripuddin",
-          "Mohammad Mifzal Syahmie bin Mohammed Saifullah",
-          "Mohammad Nazrin Shah bin Jumain Ajamaing",
-          "Mohammad Noor Aiman bin Osman",
-          "Muhammad Adam Aqil bin Jasman",
-          "Muhammad Afiq Ziyad bin Rahmat Ali",
-          "Muhammad Afnan Fariz bin Fari Akbar Nor",
-          "Muhammad Aqif Iman bin Sofian",
-          "Muhammad Aqil Zafran bin Sabir",
-          "Muhammad Huzaifah bin Mohd.rizuwan",
-          "Muhammad Iman Riziqin Hakim bin Abdul Rapiq",
-          "Muhammad Irfan Jabar bin Mohamad Azhar",
-          "Muhammad Mikail Arsya bin Abdullah",
-          "Muhammad Nazreen bin Kenely",
-          "Muhammad Syahziezan bin Iskandar",
-          "Muhammad Yusuf Islam bin Mohd Irwan",
-          "Norhafifah binti Hasmuran",
-          "Nur Ainul Qistina binti Harris",
-          "Nur Aisyah binti Abdul Rahman",
-          "Nur Eryna Auni binti Muharam",
-          "Nur Khairunnisa binti Muhamad Ikhram",
-          "Nur Saadatul Aqilah binti Mazlan",
-          "Nur Sumayyah Nabilah binti Abdullah",
-          "Safiyya Hanna binti Rahim",
-          "Sofieya Nur Arrissa binti Mohd Tri Awan",
-          "Syafinaz Batrisya binti Mohd Umut"
-        ],
-        "5 Eltizam": [
-          "Aleesya Dania binti Arapa",
-          "Amrin Huzaifah bin Jamaluddin",
-          "Ariana Rayhana binti Ramlie",
-          "As Syifah Nuruzzawany binti Abdullah",
-          "Elmy Ridanish Haris bin Jaimi",
-          "Fatihah Nurzulaikha binti Azman",
-          "Hannah Syifa binti Suharman",
-          "Hulyatul Auliyah binti Nurdin",
-          "Mohammad Ikhwan Tarmizi",
-          "Muhammad Adam Danial bin Lasattu",
-          "Muhammad Adam Mikael bin Mohammad Nazrin",
-          "Muhammad Adeeb Hanif bin Lahadu",
-          "Muhammad Aimanshah bin Ishak",
-          "Muhammad Azroy Azmi bin Raziff Azmi",
-          "Muhammad Hakimi bin Samsul",
-          "Muhammad Haziq bin Abdul Jabar",
-          "Muhammad Ihtifazhuddin bin Mohd Adenan",
-          "Muhammad In Amul Hasan bin Rusli",
-          "Muhammad Iskandar bin Mohd Azrin",
-          "Muhammad Rhaymie Sulaiman bin Rhaymayazlan",
-          "Muhammad Shadzwan Muaafan bin Sharul",
-          "Muhammad Shafie Ruzain bin Rahim",
-          "Muhammad Shazan Muhayr bin Sharul",
-          "Norlia binti Ali Hassan",
-          "Nur Aina Maisarah binti Mohd Rizal",
-          "Nur Alisha Safiya binti Haswan",
-          "Nur Amirahtussoleha binti Mohmad Solih",
-          "Nur Damia Batrisya binti Asmadi",
-          "Nur Damia Izzati binti Mushrik Adiya",
-          "Nur Fareeha Aulia binti Rashid",
-          "Nuraisyah Syifa binti Yasmin",
-          "Nurshuhada binti Abdullah",
-          "Putra Syahrulnizam bin Haris",
-          "Qalesya Ramadhani binti Azlan",
-          "Shafiq Alyph Daniel bin Surianto",
-          "Ummu Radhiah Shadrina binti Mohd Mihdad"
-        ]
-      },
-      grade6: {
-        "6 Khoir": [
-          "Aadhan Muhriz bin Muhamad Haris",
-          "Ahmad Rifqi bin Totong",
-          "Aisha Damia binti Jamaluddin",
-          "Aisyah Sarah binti Muhamad Shahruddin",
-          "Casey Marcelina anak Jerome",
-          "Daaniyatul Fathiyyah binti Suhaimi",
-          "Hana Humaira binti Abd Rizam",
-          "Harith Hakim bin Ibnu Suhud",
-          "Khaireen Safiyyah binti Marsan",
-          "Mohamad Nazri bin Laseal",
-          "Mohamad Redzwan bin Supa",
-          "Mohammad Qaizar Amar Mickhail bin Haeruddin",
-          "Mohammad Trizuanshah bin Mohammad Hanapiah",
-          "Muhamad Mikail Adam Mukriz bin Azlan",
-          "Muhammad Adl Wafie bin Kasman",
-          "Muhammad Fhirdaus Iskandar bin Abdullah",
-          "Muhammad Haziq Adam bin Ekho Dynnie Arbianto",
-          "Muhammad Hizqil bin Jukdin",
-          "Muhammad Izman Izriansha bin Mohd Azman",
-          "Muhammad Nazmi Faiq bin Mohamad Azizul Arifin",
-          "Muhammad Rayyan Firdaus bin Rahim",
-          "Muhammad Syamil bin Kamal",
-          "Nur Adha Fatini binti Muslimin",
-          "Nur Aiza Natasha binti Abdul Mucatill",
-          "Nur Aqeela Safiya binti Mohd Naqiuddin Niyaz",
-          "Nur Atiqah binti Amir",
-          "Nur Farisya Haziqah binti Sukman",
-          "Nur Jannah binti Ismail",
-          "Nur Qiesya Aqeela binti Mohd Azman",
-          "Nur Ramadhania binti Mohan",
-          "Nur Syuhadah binti Yasmin",
-          "Nurshazafeefa binti Muhamad Shazfaliq",
-          "Ryandiee Izham bin Ilham",
-          "Shareen Loin anak Simon"
-        ],
-        "6 Mumtaz": [
-          "Afifah Auni Aqilah binti Jamidi",
-          "Ahmad Izzat bin Suhardi",
-          "Ahmed Eshan bin Abdullah",
-          "Ammaara Luthfea binti Lukman Rizal",
-          "Damia Adriana binti Jhon Pinero @ Mohammad Arif",
-          "Maal Hizrayyan bin Abdullah",
-          "Mohamad Ariz Zahran bin Jasni",
-          "Muhamad Alifhamdan bin Wahid",
-          "Muhammad Adli Adam bin Adil",
-          "Muhammad Alif Firdaus bin Mohd Ghazali",
-          "Muhammad Alif Syazwan bin Usman",
-          "Muhammad Arfa Safaraz Az Zaim bin Darwis",
-          "Muhammad Arief Rifqie bin Ashary",
-          "Muhammad Aryan Ashraf bin Sabir",
-          "Muhammad Iqbaal bin Japar",
-          "Muhammad Izzrin bin Ahmad",
-          "Muhammad Solihin Ishaq bin Asis",
-          "Muhammad Syafieq Hakimi bin Suyuti",
-          "Muhammad Syahmie bin Sultan",
-          "Muhammad Zharif Aimin bin Kamaluddin @ Mohd Yasmin",
-          "Naazhimah binti Nasarudin",
-          "Nur Affiqah Hidayah binti Fari Akbar Nor",
-          "Nur Delisya binti Mohamad",
-          "Nur Haziqah binti Jumadi",
-          "Nur Syafika binti Yasmansah",
-          "Nur Syifa Raisah binti Roslan",
-          "Nurfarah Khaalishah binti Mohamad Taufik",
-          "Nurqistina Najwa binti Sadam",
-          "Putri Syakilla Dania binti Abdullah",
-          "Qayyum Nur Iman bin Amir",
-          "Rania Awfiyah binti Ramle",
-          "Samarulisam bin Abdullah",
-          "Sayyidah Khaulah Al Azwar binti Mohd Mihdad",
-          "Shazwi Shazia binti Azman",
-          "Sumayyah Qaisara binti Alfian"
-        ],
-        "6 Jahid": [
-          "Airis Nur Raysha Amanda binti Riduan",
-          "Ariz Faiqh bin Mohd Rozaidy",
-          "Aufa Hanifah binti Juari",
-          "Izzat Nazhan bin Sumardi",
-          "Linda Qaisarah binti Rajlan",
-          "Mahirah Athilah binti M Sabran",
-          "Mohammad Nizwan bin Azime",
-          "Muhammad Afif Arsyad bin Hasrin",
-          "Muhammad Aiman bin Ambo Masse",
-          "Muhammad Ammar Syawal bin Sudeyansah",
-          "Muhammad Ariq Adam bin Sanudin",
-          "Muhammad Danish Zafwan bin Paisal",
-          "Muhammad Dzar Dzikri bin Marindo @ Abd Karim",
-          "Muhammad Faiz Izuddin bin Mohd Fairos",
-          "Muhammad Fariz Izuddin bin Mohd Fairos",
-          "Muhammad Haziq Syakir bin Aming",
-          "Muhammad Khairul Muhaimin bin Muharam",
-          "Muhammad Luthfi Wafi bin Abdullah",
-          "Muhammad Mahdy bin Mazlan",
-          "Muhammad Yuzwan Wafiy bin Yusuf",
-          "Nur Adilah binti Abdul Malik",
-          "Nur Eryna Naurah binti Jamal",
-          "Nur Farah Fadillah binti Mohd Ardy",
-          "Nur Humayraa Delisyah binti Herman",
-          "Nur Khayrin Afiqah binti Jamidi",
-          "Nur Subayya Azzahra binti Sahrul",
-          "Nur Zhafirah binti Abdul Rashid",
-          "Nuranis Fatihah binti Jamal",
-          "Nurul Suhada binti Suryaman",
-          "Nurzahra Zafirah binti Asis",
-          "Rizq Irfan bin Mohd.azrul",
-          "Siti Nur Adibah Syahirah binti Amrani",
-          "Siti Nuralya Nabilah binti Hasrin",
-          "Siti Nurfarzriekin binti Hery",
-          "Yasin Muhammad Khairul bin Yusran"
-        ],
-        "6 Eltizam": [
-          "Adni Dafinah binti Mursalin",
-          "Alfin Zikri bin Muhammad Zulkifli",
-          "Aniq Izz Zarif bin Mohd Nor Azman",
-          "Audhia Mulianie binti Ady Kurniawan",
-          "Dayang Nur Athirah binti Datu Mohd Noor",
-          "Farhana Alisya binti A.rahman",
-          "Humaira Qairina binti Hassan",
-          "Marzuqi Wahiduz Zaman bin Hermanshah",
-          "Mas Syuhadah binti Masli",
-          "Mohammad Iqqal Ruzayley bin Mohd Rusdi",
-          "Mohammad Irfan bin Jasmyn",
-          "Muhamad Aidil Azhari bin Mohamad Ali",
-          "Muhammad Alif bin Ramil",
-          "Muhammad Arrian bin Faizal",
-          "Muhammad Arsyad Luqman bin Sahrul",
-          "Muhammad Fahmi bin Misli",
-          "Muhammad Fahril Uzayr bin Awal",
-          "Muhammad Harith bin Abd Haliq",
-          "Muhammad Izz Rizqi Rayyan bin Saharuddin",
-          "Muhammad Nur Aiman bin Kriscylla",
-          "Muhammad Yusuf Nizam bin Lukman",
-          "Mustapha Irwansyah bin Buddahil",
-          "Nur Farah Mawaddah binti Armiansah",
-          "Nur Hana Afrina binti Herman",
-          "Nur Hayla Dayyana binti Herman",
-          "Nur Izzara Zulaikha binti Md Halim",
-          "Nur Marissa Amanda binti Hamka",
-          "Nurfatiha Adwa Qaisara binti Herman",
-          "Nurhana Airisya Sofia binti Mohammad Sofian",
-          "Nurul Syuhada binti Kahar",
-          "Qaiser Mifdal bin Budiman",
-          "Siti Nurshahira binti Kadir",
-          "Suhaimah Fadila binti Zulkifly",
-          "Syazanie Ashraf bin Sudirman",
-          "Zarirah binti Patrisius"
-        ]
-      }
+    const DEFAULT_CLASSES = {
+      grade5: ["5 Khoir", "5 Mumtaz", "5 Jahid", "5 Eltizam"],
+      grade6: ["6 Khoir", "6 Mumtaz", "6 Jahid", "6 Eltizam"]
     };
 
-    const ROSTER_STORAGE_KEY = "MATH_QUEST_ROSTER_SK_RANGGU_V3";
+    const CLASS_STORAGE_KEY = "MATH_QUEST_CLASSES_SK_RANGGU_V4";
 
-    function getRosters() {
+    function getClasses() {
       try {
-        const s = localStorage.getItem(ROSTER_STORAGE_KEY);
-        if (s) {
-          const p = JSON.parse(s);
-          if (p && p.grade5 && p.grade6) return p;
-        }
-      } catch(e) {}
-      localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
-      return JSON.parse(JSON.stringify(DEFAULT_ROSTERS));
+        const saved = JSON.parse(localStorage.getItem(CLASS_STORAGE_KEY) || "null");
+        if (saved && Array.isArray(saved.grade5) && Array.isArray(saved.grade6)) return saved;
+      } catch (error) {}
+      return JSON.parse(JSON.stringify(DEFAULT_CLASSES));
     }
 
-    function saveRosters(data) {
-      try { localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+    function saveClasses(classes) {
+      try { localStorage.setItem(CLASS_STORAGE_KEY, JSON.stringify(classes)); } catch (error) {}
     }
 
     /* ==============================================================
@@ -2036,6 +1944,7 @@ const COMBAT_BANK = {
        ============================================================== */
     function initLobbyUI() {
       updateLobbyClassDropdown(STATE.grade);
+      updateProfilePreview();
     }
 
     function selectLobbyGrade(g) {
@@ -2043,13 +1952,14 @@ const COMBAT_BANK = {
       document.getElementById('chip-year-5').classList.toggle('active', g === 5);
       document.getElementById('chip-year-6').classList.toggle('active', g === 6);
       updateLobbyClassDropdown(g);
+      updateProfilePreview();
       audio.init(); audio.playPop();
     }
 
     function updateLobbyClassDropdown(grade) {
-      const rosters = getRosters();
+      const classes = getClasses();
       const gradeKey = grade === 5 ? 'grade5' : 'grade6';
-      const classList = Object.keys(rosters[gradeKey] || {});
+      const classList = classes[gradeKey] || [];
       const select = document.getElementById('select-lobby-class');
       if (!select) return;
 
@@ -2065,65 +1975,34 @@ const COMBAT_BANK = {
         STATE.className = classList[0];
         select.value = classList[0];
       }
-
-      STATE.studentName = '';
-      const banner = document.getElementById('roster-status-banner');
-      if (banner) banner.textContent = '⚠️ Sila scroll dan klik nama anda daripada senarai di atas';
-
-      renderLobbyRoster();
+      updateProfilePreview();
     }
 
     function onLobbyClassChanged(cls) {
       STATE.className = cls;
-      STATE.studentName = '';
-      const banner = document.getElementById('roster-status-banner');
-      if (banner) banner.textContent = '⚠️ Sila scroll dan klik nama anda daripada senarai di atas';
-      renderLobbyRoster();
+      updateProfilePreview();
     }
 
-    function renderLobbyRoster(filterText = '') {
-      const rosters = getRosters();
-      const gradeKey = STATE.grade === 5 ? 'grade5' : 'grade6';
-      const students = (rosters[gradeKey] && rosters[gradeKey][STATE.className]) || [];
-      const container = document.getElementById('roster-grid-list');
-      const counter = document.getElementById('roster-counter-title');
-      if (!container) return;
-
-      const q = filterText.trim().toLowerCase();
-      const filtered = q ? students.filter(s => s.toLowerCase().includes(q)) : students;
-
-      if (counter) counter.textContent = `3. SCROLL & KLIK NAMA ANDA (${filtered.length}/${students.length}):`;
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:12px; font-size:0.75rem; color:#94a3b8;">Tiada nama murid padan dengan carian.</div>`;
-        return;
-      }
-
-      let html = '';
-      filtered.forEach(name => {
-        const isActive = (STATE.studentName === name);
-        const safeName = name.replace(/"/g, '&quot;');
-        html += `
-          <div class="student-btn ${isActive ? 'active' : ''}" data-name="${safeName}" onclick="selectLobbyStudentName(this.getAttribute('data-name'))">
-            <span>${isActive ? '✅' : '🎓'}</span>
-            <span style="overflow:hidden; text-overflow:ellipsis;">${name}</span>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
+    function updateProfilePreview() {
+      const avatar = document.getElementById('profile-preview-avatar');
+      const name = document.getElementById('profile-preview-name');
+      const meta = document.getElementById('profile-preview-meta');
+      if (avatar) avatar.textContent = STATE.avatar;
+      if (name) name.textContent = STATE.studentName || 'Nama anda akan muncul di sini';
+      if (meta) meta.textContent = `${STATE.avatarTitle} • ${STATE.className}`;
     }
 
-    function filterRosterSearch(val) {
-      renderLobbyRoster(val);
-    }
-
-    function selectLobbyStudentName(name) {
-      STATE.studentName = name;
-      const banner = document.getElementById('roster-status-banner');
-      if (banner) banner.textContent = `✅ Arkitek Dipilih: ${name} (${STATE.className})`;
-      renderLobbyRoster(document.getElementById('input-roster-search') ? document.getElementById('input-roster-search').value : '');
-      audio.init(); audio.playPop();
-      showToast(`Wira Dipilih: ${name}`);
+    function updateStudentNameInput(value) {
+      const clean = value.replace(/[<>]/g, '').replace(/\s+/g, ' ').trimStart().slice(0, 80);
+      const input = document.getElementById('input-student-name');
+      if (input && input.value !== clean) input.value = clean;
+      STATE.studentName = clean.trim();
+      const status = document.getElementById('student-name-status');
+      if (!status) return;
+      status.textContent = STATE.studentName.length >= 3
+        ? `✅ Nama sedia digunakan: ${STATE.studentName}`
+        : 'Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.';
+      updateProfilePreview();
     }
 
     function pickAvatar(emoji, title) {
@@ -2133,13 +2012,17 @@ const COMBAT_BANK = {
       document.getElementById('av-designer').classList.toggle('active', emoji === '🧕');
       document.getElementById('av-agent').classList.toggle('active', emoji === '🦸‍♂️');
       document.getElementById('av-robot').classList.toggle('active', emoji === '🤖');
+      updateProfilePreview();
       audio.init(); audio.playPop();
     }
 
     function enterBuildingPlot() {
       audio.init();
-      if (!STATE.studentName) {
-        showToast("⚠️ Sila scroll & klik nama anda daripada senarai murid!");
+      const nameInput = document.getElementById('input-student-name');
+      updateStudentNameInput(nameInput ? nameInput.value : STATE.studentName);
+      if (STATE.studentName.length < 3) {
+        showToast("⚠️ Sila isi nama penuh anda terlebih dahulu!");
+        if (nameInput) nameInput.focus();
         return;
       }
 
@@ -2165,6 +2048,7 @@ const COMBAT_BANK = {
       saveCurrentStudentState();
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-lobby').style.display = 'flex';
+      updateProfilePreview();
     }
 
     /* ==============================================================
@@ -2932,6 +2816,12 @@ const COMBAT_BANK = {
     let currentLeaderFilter = 'ALL';
     let customLeaderDate = '';
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[char]));
+    }
+
     function openLeaderboardModal() {
       document.getElementById('modal-leaderboard').style.display = 'flex';
       renderLeaderboardRecords();
@@ -2989,16 +2879,18 @@ const COMBAT_BANK = {
         html += `<div style="font-size:0.75rem; font-weight:900; color:#0284c7; margin-top:4px;">📅 Sesi PDPR: ${dateTitle} (${items.length} Murid)</div>`;
         items.forEach((it, idx) => {
           const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx+1}`;
+          const safeName = escapeHtml(it.name || 'Murid');
+          const safeClass = escapeHtml(it.className || 'Tanpa kelas');
           html += `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; font-size:0.78rem;">
+            <div class="leader-record-row" style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; font-size:0.78rem;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-weight:900;">${medal}</span>
                 <div>
-                  <div style="font-weight:800; color:#0f172a;">${it.name}</div>
-                  <div style="font-size:0.65rem; color:#64748b;">${it.className} • Thn ${it.grade} • ${it.time || ''} • ${it.questions || 0} soalan • ${it.accuracy || 0}% tepat</div>
+                  <div style="font-weight:800; color:#0f172a;">${safeName}</div>
+                  <div style="font-size:0.65rem; color:#64748b;">${safeClass} • Thn ${Number(it.grade || 0)} • ${escapeHtml(it.time || '')} • ${Number(it.questions || 0)} soalan • ${Number(it.accuracy || 0)}% tepat</div>
                 </div>
               </div>
-              <div style="text-align:right;">
+              <div class="leader-record-score" style="text-align:right;">
                 <div style="font-weight:900; color:#b45309;">${Number(it.xp || 0).toLocaleString()} XP</div>
                 <div style="font-size:0.65rem; color:#15803d; font-weight:800;">🏠 Tahap ${it.houseLevel || 1} • ${it.houseProgress || 0}% • 🧱 ${it.blocks || 0}</div>
               </div>
@@ -3015,18 +2907,18 @@ const COMBAT_BANK = {
         const raw = localStorage.getItem(LEADERBOARD_KEY);
         if (raw) all = JSON.parse(raw);
       } catch(e) {}
+      const csvCell = value => {
+        let text = String(value ?? '');
+        if (/^[=+\-@]/.test(text)) text = "'" + text;
+        return `"${text.replace(/"/g, '""')}"`;
+      };
       let csv = "Bil,Nama Murid,Kelas,Tahun,Skor XP,Syiling,Soalan,Ketepatan,Tahap Rumah,Kemajuan Rumah,Blok Terbina,Tarikh,Masa\n";
       all.forEach((r, i) => {
-        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.coins || 0}","${r.questions || 0}","${r.accuracy || 0}%","${r.houseLevel || 1}","${r.houseProgress || 0}%","${r.blocks}","${r.date}","${r.time}"\n`;
+        csv += [i + 1, r.name, r.className, `Tahun ${r.grade}`, r.xp, r.coins || 0, r.questions || 0,
+          `${r.accuracy || 0}%`, r.houseLevel || 1, `${r.houseProgress || 0}%`, r.blocks || 0, r.date, r.time]
+          .map(csvCell).join(',') + '\n';
       });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const u = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = u;
-      a.download = `Rekod_Arkitek_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      downloadCsvFile(`Rekod_Arkitek_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`, csv);
       showToast("Fail CSV dimuat turun untuk Cikgu Mohammad Fikrey!");
     }
 
@@ -3077,176 +2969,38 @@ const COMBAT_BANK = {
 
     function openAdminControlPanel() {
       document.getElementById('modal-admin-panel').style.display = 'flex';
-      populateAdminClassSelector();
-      renderAdminClassesList();
     }
 
     function closeAdminPanel() {
       document.getElementById('modal-admin-panel').style.display = 'none';
-      updateLobbyClassDropdown(STATE.grade);
-      showToast("Kemaskini pangkalan data disimpan!");
     }
 
-    function switchAdminTab(tab) {
-      document.getElementById('admin-tab-stu').classList.toggle('active', tab === 'students');
-      document.getElementById('admin-tab-cls').classList.toggle('active', tab === 'classes');
-      document.getElementById('admin-sec-students').style.display = (tab === 'students' ? 'flex' : 'none');
-      document.getElementById('admin-sec-classes').style.display = (tab === 'classes' ? 'flex' : 'none');
+    function downloadCsvFile(filename, content) {
+      const blob = new Blob(["\ufeff" + content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
 
-    function populateAdminClassSelector() {
-      const rosters = getRosters();
-      const sel = document.getElementById('admin-cls-select');
-      if (!sel) return;
-      sel.innerHTML = '';
-      ['grade5', 'grade6'].forEach(gKey => {
-        const title = gKey === 'grade5' ? 'Tahun 5' : 'Tahun 6';
-        Object.keys(rosters[gKey] || {}).forEach(cls => {
-          const opt = document.createElement('option');
-          opt.value = `${gKey}|${cls}`;
-          opt.textContent = `${cls} (${title})`;
-          sel.appendChild(opt);
-        });
-      });
-      if (sel.options.length > 0) renderAdminStudentListView(sel.options[0].value);
-    }
-
-    function renderAdminStudentListView(val) {
-      if (!val) return;
-      const [gKey, className] = val.split('|');
-      const rosters = getRosters();
-      const students = (rosters[gKey] && rosters[gKey][className]) || [];
-      const box = document.getElementById('admin-students-scroll-box');
-      if (!box) return;
-
-      if (students.length === 0) {
-        box.innerHTML = `<div style="text-align:center; padding:10px; font-size:0.75rem; color:#94a3b8;">Tiada murid dikesan.</div>`;
-        return;
-      }
-
-      let html = '';
-      students.forEach((s, idx) => {
-        const safeStudent = s.replace(/"/g, '&quot;');
-        html += `
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 8px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; font-size:0.75rem;">
-            <span>${idx + 1}. <b>${s}</b></span>
-            <button data-student="${safeStudent}" onclick="adminDeleteStudent('${gKey}', '${className}', this.getAttribute('data-student'))" style="background:none; border:none; color:#ef4444; font-size:0.75rem; cursor:pointer;">🗑️</button>
-          </div>
-        `;
-      });
-      box.innerHTML = html;
-    }
-
-    function adminAddStudentSingle() {
-      const inp = document.getElementById('admin-add-stu-input');
-      const name = inp.value.trim();
-      const sel = document.getElementById('admin-cls-select').value;
-      if (!name || !sel) return;
-
-      const [gKey, className] = sel.split('|');
-      const rosters = getRosters();
-      if (!rosters[gKey][className]) rosters[gKey][className] = [];
-      if (rosters[gKey][className].includes(name)) {
-        showToast("Nama murid sudah wujud!");
-        return;
-      }
-      rosters[gKey][className].push(name);
-      saveRosters(rosters);
-      inp.value = '';
-      renderAdminStudentListView(sel);
-      showToast(`${name} ditambah!`);
-    }
-
-    function adminBulkImportStudents() {
-      const txt = document.getElementById('admin-bulk-stu-area').value.trim();
-      const sel = document.getElementById('admin-cls-select').value;
-      if (!txt || !sel) return;
-
-      const lines = txt.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      if (lines.length === 0) return;
-
-      const [gKey, className] = sel.split('|');
-      const rosters = getRosters();
-      if (!rosters[gKey][className]) rosters[gKey][className] = [];
-
-      let added = 0;
-      lines.forEach(name => {
-        if (!rosters[gKey][className].includes(name)) {
-          rosters[gKey][className].push(name);
-          added++;
-        }
-      });
-      saveRosters(rosters);
-      document.getElementById('admin-bulk-stu-area').value = '';
-      renderAdminStudentListView(sel);
-      showToast(`${added} murid berjaya diimport!`);
-    }
-
-    function adminDeleteStudent(gKey, className, studentName) {
-      const rosters = getRosters();
-      if (!rosters[gKey] || !rosters[gKey][className]) return;
-      rosters[gKey][className] = rosters[gKey][className].filter(s => s !== studentName);
-      saveRosters(rosters);
-      renderAdminStudentListView(`${gKey}|${className}`);
-      showToast(`${studentName} dipadam.`);
-    }
-
-    function adminCreateClass() {
-      const yr = document.getElementById('admin-new-cls-year').value;
-      const nm = document.getElementById('admin-new-cls-name').value.trim();
-      if (!nm) return;
-
-      const gKey = yr === '5' ? 'grade5' : 'grade6';
-      const rosters = getRosters();
-      if (rosters[gKey][nm]) {
-        showToast("Kelas ini sudah wujud!");
-        return;
-      }
-      rosters[gKey][nm] = [];
-      saveRosters(rosters);
-      document.getElementById('admin-new-cls-name').value = '';
-      populateAdminClassSelector();
-      renderAdminClassesList();
-      showToast(`Kelas ${nm} dicipta!`);
-    }
-
-    function renderAdminClassesList() {
-      const rosters = getRosters();
-      const box = document.getElementById('admin-classes-badge-box');
-      if (!box) return;
-      let html = '';
-      ['grade5', 'grade6'].forEach(gKey => {
-        const title = gKey === 'grade5' ? 'Thn 5' : 'Thn 6';
-        Object.keys(rosters[gKey] || {}).forEach(cls => {
-          const count = (rosters[gKey][cls] || []).length;
-          html += `
-            <div style="background:#e0f2fe; border:1px solid #7dd3fc; border-radius:6px; padding:3px 8px; font-size:0.75rem; font-weight:800; display:flex; align-items:center; gap:6px;">
-              <span>🏫 ${cls} (${title} - ${count} murid)</span>
-              <button onclick="adminDeleteClass('${gKey}', '${cls}')" style="background:none; border:none; color:#ef4444; font-size:0.75rem; cursor:pointer;">✕</button>
-            </div>
-          `;
-        });
-      });
-      box.innerHTML = html;
-    }
-
-    function adminDeleteClass(gKey, className) {
-      if (!confirm(`Padam kelas "${className}" berserta semua muridnya?`)) return;
-      const rosters = getRosters();
-      delete rosters[gKey][className];
-      saveRosters(rosters);
-      populateAdminClassSelector();
-      renderAdminClassesList();
-      showToast(`Kelas ${className} dipadam.`);
-    }
-
-    function adminResetRostersToDefault() {
-      if (!confirm("Set semula pangkalan data ke 8 kelas rasmi SK Ranggu (Khoir, Mumtaz, Jahid, Eltizam)?")) return;
-      localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
-      populateAdminClassSelector();
-      renderAdminClassesList();
-      updateLobbyClassDropdown(STATE.grade);
-      showToast("Pangkalan data 8 kelas dipulihkan!");
+    function downloadRecordTemplateCSV() {
+      const headers = [
+        "Bil", "Nama Murid", "Kelas", "Tahun", "Skor XP", "Syiling",
+        "Jumlah Soalan", "Ketepatan (%)", "Tahap Rumah", "Kemajuan Rumah (%)",
+        "Blok Terbina", "Tarikh", "Masa", "Catatan Guru"
+      ];
+      const example = [
+        "CONTOH - PADAM BARIS INI", "Nama Murid", "5 Khoir", "5", "150", "150",
+        "0", "0", "1", "0", "0", "YYYY-MM-DD", "HH:MM", ""
+      ];
+      const quote = value => '"' + String(value).replace(/"/g, '""') + '"';
+      const csv = [headers, example].map(row => row.map(quote).join(',')).join('\n');
+      downloadCsvFile('Templat_Semakan_Rekod_Math_Quest.csv', csv);
+      showToast("Templat semakan rekod dimuat turun!");
     }
 
     /* ==============================================================
@@ -3715,6 +3469,11 @@ const COMBAT_BANK = {
     // Startup
     window.addEventListener('DOMContentLoaded', initLobbyUI);
     setTimeout(initLobbyUI, 100);
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
