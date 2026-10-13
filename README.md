@@ -2,6 +2,21 @@
 ### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
+## Versi V3 — Pembina Rumah Voxel 3D
+
+Branch pembangunan V3 menggantikan petak emoji dengan dunia voxel 3D sebenar:
+
+- tapak 14 × 8 dengan koordinat X, Y dan Z;
+- binaan sehingga 8 aras, kawalan kamera sentuh, zum, putar blok, undo dan redo;
+- blok tidak boleh terapung tanpa sokongan;
+- bentuk khas untuk pintu, tingkap, bumbung condong/rata, tangga, pagar dan pokok;
+- XP kekal sebagai markah pencapaian, manakala syiling digunakan di kedai;
+- migrasi simpanan V2 ke V3 tanpa memadam data lama;
+- tahap dan peratus rumah dikira daripada lantai, dinding, pintu, tingkap, bumbung, tingkat atas dan landskap sebenar;
+- dashboard/CSV guru memaparkan XP, ketepatan, jumlah soalan dan kemajuan rumah.
+
+Three.js dimuat daripada CDN jsDelivr ketika halaman dibuka. Penyegerakan merentas peranti belum diaktifkan kerana backend dan log masuk guru belum dikonfigurasi. Lihat [SECURITY.md](SECURITY.md) sebelum menambah pangkalan data.
+
 ---
 
 ## 🌟 Pengenalan & Konsep Permainan (Sandbox Crafting + Math XP Quest)
@@ -37,7 +52,7 @@ Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** un
    - Boleh di-filter mengikut tarikh kalendar PDPR.
    - Lengkap dengan fungsi muat turun fail Excel (CSV) dan butang salin laporan ke WhatsApp Cikgu.
 
-7. **⚙️ Panel Kawalan Guru (Admin Kod: TS.FIKREY37):**
+7. **⚙️ Panel Kawalan Guru:**
    - Membolehkan Cikgu Fikrey mengurus murid, menambah kelas, import senarai pukal, atau menetapkan semula pangkalan data 8 kelas SK Ranggu bila-bila masa.
 
 ---
