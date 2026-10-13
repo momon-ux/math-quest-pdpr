@@ -2,75 +2,61 @@
 ### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
-## Versi V4 — Mesra Telefon, Nama Kendiri & Pembina Rumah Voxel 3D
-
-Branch pembangunan V3 menggantikan petak emoji dengan dunia voxel 3D sebenar:
-
-- tapak 14 × 8 dengan koordinat X, Y dan Z;
-- binaan sehingga 8 aras, kawalan kamera sentuh, zum, putar blok, undo dan redo;
-- blok tidak boleh terapung tanpa sokongan;
-- bentuk khas untuk pintu, tingkap, bumbung condong/rata, tangga, pagar dan pokok;
-- XP kekal sebagai markah pencapaian, manakala syiling digunakan di kedai;
-- migrasi simpanan V2 ke V3 tanpa memadam data lama;
-- tahap dan peratus rumah dikira daripada lantai, dinding, pintu, tingkap, bumbung, tingkat atas dan landskap sebenar;
-- dashboard/CSV guru memaparkan XP, ketepatan, jumlah soalan dan kemajuan rumah.
-- paparan telefon disusun semula supaya HUD, kawalan binaan, minigame dan modal tidak terpotong;
-- tiada senarai nama murid ditanam dalam repositori; murid menaip nama sendiri;
-- templat CSV kosong disediakan untuk semakan dan penggabungan rekod guru.
-- PWA bernama **MathBina** menyediakan ikon telefon 192px, 512px, 1024px dan Apple Touch Icon;
-- kad profil biru memaparkan nama, kelas dan avatar murid secara langsung.
-
-Three.js dimuat daripada CDN jsDelivr ketika halaman dibuka. Penyegerakan merentas peranti belum diaktifkan kerana backend dan log masuk guru belum dikonfigurasi. Lihat [SECURITY.md](SECURITY.md) sebelum menambah pangkalan data.
-
 ---
 
-## 🌟 Pengenalan & Konsep Permainan (Sandbox Crafting + Math XP Quest)
+## 🌟 Versi V5 — Pelan Rumah Starter Minecraft (Reddit Starter House) & Enjin Voxel 3D
 
-Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau yang menggabungkan elemen kreativiti **Lego / Minecraft Sandbox (Bina Rumah Impian)** dengan minigame arked matematik yang mencabar:
+Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berdasarkan Rujukan Rasmi Reddit: *A simple starter house*)** yang membolehkan murid melihat rumah impian terbentuk sempurna secara 3D:
 
-1. **Padang Rumput Binaan Rumah Impian (Creative Building Plot):**
-   - Setiap murid diberikan sebidang tanah lapangan rumput bergrid (14 × 8 petak) sendiri.
-   - Murid boleh menyusun blok-blok binaan untuk mendirikan rumah impian, bumbung, pintu, tingkap kaca, halaman taman, kolam renang, pagar, kenderaan (kereta lumba, basikal, helikopter, roket) serta haiwan peliharaan!
-   - Dilengkapi alatan letak blok, alatan pemadam (*eraser*), dan butang tangkap gambar (*snapshot*) untuk memuat turun hasil karya rumah murid.
+1. **🏡 Pelan Rumah Starter Minecraft 8-Fasa:**
+   - **Fasa 1: Tapak Cobblestone & Tiang Balak Oak (100 Syiling):** Menanam asas batu *cobblestone* sekeliling dan 4 tiang balak kayu oak menegak di sudut rumah.
+   - **Fasa 2: Lantai Kayu & Dinding Papan Oak (120 Syiling):** Menghampar lantai parket kayu dan mendirikan dinding papan kayu oak berserta bukaan tingkap.
+   - **Fasa 3: Anjung Depan, Tangga & Pintu Rumah (100 Syiling):** Membina anjung depan berkayu, tangga masuk kayu oak, tiang pagar anjung, dan pintu kayu depan.
+   - **Fasa 4: Tingkap Kaca & Pelita Tanglung (100 Syiling):** Memasang panel tingkap kaca pencahayaan dan tanglung bercahaya hangat ala Minecraft.
+   - **Fasa 5: Bumbung Berpuncak Kayu Segitiga / Gable Roof (180 Syiling):** Memasang bumbung A-frame berpuncak kayu bertingkat dengan rabung batu cobblestone.
+   - **Fasa 6: Dedaun Rimbun & Taman Bunga (80 Syiling):** Menanam semak dedaun hijau rimbun dan bunga ros mawar di sekeliling asas rumah.
+   - **Fasa 7: Corong Asap Batu (Chimney) & Hearth (120 Syiling):** Membina cerobong asap batu cobblestone di sisi rumah yang melepasi bumbung.
+   - **Fasa 8: Pagar Halaman & Kereta Sukan Kartun (150 Syiling):** Memasang pagar laman putih dan kenderaan sukan merah di halaman rumah.
+   - **⚡ Butang Bina Penuh:** Pilihan untuk membina rumah starter lengkap secara automatik dalam satu klik.
+   - **🧹 Butang Kosongkan Tapak:** Mengosongkan tapak binaan untuk memulakan rekaan baharu.
 
-2. **Ekonomi XP & Kedai Blok (XP Block Shop):**
-   - Setiap blok dan hiasan dibeli menggunakan syiling; XP kekal sebagai markah pencapaian.
-   - Murid bermula dengan pek alu-aluan 150 XP, 150 syiling dan blok asas percuma.
-   - Murid mengembara ke zon cabaran matematik untuk meningkatkan XP dan mengumpul ganjaran.
+2. **🎥 Kawalan Pantas Kamera 3D & Putaran 360° Automatik:**
+   - Butang pandangan pantas: `👁️ Depan`, `📐 Isometrik`, `🔝 Atas`, dan `🔄 Putar 360°`.
+   - Kawalan sentuh penuh: Seret satu jari untuk putar kamera, cubit dua jari untuk zum masuk/keluar, dan ketuk blok untuk bina atau padam.
 
-3. **2 Zon Minigame Cari XP (Zero Reading Fatigue):**
-   - 🎯 **Math Shooter (Meriam Belon):** Meriam kartun hijau di atas bukit membidik belon-belon terapung. Tembak belon dengan jawapan betul -> **POP! 🎈💥** meletup dan dapat **+100 XP** terus ke akaun!
-   - 🎡 **Roda Sifir & Operasi (Spinning Wheel):** Putar roda berputar, jawab soalan kilat dalam masa 15 saat -> dapat bonus **+150 XP** sehingga **+300 XP (Jackpot)**!
-   - Jika jawab salah: tiada XP diberikan, murid digalakkan mencuba lagi.
+3. **🧱 Tekstur & Blok Khas Minecraft (Procedural Pixel-Art):**
+   - Tekstur tulen dijana secara prosedural di dalam kanvas: *Cobblestone*, *Oak Log*, *Oak Planks*, *Bush Leaves*, *Wood Stairs/Wedge Roof*, *Stone Chimney*, *Lanterns*, dan *Flowers*.
+   - Tidak memerlukan muat turun imej luar yang berisiko disekat oleh sambungan internet sekolah.
 
-4. **Penyimpanan Perkembangan Murid (Persistent Auto-Save per Student):**
-   - Binaan rumah dan baki XP setiap murid disimpan secara automatik dalam `localStorage`.
-   - Setiap kali murid login dengan nama mereka, rumah impian mereka akan dipaparkan semula seperti mana mereka tinggalkan.
+4. **Ekonomi Syiling & 2 Minigame Menjana XP (Zero Reading Fatigue):**
+   - 🎯 **Math Shooter (Meriam Belon):** Meriam kartun hijau membidik belon-belon terapung. Tembak belon dengan jawapan matematik yang betul -> **POP! 🎈💥** meletup dan dapat **+100 XP**!
+   - 🎡 **Roda Sifir & Operasi (Spinning Wheel):** Putar roda bertuah 8 segmen, selesaikan soalan kilat dalam 15 saat -> dapat **+150 XP** sehingga **+300 XP (Jackpot)**!
 
-5. **Nama Kendiri & Pilihan 8 Kelas SK Ranggu Tawau:**
+5. **Penyimpanan Perkembangan Murid (Persistent Auto-Save):**
+   - Binaan 3D, baki syiling, markah XP, dan kemajuan fasa rumah setiap murid disimpan secara automatik dalam `localStorage`.
+
+6. **Pilihan 8 Kelas SK Ranggu Tawau:**
    - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jayyid`, `5 Iltizam`
    - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jayyid`, `6 Iltizam`
-   - Murid menaip nama sendiri; tiada nama murid disimpan dalam kod awam.
 
-6. **📅 Papan Skor Kalendar PDPR (Scrollable mengikut Tarikh):**
-   - Menyenaraikan semua murid SK Ranggu yang aktif mengumpul XP dan membina rumah.
-   - Boleh di-filter mengikut tarikh kalendar PDPR.
-   - Lengkap dengan fungsi muat turun fail Excel (CSV) dan butang salin laporan ke WhatsApp Cikgu.
+7. **📅 Papan Skor Kalendar PDPR & Eksport Excel (CSV):**
+   - Menyenaraikan semua rekod murid mengikut kalendar sesi PDPR.
+   - Boleh dieksport ke format Excel (CSV) dan disalin terus ke mesej WhatsApp guru.
 
-7. **⚙️ Alat Semakan Rekod Guru:**
-   - Menyediakan templat CSV kosong, eksport rekod peranti semasa dan ringkasan WhatsApp.
+8. **⚙️ Alat Semakan Rekod Guru:**
+   - Panel pengurusan dengan kod akses guru (kod kekal tersembunyi tanpa dipaparkan pada skrin).
 
 ---
 
 ## 🕹️ Aliran Permainan (Gameplay Loop)
 
 ```
-[LOBBY: PILIH KELAS + ISI NAMA SENDIRI + AVATAR]
+[LOBBY: PILIH TAHUN & KELAS SK RANGGU + TAIP NAMA]
                   │
                   ▼
-   🏡 PADANG RUMPUT BINAAN RUMAH IMPIAN (SANDBOX PLOT)
-   • Letak blok, dinding, pintu, tingkap, kereta, kolam renang.
-   • Beli blok baharu di Kedai Blok menggunakan XP.
+   🏡 DUNIA 3D MINECRAFT STARTER HOUSE (THREE.JS)
+   • Putar kamera 360°, lihat tapak rumput.
+   • Buka "PELAN RUMAH STARTER" untuk bina rumah Reddit fasa-demi-fasa!
                   │
                   ├──────────────────────────────┐
                   ▼                              ▼
@@ -81,9 +67,9 @@ Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** un
                   └──────────────┬───────────────┘
                                  │
                                  ▼
-   💰 KEMBALI KE PADANG RUMAH DENGAN XP & SYILING!
-   • Beli blok impian dan teruskan membina rumah tercantik!
-   • Tangkap gambar rumah 📸 & rekod markah ke Papan Skor Kalendar!
+   💰 KEMBALI DENGAN SYILING UNTUK SIAPKAN RUMAH IMPIAN!
+   • Buka semua fasa hingga rumah starter siap 100%!
+   • Tangkap gambar 3D Snapshot 📸 & rekod markah ke Papan Skor Kalendar!
 ```
 
 ---

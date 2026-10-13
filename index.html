@@ -1130,6 +1130,170 @@
       .palette-item-slot { min-width: 43px; height: 43px; }
       .developer-credit-bar { padding-top: 1px; padding-bottom: calc(1px + env(safe-area-inset-bottom)); }
     }
+  
+    /* --- MINECRAFT STARTER HOUSE BLUEPRINT STYLES --- */
+    .btn-blueprint {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+      color: #fff !important;
+      border: 2px solid #047857 !important;
+      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.35) !important;
+      font-weight: 900 !important;
+    }
+    .btn-blueprint:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(16, 185, 129, 0.5) !important;
+    }
+
+    .camera-quick-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+      flex-wrap: wrap;
+    }
+    .cam-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #1e293b;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+      backdrop-filter: blur(4px);
+      transition: all 0.15s ease;
+    }
+    .cam-btn:hover, .cam-btn.active {
+      background: #0284c7;
+      color: #fff;
+      border-color: #0369a1;
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    .blueprint-modal-box {
+      max-width: 780px !important;
+      width: 95% !important;
+      max-height: 90vh !important;
+      display: flex;
+      flex-direction: column;
+    }
+    .blueprint-banner-card {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border: 2px solid #059669;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .btn-blueprint-action {
+      padding: 7px 12px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .btn-auto-build-all {
+      background: #059669;
+      color: #fff;
+      border: 1.5px solid #047857;
+      box-shadow: 0 2px 6px rgba(5,150,105,0.3);
+    }
+    .btn-auto-build-all:hover {
+      transform: translateY(-1px);
+      background: #047857;
+    }
+    .btn-clear-plot {
+      background: #fff;
+      color: #dc2626;
+      border: 1.5px solid #f87171;
+    }
+    .btn-clear-plot:hover {
+      background: #fee2e2;
+    }
+    .blueprint-phases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 10px;
+      overflow-y: auto;
+      max-height: 50vh;
+      padding-right: 4px;
+      margin-bottom: 10px;
+    }
+    .blueprint-phase-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .blueprint-phase-card:hover {
+      border-color: #cbd5e1;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .blueprint-phase-card.completed {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+    .phase-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .phase-title-text {
+      font-size: 0.84rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+    .phase-desc-text {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .phase-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .phase-cost-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #b45309;
+      background: #fef3c7;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid #fde68a;
+    }
+    .btn-build-phase {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      background: #0284c7;
+      color: #fff;
+      border: 1px solid #0369a1;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .btn-build-phase:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+    .btn-build-phase.completed {
+      background: #10b981;
+      border-color: #059669;
+      cursor: default;
+    }
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
 </head>
@@ -1392,6 +1556,67 @@
     </div>
 
     <!-- ==============================================================
+         MODAL: PELAN RUMAH STARTER MINECRAFT (REDDIT STARTER HOUSE)
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-blueprint" style="display: none;">
+      <div class="game-modal-box blueprint-modal-box">
+        <div class="modal-head">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.4rem;">🏡</span>
+            <div>
+              <div class="modal-title">PELAN RUMAH STARTER MINECRAFT</div>
+              <div style="font-size: 0.72rem; color: #64748b; font-weight: 700;">Rekaan Rumah Kayu & Batu Asli (Rujukan Reddit Starter House)</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="hud-wallet-pill">
+              <span>🪙 Baki:</span> <span id="blueprint-wallet-coins">150 Syiling</span>
+            </div>
+            <button class="modal-close-btn" onclick="closeBlueprintModal()">✕</button>
+          </div>
+        </div>
+
+        <div class="blueprint-banner-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <div style="font-size: 0.88rem; font-weight: 900; color: #065f46;">🏡 Rumah Impian 8-Fasa Lengkap</div>
+              <div style="font-size: 0.75rem; color: #047857; margin-top: 2px;">
+                Asas Cobblestone • Tiang Balak Oak • Anjung & Pintu • Bumbung Gable A-Frame • Cerobong Asap • Taman Bunga
+              </div>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <button class="btn-blueprint-action btn-auto-build-all" onclick="buildEntireStarterHouse()">
+                ⚡ BINA RUMAH LENGKAP SEKARANG
+              </button>
+              <button class="btn-blueprint-action btn-clear-plot" onclick="clearHousePlot()">
+                🧹 Kosongkan Tapak
+              </button>
+            </div>
+          </div>
+          <div class="blueprint-progress-bar-container" style="margin-top: 10px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
+              <span id="blueprint-progress-text">Kemajuan Pelan: 0 / 8 Fasa Siap</span>
+              <span id="blueprint-progress-pct">0%</span>
+            </div>
+            <div class="build-progress-track"><div class="build-progress-fill" id="blueprint-progress-fill" style="width: 0%;"></div></div>
+          </div>
+        </div>
+
+        <div class="blueprint-phases-grid" id="blueprint-phases-list">
+          <!-- Injected dynamically by renderBlueprintPhases() -->
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; flex-wrap: wrap; gap: 6px;">
+          <span style="font-size: 0.72rem; color: #64748b; font-weight: 700;">Kurang Syiling? Selesaikan cabaran matematik untuk kumpul XP & Syiling!</span>
+          <div style="display: flex; gap: 6px;">
+            <button onclick="closeBlueprintModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #16a34a; border-radius: 8px; cursor: pointer;">🎯 Math Shooter (+100 XP)</button>
+            <button onclick="closeBlueprintModal(); launchMathWheel();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;">🎡 Roda Sifir (+150-300 XP)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
          MODAL: KEDAI BLOK & LEGO (XP BLOCK SHOP)
          ============================================================== -->
     <div class="game-modal-overlay" id="modal-shop">
@@ -1640,6 +1865,8 @@
        ============================================================== */
     const BLOCK_CATALOG = [
       // 1. Struktur Asas
+      { id: 'cobblestone', name: 'Batu Cobblestone', cat: 'structure', price: 25, icon: '🪨', color: '#6b7280' },
+      { id: 'oak_log', name: 'Kayu Balak Oak', cat: 'structure', price: 30, icon: '🪵', color: '#78350f' },
       { id: 'wood_wall', name: 'Dinding Kayu', cat: 'structure', price: 20, icon: '🪵', color: '#b45309' },
       { id: 'brick_wall', name: 'Bata Merah', cat: 'structure', price: 30, icon: '🧱', color: '#dc2626' },
       { id: 'stone_wall', name: 'Batu Konkrit', cat: 'structure', price: 40, icon: '🪨', color: '#64748b' },
@@ -1649,6 +1876,7 @@
       { id: 'rainbow_block', name: 'Blok Pelangi', cat: 'structure', price: 200, icon: '🌈', color: '#ec4899' },
 
       // 2. Komponen Rumah
+      { id: 'roof_wood', name: 'Bumbung Kayu Segitiga', cat: 'house', price: 45, icon: '🛖', color: '#a16207' },
       { id: 'door_wood', name: 'Pintu Kayu', cat: 'house', price: 40, icon: '🚪', color: '#92400e' },
       { id: 'door_glass', name: 'Pintu Kaca', cat: 'house', price: 60, icon: '🚪', color: '#0284c7' },
       { id: 'window_glass', name: 'Tingkap Kaca', cat: 'house', price: 35, icon: '🪟', color: '#7dd3fc' },
@@ -1660,6 +1888,8 @@
       { id: 'parquet_floor', name: 'Lantai Parket', cat: 'house', price: 25, icon: '🪵', color: '#d97706' },
 
       // 3. Taman & Alam
+      { id: 'bush_leaf', name: 'Dedaun Semak Hijau', cat: 'nature', price: 20, icon: '🌿', color: '#16a34a' },
+      { id: 'lantern', name: 'Pelita Tanglung Hangat', cat: 'nature', price: 35, icon: '🏮', color: '#fbbf24' },
       { id: 'fence_white', name: 'Pagar Putih', cat: 'nature', price: 20, icon: '🪵', color: '#f8fafc' },
       { id: 'tree_shade', name: 'Pokok Rendang', cat: 'nature', price: 50, icon: '🌳', color: '#15803d' },
       { id: 'rose_flower', name: 'Pokok Bunga Mawar', cat: 'nature', price: 25, icon: '🌹', color: '#e11d48' },
@@ -3220,6 +3450,29 @@ const COMBAT_BANK = {
       } else if (kind === 'brick') {
         for (let y = 0; y <= 64; y += 16) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(64,y); ctx.stroke(); }
         for (let y = 0; y < 64; y += 16) for (let x = (y / 16) % 2 ? 0 : 16; x < 64; x += 32) { ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y+16); ctx.stroke(); }
+      } else if (kind === 'cobblestone') {
+        ctx.fillStyle = base; ctx.fillRect(0, 0, 64, 64);
+        ctx.fillStyle = accent;
+        for (let i = 0; i < 48; i++) {
+          const rx = (i * 17) % 56, ry = (i * 23) % 56;
+          ctx.fillRect(rx, ry, 6 + (i % 5) * 2, 6 + (i % 4) * 2);
+        }
+        ctx.fillStyle = '#949494';
+        for (let i = 0; i < 24; i++) {
+          const rx = (i * 29) % 60, ry = (i * 37) % 60;
+          ctx.fillRect(rx, ry, 4, 3);
+        }
+      } else if (kind === 'oak_log') {
+        ctx.fillStyle = base; ctx.fillRect(0, 0, 64, 64);
+        ctx.fillStyle = accent;
+        for (let x = 0; x < 64; x += 8) { ctx.fillRect(x, 0, 3, 64); }
+        for (let y = 4; y < 64; y += 12) for (let x = 0; x < 64; x += 16) { ctx.fillRect(x, y, 6, 2); }
+      } else if (kind === 'leaves') {
+        ctx.fillStyle = base; ctx.fillRect(0, 0, 64, 64);
+        ctx.fillStyle = accent;
+        for (let i = 0; i < 50; i++) { const lx = (i * 13) % 60, ly = (i * 19) % 60; ctx.fillRect(lx, ly, 5, 5); }
+        ctx.fillStyle = '#4ade80';
+        for (let i = 0; i < 30; i++) { const lx = (i * 27) % 62, ly = (i * 31) % 62; ctx.fillRect(lx, ly, 3, 3); }
       } else {
         for (let i = 0; i < 36; i++) { const x = (i * 19) % 64, y = (i * 31) % 64; ctx.fillStyle = accent; ctx.fillRect(x,y,3,3); }
       }
@@ -3235,6 +3488,13 @@ const COMBAT_BANK = {
         wood_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#b97932','#754216') }),
         brick_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('brick','#c74b3c','#f2b6a8') }),
         stone_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('stone','#7b8794','#aeb8c2') }),
+        cobblestone: new THREE.MeshLambertMaterial({ map: makePatternTexture('cobblestone','#6e6e6e','#3a3a3a') }),
+        oak_log: new THREE.MeshLambertMaterial({ map: makePatternTexture('oak_log','#6b4929','#3b2612') }),
+        roof_wood: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#995a20','#5e330e') }),
+        bush_leaf: new THREE.MeshLambertMaterial({ map: makePatternTexture('leaves','#1e7328','#0f4a17') }),
+        lantern: new THREE.MeshBasicMaterial({ color: 0xffd166 }),
+        rose_flower: new THREE.MeshLambertMaterial({ color: 0xef4444 }),
+        sunflower: new THREE.MeshLambertMaterial({ color: 0xfbbf24 }),
         glass_wall: mat(0x5fd8ff, { transparent:true, opacity:.55 }),
         window_glass: mat(0x8be5ff, { transparent:true, opacity:.48 }),
         door_wood: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#8a4d1e','#4c2a12') }),
@@ -3265,14 +3525,38 @@ const COMBAT_BANK = {
       const add = (geo, mat = material, px = 0, py = 0, pz = 0) => {
         const mesh = new THREE.Mesh(geo, mat); mesh.position.set(px,py,pz); mesh.castShadow = !preview; mesh.receiveShadow = true; group.add(mesh); return mesh;
       };
-      if (type === 'roof_red' || type === 'roof_blue') {
+      if (type === 'roof_red' || type === 'roof_blue' || type === 'roof_wood') {
         add(createWedgeGeometry());
+      } else if (type === 'cobblestone' || type === 'oak_log' || type === 'bush_leaf') {
+        add(new THREE.BoxGeometry(.96,.96,.96), material);
       } else if (type === 'parquet_floor') {
         add(new THREE.BoxGeometry(.96,.96,.96), material);
       } else if (type === 'roof_flat' || type === 'swimming_pool') {
         add(new THREE.BoxGeometry(.96,.18,.96), material, 0,-.4,0);
       } else if (type === 'stairs_wood') {
         for (let i=0;i<4;i++) add(new THREE.BoxGeometry(.96,(i+1)/4*.9,.24), material,0,-.5+(i+1)/8,-.36+i*.24);
+      } else if (type === 'chimney') {
+        add(new THREE.BoxGeometry(.94,.96,.94), material);
+        add(new THREE.BoxGeometry(.4,.2,.4), V3.materials.roof_flat, 0,.45,0);
+      } else if (type === 'lantern' || type === 'garden_lamp') {
+        add(new THREE.CylinderGeometry(.02,.02,.3,6), V3.materials.stone_wall, 0,.35,0);
+        add(new THREE.BoxGeometry(.34,.42,.34), V3.materials.stone_wall, 0,.05,0);
+        add(new THREE.BoxGeometry(.26,.34,.26), preview ? material : V3.materials.lantern, 0,.05,0);
+      } else if (type === 'rose_flower') {
+        add(new THREE.CylinderGeometry(.03,.03,.4,6), V3.materials.tree_leaf_dark, 0,-.25,0);
+        add(new THREE.DodecahedronGeometry(.18,0), preview ? material : V3.materials.rose_flower, 0,.05,0);
+      } else if (type === 'sunflower') {
+        add(new THREE.CylinderGeometry(.03,.03,.55,6), V3.materials.tree_leaf_dark, 0,-.2,0);
+        add(new THREE.CylinderGeometry(.22,.22,.05,8), preview ? material : V3.materials.sunflower, 0,.15,0);
+        add(new THREE.CylinderGeometry(.10,.10,.07,8), preview ? material : V3.materials.tree_trunk, 0,.16,0);
+      } else if (type === 'car_red') {
+        add(new THREE.BoxGeometry(.84,.24,1.2), preview ? material : V3.materials.roof_red, 0,-.18,0);
+        add(new THREE.BoxGeometry(.68,.28,.62), preview ? material : V3.materials.window_glass, 0,.06,-.05);
+        const wMat = preview ? material : V3.materials.stone_wall;
+        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, -.44,-.28,-.35);
+        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, .44,-.28,-.35);
+        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, -.44,-.28,.35);
+        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, .44,-.28,.35);
       } else if (type.startsWith('door_') || type === 'window_glass') {
         // Bingkai sedalam blok dinding menjadikan pintu/tingkap benar-benar
         // bersambung dengan rumah, bukan terapung di tengah petak.
@@ -3351,7 +3635,14 @@ const COMBAT_BANK = {
       V3.buildPlane.rotation.x = -Math.PI/2; V3.scene.add(V3.buildPlane);
       bindVoxelInput(canvas); resizeVoxelRenderer(); rebuildVoxelWorld(); updateBuildPlane(); updateCamera();
       if (!V3.resizeBound) { window.addEventListener('resize',resizeVoxelRenderer); V3.resizeBound=true; }
-      const loop = () => { V3.animationId=requestAnimationFrame(loop); V3.renderer.render(V3.scene,V3.camera); }; loop();
+      const loop = () => {
+        V3.animationId = requestAnimationFrame(loop);
+        if (V3.autoRotate && !V3.dragging) {
+          V3.yaw += 0.005;
+          updateCamera();
+        }
+        V3.renderer.render(V3.scene, V3.camera);
+      }; loop();
     }
 
     function resizeVoxelRenderer() {
@@ -3473,22 +3764,30 @@ const COMBAT_BANK = {
     function resizeSandboxCanvas(){ resizeVoxelRenderer(); }
 
     function calculateHouseProgress() {
-      const vox=STATE.voxels||[];
-      const count=fn=>vox.filter(fn).length;
-      const floor=count(v=>v.type==='parquet_floor'||(v.y===0&&['wood_wall','brick_wall','stone_wall'].includes(v.type)));
-      const walls=count(v=>['wood_wall','brick_wall','stone_wall','glass_wall'].includes(v.type));
-      const doors=count(v=>v.type.startsWith('door_'));
-      const windows=count(v=>v.type==='window_glass');
-      const roofs=count(v=>v.type.startsWith('roof_'));
-      const upper=count(v=>v.y>=1);
-      const landscape=count(v=>['fence_white','tree_shade','rose_flower','sunflower','garden_lamp','swimming_pool','fountain'].includes(v.type));
-      let percent=Math.round(Math.min(floor,12)/12*20+Math.min(walls,16)/16*25+(doors?10:0)+Math.min(windows,2)/2*10+Math.min(roofs,8)/8*20+Math.min(upper,5)/5*10+Math.min(landscape,3)/3*5);
-      let level=1,label='Tapak & Asas';
-      if(doors&&walls>=8){level=2;label='Dinding & Pintu';}
-      if(level>=2&&windows>=1&&roofs>=4){level=3;label='Tingkap & Bumbung';}
-      if(level>=3&&walls>=16&&roofs>=8){level=4;label='Rumah Lengkap';}
-      if(level>=4&&upper>=5&&landscape>=3){level=5;label='Rumah Premium';}
-      return {percent,level,label};
+      const vox = STATE.voxels || [];
+      const count = fn => vox.filter(fn).length;
+      const floor = count(v => v.type === 'parquet_floor' || v.type === 'cobblestone' || (v.y === 0 && ['wood_wall','brick_wall','stone_wall','oak_log'].includes(v.type)));
+      const walls = count(v => ['wood_wall','brick_wall','stone_wall','glass_wall','oak_log','cobblestone'].includes(v.type));
+      const doors = count(v => v.type && v.type.startsWith('door_'));
+      const windows = count(v => v.type === 'window_glass');
+      const roofs = count(v => v.type && (v.type.startsWith('roof_') || v.type === 'roof_wood'));
+      const upper = count(v => v.y >= 1);
+      const landscape = count(v => ['fence_white','tree_shade','rose_flower','sunflower','garden_lamp','lantern','bush_leaf','swimming_pool','fountain','car_red','chimney'].includes(v.type));
+      let percent = Math.min(100, Math.round(
+        Math.min(floor, 12) / 12 * 20 +
+        Math.min(walls, 16) / 16 * 25 +
+        (doors ? 10 : 0) +
+        Math.min(windows, 2) / 2 * 10 +
+        Math.min(roofs, 8) / 8 * 20 +
+        Math.min(upper, 5) / 5 * 10 +
+        Math.min(landscape, 3) / 3 * 5
+      ));
+      let level = 1, label = 'Tapak & Asas';
+      if (doors && walls >= 8) { level = 2; label = 'Dinding & Pintu'; }
+      if (level >= 2 && windows >= 1 && roofs >= 4) { level = 3; label = 'Tingkap & Bumbung'; }
+      if (level >= 3 && walls >= 16 && roofs >= 8) { level = 4; label = 'Rumah Lengkap'; }
+      if (level >= 4 && upper >= 6 && landscape >= 3) { level = 5; label = 'Rumah Starter Premium'; }
+      return { percent, level, label };
     }
 
     function updateSandboxHud() {
@@ -3565,6 +3864,447 @@ const COMBAT_BANK = {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
+  
+    /* ==============================================================
+       PELAN RUMAH STARTER MINECRAFT (REDDIT STARTER HOUSE BLUEPRINT)
+       ============================================================== */
+    const MINECRAFT_STARTER_HOUSE_BLUEPRINT = [
+      {
+        phase: 1,
+        name: "Fasa 1: Tapak Cobblestone & Tiang Balak Oak",
+        price: 100,
+        icon: "🪵",
+        desc: "Asas batu cobblestone kukuh & 4 tiang kayu balak sudut",
+        voxels: [
+          // Cobblestone foundation perimeter (x: 4..9, z: 2..5 at y: 0)
+          { x: 4, y: 0, z: 2, type: 'cobblestone' },
+          { x: 5, y: 0, z: 2, type: 'cobblestone' },
+          { x: 6, y: 0, z: 2, type: 'cobblestone' },
+          { x: 7, y: 0, z: 2, type: 'cobblestone' },
+          { x: 8, y: 0, z: 2, type: 'cobblestone' },
+          { x: 9, y: 0, z: 2, type: 'cobblestone' },
+          { x: 4, y: 0, z: 3, type: 'cobblestone' },
+          { x: 9, y: 0, z: 3, type: 'cobblestone' },
+          { x: 4, y: 0, z: 4, type: 'cobblestone' },
+          { x: 9, y: 0, z: 4, type: 'cobblestone' },
+          { x: 4, y: 0, z: 5, type: 'cobblestone' },
+          { x: 5, y: 0, z: 5, type: 'cobblestone' },
+          { x: 6, y: 0, z: 5, type: 'cobblestone' },
+          { x: 7, y: 0, z: 5, type: 'cobblestone' },
+          { x: 8, y: 0, z: 5, type: 'cobblestone' },
+          { x: 9, y: 0, z: 5, type: 'cobblestone' },
+          // 4 Corner Oak Log Pillars (rising y=1, 2, 3)
+          { x: 4, y: 1, z: 2, type: 'oak_log' },
+          { x: 4, y: 2, z: 2, type: 'oak_log' },
+          { x: 4, y: 3, z: 2, type: 'oak_log' },
+          { x: 9, y: 1, z: 2, type: 'oak_log' },
+          { x: 9, y: 2, z: 2, type: 'oak_log' },
+          { x: 9, y: 3, z: 2, type: 'oak_log' },
+          { x: 4, y: 1, z: 5, type: 'oak_log' },
+          { x: 4, y: 2, z: 5, type: 'oak_log' },
+          { x: 4, y: 3, z: 5, type: 'oak_log' },
+          { x: 9, y: 1, z: 5, type: 'oak_log' },
+          { x: 9, y: 2, z: 5, type: 'oak_log' },
+          { x: 9, y: 3, z: 5, type: 'oak_log' }
+        ]
+      },
+      {
+        phase: 2,
+        name: "Fasa 2: Lantai Kayu & Dinding Papan Oak",
+        price: 120,
+        icon: "🪵",
+        desc: "Lantai parket dalaman & dinding kayu oak sekeliling",
+        voxels: [
+          // Floor interior (y: 0, x: 5..8, z: 3..4)
+          { x: 5, y: 0, z: 3, type: 'parquet_floor' },
+          { x: 6, y: 0, z: 3, type: 'parquet_floor' },
+          { x: 7, y: 0, z: 3, type: 'parquet_floor' },
+          { x: 8, y: 0, z: 3, type: 'parquet_floor' },
+          { x: 5, y: 0, z: 4, type: 'parquet_floor' },
+          { x: 6, y: 0, z: 4, type: 'parquet_floor' },
+          { x: 7, y: 0, z: 4, type: 'parquet_floor' },
+          { x: 8, y: 0, z: 4, type: 'parquet_floor' },
+          // Back Wall (z=2, x: 5..8, y: 1, 2, 3)
+          { x: 5, y: 1, z: 2, type: 'wood_wall' },
+          { x: 6, y: 1, z: 2, type: 'wood_wall' },
+          { x: 7, y: 1, z: 2, type: 'wood_wall' },
+          { x: 8, y: 1, z: 2, type: 'wood_wall' },
+          { x: 5, y: 2, z: 2, type: 'wood_wall' },
+          { x: 7, y: 2, z: 2, type: 'wood_wall' },
+          { x: 8, y: 2, z: 2, type: 'wood_wall' },
+          { x: 5, y: 3, z: 2, type: 'wood_wall' },
+          { x: 6, y: 3, z: 2, type: 'wood_wall' },
+          { x: 7, y: 3, z: 2, type: 'wood_wall' },
+          { x: 8, y: 3, z: 2, type: 'wood_wall' },
+          // Left Wall (x=4, z: 3..4, y: 1, 2, 3)
+          { x: 4, y: 1, z: 3, type: 'wood_wall' },
+          { x: 4, y: 1, z: 4, type: 'wood_wall' },
+          { x: 4, y: 2, z: 4, type: 'wood_wall' },
+          { x: 4, y: 3, z: 3, type: 'wood_wall' },
+          { x: 4, y: 3, z: 4, type: 'wood_wall' },
+          // Right Wall (x=9, z: 3..4, y: 1, 2, 3)
+          { x: 9, y: 1, z: 4, type: 'wood_wall' },
+          { x: 9, y: 2, z: 4, type: 'wood_wall' },
+          { x: 9, y: 3, z: 4, type: 'wood_wall' },
+          // Front Wall (z=5, x: 5, 8 at y: 1, 2, 3, and x: 6, 7 at y: 3)
+          { x: 5, y: 1, z: 5, type: 'wood_wall' },
+          { x: 8, y: 1, z: 5, type: 'wood_wall' },
+          { x: 5, y: 2, z: 5, type: 'wood_wall' },
+          { x: 8, y: 2, z: 5, type: 'wood_wall' },
+          { x: 5, y: 3, z: 5, type: 'wood_wall' },
+          { x: 6, y: 3, z: 5, type: 'wood_wall' },
+          { x: 7, y: 3, z: 5, type: 'wood_wall' },
+          { x: 8, y: 3, z: 5, type: 'wood_wall' }
+        ]
+      },
+      {
+        phase: 3,
+        name: "Fasa 3: Anjung Depan, Tangga & Pintu Rumah",
+        price: 100,
+        icon: "🚪",
+        desc: "Anjung berkayu, tangga masuk & pintu depan oak",
+        voxels: [
+          // Porch deck (z=6, x: 6..7 at y: 0)
+          { x: 6, y: 0, z: 6, type: 'parquet_floor' },
+          { x: 7, y: 0, z: 6, type: 'parquet_floor' },
+          // Porch steps (z=7, x: 6..7 at y: 0)
+          { x: 6, y: 0, z: 7, type: 'stairs_wood', rotation: 0 },
+          { x: 7, y: 0, z: 7, type: 'stairs_wood', rotation: 0 },
+          // Oak Door at entrance (x: 6, z: 5, y: 1)
+          { x: 6, y: 1, z: 5, type: 'door_wood', rotation: 0 },
+          // Porch overhang posts (x: 5, 8 at z: 6, y: 1, 2)
+          { x: 5, y: 1, z: 6, type: 'fence_white' },
+          { x: 8, y: 1, z: 6, type: 'fence_white' },
+          { x: 5, y: 2, z: 6, type: 'fence_white' },
+          { x: 8, y: 2, z: 6, type: 'fence_white' },
+          // Porch roof overhang at y: 3
+          { x: 6, y: 3, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 7, y: 3, z: 6, type: 'roof_wood', rotation: 0 }
+        ]
+      },
+      {
+        phase: 4,
+        name: "Fasa 4: Tingkap Kaca & Pelita Tanglung",
+        price: 100,
+        icon: "🪟",
+        desc: "Tingkap kaca pencahayaan & tanglung bercahaya",
+        voxels: [
+          // Front window beside door (x: 7, z: 5, y: 1)
+          { x: 7, y: 1, z: 5, type: 'window_glass', rotation: 0 },
+          // Front upper accent windows (x: 6, 7 at z: 5, y: 2)
+          { x: 6, y: 2, z: 5, type: 'wood_wall' },
+          { x: 7, y: 2, z: 5, type: 'window_glass', rotation: 0 },
+          // Left window (x: 4, z: 3, y: 2)
+          { x: 4, y: 2, z: 3, type: 'window_glass', rotation: 1 },
+          // Back window (x: 6, z: 2, y: 2)
+          { x: 6, y: 2, z: 2, type: 'window_glass', rotation: 2 },
+          // Porch Lanterns (hanging at x: 5, z: 6, y: 2; x: 8, z: 6, y: 2)
+          { x: 5, y: 1, z: 5, type: 'lantern' },
+          { x: 8, y: 1, z: 5, type: 'lantern' }
+        ]
+      },
+      {
+        phase: 5,
+        name: "Fasa 5: Bumbung Berpuncak Kayu Segitiga (Gable Roof)",
+        price: 180,
+        icon: "🛖",
+        desc: "Bumbung A-frame bersusun cerun kayu oak ala Minecraft",
+        voxels: [
+          // Front slope eave (z=6, x: 4..9 at y: 4)
+          { x: 4, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 5, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 6, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 7, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 8, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          { x: 9, y: 4, z: 6, type: 'roof_wood', rotation: 0 },
+          // Mid front slope (z=5, x: 4..9 at y: 4)
+          { x: 4, y: 4, z: 5, type: 'wood_wall' },
+          { x: 5, y: 4, z: 5, type: 'roof_wood', rotation: 0 },
+          { x: 6, y: 4, z: 5, type: 'roof_wood', rotation: 0 },
+          { x: 7, y: 4, z: 5, type: 'roof_wood', rotation: 0 },
+          { x: 8, y: 4, z: 5, type: 'roof_wood', rotation: 0 },
+          { x: 9, y: 4, z: 5, type: 'wood_wall' },
+          // Mid back slope (z=2, x: 4..9 at y: 4)
+          { x: 4, y: 4, z: 2, type: 'wood_wall' },
+          { x: 5, y: 4, z: 2, type: 'roof_wood', rotation: 2 },
+          { x: 6, y: 4, z: 2, type: 'roof_wood', rotation: 2 },
+          { x: 7, y: 4, z: 2, type: 'roof_wood', rotation: 2 },
+          { x: 8, y: 4, z: 2, type: 'roof_wood', rotation: 2 },
+          { x: 9, y: 4, z: 2, type: 'wood_wall' },
+          // Back slope eave (z=1, x: 4..9 at y: 4)
+          { x: 4, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          { x: 5, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          { x: 6, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          { x: 7, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          { x: 8, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          { x: 9, y: 4, z: 1, type: 'roof_wood', rotation: 2 },
+          // Ridge level y: 5 (z: 3..4, x: 4..9)
+          { x: 4, y: 5, z: 3, type: 'wood_wall' },
+          { x: 4, y: 5, z: 4, type: 'wood_wall' },
+          { x: 5, y: 5, z: 3, type: 'roof_wood', rotation: 2 },
+          { x: 6, y: 5, z: 3, type: 'roof_wood', rotation: 2 },
+          { x: 7, y: 5, z: 3, type: 'roof_wood', rotation: 2 },
+          { x: 8, y: 5, z: 3, type: 'roof_wood', rotation: 2 },
+          { x: 5, y: 5, z: 4, type: 'roof_wood', rotation: 0 },
+          { x: 6, y: 5, z: 4, type: 'roof_wood', rotation: 0 },
+          { x: 7, y: 5, z: 4, type: 'roof_wood', rotation: 0 },
+          { x: 8, y: 5, z: 4, type: 'roof_wood', rotation: 0 },
+          { x: 9, y: 5, z: 3, type: 'wood_wall' },
+          { x: 9, y: 5, z: 4, type: 'wood_wall' },
+          // Apex ridge cap y: 6 (z: 3..4, x: 4..9)
+          { x: 4, y: 6, z: 3, type: 'cobblestone' },
+          { x: 4, y: 6, z: 4, type: 'cobblestone' },
+          { x: 5, y: 6, z: 3, type: 'roof_flat' },
+          { x: 6, y: 6, z: 3, type: 'roof_flat' },
+          { x: 7, y: 6, z: 3, type: 'roof_flat' },
+          { x: 8, y: 6, z: 3, type: 'roof_flat' },
+          { x: 9, y: 6, z: 3, type: 'cobblestone' },
+          { x: 9, y: 6, z: 4, type: 'cobblestone' }
+        ]
+      },
+      {
+        phase: 6,
+        name: "Fasa 6: Dedaun Rimbun & Taman Bunga",
+        price: 80,
+        icon: "🌿",
+        desc: "Semak dedaun hijau rimbun & bunga mawar di kaki rumah",
+        voxels: [
+          // Left side bushes & flowers (x: 3, z: 2..5 at y: 0)
+          { x: 3, y: 0, z: 2, type: 'bush_leaf' },
+          { x: 3, y: 0, z: 3, type: 'bush_leaf' },
+          { x: 3, y: 0, z: 4, type: 'rose_flower' },
+          { x: 3, y: 0, z: 5, type: 'bush_leaf' },
+          // Front right bushes & flowers (x: 8..9, z: 6 at y: 0)
+          { x: 8, y: 0, z: 6, type: 'bush_leaf' },
+          { x: 9, y: 0, z: 6, type: 'sunflower' },
+          { x: 9, y: 0, z: 5, type: 'bush_leaf' },
+          // Front left bushes (x: 4..5, z: 6 at y: 0)
+          { x: 4, y: 0, z: 6, type: 'bush_leaf' },
+          { x: 5, y: 0, z: 6, type: 'rose_flower' },
+          // Back bushes (z: 1, x: 5..8 at y: 0)
+          { x: 5, y: 0, z: 1, type: 'bush_leaf' },
+          { x: 6, y: 0, z: 1, type: 'bush_leaf' },
+          { x: 7, y: 0, z: 1, type: 'rose_flower' },
+          { x: 8, y: 0, z: 1, type: 'bush_leaf' }
+        ]
+      },
+      {
+        phase: 7,
+        name: "Fasa 7: Corong Asap Batu (Chimney) & Hearth",
+        price: 120,
+        icon: "🧱",
+        desc: "Cerobong asap batu cobblestone di sisi rumah",
+        voxels: [
+          // Chimney column along right wall (x: 9, z: 3, y: 0 to 7)
+          { x: 9, y: 0, z: 3, type: 'cobblestone' },
+          { x: 9, y: 1, z: 3, type: 'chimney' },
+          { x: 9, y: 2, z: 3, type: 'chimney' },
+          { x: 9, y: 3, z: 3, type: 'chimney' },
+          { x: 9, y: 4, z: 3, type: 'chimney' },
+          { x: 9, y: 5, z: 3, type: 'chimney' },
+          { x: 9, y: 6, z: 3, type: 'cobblestone' },
+          { x: 9, y: 7, z: 3, type: 'roof_flat' }
+        ]
+      },
+      {
+        phase: 8,
+        name: "Fasa 8: Pagar Halaman & Kereta Sukan Kartun",
+        price: 150,
+        icon: "🚗",
+        desc: "Pagar keliling laman & kereta sukan merah",
+        voxels: [
+          // Perimeter Fence front yard
+          { x: 2, y: 0, z: 6, type: 'fence_white' },
+          { x: 2, y: 0, z: 7, type: 'fence_white' },
+          { x: 3, y: 0, z: 7, type: 'fence_white' },
+          { x: 4, y: 0, z: 7, type: 'fence_white' },
+          { x: 5, y: 0, z: 7, type: 'fence_white' },
+          { x: 8, y: 0, z: 7, type: 'fence_white' },
+          { x: 9, y: 0, z: 7, type: 'fence_white' },
+          { x: 10, y: 0, z: 7, type: 'fence_white' },
+          { x: 11, y: 0, z: 7, type: 'fence_white' },
+          { x: 11, y: 0, z: 6, type: 'fence_white' },
+          { x: 11, y: 0, z: 5, type: 'fence_white' },
+          // Red Sports Car parked in driveway at x: 11, z: 3
+          { x: 11, y: 0, z: 3, type: 'car_red', rotation: 1 }
+        ]
+      }
+    ];
+
+    function openBlueprintModal() {
+      const modal = document.getElementById('modal-blueprint');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      const wallet = document.getElementById('blueprint-wallet-coins');
+      if (wallet) wallet.textContent = `${STATE.coins.toLocaleString()} Syiling`;
+      renderBlueprintPhases();
+      audio.init(); audio.playPop();
+    }
+
+    function closeBlueprintModal() {
+      const modal = document.getElementById('modal-blueprint');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function isPhaseBuilt(phase) {
+      if (!STATE.voxels || !STATE.voxels.length) return false;
+      const set = new Set(STATE.voxels.map(v => `${v.x},${v.y},${v.z}`));
+      let present = 0;
+      phase.voxels.forEach(v => {
+        if (set.has(`${v.x},${v.y},${v.z}`)) present++;
+      });
+      return present >= Math.ceil(phase.voxels.length * 0.8);
+    }
+
+    function renderBlueprintPhases() {
+      const container = document.getElementById('blueprint-phases-list');
+      if (!container) return;
+      let completedCount = 0;
+
+      container.innerHTML = MINECRAFT_STARTER_HOUSE_BLUEPRINT.map((phase, idx) => {
+        const built = isPhaseBuilt(phase);
+        if (built) completedCount++;
+
+        return `
+          <div class="blueprint-phase-card ${built ? 'completed' : ''}">
+            <div class="phase-card-header">
+              <div>
+                <div class="phase-title-text">${phase.icon} ${phase.name}</div>
+                <div class="phase-desc-text">${phase.desc} (${phase.voxels.length} blok)</div>
+              </div>
+              ${built ? '<span style="font-size:0.7rem; font-weight:900; color:#15803d; background:#dcfce7; padding:2px 8px; border-radius:6px; border:1px solid #bbf7d0;">✅ Siap</span>' : ''}
+            </div>
+            <div class="phase-footer-row">
+              <span class="phase-cost-pill">🪙 ${phase.price} Syiling</span>
+              ${built 
+                ? '<button class="btn-build-phase completed" disabled>✅ Telah Dibina</button>'
+                : `<button class="btn-build-phase" onclick="buildBlueprintPhase(${idx})">🔨 Bina Fasa Ini</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const total = MINECRAFT_STARTER_HOUSE_BLUEPRINT.length;
+      const pct = Math.round((completedCount / total) * 100);
+      const label = document.getElementById('blueprint-progress-text');
+      if (label) label.textContent = `Kemajuan Pelan: ${completedCount} / ${total} Fasa Siap`;
+      const pctEl = document.getElementById('blueprint-progress-pct');
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      const fillEl = document.getElementById('blueprint-progress-fill');
+      if (fillEl) fillEl.style.width = `${pct}%`;
+    }
+
+    function buildBlueprintPhase(phaseIdx) {
+      const phase = MINECRAFT_STARTER_HOUSE_BLUEPRINT[phaseIdx];
+      if (!phase) return;
+      audio.init();
+
+      if (isPhaseBuilt(phase)) {
+        showToast(`Fasa ini telahpun dibina di atas tapak!`);
+        return;
+      }
+
+      if (STATE.coins < phase.price) {
+        showToast(`🪙 Syiling tidak mencukupi! Anda perlukan ${phase.price} syiling.`);
+        return;
+      }
+
+      rememberBuildAction();
+      STATE.coins = Math.max(0, STATE.coins - phase.price);
+
+      // Add phase voxels
+      const existingMap = new Map();
+      (STATE.voxels || []).forEach((v, i) => existingMap.set(`${v.x},${v.y},${v.z}`, i));
+
+      phase.voxels.forEach(nv => {
+        const k = `${nv.x},${nv.y},${nv.z}`;
+        if (existingMap.has(k)) {
+          STATE.voxels[existingMap.get(k)] = { ...nv };
+        } else {
+          STATE.voxels.push({ ...nv });
+          existingMap.set(k, STATE.voxels.length - 1);
+        }
+      });
+
+      audio.playPop();
+      rebuildVoxelWorld();
+      updateSandboxHud();
+      saveCurrentStudentState();
+      renderBlueprintPhases();
+
+      const wallet = document.getElementById('blueprint-wallet-coins');
+      if (wallet) wallet.textContent = `${STATE.coins.toLocaleString()} Syiling`;
+
+      showToast(`🎉 ${phase.name} berjaya dibina!`);
+    }
+
+    function buildEntireStarterHouse() {
+      audio.init();
+      rememberBuildAction();
+      const existingMap = new Map();
+      (STATE.voxels || []).forEach((v, i) => existingMap.set(`${v.x},${v.y},${v.z}`, i));
+
+      MINECRAFT_STARTER_HOUSE_BLUEPRINT.forEach(phase => {
+        phase.voxels.forEach(nv => {
+          const k = `${nv.x},${nv.y},${nv.z}`;
+          if (existingMap.has(k)) {
+            STATE.voxels[existingMap.get(k)] = { ...nv };
+          } else {
+            STATE.voxels.push({ ...nv });
+            existingMap.set(k, STATE.voxels.length - 1);
+          }
+        });
+      });
+
+      audio.playFanfare();
+      rebuildVoxelWorld();
+      updateSandboxHud();
+      saveCurrentStudentState();
+      renderBlueprintPhases();
+      closeBlueprintModal();
+
+      setCameraView('iso');
+      toggleAutoRotateCamera(true);
+
+      showToast('🎉 Rumah Starter Minecraft (Reddit) siap dibina sepenuhnya! Kagumi hasil binaan 3D anda.');
+    }
+
+    function clearHousePlot() {
+      if (!confirm('Adakah anda pasti ingin mengosongkan semua blok pada tapak binaan?')) return;
+      rememberBuildAction();
+      STATE.voxels = [];
+      rebuildVoxelWorld();
+      updateSandboxHud();
+      saveCurrentStudentState();
+      renderBlueprintPhases();
+      showToast('🧹 Tapak binaan telah dikosongkan.');
+    }
+
+    function setCameraView(mode) {
+      if (!V3.camera) return;
+      V3.autoRotate = false;
+      const btn = document.getElementById('btn-cam-autorotate');
+      if (btn) btn.classList.remove('active');
+
+      if (mode === 'front') {
+        V3.yaw = 0; V3.pitch = 0.35; V3.distance = 18;
+      } else if (mode === 'iso') {
+        V3.yaw = Math.PI / 4; V3.pitch = 0.68; V3.distance = 18;
+      } else if (mode === 'top') {
+        V3.yaw = 0; V3.pitch = 1.25; V3.distance = 18;
+      }
+      updateCamera();
+      showToast(`Sudut kamera: ${mode.toUpperCase()}`);
+    }
+
+    function toggleAutoRotateCamera(forceVal) {
+      V3.autoRotate = forceVal !== undefined ? forceVal : !V3.autoRotate;
+      const btn = document.getElementById('btn-cam-autorotate');
+      if (btn) btn.classList.toggle('active', V3.autoRotate);
+      showToast(V3.autoRotate ? '🔄 Putaran 360° automatik aktif' : 'Putaran kamera manual');
+    }
+
   </script>
 </body>
 </html>
