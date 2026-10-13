@@ -179,6 +179,13 @@
       .scores-scroll-list {
         max-height: 42vh !important;
       }
+      .roster-scroll-box {
+        max-height: 60px !important;
+      }
+      .roster-name-chip {
+        padding: 3px 5px !important;
+        font-size: 0.68rem !important;
+      }
     }
 
     /* Top MOBA/Arcade HUD */
@@ -606,6 +613,168 @@
       border: 1px solid #a78bfa;
     }
 
+    .admin-gear-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .admin-gear-btn:hover {
+      background: rgba(6, 182, 212, 0.3);
+      border-color: var(--cyan-glow);
+      transform: rotate(45deg);
+    }
+
+    /* Roster Picker Styles */
+    .roster-selection-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: rgba(2, 6, 23, 0.7);
+      border: 1.5px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 6px 10px;
+    }
+    .roster-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .roster-scroll-box {
+      max-height: 90px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      padding-right: 4px;
+    }
+    .roster-name-chip {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.12s;
+    }
+    .roster-name-chip:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--cyan-glow);
+    }
+    .roster-name-chip.active {
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+      border-color: #fff;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
+    }
+    .roster-selected-banner {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #a5f3fc;
+      text-align: center;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+    }
+
+    /* Admin Auth & Panel Modals */
+    .admin-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.94);
+      backdrop-filter: blur(8px);
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .admin-card-box {
+      width: 100%;
+      max-width: 540px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: rgba(15, 23, 42, 0.98);
+      border: 2px solid var(--cyan-glow);
+      border-radius: 18px;
+      padding: 14px 18px;
+      box-shadow: 0 0 35px rgba(6, 182, 212, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .admin-tab-bar {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 6px;
+    }
+    .admin-tab-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .admin-tab-btn.active {
+      background: #0284c7;
+      border-color: var(--cyan-glow);
+      color: #fff;
+    }
+    .admin-students-scroll {
+      max-height: 38vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-right: 4px;
+    }
+    .admin-student-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+    }
+    .admin-btn-delete {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #f87171;
+      color: #fca5a5;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .admin-btn-delete:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
     /* VICTORY / RESULTS OVERLAY */
     #overlay-results {
       position: absolute;
@@ -766,6 +935,7 @@
         <div class="hud-score-pill" id="hud-xp-text">⚡ 0 XP</div>
         <button class="hud-icon-btn" onclick="openLeaderboard()" title="Papan Skor Kalendar">🏆</button>
         <button class="hud-icon-btn" id="btn-sound-toggle" onclick="toggleSound()" title="Bunyi">🔊</button>
+        <button class="hud-icon-btn" onclick="openAdminAuth()" title="Tetapan Guru (Admin)">⚙️</button>
       </div>
     </header>
 
@@ -800,18 +970,51 @@
     <div id="overlay-start-screen">
       <div class="start-dialog-box">
         <div class="creator-tag-header">
-          <span>👨‍💻 Pembangun: <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b></span>
-          <span>🏫 SK RANGGU TAWAU</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span>👨‍💻 Pembangun: <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>🏫 SK RANGGU</span>
+            <button class="admin-gear-btn" onclick="openAdminAuth()" title="Tetapan Guru (Admin)">⚙️</button>
+          </div>
         </div>
 
         <div class="game-logo-row">
-          <span style="font-size: 2rem;">🚀</span>
+          <span style="font-size: 1.8rem;">🚀</span>
           <div class="game-logo-title">MATH QUEST: SIBER</div>
         </div>
 
-        <div class="start-inputs-row">
-          <input type="text" id="input-player-name" class="game-input" placeholder="Nama Murid (Cth: Danial Hakimi)" maxlength="25">
-          <input type="text" id="input-player-class" class="game-input" placeholder="Kelas (Cth: 6 Arif)" maxlength="20">
+        <!-- Pilihan Tahun & Pilihan Kelas -->
+        <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 8px;">
+          <!-- Pilih Tahun -->
+          <div>
+            <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-bottom: 2px;">1. PILIH TAHUN:</div>
+            <div class="grade-choice-strip">
+              <div class="grade-chip active" id="chip-g5" onclick="pickGrade(5)">TAHUN 5</div>
+              <div class="grade-chip" id="chip-g6" onclick="pickGrade(6)">TAHUN 6</div>
+            </div>
+          </div>
+          <!-- Pilih Kelas -->
+          <div>
+            <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-bottom: 2px;">2. PILIH KELAS:</div>
+            <select id="select-player-class" class="game-input" onchange="onClassChange(this.value)" style="width:100%; height:32px; font-weight:700; font-size:0.8rem; padding:4px 8px; cursor:pointer;">
+              <!-- Populated dynamically: 5 Khoir, 5 Mumtaz / 6 Khoir, 6 Jahid, 6 Mumtaz -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Senarai Nama Murid (Scrollable) -->
+        <div class="roster-selection-container">
+          <div class="roster-header-row">
+            <span style="font-size: 0.68rem; color: #7dd3fc; font-weight: 700;" id="roster-header-title">3. SCROLL & KLIK NAMA ANDA:</span>
+            <input type="text" id="roster-search-input" placeholder="🔍 Cari nama..." oninput="filterRosterNames(this.value)" style="background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); color:#fff; font-size:0.68rem; border-radius:6px; padding:2px 6px; width:110px;">
+          </div>
+          <div class="roster-scroll-box" id="roster-names-list">
+            <!-- Populated dynamically by JS -->
+          </div>
+          <div class="roster-selected-banner" id="roster-selected-display">
+            ⚠️ Sila scroll & klik nama anda dari senarai di atas
+          </div>
         </div>
 
         <!-- Pilih Hero Avatar -->
@@ -825,12 +1028,6 @@
           <div class="hero-chip" id="chip-h3" onclick="pickHero('mech', '🤖', 'Mecha-Titan')">
             <span>🤖</span> <span>Mecha-Titan</span>
           </div>
-        </div>
-
-        <!-- Pilih Tahap 5 atau 6 -->
-        <div class="grade-choice-strip">
-          <div class="grade-chip active" id="chip-g5" onclick="pickGrade(5)">TAHUN 5 (KSSR)</div>
-          <div class="grade-chip" id="chip-g6" onclick="pickGrade(6)">TAHUN 6 (KSSR)</div>
         </div>
 
         <!-- Butang Mula Aksi & Papan Skor -->
@@ -927,6 +1124,115 @@
       </div>
     </div>
 
+    <!-- ==============================================================
+         OVERLAY 4: MODAL AKSES KESELAMATAN ADMIN (GURU)
+         ============================================================== -->
+    <div id="overlay-admin-auth" class="admin-modal-overlay">
+      <div class="admin-card-box" style="max-width: 360px; text-align: center; align-items: center;">
+        <div style="font-size: 2.2rem;">🔐</div>
+        <div style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">AKSES KHAS GURU / ADMIN</div>
+        <p style="font-size: 0.72rem; color: #94a3b8;">Sila masukkan kod keselamatan pengajar untuk menguruskan kelas & senarai nama murid.</p>
+        
+        <input type="password" id="input-admin-pass" class="game-input" placeholder="Masukkan Kod Laluan..." style="width: 100%; text-align: center; font-size: 1rem; letter-spacing: 2px;">
+
+        <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px;">
+          <button class="btn-arcade btn-board" onclick="closeAdminAuth()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
+            <span>BATAL</span>
+          </button>
+          <button class="btn-arcade btn-play" onclick="verifyAdminPass()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
+            <span>MASUK</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         OVERLAY 5: PANEL PENGURUSAN GURU (ADMIN PANEL)
+         ============================================================== -->
+    <div id="overlay-admin-panel" class="admin-modal-overlay">
+      <div class="admin-card-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(56, 189, 248, 0.3); padding-bottom: 6px;">
+          <div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--cyan-glow);">⚙️ PANEL TETAPAN PENGURUSAN GURU</div>
+            <div style="font-size: 0.65rem; color: #7dd3fc;">Pengajar: Mohammad Fikrey bin Abdul Gapar (SK Ranggu Tawau)</div>
+          </div>
+          <button onclick="closeAdminPanel()" style="background: none; border: none; color: #fff; font-size: 1.3rem; cursor: pointer;">✕</button>
+        </div>
+
+        <!-- Tab Bar -->
+        <div class="admin-tab-bar">
+          <button class="admin-tab-btn active" id="btn-tab-students" onclick="switchAdminTab('students')">👥 Urus Senarai Murid</button>
+          <button class="admin-tab-btn" id="btn-tab-classes" onclick="switchAdminTab('classes')">➕ Urus & Tambah Kelas</button>
+        </div>
+
+        <!-- TAB 1: URUS SENARAI MURID -->
+        <div id="admin-tab-students-view" style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="font-size: 0.72rem; color: #cbd5e1; font-weight: 700;">Pilih Kelas:</div>
+            <select id="admin-select-class" onchange="renderAdminStudentList(this.value)" class="game-input" style="flex: 1; padding: 4px 8px; font-size: 0.78rem;">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Tambah Murid Individu -->
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="admin-input-new-student" class="game-input" placeholder="Nama Murid Baharu..." style="flex: 1; padding: 6px 8px; font-size: 0.78rem;">
+            <button class="btn-arcade btn-play" onclick="adminAddStudentSingle()" style="padding: 6px 12px; font-size: 0.75rem;">
+              <span>+ TAMBAH</span>
+            </button>
+          </div>
+
+          <!-- Senarai Murid Semasa -->
+          <div style="font-size: 0.68rem; color: #7dd3fc; font-weight: 700;" id="admin-class-summary-text">Senarai Murid:</div>
+          <div class="admin-students-scroll" id="admin-students-list">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Tambah Pukal (Bulk Add) -->
+          <details style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px;">
+            <summary style="font-size: 0.72rem; color: #38bdf8; cursor: pointer; font-weight: 700;">📋 Import Pukal (Tampal Senarai Nama Sekaligus)</summary>
+            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+              <textarea id="admin-bulk-input" rows="3" class="game-input" placeholder="Tampal senarai nama di sini (satu nama setiap baris)..." style="font-size: 0.72rem; width: 100%;"></textarea>
+              <button class="btn-arcade btn-board" onclick="adminBulkAddStudents()" style="padding: 6px; font-size: 0.72rem;">
+                <span>📥 Import ke Kelas Ini</span>
+              </button>
+            </div>
+          </details>
+        </div>
+
+        <!-- TAB 2: URUS & TAMBAH KELAS -->
+        <div id="admin-tab-classes-view" style="display: none; flex-direction: column; gap: 8px;">
+          <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 0.75rem; color: #a5f3fc; font-weight: 800;">➕ Cipta Kelas Baharu:</div>
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 6px;">
+              <input type="text" id="admin-new-class-name" class="game-input" placeholder="Nama Kelas (Cth: 5 Cerdik)" style="padding: 6px; font-size: 0.78rem;">
+              <select id="admin-new-class-grade" class="game-input" style="padding: 6px; font-size: 0.78rem;">
+                <option value="5">Tahun 5</option>
+                <option value="6">Tahun 6</option>
+              </select>
+            </div>
+            <button class="btn-arcade btn-play" onclick="adminCreateNewClass()" style="padding: 7px; font-size: 0.78rem;">
+              <span>+ CIPTA KELAS BAHARU</span>
+            </button>
+          </div>
+
+          <div style="font-size: 0.72rem; color: #cbd5e1; font-weight: 700;">Senarai Semua Kelas Semasa:</div>
+          <div id="admin-classes-badge-list" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 18vh; overflow-y: auto;">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Reset Button -->
+          <div style="margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.68rem; color: #94a3b8;">Pulihkan senarai rasmi SK Ranggu:</span>
+            <button onclick="adminResetToDefaultRoster()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">
+              🔄 Reset ke Asal
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -1014,12 +1320,12 @@
        ============================================================== */
     const LEADERBOARD_KEY = "MATH_QUEST_ML_SCORES_V4";
     const SAMPLE_RECORDS = [
-      { id: "MQ-1", name: "Muhammad Danial", className: "6 Arif", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
-      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Arif", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
-      { id: "MQ-3", name: "Adam Harith", className: "5 Cemerlang", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
-      { id: "MQ-4", name: "Muhammad Rayyan", className: "6 Bijak", grade: 6, xp: 4100, stars: 2, acc: 84, date: "2026-10-12", time: "11:20 AM" },
-      { id: "MQ-5", name: "Siti Nurhaliza", className: "5 Cemerlang", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
-      { id: "MQ-6", name: "Dayang Batrisya", className: "5 Cemerlang", grade: 5, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
+      { id: "MQ-1", name: "Muhammad Danial", className: "6 Khoir", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
+      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Khoir", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
+      { id: "MQ-3", name: "Adam Harith", className: "5 Khoir", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
+      { id: "MQ-4", name: "Muhammad Rayyan", className: "6 Jahid", grade: 6, xp: 4100, stars: 2, acc: 84, date: "2026-10-12", time: "11:20 AM" },
+      { id: "MQ-5", name: "Dayang Nur Batrisya", className: "5 Mumtaz", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
+      { id: "MQ-6", name: "Ameer Muqri", className: "6 Mumtaz", grade: 6, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
     ];
 
     function getScores() {
@@ -1296,13 +1602,441 @@
     }
 
     /* ==============================================================
+       PENGKALAN DATA KELAS & SENARAI NAMA MURID SK RANGGU TAWAU
+       ============================================================== */
+    const DEFAULT_ROSTERS = {
+      grade5: {
+        "5 Khoir": [
+          "Ahmad Rayyan bin Roslan",
+          "Aisyah Humaira binti Azman",
+          "Danial Hakimi bin Abdullah",
+          "Faris Iskandar bin Razali",
+          "Hannah Zulaikha binti Zulkifli",
+          "Luqman Al-Hakim bin Shamsul",
+          "Muhammad Adam bin Harith",
+          "Muhammad Amirul bin Nizam",
+          "Nur Ain Syafiqah binti Rahman",
+          "Nur Damia Batrisya binti Firdaus",
+          "Nurul Izzah binti Mazlan",
+          "Putera Danish bin Ridzuan",
+          "Siti Sarah binti Khairul",
+          "Wan Harith Irfan bin Wan Rosli",
+          "Zaidan Muhaimin bin Zaidi"
+        ],
+        "5 Mumtaz": [
+          "Aqil Dhabit bin Ridha",
+          "Dayang Nur Batrisya binti Awang",
+          "Harith Naufal bin Hisham",
+          "Maryam Safiyyah binti Salleh",
+          "Megat Danish bin Megat Johari",
+          "Muhammad Bilal bin Hamzah",
+          "Muhammad Fayyadh bin Asri",
+          "Muhammad Thaqif bin Zulkarnain",
+          "Nur Aleeya Maisarah binti Rizal",
+          "Nur Hana Medina binti Kamal",
+          "Nur Qistina Balqis binti Syafiq",
+          "Rayyan Mifzal bin Zaki",
+          "Sarah Adriana binti Fauzi",
+          "Syazwan Nazim bin Norazman",
+          "Umar Al-Faruq bin Imran"
+        ]
+      },
+      grade6: {
+        "6 Khoir": [
+          "Afiq Danial bin Mohd Fikri",
+          "Amani Maisarah binti Jamil",
+          "Danish Haikal bin Syahril",
+          "Haziq Rayyan bin Norazam",
+          "Khadijah binti Mohd Yusof",
+          "Muhammad Alif bin Shahrizal",
+          "Muhammad Danish bin Azhar",
+          "Muhammad Haziq bin Faizal",
+          "Nur Alya Natasha binti Kamaruddin",
+          "Nur Fatihah binti Ramli",
+          "Nur Maisarah binti Baharuddin",
+          "Syabil Iman bin Shariff",
+          "Umar Zikri bin Zulhelmi",
+          "Zara Aisyah binti Mustapha",
+          "Zarith Sofea binti Mohd Noor"
+        ],
+        "6 Jahid": [
+          "Adam Mikhail bin Khairul Anuar",
+          "Ainur Mardhiah binti Suhaimi",
+          "Darris Rayqal bin Jamal",
+          "Fayyadh Mikael bin Azfar",
+          "Iman Nur Salsabila binti Azmi",
+          "Muhammad Aqil bin Badrul",
+          "Muhammad Firas bin Amran",
+          "Muhammad Nabil bin Zafran",
+          "Nur Afrina Batrisya binti Affendi",
+          "Nur Imanina binti Syukur",
+          "Nurul Iman binti Hairudin",
+          "Raees Danish bin Rostam",
+          "Safwan Haziq bin Sulaiman",
+          "Syarifah Nur Dayana binti Syed",
+          "Wan Muhammad Danish bin Wan Azli"
+        ],
+        "6 Mumtaz": [
+          "Ameer Muqri bin Hairul",
+          "Aniq Amsyar bin Redza",
+          "Arianna Sofia binti Johan",
+          "Firas Eiman bin Shahrul",
+          "Izz Rayyan bin Nazri",
+          "Khalish Darwisy bin Azman",
+          "Muhammad Amar bin Qayyum",
+          "Muhammad Zafri bin Zaidi",
+          "Nur Aina Syahmina binti Latif",
+          "Nur Hanis Safiya binti Azlan",
+          "Nur Zahra Syakirah binti Fadil",
+          "Qaisara Batrisya binti Johari",
+          "Thaqif Rayyan bin Yusry",
+          "Wan Nur Imanina binti Wan Roslan",
+          "Yusuf Al-Qardhawi bin Ridwan"
+        ]
+      }
+    };
+
+    const ROSTER_STORAGE_KEY = "MATH_QUEST_ROSTER_SK_RANGGU_V2";
+
+    function getRosters() {
+      try {
+        const s = localStorage.getItem(ROSTER_STORAGE_KEY);
+        if (s) {
+          const parsed = JSON.parse(s);
+          if (parsed && parsed.grade5 && parsed.grade6) return parsed;
+        }
+      } catch(e) {}
+      localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
+      return JSON.parse(JSON.stringify(DEFAULT_ROSTERS));
+    }
+
+    function saveRosters(data) {
+      try {
+        localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(data));
+      } catch(e) {}
+    }
+
+    function initRosterUI() {
+      updateClassDropdown(G.grade);
+    }
+
+    function updateClassDropdown(grade) {
+      const rosters = getRosters();
+      const gradeKey = grade === 5 ? 'grade5' : 'grade6';
+      const classList = Object.keys(rosters[gradeKey] || {});
+      const select = document.getElementById('select-player-class');
+      if (!select) return;
+
+      select.innerHTML = '';
+      classList.forEach((cls) => {
+        const opt = document.createElement('option');
+        opt.value = cls;
+        opt.textContent = cls;
+        select.appendChild(opt);
+      });
+
+      if (classList.length > 0) {
+        G.heroClass = classList[0];
+        select.value = classList[0];
+      } else {
+        G.heroClass = '';
+      }
+
+      G.heroName = '';
+      const banner = document.getElementById('roster-selected-display');
+      if (banner) banner.textContent = '⚠️ Sila scroll & klik nama anda dari senarai di atas';
+
+      renderRosterNamesList();
+    }
+
+    function onClassChange(className) {
+      G.heroClass = className;
+      G.heroName = '';
+      const banner = document.getElementById('roster-selected-display');
+      if (banner) banner.textContent = '⚠️ Sila scroll & klik nama anda dari senarai di atas';
+      renderRosterNamesList();
+    }
+
+    function renderRosterNamesList(filterQuery = '') {
+      const rosters = getRosters();
+      const gradeKey = G.grade === 5 ? 'grade5' : 'grade6';
+      const students = (rosters[gradeKey] && rosters[gradeKey][G.heroClass]) || [];
+      const container = document.getElementById('roster-names-list');
+      const title = document.getElementById('roster-header-title');
+      if (!container) return;
+
+      const q = filterQuery.trim().toLowerCase();
+      const filtered = q ? students.filter(s => s.toLowerCase().includes(q)) : students;
+
+      if (title) title.textContent = `3. SCROLL & KLIK NAMA ANDA (${filtered.length}/${students.length}):`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:12px; font-size:0.75rem; color:#94a3b8;">Tiada nama murid padan dengan carian.</div>`;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach(name => {
+        const isActive = (G.heroName === name);
+        html += `
+          <div class="roster-name-chip ${isActive ? 'active' : ''}" onclick="selectStudentName('${name.replace(/'/g, "\\'")}')">
+            <span>${isActive ? '✅' : '🎓'}</span>
+            <span style="overflow:hidden; text-overflow:ellipsis;">${name}</span>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function filterRosterNames(query) {
+      renderRosterNamesList(query);
+    }
+
+    function selectStudentName(name) {
+      G.heroName = name;
+      const banner = document.getElementById('roster-selected-display');
+      if (banner) {
+        banner.textContent = `✅ Wira Ejen: ${name} (${G.heroClass})`;
+      }
+      renderRosterNamesList(document.getElementById('roster-search-input') ? document.getElementById('roster-search-input').value : '');
+      audio.init(); audio.playChime();
+      showToast(`Wira Dipilih: ${name}`);
+    }
+
+    /* ==============================================================
+       ADMIN / GURU SECURITY & MANAGEMENT FUNCTIONS
+       ============================================================== */
+    function openAdminAuth() {
+      document.getElementById('overlay-admin-auth').style.display = 'flex';
+      const inp = document.getElementById('input-admin-pass');
+      inp.value = '';
+      setTimeout(() => inp.focus(), 150);
+      audio.init();
+    }
+
+    function closeAdminAuth() {
+      document.getElementById('overlay-admin-auth').style.display = 'none';
+      document.getElementById('input-admin-pass').value = '';
+    }
+
+    function verifyAdminPass() {
+      const code = document.getElementById('input-admin-pass').value.trim();
+      if (code === "TS.FIKREY37") {
+        closeAdminAuth();
+        openAdminPanel();
+        showToast("Akses Guru Disahkan! Selamat datang Cikgu Fikrey.");
+      } else {
+        showToast("❌ Kod Keselamatan Tidak Sah!");
+        audio.playHit();
+      }
+    }
+
+    function openAdminPanel() {
+      document.getElementById('overlay-admin-panel').style.display = 'flex';
+      populateAdminClassSelect();
+      renderAdminClassesList();
+    }
+
+    function closeAdminPanel() {
+      document.getElementById('overlay-admin-panel').style.display = 'none';
+      updateClassDropdown(G.grade);
+      showToast("Kemaskini kelas disimpan!");
+    }
+
+    function switchAdminTab(tab) {
+      document.getElementById('btn-tab-students').classList.toggle('active', tab === 'students');
+      document.getElementById('btn-tab-classes').classList.toggle('active', tab === 'classes');
+      document.getElementById('admin-tab-students-view').style.display = (tab === 'students' ? 'flex' : 'none');
+      document.getElementById('admin-tab-classes-view').style.display = (tab === 'classes' ? 'flex' : 'none');
+    }
+
+    function populateAdminClassSelect() {
+      const rosters = getRosters();
+      const select = document.getElementById('admin-select-class');
+      if (!select) return;
+
+      select.innerHTML = '';
+      ['grade5', 'grade6'].forEach(gKey => {
+        const gradeTitle = gKey === 'grade5' ? 'Tahun 5' : 'Tahun 6';
+        const classes = Object.keys(rosters[gKey] || {});
+        classes.forEach(cls => {
+          const opt = document.createElement('option');
+          opt.value = `${gKey}|${cls}`;
+          opt.textContent = `${cls} (${gradeTitle})`;
+          select.appendChild(opt);
+        });
+      });
+
+      if (select.options.length > 0) {
+        renderAdminStudentList(select.options[0].value);
+      }
+    }
+
+    function renderAdminStudentList(val) {
+      if (!val) return;
+      const [gKey, className] = val.split('|');
+      const rosters = getRosters();
+      const students = (rosters[gKey] && rosters[gKey][className]) || [];
+      const container = document.getElementById('admin-students-list');
+      const summary = document.getElementById('admin-class-summary-text');
+
+      if (summary) summary.textContent = `Senarai Murid ${className} (${students.length} Orang):`;
+
+      if (students.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:12px; font-size:0.75rem; color:#94a3b8;">Tiada murid dalam kelas ini lagi.</div>`;
+        return;
+      }
+
+      let html = '';
+      students.forEach((name, idx) => {
+        html += `
+          <div class="admin-student-row">
+            <span>${idx + 1}. <b>${name}</b></span>
+            <button class="admin-btn-delete" onclick="adminDeleteStudent('${gKey}', '${className}', '${name.replace(/'/g, "\\'")}')">🗑️ Padam</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function adminAddStudentSingle() {
+      const input = document.getElementById('admin-input-new-student');
+      const val = input.value.trim();
+      const selectVal = document.getElementById('admin-select-class').value;
+      if (!val || !selectVal) {
+        showToast("Sila masukkan nama murid!");
+        return;
+      }
+
+      const [gKey, className] = selectVal.split('|');
+      const rosters = getRosters();
+      if (!rosters[gKey][className]) rosters[gKey][className] = [];
+
+      if (rosters[gKey][className].includes(val)) {
+        showToast("Nama murid ini sudah wujud dalam kelas!");
+        return;
+      }
+
+      rosters[gKey][className].push(val);
+      saveRosters(rosters);
+      input.value = '';
+      renderAdminStudentList(selectVal);
+      showToast(`${val} ditambah ke ${className}!`);
+    }
+
+    function adminBulkAddStudents() {
+      const area = document.getElementById('admin-bulk-input');
+      const text = area.value.trim();
+      const selectVal = document.getElementById('admin-select-class').value;
+      if (!text || !selectVal) {
+        showToast("Sila tampal senarai nama murid!");
+        return;
+      }
+
+      const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      if (lines.length === 0) return;
+
+      const [gKey, className] = selectVal.split('|');
+      const rosters = getRosters();
+      if (!rosters[gKey][className]) rosters[gKey][className] = [];
+
+      let added = 0;
+      lines.forEach(name => {
+        if (!rosters[gKey][className].includes(name)) {
+          rosters[gKey][className].push(name);
+          added++;
+        }
+      });
+
+      saveRosters(rosters);
+      area.value = '';
+      renderAdminStudentList(selectVal);
+      showToast(`Berjaya import ${added} murid ke ${className}!`);
+    }
+
+    function adminDeleteStudent(gKey, className, studentName) {
+      const rosters = getRosters();
+      if (!rosters[gKey] || !rosters[gKey][className]) return;
+      rosters[gKey][className] = rosters[gKey][className].filter(s => s !== studentName);
+      saveRosters(rosters);
+      renderAdminStudentList(`${gKey}|${className}`);
+      showToast(`${studentName} dipadam.`);
+    }
+
+    function adminCreateNewClass() {
+      const nameInput = document.getElementById('admin-new-class-name');
+      const gradeInput = document.getElementById('admin-new-class-grade');
+      const className = nameInput.value.trim();
+      const grade = gradeInput.value;
+      const gKey = grade === '5' ? 'grade5' : 'grade6';
+
+      if (!className) {
+        showToast("Sila masukkan nama kelas!");
+        return;
+      }
+
+      const rosters = getRosters();
+      if (rosters[gKey][className]) {
+        showToast("Kelas ini sudah wujud!");
+        return;
+      }
+
+      rosters[gKey][className] = [];
+      saveRosters(rosters);
+      nameInput.value = '';
+      populateAdminClassSelect();
+      renderAdminClassesList();
+      showToast(`Kelas ${className} berjaya dicipta!`);
+    }
+
+    function renderAdminClassesList() {
+      const rosters = getRosters();
+      const container = document.getElementById('admin-classes-badge-list');
+      if (!container) return;
+
+      let html = '';
+      ['grade5', 'grade6'].forEach(gKey => {
+        const gradeTitle = gKey === 'grade5' ? 'Thn 5' : 'Thn 6';
+        Object.keys(rosters[gKey] || {}).forEach(cls => {
+          const count = (rosters[gKey][cls] || []).length;
+          html += `
+            <div class="admin-class-badge">
+              <span>🏫 ${cls} (${gradeTitle} - ${count} murid)</span>
+              <button onclick="adminDeleteClass('${gKey}', '${cls}')" style="background:none; border:none; color:#fca5a5; cursor:pointer; font-size:0.75rem; margin-left:4px;" title="Padam Kelas">✕</button>
+            </div>
+          `;
+        });
+      });
+      container.innerHTML = html;
+    }
+
+    function adminDeleteClass(gKey, className) {
+      if (!confirm(`Adakah anda pasti mahu memadam kelas "${className}" berserta semua senarai muridnya?`)) return;
+      const rosters = getRosters();
+      delete rosters[gKey][className];
+      saveRosters(rosters);
+      populateAdminClassSelect();
+      renderAdminClassesList();
+      showToast(`Kelas ${className} dipadam.`);
+    }
+
+    function adminResetToDefaultRoster() {
+      if (!confirm("Adakah anda pasti mahu set semula senarai rasmi SK Ranggu (5 Khoir, 5 Mumtaz, 6 Khoir, 6 Jahid & 6 Mumtaz)?")) return;
+      localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
+      populateAdminClassSelect();
+      renderAdminClassesList();
+      updateClassDropdown(G.grade);
+      showToast("Senarai kelas & murid berjaya dipulihkan!");
+    }
+
+    /* ==============================================================
        REAL ARCADE GAME STATE MACHINE & CANVAS 60 FPS
        ============================================================== */
     const G = {
       heroType: 'cyber',
       heroEmoji: '🦸‍♂️',
-      heroName: 'Danial',
-      heroClass: '6 Arif',
+      heroName: '',
+      heroClass: '5 Khoir',
       grade: 5,
       hp: 100,
       xp: 0,
@@ -1350,22 +2084,23 @@
       G.grade = g;
       document.getElementById('chip-g5').classList.toggle('active', g === 5);
       document.getElementById('chip-g6').classList.toggle('active', g === 6);
+      updateClassDropdown(g);
       audio.init(); audio.playChime();
     }
 
     function startArcadeBattle() {
       audio.init();
-      const nameInput = document.getElementById('input-player-name').value.trim();
-      const classInput = document.getElementById('input-player-class').value.trim();
 
-      if (!nameInput) {
-        showToast("Sila masukkan Nama Penuh anda!");
-        document.getElementById('input-player-name').focus();
+      if (!G.heroName) {
+        showToast("⚠️ Sila scroll & klik nama anda dari senarai murid!");
+        const container = document.querySelector('.roster-selection-container');
+        if (container) {
+          container.style.borderColor = '#ef4444';
+          setTimeout(() => container.style.borderColor = 'rgba(56, 189, 248, 0.3)', 1500);
+        }
         return;
       }
 
-      G.heroName = nameInput;
-      G.heroClass = classInput || (G.grade === 5 ? '5 Cemerlang' : '6 Arif');
       G.hp = 100;
       G.xp = 0;
       G.combo = 0;
@@ -1757,6 +2492,10 @@
 
       G.animId = requestAnimationFrame(runArcadeLoop);
     }
+
+    // Inisialisasi Senarai Kelas & Murid SK Ranggu
+    window.addEventListener('DOMContentLoaded', initRosterUI);
+    setTimeout(initRosterUI, 100);
   </script>
 </body>
 </html>
