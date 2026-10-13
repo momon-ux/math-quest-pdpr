@@ -1858,6 +1858,36 @@ const COMBAT_BANK = {
       return {};
     }
 
+    function normalizeStudentIdentity(value) {
+      return String(value || '')
+        .normalize('NFKC')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase('ms-MY');
+    }
+
+    function getStudentSaveKey(name, cls) {
+      return `${normalizeStudentIdentity(name)}|${normalizeStudentIdentity(cls)}`;
+    }
+
+    function findStudentSave(name, cls) {
+      const all = getAllSaves();
+      const canonicalKey = getStudentSaveKey(name, cls);
+      if (all[canonicalKey]) return { key: canonicalKey, saved: all[canonicalKey] };
+
+      // Cari juga kunci versi lama supaya binaan sedia ada tidak hilang selepas
+      // nama mula dipadankan tanpa mengira huruf besar atau jarak berlebihan.
+      const matches = Object.entries(all).filter(([legacyKey, saved]) => {
+        const separator = legacyKey.indexOf('|');
+        const legacyName = saved?.studentName || (separator >= 0 ? legacyKey.slice(0, separator) : '');
+        const legacyClass = saved?.className || (separator >= 0 ? legacyKey.slice(separator + 1) : '');
+        return getStudentSaveKey(legacyName, legacyClass) === canonicalKey;
+      });
+      if (!matches.length) return null;
+      matches.sort((a, b) => String(b[1]?.lastUpdated || '').localeCompare(String(a[1]?.lastUpdated || '')));
+      return { key: matches[0][0], saved: matches[0][1] };
+    }
+
     function saveCurrentStudentState() {
       if (!STATE.studentName) return;
       const key = `${STATE.studentName}|${STATE.className}`;
@@ -1981,6 +2011,7 @@ const COMBAT_BANK = {
     function onLobbyClassChanged(cls) {
       STATE.className = cls;
       updateProfilePreview();
+      updateStudentSaveStatus();
     }
 
     function updateProfilePreview() {
@@ -1997,12 +2028,22 @@ const COMBAT_BANK = {
       const input = document.getElementById('input-student-name');
       if (input && input.value !== clean) input.value = clean;
       STATE.studentName = clean.trim();
+      updateStudentSaveStatus();
+      updateProfilePreview();
+    }
+
+    function updateStudentSaveStatus() {
       const status = document.getElementById('student-name-status');
       if (!status) return;
-      status.textContent = STATE.studentName.length >= 3
-        ? `✅ Nama sedia digunakan: ${STATE.studentName}`
-        : 'Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.';
-      updateProfilePreview();
+      if (STATE.studentName.length < 3) {
+        status.textContent = 'Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.';
+        return;
+      }
+      const match = findStudentSave(STATE.studentName, STATE.className);
+      const blocks = match ? (match.saved?.voxels?.length ?? match.saved?.placedBlocks ?? 0) : 0;
+      status.textContent = match
+        ? `✅ Kemajuan lama ditemui: ${blocks} blok akan dibuka semula.`
+        : `✅ Profil baharu sedia dicipta untuk ${STATE.studentName}.`;
     }
 
     function pickAvatar(emoji, title) {
@@ -2026,7 +2067,7 @@ const COMBAT_BANK = {
         return;
       }
 
-      loadStudentProfile(STATE.studentName, STATE.className);
+      const restored = loadStudentProfile(STATE.studentName, STATE.className);
 
       // Hide Lobby, Show Sandbox
       document.getElementById('view-lobby').style.display = 'none';
@@ -2041,7 +2082,9 @@ const COMBAT_BANK = {
       renderPaletteDock();
       initSandboxCanvas();
 
-      showToast(`Selamat Datang ${STATE.studentName}! Bina rumah impian anda! 🏡`);
+      showToast(restored
+        ? `✅ Selamat kembali ${STATE.studentName}! Binaan lama anda telah dibuka.`
+        : `Selamat Datang ${STATE.studentName}! Bina rumah impian anda! 🏡`);
     }
 
     function returnToLobby() {
@@ -3087,7 +3130,7 @@ const COMBAT_BANK = {
 
     function saveCurrentStudentState() {
       if (!STATE.studentName) return;
-      const key = `${STATE.studentName}|${STATE.className}`;
+      const key = getStudentSaveKey(STATE.studentName, STATE.className);
       const all = getAllSaves();
       const progress = calculateHouseProgress();
       all[key] = {
@@ -3096,6 +3139,7 @@ const COMBAT_BANK = {
         className: STATE.className,
         studentName: STATE.studentName,
         avatar: STATE.avatar,
+        avatarTitle: STATE.avatarTitle,
         xp: STATE.xp,
         coins: STATE.coins,
         inventory: STATE.inventory,
@@ -3112,9 +3156,8 @@ const COMBAT_BANK = {
     }
 
     function loadStudentProfile(name, cls) {
-      const key = `${name}|${cls}`;
-      const all = getAllSaves();
-      const saved = all[key];
+      const match = findStudentSave(name, cls);
+      const saved = match?.saved;
       if (saved) {
         STATE.xp = Number(saved.xp ?? 150);
         STATE.coins = Number(saved.coins ?? Math.max(150, Math.floor(STATE.xp / 2)));
@@ -3123,6 +3166,7 @@ const COMBAT_BANK = {
         STATE.voxels = Array.isArray(saved.voxels) ? saved.voxels : migrateLegacyGrid(saved.grid);
         STATE.mathStats = saved.mathStats || { total: 0, correct: 0 };
         STATE.avatar = saved.avatar || '👷‍♂️';
+        STATE.avatarTitle = saved.avatarTitle || 'Arkitek Cilik';
       } else {
         STATE.xp = 150;
         STATE.coins = 150;
@@ -3139,6 +3183,10 @@ const COMBAT_BANK = {
       STATE.blockRotation = 0;
       STATE.undoStack = [];
       STATE.redoStack = [];
+      // Simpan terus menggunakan kunci seragam untuk memindahkan rekod lama
+      // tanpa memadam salinan asalnya.
+      if (saved && match.key !== getStudentSaveKey(name, cls)) saveCurrentStudentState();
+      return Boolean(saved);
     }
 
     function recordToLeaderboard(name, cls, grade, xp, blocks, progress = calculateHouseProgress()) {
@@ -3193,7 +3241,9 @@ const COMBAT_BANK = {
         door_glass: mat(0x4fc3e8, { transparent:true, opacity:.58 }),
         parquet_floor: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#d79a4c','#9c5e20') }),
         roof_red: mat(0xc92f2f), roof_blue: mat(0x2563c9), roof_flat: mat(0x475569),
-        stairs_wood: mat(0xa16207), fence_white: mat(0xf8fafc), tree_shade: mat(0x25833a),
+        stairs_wood: mat(0xa16207), fence_white: mat(0xf8fafc),
+        tree_trunk: mat(0x7c3f19), tree_shade: mat(0x218739),
+        tree_leaf_dark: mat(0x166534), tree_leaf_light: mat(0x4ade80),
         default: mat(0x9a6a35), preview: mat(0x4ade80, { transparent:true, opacity:.42 })
       };
     }
@@ -3224,19 +3274,36 @@ const COMBAT_BANK = {
       } else if (type === 'stairs_wood') {
         for (let i=0;i<4;i++) add(new THREE.BoxGeometry(.96,(i+1)/4*.9,.24), material,0,-.5+(i+1)/8,-.36+i*.24);
       } else if (type.startsWith('door_') || type === 'window_glass') {
+        // Bingkai sedalam blok dinding menjadikan pintu/tingkap benar-benar
+        // bersambung dengan rumah, bukan terapung di tengah petak.
         const frame = preview ? material : V3.materials.wood_wall;
-        add(new THREE.BoxGeometry(.9,.12,.18), frame,0,-.44,0);
-        add(new THREE.BoxGeometry(.12,.88,.18), frame,-.39,0,0);
-        add(new THREE.BoxGeometry(.12,.88,.18), frame,.39,0,0);
-        add(new THREE.BoxGeometry(.9,.12,.18), frame,0,.44,0);
-        add(new THREE.BoxGeometry(.66,.68,.10), material,0,0,0);
-        if (type === 'window_glass') add(new THREE.BoxGeometry(.08,.68,.20), frame,0,0,0);
+        const frameDepth = .74;
+        add(new THREE.BoxGeometry(.94,.12,frameDepth), frame,0,-.44,0);
+        add(new THREE.BoxGeometry(.12,.88,frameDepth), frame,-.41,0,0);
+        add(new THREE.BoxGeometry(.12,.88,frameDepth), frame,.41,0,0);
+        add(new THREE.BoxGeometry(.94,.12,frameDepth), frame,0,.44,0);
+        if (type === 'window_glass') {
+          add(new THREE.BoxGeometry(.70,.68,.08), material,0,0,.39);
+          add(new THREE.BoxGeometry(.07,.68,.10), frame,0,0,.44);
+          add(new THREE.BoxGeometry(.70,.07,.10), frame,0,0,.44);
+        } else {
+          add(new THREE.BoxGeometry(.70,.76,.12), material,0,-.03,.38);
+          add(new THREE.SphereGeometry(.045,8,6), preview ? material : V3.materials.fence_white,.23,-.03,.46);
+        }
       } else if (type === 'fence_white') {
         add(new THREE.BoxGeometry(.13,.95,.13), material,-.36,0,0); add(new THREE.BoxGeometry(.13,.95,.13), material,.36,0,0);
         add(new THREE.BoxGeometry(.86,.12,.13), material,0,.22,0); add(new THREE.BoxGeometry(.86,.12,.13), material,0,-.22,0);
       } else if (type === 'tree_shade') {
-        add(new THREE.BoxGeometry(.24,.75,.24), preview ? material : V3.materials.door_wood,0,-.12,0);
-        add(new THREE.BoxGeometry(.9,.55,.9), material,0,.42,0);
+        const trunk = preview ? material : V3.materials.tree_trunk;
+        const leaf = preview ? material : V3.materials.tree_shade;
+        const leafDark = preview ? material : V3.materials.tree_leaf_dark;
+        const leafLight = preview ? material : V3.materials.tree_leaf_light;
+        add(new THREE.BoxGeometry(.28,.72,.28), trunk,0,-.18,0);
+        add(new THREE.BoxGeometry(.62,.14,.18), trunk,0,.04,0);
+        add(new THREE.DodecahedronGeometry(.46,0), leaf,0,.38,0);
+        add(new THREE.DodecahedronGeometry(.36,0), leafDark,-.34,.32,.04);
+        add(new THREE.DodecahedronGeometry(.36,0), leaf,.34,.32,-.04);
+        add(new THREE.DodecahedronGeometry(.34,0), leafLight,0,.68,.02);
       } else {
         add(new THREE.BoxGeometry(.96,.96,.96));
       }
@@ -3357,6 +3424,20 @@ const COMBAT_BANK = {
 
     function findVoxel(x,y,z){return (STATE.voxels||[]).find(v=>v.x===x&&v.y===y&&v.z===z);}
 
+    function isWallBlock(type) {
+      return ['wood_wall','brick_wall','stone_wall','glass_wall'].includes(type);
+    }
+
+    function getOpeningAttachment(cell, existing) {
+      const xWalls = [findVoxel(cell.x-1,cell.y,cell.z), findVoxel(cell.x+1,cell.y,cell.z)].filter(v=>v&&isWallBlock(v.type));
+      const zWalls = [findVoxel(cell.x,cell.y,cell.z-1), findVoxel(cell.x,cell.y,cell.z+1)].filter(v=>v&&isWallBlock(v.type));
+      const replacesWall = existing && isWallBlock(existing.type);
+      return {
+        attached: Boolean(replacesWall || xWalls.length || zWalls.length),
+        rotation: xWalls.length > zWalls.length ? 0 : zWalls.length > xWalls.length ? 1 : STATE.blockRotation
+      };
+    }
+
     function handleVoxelCellClicked(cell) {
       audio.init();
       const existing=findVoxel(cell.x,cell.y,cell.z);
@@ -3370,9 +3451,15 @@ const COMBAT_BANK = {
       if(!type)return showToast('Pilih blok dari alatan dahulu.');
       if((STATE.inventory[type]||0)<=0)return showToast('Blok ini telah habis. Beli lagi di kedai.');
       if(cell.y>0&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.');
+      let placementRotation=STATE.blockRotation;
+      if(type.startsWith('door_')||type==='window_glass'){
+        const attachment=getOpeningAttachment(cell,existing);
+        if(!attachment.attached)return showToast('⚠️ Bina dinding dahulu. Letakkan pintu atau tingkap pada blok/barisan dinding supaya melekap.');
+        placementRotation=attachment.rotation;
+      }
       rememberBuildAction();
       if(existing){STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;STATE.voxels=STATE.voxels.filter(v=>v!==existing);}
-      STATE.voxels.push({...cell,type,rotation:STATE.blockRotation});STATE.inventory[type]--;audio.playPlace();
+      STATE.voxels.push({...cell,type,rotation:placementRotation});STATE.inventory[type]--;audio.playPlace();
       rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();
     }
 
@@ -3469,6 +3556,10 @@ const COMBAT_BANK = {
     // Startup
     window.addEventListener('DOMContentLoaded', initLobbyUI);
     setTimeout(initLobbyUI, 100);
+    window.addEventListener('pagehide', saveCurrentStudentState);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') saveCurrentStudentState();
+    });
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
