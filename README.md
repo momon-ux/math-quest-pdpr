@@ -12,8 +12,8 @@ Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** un
 2. **Pilihan Wira Avatar:** Murid memilih watak wira (*Ejen Siber*, *Ninja Kripto*, *Mecha-Titan*).
 3. **Papan Pemuka Pertarungan MOBA (Top HUD & Combat Action):** Dilengkapi bar nyawa HP/MP, timer 15 minit, dan 3 butang serangan pantas (*Skill 1, Skill 2, Ultimate Blast*).
 4. **Pilihan Tahun & Kelas Rasmi SK Ranggu Tawau:**
-   - **Tahun 5:** `5 Khoir`, `5 Mumtaz`
-   - **Tahun 6:** `6 Khoir`, `6 Jahid`, `6 Mumtaz`
+   - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jahid`, `5 Eltizam`
+   - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jahid`, `6 Eltizam`
 5. **Scroll & Pilih Nama Murid:** Murid tidak perlu menaip manual; murid memilih kelas dan scroll senarai nama rasmi kelas mereka.
 6. **Panel Tetapan Guru (Admin) ⚙️:** Guru boleh menekan ikon ⚙️ dan memasukkan kod keselamatan pengajar untuk menambah/memadam kelas, menambah murid secara individu atau import pukal (*bulk paste*).
 7. **Soalan Pantas Sebagai Pencetus Serangan (Zero Reading Fatigue):** Tiada petikan cerita panjang! Soalan Matematik KSSR Semakan (Tahun 5 & Tahun 6) disajikan secara pantas (Cth: `8 × 7 = ?`, `³/₄ Juta = ?`) sebagai cas laser tenaga!

@@ -998,7 +998,7 @@
           <div>
             <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-bottom: 2px;">2. PILIH KELAS:</div>
             <select id="select-player-class" class="game-input" onchange="onClassChange(this.value)" style="width:100%; height:32px; font-weight:700; font-size:0.8rem; padding:4px 8px; cursor:pointer;">
-              <!-- Populated dynamically: 5 Khoir, 5 Mumtaz / 6 Khoir, 6 Jahid, 6 Mumtaz -->
+              <!-- Populated dynamically: Khoir, Mumtaz, Jahid, Eltizam (Tahun 5 & 6) -->
             </select>
           </div>
         </div>
@@ -1318,14 +1318,17 @@
     /* ==============================================================
        PAPAN SKOR KALENDAR DATA
        ============================================================== */
-    const LEADERBOARD_KEY = "MATH_QUEST_ML_SCORES_V4";
+    const LEADERBOARD_KEY = "MATH_QUEST_ML_SCORES_V5";
     const SAMPLE_RECORDS = [
       { id: "MQ-1", name: "Muhammad Danial", className: "6 Khoir", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
       { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Khoir", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
-      { id: "MQ-3", name: "Adam Harith", className: "5 Khoir", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
-      { id: "MQ-4", name: "Muhammad Rayyan", className: "6 Jahid", grade: 6, xp: 4100, stars: 2, acc: 84, date: "2026-10-12", time: "11:20 AM" },
-      { id: "MQ-5", name: "Dayang Nur Batrisya", className: "5 Mumtaz", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
-      { id: "MQ-6", name: "Ameer Muqri", className: "6 Mumtaz", grade: 6, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
+      { id: "MQ-3", name: "Adib Qayyum Syazwan", className: "5 Khoir", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
+      { id: "MQ-4", name: "Airis Nur Raysha Amanda", className: "6 Jahid", grade: 6, xp: 4350, stars: 3, acc: 88, date: "2026-10-13", time: "10:35 AM" },
+      { id: "MQ-5", name: "Aleesya Dania", className: "5 Eltizam", grade: 5, xp: 4200, stars: 3, acc: 86, date: "2026-10-13", time: "11:15 AM" },
+      { id: "MQ-6", name: "Adni Dafinah", className: "6 Eltizam", grade: 6, xp: 4050, stars: 2, acc: 85, date: "2026-10-12", time: "11:20 AM" },
+      { id: "MQ-7", name: "Ab Muhammad Nurasyraf", className: "5 Mumtaz", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
+      { id: "MQ-8", name: "Ameera Nur Izzatunnisa", className: "5 Jahid", grade: 5, xp: 3650, stars: 2, acc: 78, date: "2026-10-12", time: "03:40 PM" },
+      { id: "MQ-9", name: "Afifah Auni Aqilah", className: "6 Mumtaz", grade: 6, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
     ];
 
     function getScores() {
@@ -1607,96 +1610,309 @@
     const DEFAULT_ROSTERS = {
       grade5: {
         "5 Khoir": [
-          "Ahmad Rayyan bin Roslan",
-          "Aisyah Humaira binti Azman",
-          "Danial Hakimi bin Abdullah",
-          "Faris Iskandar bin Razali",
-          "Hannah Zulaikha binti Zulkifli",
-          "Luqman Al-Hakim bin Shamsul",
-          "Muhammad Adam bin Harith",
-          "Muhammad Amirul bin Nizam",
-          "Nur Ain Syafiqah binti Rahman",
-          "Nur Damia Batrisya binti Firdaus",
-          "Nurul Izzah binti Mazlan",
-          "Putera Danish bin Ridzuan",
-          "Siti Sarah binti Khairul",
-          "Wan Harith Irfan bin Wan Rosli",
-          "Zaidan Muhaimin bin Zaidi"
+          "Adib Qayyum Syazwan bin Abdul Rahmat",
+          "Aisyah Ayudia Inara binti Punanwi",
+          "Amani Qistina binti Abdillah",
+          "Aryan Zihni bin Sudirman",
+          "Asyrafa Qurratuain binti Raman",
+          "Izzat Izzuedin bin Arman",
+          "Maimunah binti Jukdin",
+          "Mas Elly Khushairy bin Masli",
+          "Mohamad Muzillsyah bin Mohd Musa",
+          "Mohammad Azaim Firdaus bin Yasri",
+          "Muhammad Aqil Danish bin Maslan",
+          "Muhammad Arif Lutfil bin Masudi",
+          "Muhammad Arif Zikri bin Herman",
+          "Muhammad Fayyadh Farhan bin Darwis",
+          "Muhammad Haziq Uqasyah bin Mohd Nasdrul Ikram",
+          "Muhammad Nifael Danish bin Azmen",
+          "Muhammad Razaq bin Firdaus",
+          "Muhammad Rizman bin James",
+          "Muhammad Syah Hidayatullah bin Abdul Rahman",
+          "Nabil Najmi bin Mohammad Razali",
+          "Nur Aisyah binti Abdullah",
+          "Nur Aleesya Dania binti Asdi",
+          "Nur Alieya Safya",
+          "Nur Arissa Sofia binti Abdullah",
+          "Nur Azirah binti Aidi",
+          "Nur Faiq Isham bin Shahruddin",
+          "Nur Qaireen Damia binti Maksud",
+          "Nur Shaza Syuhadah binti Azman",
+          "Nur Syaqilah Syazwani binti Ardiadi",
+          "Nur Zahira binti Kamarudin",
+          "Nurul Afiqah Adawiyah binti Mohd Faizal",
+          "Nurul Umairah binti Mohd Ghazali",
+          "Nuwairah Qalbiya binti Arsip",
+          "Qalesya Qistina binti Francis",
+          "Qatreennada Nur Shahabiah binti Mu'ammar",
+          "Ummu Masyitah binti Kamal"
         ],
         "5 Mumtaz": [
-          "Aqil Dhabit bin Ridha",
-          "Dayang Nur Batrisya binti Awang",
-          "Harith Naufal bin Hisham",
-          "Maryam Safiyyah binti Salleh",
-          "Megat Danish bin Megat Johari",
-          "Muhammad Bilal bin Hamzah",
-          "Muhammad Fayyadh bin Asri",
-          "Muhammad Thaqif bin Zulkarnain",
-          "Nur Aleeya Maisarah binti Rizal",
-          "Nur Hana Medina binti Kamal",
-          "Nur Qistina Balqis binti Syafiq",
-          "Rayyan Mifzal bin Zaki",
-          "Sarah Adriana binti Fauzi",
-          "Syazwan Nazim bin Norazman",
-          "Umar Al-Faruq bin Imran"
+          "Ab Muhammad Nurasyraf bin Ab Azis",
+          "Abdullah bin Saini",
+          "Afifah Fitriyah binti Abraham",
+          "Ahmad Ali Rizqi bin Mohd Sabri",
+          "Davina Zaviera binti Rizan Hardinata",
+          "Dayang Izz Ryna binti Ahmad",
+          "Dayang Nur Shafiyyah binti Nasip",
+          "Erisha Damia binti Nasrih",
+          "Hamisya Amani binti Hamsah",
+          "Lina Afiqah binti Abdullah",
+          "Mohamad Dzaqierul Hamzah bin Mohamad Ridwan",
+          "Mohammad Harith Mikail bin Ismail",
+          "Mohammad Shaqri bin Saripuddin",
+          "Mohammad Thaqif Harraz bin Sabri",
+          "Muhamad Izzat bin Muhamad Sufri",
+          "Muhammad Arsyad Maliq bin Sahrul",
+          "Muhammad Arsyad Miqhael bin Sahrul",
+          "Muhammad Faiz Daim bin Syamsuddin",
+          "Muhammad Hadiff bin Sambran",
+          "Muhammad Kamarul bin Kamal",
+          "Muhammad Naufal Luthfi bin Mohd Syazwan",
+          "Muhammad Syafiq Aiman bin Ahmad",
+          "Muhammad Syahfiq bin Jupri",
+          "Muhammad Syahrizan Uqasya bin Reduwan",
+          "Muhammad Zahir Arrayyan bin Azman",
+          "Nur Aisyah Zulaikha binti Mohd Rosman",
+          "Nur Damia Qaisara binti Ramlan",
+          "Nur Fitri Syafiyah binti Adzhar Khan",
+          "Nur Izara Zulaiqah binti Abdullah",
+          "Nur Qisya Adelia binti Hussien",
+          "Nurul Shafiqah Senrose binti Asbidun",
+          "Rayyan bin Suhaimi",
+          "Razieq Azfar bin Ruslan",
+          "Risqah Adriana binti Rais",
+          "Siti Syazwanie binti Abdullah"
+        ],
+        "5 Jahid": [
+          "Ameera Nur Izzatunnisa binti Amirullah",
+          "Amzar Imtiyaz bin Muslihadir",
+          "Andi Mohammad Syahir bin Andi Saharudin",
+          "Aniq Khairiy Azhar bin Agus",
+          "Ardiyani Syahzilah binti Mohd Arfian",
+          "Devvieyona Elvira Herodiun",
+          "Fatimah Azzahra binti Razaleh",
+          "Ilham Razak bin Redwan",
+          "Indrieyana Arendella binti Chrys",
+          "Insyirah Rashanah binti Abdullah",
+          "Mohammad Amirul bin Saripuddin",
+          "Mohammad Mifzal Syahmie bin Mohammed Saifullah",
+          "Mohammad Nazrin Shah bin Jumain Ajamaing",
+          "Mohammad Noor Aiman bin Osman",
+          "Muhammad Adam Aqil bin Jasman",
+          "Muhammad Afiq Ziyad bin Rahmat Ali",
+          "Muhammad Afnan Fariz bin Fari Akbar Nor",
+          "Muhammad Aqif Iman bin Sofian",
+          "Muhammad Aqil Zafran bin Sabir",
+          "Muhammad Huzaifah bin Mohd.rizuwan",
+          "Muhammad Iman Riziqin Hakim bin Abdul Rapiq",
+          "Muhammad Irfan Jabar bin Mohamad Azhar",
+          "Muhammad Mikail Arsya bin Abdullah",
+          "Muhammad Nazreen bin Kenely",
+          "Muhammad Syahziezan bin Iskandar",
+          "Muhammad Yusuf Islam bin Mohd Irwan",
+          "Norhafifah binti Hasmuran",
+          "Nur Ainul Qistina binti Harris",
+          "Nur Aisyah binti Abdul Rahman",
+          "Nur Eryna Auni binti Muharam",
+          "Nur Khairunnisa binti Muhamad Ikhram",
+          "Nur Saadatul Aqilah binti Mazlan",
+          "Nur Sumayyah Nabilah binti Abdullah",
+          "Safiyya Hanna binti Rahim",
+          "Sofieya Nur Arrissa binti Mohd Tri Awan",
+          "Syafinaz Batrisya binti Mohd Umut"
+        ],
+        "5 Eltizam": [
+          "Aleesya Dania binti Arapa",
+          "Amrin Huzaifah bin Jamaluddin",
+          "Ariana Rayhana binti Ramlie",
+          "As Syifah Nuruzzawany binti Abdullah",
+          "Elmy Ridanish Haris bin Jaimi",
+          "Fatihah Nurzulaikha binti Azman",
+          "Hannah Syifa binti Suharman",
+          "Hulyatul Auliyah binti Nurdin",
+          "Mohammad Ikhwan Tarmizi",
+          "Muhammad Adam Danial bin Lasattu",
+          "Muhammad Adam Mikael bin Mohammad Nazrin",
+          "Muhammad Adeeb Hanif bin Lahadu",
+          "Muhammad Aimanshah bin Ishak",
+          "Muhammad Azroy Azmi bin Raziff Azmi",
+          "Muhammad Hakimi bin Samsul",
+          "Muhammad Haziq bin Abdul Jabar",
+          "Muhammad Ihtifazhuddin bin Mohd Adenan",
+          "Muhammad In Amul Hasan bin Rusli",
+          "Muhammad Iskandar bin Mohd Azrin",
+          "Muhammad Rhaymie Sulaiman bin Rhaymayazlan",
+          "Muhammad Shadzwan Muaafan bin Sharul",
+          "Muhammad Shafie Ruzain bin Rahim",
+          "Muhammad Shazan Muhayr bin Sharul",
+          "Norlia binti Ali Hassan",
+          "Nur Aina Maisarah binti Mohd Rizal",
+          "Nur Alisha Safiya binti Haswan",
+          "Nur Amirahtussoleha binti Mohmad Solih",
+          "Nur Damia Batrisya binti Asmadi",
+          "Nur Damia Izzati binti Mushrik Adiya",
+          "Nur Fareeha Aulia binti Rashid",
+          "Nuraisyah Syifa binti Yasmin",
+          "Nurshuhada binti Abdullah",
+          "Putra Syahrulnizam bin Haris",
+          "Qalesya Ramadhani binti Azlan",
+          "Shafiq Alyph Daniel bin Surianto",
+          "Ummu Radhiah Shadrina binti Mohd Mihdad"
         ]
       },
       grade6: {
         "6 Khoir": [
-          "Afiq Danial bin Mohd Fikri",
-          "Amani Maisarah binti Jamil",
-          "Danish Haikal bin Syahril",
-          "Haziq Rayyan bin Norazam",
-          "Khadijah binti Mohd Yusof",
-          "Muhammad Alif bin Shahrizal",
-          "Muhammad Danish bin Azhar",
-          "Muhammad Haziq bin Faizal",
-          "Nur Alya Natasha binti Kamaruddin",
-          "Nur Fatihah binti Ramli",
-          "Nur Maisarah binti Baharuddin",
-          "Syabil Iman bin Shariff",
-          "Umar Zikri bin Zulhelmi",
-          "Zara Aisyah binti Mustapha",
-          "Zarith Sofea binti Mohd Noor"
-        ],
-        "6 Jahid": [
-          "Adam Mikhail bin Khairul Anuar",
-          "Ainur Mardhiah binti Suhaimi",
-          "Darris Rayqal bin Jamal",
-          "Fayyadh Mikael bin Azfar",
-          "Iman Nur Salsabila binti Azmi",
-          "Muhammad Aqil bin Badrul",
-          "Muhammad Firas bin Amran",
-          "Muhammad Nabil bin Zafran",
-          "Nur Afrina Batrisya binti Affendi",
-          "Nur Imanina binti Syukur",
-          "Nurul Iman binti Hairudin",
-          "Raees Danish bin Rostam",
-          "Safwan Haziq bin Sulaiman",
-          "Syarifah Nur Dayana binti Syed",
-          "Wan Muhammad Danish bin Wan Azli"
+          "Aadhan Muhriz bin Muhamad Haris",
+          "Ahmad Rifqi bin Totong",
+          "Aisha Damia binti Jamaluddin",
+          "Aisyah Sarah binti Muhamad Shahruddin",
+          "Casey Marcelina anak Jerome",
+          "Daaniyatul Fathiyyah binti Suhaimi",
+          "Hana Humaira binti Abd Rizam",
+          "Harith Hakim bin Ibnu Suhud",
+          "Khaireen Safiyyah binti Marsan",
+          "Mohamad Nazri bin Laseal",
+          "Mohamad Redzwan bin Supa",
+          "Mohammad Qaizar Amar Mickhail bin Haeruddin",
+          "Mohammad Trizuanshah bin Mohammad Hanapiah",
+          "Muhamad Mikail Adam Mukriz bin Azlan",
+          "Muhammad Adl Wafie bin Kasman",
+          "Muhammad Fhirdaus Iskandar bin Abdullah",
+          "Muhammad Haziq Adam bin Ekho Dynnie Arbianto",
+          "Muhammad Hizqil bin Jukdin",
+          "Muhammad Izman Izriansha bin Mohd Azman",
+          "Muhammad Nazmi Faiq bin Mohamad Azizul Arifin",
+          "Muhammad Rayyan Firdaus bin Rahim",
+          "Muhammad Syamil bin Kamal",
+          "Nur Adha Fatini binti Muslimin",
+          "Nur Aiza Natasha binti Abdul Mucatill",
+          "Nur Aqeela Safiya binti Mohd Naqiuddin Niyaz",
+          "Nur Atiqah binti Amir",
+          "Nur Farisya Haziqah binti Sukman",
+          "Nur Jannah binti Ismail",
+          "Nur Qiesya Aqeela binti Mohd Azman",
+          "Nur Ramadhania binti Mohan",
+          "Nur Syuhadah binti Yasmin",
+          "Nurshazafeefa binti Muhamad Shazfaliq",
+          "Ryandiee Izham bin Ilham",
+          "Shareen Loin anak Simon"
         ],
         "6 Mumtaz": [
-          "Ameer Muqri bin Hairul",
-          "Aniq Amsyar bin Redza",
-          "Arianna Sofia binti Johan",
-          "Firas Eiman bin Shahrul",
-          "Izz Rayyan bin Nazri",
-          "Khalish Darwisy bin Azman",
-          "Muhammad Amar bin Qayyum",
-          "Muhammad Zafri bin Zaidi",
-          "Nur Aina Syahmina binti Latif",
-          "Nur Hanis Safiya binti Azlan",
-          "Nur Zahra Syakirah binti Fadil",
-          "Qaisara Batrisya binti Johari",
-          "Thaqif Rayyan bin Yusry",
-          "Wan Nur Imanina binti Wan Roslan",
-          "Yusuf Al-Qardhawi bin Ridwan"
+          "Afifah Auni Aqilah binti Jamidi",
+          "Ahmad Izzat bin Suhardi",
+          "Ahmed Eshan bin Abdullah",
+          "Ammaara Luthfea binti Lukman Rizal",
+          "Damia Adriana binti Jhon Pinero @ Mohammad Arif",
+          "Maal Hizrayyan bin Abdullah",
+          "Mohamad Ariz Zahran bin Jasni",
+          "Muhamad Alifhamdan bin Wahid",
+          "Muhammad Adli Adam bin Adil",
+          "Muhammad Alif Firdaus bin Mohd Ghazali",
+          "Muhammad Alif Syazwan bin Usman",
+          "Muhammad Arfa Safaraz Az Zaim bin Darwis",
+          "Muhammad Arief Rifqie bin Ashary",
+          "Muhammad Aryan Ashraf bin Sabir",
+          "Muhammad Iqbaal bin Japar",
+          "Muhammad Izzrin bin Ahmad",
+          "Muhammad Solihin Ishaq bin Asis",
+          "Muhammad Syafieq Hakimi bin Suyuti",
+          "Muhammad Syahmie bin Sultan",
+          "Muhammad Zharif Aimin bin Kamaluddin @ Mohd Yasmin",
+          "Naazhimah binti Nasarudin",
+          "Nur Affiqah Hidayah binti Fari Akbar Nor",
+          "Nur Delisya binti Mohamad",
+          "Nur Haziqah binti Jumadi",
+          "Nur Syafika binti Yasmansah",
+          "Nur Syifa Raisah binti Roslan",
+          "Nurfarah Khaalishah binti Mohamad Taufik",
+          "Nurqistina Najwa binti Sadam",
+          "Putri Syakilla Dania binti Abdullah",
+          "Qayyum Nur Iman bin Amir",
+          "Rania Awfiyah binti Ramle",
+          "Samarulisam bin Abdullah",
+          "Sayyidah Khaulah Al Azwar binti Mohd Mihdad",
+          "Shazwi Shazia binti Azman",
+          "Sumayyah Qaisara binti Alfian"
+        ],
+        "6 Jahid": [
+          "Airis Nur Raysha Amanda binti Riduan",
+          "Ariz Faiqh bin Mohd Rozaidy",
+          "Aufa Hanifah binti Juari",
+          "Izzat Nazhan bin Sumardi",
+          "Linda Qaisarah binti Rajlan",
+          "Mahirah Athilah binti M Sabran",
+          "Mohammad Nizwan bin Azime",
+          "Muhammad Afif Arsyad bin Hasrin",
+          "Muhammad Aiman bin Ambo Masse",
+          "Muhammad Ammar Syawal bin Sudeyansah",
+          "Muhammad Ariq Adam bin Sanudin",
+          "Muhammad Danish Zafwan bin Paisal",
+          "Muhammad Dzar Dzikri bin Marindo @ Abd Karim",
+          "Muhammad Faiz Izuddin bin Mohd Fairos",
+          "Muhammad Fariz Izuddin bin Mohd Fairos",
+          "Muhammad Haziq Syakir bin Aming",
+          "Muhammad Khairul Muhaimin bin Muharam",
+          "Muhammad Luthfi Wafi bin Abdullah",
+          "Muhammad Mahdy bin Mazlan",
+          "Muhammad Yuzwan Wafiy bin Yusuf",
+          "Nur Adilah binti Abdul Malik",
+          "Nur Eryna Naurah binti Jamal",
+          "Nur Farah Fadillah binti Mohd Ardy",
+          "Nur Humayraa Delisyah binti Herman",
+          "Nur Khayrin Afiqah binti Jamidi",
+          "Nur Subayya Azzahra binti Sahrul",
+          "Nur Zhafirah binti Abdul Rashid",
+          "Nuranis Fatihah binti Jamal",
+          "Nurul Suhada binti Suryaman",
+          "Nurzahra Zafirah binti Asis",
+          "Rizq Irfan bin Mohd.azrul",
+          "Siti Nur Adibah Syahirah binti Amrani",
+          "Siti Nuralya Nabilah binti Hasrin",
+          "Siti Nurfarzriekin binti Hery",
+          "Yasin Muhammad Khairul bin Yusran"
+        ],
+        "6 Eltizam": [
+          "Adni Dafinah binti Mursalin",
+          "Alfin Zikri bin Muhammad Zulkifli",
+          "Aniq Izz Zarif bin Mohd Nor Azman",
+          "Audhia Mulianie binti Ady Kurniawan",
+          "Dayang Nur Athirah binti Datu Mohd Noor",
+          "Farhana Alisya binti A.rahman",
+          "Humaira Qairina binti Hassan",
+          "Marzuqi Wahiduz Zaman bin Hermanshah",
+          "Mas Syuhadah binti Masli",
+          "Mohammad Iqqal Ruzayley bin Mohd Rusdi",
+          "Mohammad Irfan bin Jasmyn",
+          "Muhamad Aidil Azhari bin Mohamad Ali",
+          "Muhammad Alif bin Ramil",
+          "Muhammad Arrian bin Faizal",
+          "Muhammad Arsyad Luqman bin Sahrul",
+          "Muhammad Fahmi bin Misli",
+          "Muhammad Fahril Uzayr bin Awal",
+          "Muhammad Harith bin Abd Haliq",
+          "Muhammad Izz Rizqi Rayyan bin Saharuddin",
+          "Muhammad Nur Aiman bin Kriscylla",
+          "Muhammad Yusuf Nizam bin Lukman",
+          "Mustapha Irwansyah bin Buddahil",
+          "Nur Farah Mawaddah binti Armiansah",
+          "Nur Hana Afrina binti Herman",
+          "Nur Hayla Dayyana binti Herman",
+          "Nur Izzara Zulaikha binti Md Halim",
+          "Nur Marissa Amanda binti Hamka",
+          "Nurfatiha Adwa Qaisara binti Herman",
+          "Nurhana Airisya Sofia binti Mohammad Sofian",
+          "Nurul Syuhada binti Kahar",
+          "Qaiser Mifdal bin Budiman",
+          "Siti Nurshahira binti Kadir",
+          "Suhaimah Fadila binti Zulkifly",
+          "Syazanie Ashraf bin Sudirman",
+          "Zarirah binti Patrisius"
         ]
       }
     };
 
-    const ROSTER_STORAGE_KEY = "MATH_QUEST_ROSTER_SK_RANGGU_V2";
+    const ROSTER_STORAGE_KEY = "MATH_QUEST_ROSTER_SK_RANGGU_V3";
 
     function getRosters() {
       try {
@@ -1778,8 +1994,9 @@
       let html = '';
       filtered.forEach(name => {
         const isActive = (G.heroName === name);
+        const safeName = name.replace(/"/g, '&quot;');
         html += `
-          <div class="roster-name-chip ${isActive ? 'active' : ''}" onclick="selectStudentName('${name.replace(/'/g, "\\'")}')">
+          <div class="roster-name-chip ${isActive ? 'active' : ''}" data-name="${safeName}" onclick="selectStudentName(this.getAttribute('data-name'))">
             <span>${isActive ? '✅' : '🎓'}</span>
             <span style="overflow:hidden; text-overflow:ellipsis;">${name}</span>
           </div>
@@ -1889,10 +2106,11 @@
 
       let html = '';
       students.forEach((name, idx) => {
+        const safeName = name.replace(/"/g, '&quot;');
         html += `
           <div class="admin-student-row">
             <span>${idx + 1}. <b>${name}</b></span>
-            <button class="admin-btn-delete" onclick="adminDeleteStudent('${gKey}', '${className}', '${name.replace(/'/g, "\\'")}')">🗑️ Padam</button>
+            <button class="admin-btn-delete" data-student="${safeName}" onclick="adminDeleteStudent('${gKey}', '${className}', this.getAttribute('data-student'))">🗑️ Padam</button>
           </div>
         `;
       });
@@ -2021,7 +2239,7 @@
     }
 
     function adminResetToDefaultRoster() {
-      if (!confirm("Adakah anda pasti mahu set semula senarai rasmi SK Ranggu (5 Khoir, 5 Mumtaz, 6 Khoir, 6 Jahid & 6 Mumtaz)?")) return;
+      if (!confirm("Adakah anda pasti mahu set semula senarai rasmi SK Ranggu (Semua kelas Tahun 5 & 6: Khoir, Mumtaz, Jahid, Eltizam)?")) return;
       localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
       populateAdminClassSelect();
       renderAdminClassesList();
