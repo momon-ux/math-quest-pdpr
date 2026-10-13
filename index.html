@@ -483,6 +483,48 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       cursor: crosshair;
     }
+    .voxel-stage {
+      width: min(100%, 1100px);
+      height: 100%;
+      min-height: 260px;
+      position: relative;
+      overflow: hidden;
+      border: 4px solid var(--grass-dark);
+      border-radius: 16px;
+      background: linear-gradient(#7dd3fc 0 58%, #bbf7d0 58% 100%);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      touch-action: none;
+    }
+    #voxel-world { width: 100%; height: 100%; display: block; touch-action: none; }
+    #sandbox-grid-canvas { display: none; }
+    .build-status-card {
+      position: absolute; top: 8px; left: 8px; z-index: 4;
+      background: rgba(255,255,255,.92); border: 2px solid #16a34a;
+      border-radius: 11px; padding: 6px 9px; max-width: min(270px, 62%);
+      box-shadow: 0 4px 12px rgba(15,23,42,.18); pointer-events: none;
+    }
+    .build-progress-track { height: 7px; border-radius: 99px; background: #dbeafe; overflow: hidden; margin-top: 4px; }
+    .build-progress-fill { height: 100%; width: 0; background: linear-gradient(90deg,#22c55e,#eab308); transition: width .25s; }
+    .level-badge { font-size:.64rem; font-weight:900; color:#166534; }
+    .build-help {
+      position:absolute; right:8px; bottom:8px; z-index:4; pointer-events:none;
+      background:rgba(15,23,42,.76); color:#fff; border-radius:8px;
+      padding:5px 8px; font-size:.58rem; font-weight:800;
+    }
+    .ribbon-btn.btn-build-tool { background:#0f766e; border-color:#134e4a; color:#fff; }
+    .ribbon-btn.btn-build-tool.active { background:#facc15; border-color:#92400e; color:#713f12; }
+    .level-control { display:flex; align-items:center; gap:4px; background:#ecfeff; border:2px solid #0891b2; border-radius:10px; padding:2px 4px; }
+    .level-control button { width:27px; height:27px; border:0; border-radius:7px; background:#0891b2; color:#fff; font-weight:900; cursor:pointer; }
+    #build-level-label { min-width:58px; text-align:center; font-size:.68rem; font-weight:900; color:#155e75; }
+    @media (max-width: 700px) {
+      .sandbox-action-ribbon { height:auto; min-height:48px; padding:4px 6px; overflow-x:auto; justify-content:flex-start; }
+      .ribbon-btn { flex:0 0 auto; padding:5px 8px; font-size:.62rem; }
+      .sandbox-canvas-wrapper { padding:3px; }
+      .voxel-stage { min-height:220px; border-width:3px; border-radius:10px; }
+      .build-help { display:none; }
+      .build-status-card { top:5px; left:5px; padding:4px 6px; }
+      .sandbox-bottom-dock { height:60px; padding:0 6px; }
+    }
 
     /* Bottom Inventory Palette Dock */
     .sandbox-bottom-dock {
@@ -868,6 +910,7 @@
       opacity: 1;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
 </head>
 <body>
 
@@ -975,7 +1018,10 @@
 
         <div style="display: flex; gap: 8px; align-items: center;">
           <div class="hud-wallet-pill">
-            <span>🪙</span> <span id="hud-sandbox-xp">150 XP</span>
+            <span>⭐</span> <span id="hud-sandbox-xp">150 XP</span>
+          </div>
+          <div class="hud-wallet-pill">
+            <span>🪙</span> <span id="hud-sandbox-coins">150 Syiling</span>
           </div>
           <div class="hud-blocks-count">
             <span>🧱</span> <span id="hud-sandbox-blocks">0 Blok</span>
@@ -1004,6 +1050,14 @@
         <button class="ribbon-btn btn-eraser" id="btn-eraser-mode" onclick="toggleEraserTool()">
           <span>🧹</span> <span>ALAT PADAM</span>
         </button>
+        <button class="ribbon-btn btn-build-tool" onclick="undoBuild()" title="Undur tindakan terakhir">↶ UNDO</button>
+        <button class="ribbon-btn btn-build-tool" onclick="redoBuild()" title="Buat semula tindakan">↷ REDO</button>
+        <button class="ribbon-btn btn-build-tool" onclick="rotateSelectedBlock()" title="Putar pintu, tingkap, bumbung atau tangga">↻ PUTAR BLOK</button>
+        <div class="level-control">
+          <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
+          <span id="build-level-label">Aras 1</span>
+          <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
+        </div>
         <button class="ribbon-btn btn-snapshot" onclick="takeHousePhoto()">
           <span>📸</span> <span>TANGKAP GAMBAR RUMAH</span>
         </button>
@@ -1011,7 +1065,16 @@
 
       <!-- Sandbox Canvas Area -->
       <div class="sandbox-canvas-wrapper">
-        <canvas id="sandbox-grid-canvas"></canvas>
+        <div class="voxel-stage" id="voxel-stage">
+          <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
+          <canvas id="sandbox-grid-canvas"></canvas>
+          <div class="build-status-card">
+            <div class="level-badge" id="house-level-text">Tahap 1 • Tapak & Asas</div>
+            <div style="font-size:.62rem;font-weight:800;color:#334155" id="house-progress-text">Kemajuan rumah: 0%</div>
+            <div class="build-progress-track"><div class="build-progress-fill" id="house-progress-fill"></div></div>
+          </div>
+          <div class="build-help">Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum</div>
+        </div>
       </div>
 
       <!-- Bottom Palette Dock (Inventory) -->
@@ -1683,6 +1746,8 @@ const DEFAULT_ROSTERS = {
       { id: 'window_glass', name: 'Tingkap Kaca', cat: 'house', price: 35, icon: '🪟', color: '#7dd3fc' },
       { id: 'roof_red', name: 'Bumbung Merah', cat: 'house', price: 45, icon: '🔺', color: '#ef4444' },
       { id: 'roof_blue', name: 'Bumbung Biru', cat: 'house', price: 45, icon: '🔷', color: '#3b82f6' },
+      { id: 'roof_flat', name: 'Bumbung Rata', cat: 'house', price: 35, icon: '▬', color: '#475569' },
+      { id: 'stairs_wood', name: 'Tangga Kayu', cat: 'house', price: 55, icon: '🪜', color: '#a16207' },
       { id: 'chimney', name: 'Cerobong Asap', cat: 'house', price: 70, icon: '🧱', color: '#78350f' },
       { id: 'parquet_floor', name: 'Lantai Parket', cat: 'house', price: 25, icon: '🪵', color: '#d97706' },
 
@@ -2397,14 +2462,14 @@ const COMBAT_BANK = {
 
       audio.init();
 
-      if (STATE.xp < item.price) {
+      if (STATE.coins < item.price) {
         audio.playBoing();
-        showToast(`❌ XP tidak cukup (${STATE.xp}/${item.price} XP)! Sila main Math Shooter.`);
+        showToast(`❌ Syiling tidak cukup (${STATE.coins}/${item.price})! Sila main Math Shooter.`);
         return;
       }
 
-      // Deduct XP, add to inventory
-      STATE.xp -= item.price;
+      // Deduct coins while preserving academic XP
+      STATE.coins -= item.price;
       STATE.inventory[blockId] = (STATE.inventory[blockId] || 0) + 1;
       STATE.activeBlockId = blockId;
       STATE.eraserActive = false;
@@ -2425,7 +2490,7 @@ const COMBAT_BANK = {
       saveCurrentStudentState();
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-shooter').style.display = 'flex';
-      document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP`;
+      document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP • ${STATE.coins.toLocaleString()} 🪙`;
 
       initShooterEngine();
       loadNextShooterQuestion();
@@ -2618,16 +2683,18 @@ const COMBAT_BANK = {
             // POP!
             target.popped = true;
             const earned = 100 * s.combo;
-            STATE.xp += earned;
+            const coinReward = Math.max(5, Math.round(earned / 5));
+            awardMathReward(earned, coinReward);
             s.combo++;
             audio.playPop();
-            document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP`;
-            showToast(`🎈 POP! Betul! Dapat +${earned} XP! 🪙`);
+            document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP • ${STATE.coins.toLocaleString()} 🪙`;
+            showToast(`🎈 Betul! +${earned} XP dan +${coinReward} syiling!`);
 
             setTimeout(() => {
               loadNextShooterQuestion();
             }, 650);
           } else {
+            recordWrongMathAttempt();
             audio.playBoing();
             s.combo = 1;
             showToast("OOPS! Jawapan salah. Cuba lagi!");
@@ -2845,10 +2912,11 @@ const COMBAT_BANK = {
           if (String(val) === String(correctAns)) {
             audio.playFanfare();
             const reward = topic.includes("JACKPOT") ? 300 : 150;
-            STATE.xp += reward;
-            saveCurrentStudentState();
-            showToast(`🎉 TAHNIAH! Betul! Dapat +${reward} XP! 🪙`);
+            const coinReward = Math.max(20, Math.round(reward / 5));
+            awardMathReward(reward, coinReward);
+            showToast(`🎉 Betul! +${reward} XP dan +${coinReward} syiling!`);
           } else {
+            recordWrongMathAttempt();
             audio.playBoing();
             showToast("OOPS! Jawapan salah. Boleh putar lagi!");
           }
@@ -2927,12 +2995,12 @@ const COMBAT_BANK = {
                 <span style="font-weight:900;">${medal}</span>
                 <div>
                   <div style="font-weight:800; color:#0f172a;">${it.name}</div>
-                  <div style="font-size:0.65rem; color:#64748b;">${it.className} • Thn ${it.grade} • ${it.time || ''}</div>
+                  <div style="font-size:0.65rem; color:#64748b;">${it.className} • Thn ${it.grade} • ${it.time || ''} • ${it.questions || 0} soalan • ${it.accuracy || 0}% tepat</div>
                 </div>
               </div>
               <div style="text-align:right;">
                 <div style="font-weight:900; color:#b45309;">${Number(it.xp || 0).toLocaleString()} XP</div>
-                <div style="font-size:0.65rem; color:#15803d; font-weight:800;">🧱 ${it.blocks || 0} Blok Terbina</div>
+                <div style="font-size:0.65rem; color:#15803d; font-weight:800;">🏠 Tahap ${it.houseLevel || 1} • ${it.houseProgress || 0}% • 🧱 ${it.blocks || 0}</div>
               </div>
             </div>
           `;
@@ -2947,9 +3015,9 @@ const COMBAT_BANK = {
         const raw = localStorage.getItem(LEADERBOARD_KEY);
         if (raw) all = JSON.parse(raw);
       } catch(e) {}
-      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Blok Terbina,Tarikh,Masa\n";
+      let csv = "Bil,Nama Murid,Kelas,Tahun,Skor XP,Syiling,Soalan,Ketepatan,Tahap Rumah,Kemajuan Rumah,Blok Terbina,Tarikh,Masa\n";
       all.forEach((r, i) => {
-        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.blocks}","${r.date}","${r.time}"\n`;
+        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.coins || 0}","${r.questions || 0}","${r.accuracy || 0}%","${r.houseLevel || 1}","${r.houseProgress || 0}%","${r.blocks}","${r.date}","${r.time}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const u = URL.createObjectURL(blob);
@@ -3180,6 +3248,461 @@ const COMBAT_BANK = {
       updateLobbyClassDropdown(STATE.grade);
       showToast("Pangkalan data 8 kelas dipulihkan!");
     }
+
+    /* ==============================================================
+       VOXEL HOUSE BUILDER V3 — 3D, MULTI-LEVEL & SAFE DATA MIGRATION
+       ============================================================== */
+    const MAX_BUILD_LEVEL = 7;
+    const V3 = {
+      scene: null, camera: null, renderer: null, raycaster: null,
+      world: null, preview: null, buildPlane: null, animationId: null,
+      yaw: Math.PI / 4, pitch: 0.68, distance: 18,
+      dragging: false, moved: false, pointerId: null, lastX: 0, lastY: 0,
+      pinchDistance: 0, pointers: new Map(), targetCell: null,
+      materials: {}, resizeBound: false, inputBound: false
+    };
+
+    Object.assign(STATE, {
+      coins: 150,
+      voxels: [],
+      buildLevel: 0,
+      blockRotation: 0,
+      undoStack: [],
+      redoStack: [],
+      mathStats: { total: 0, correct: 0 }
+    });
+
+    function cloneBuildState() {
+      return {
+        voxels: JSON.parse(JSON.stringify(STATE.voxels || [])),
+        inventory: JSON.parse(JSON.stringify(STATE.inventory || {}))
+      };
+    }
+
+    function restoreBuildState(snapshot) {
+      STATE.voxels = JSON.parse(JSON.stringify(snapshot.voxels || []));
+      STATE.inventory = JSON.parse(JSON.stringify(snapshot.inventory || {}));
+      rebuildVoxelWorld();
+      renderPaletteDock();
+      updateSandboxHud();
+      saveCurrentStudentState();
+    }
+
+    function rememberBuildAction() {
+      STATE.undoStack.push(cloneBuildState());
+      if (STATE.undoStack.length > 30) STATE.undoStack.shift();
+      STATE.redoStack = [];
+    }
+
+    function undoBuild() {
+      if (!STATE.undoStack.length) return showToast('Tiada tindakan untuk diundur.');
+      STATE.redoStack.push(cloneBuildState());
+      restoreBuildState(STATE.undoStack.pop());
+      showToast('↶ Tindakan terakhir diundur.');
+    }
+
+    function redoBuild() {
+      if (!STATE.redoStack.length) return showToast('Tiada tindakan untuk dibuat semula.');
+      STATE.undoStack.push(cloneBuildState());
+      restoreBuildState(STATE.redoStack.pop());
+      showToast('↷ Tindakan dibuat semula.');
+    }
+
+    function rotateSelectedBlock() {
+      STATE.blockRotation = (STATE.blockRotation + 1) % 4;
+      updatePreviewMesh();
+      showToast(`↻ Arah blok: ${STATE.blockRotation * 90}°`);
+    }
+
+    function changeBuildLevel(delta) {
+      STATE.buildLevel = Math.max(0, Math.min(MAX_BUILD_LEVEL, STATE.buildLevel + delta));
+      const label = document.getElementById('build-level-label');
+      if (label) label.textContent = `Aras ${STATE.buildLevel + 1}`;
+      updateBuildPlane();
+      showToast(`Membina pada aras ${STATE.buildLevel + 1}`);
+    }
+
+    function migrateLegacyGrid(grid) {
+      const voxels = [];
+      if (!Array.isArray(grid)) return voxels;
+      grid.forEach((row, z) => Array.isArray(row) && row.forEach((type, x) => {
+        if (type) voxels.push({ x, y: 0, z, type, rotation: 0 });
+      }));
+      return voxels;
+    }
+
+    function saveCurrentStudentState() {
+      if (!STATE.studentName) return;
+      const key = `${STATE.studentName}|${STATE.className}`;
+      const all = getAllSaves();
+      const progress = calculateHouseProgress();
+      all[key] = {
+        version: 3,
+        grade: STATE.grade,
+        className: STATE.className,
+        studentName: STATE.studentName,
+        avatar: STATE.avatar,
+        xp: STATE.xp,
+        coins: STATE.coins,
+        inventory: STATE.inventory,
+        voxels: STATE.voxels,
+        grid: STATE.grid,
+        mathStats: STATE.mathStats,
+        placedBlocks: STATE.voxels.length,
+        houseLevel: progress.level,
+        houseProgress: progress.percent,
+        lastUpdated: new Date().toISOString()
+      };
+      try { localStorage.setItem(SAVE_STORAGE_KEY, JSON.stringify(all)); } catch(e) {}
+      recordToLeaderboard(STATE.studentName, STATE.className, STATE.grade, STATE.xp, STATE.voxels.length, progress);
+    }
+
+    function loadStudentProfile(name, cls) {
+      const key = `${name}|${cls}`;
+      const all = getAllSaves();
+      const saved = all[key];
+      if (saved) {
+        STATE.xp = Number(saved.xp ?? 150);
+        STATE.coins = Number(saved.coins ?? Math.max(150, Math.floor(STATE.xp / 2)));
+        STATE.inventory = saved.inventory || { wood_wall: 6, roof_red: 3, door_wood: 1 };
+        STATE.grid = saved.grid || initEmptyGrid();
+        STATE.voxels = Array.isArray(saved.voxels) ? saved.voxels : migrateLegacyGrid(saved.grid);
+        STATE.mathStats = saved.mathStats || { total: 0, correct: 0 };
+        STATE.avatar = saved.avatar || '👷‍♂️';
+      } else {
+        STATE.xp = 150;
+        STATE.coins = 150;
+        STATE.inventory = {
+          parquet_floor: 12, wood_wall: 16, roof_red: 8, door_wood: 1,
+          window_glass: 4, stairs_wood: 1, tree_shade: 1, fence_white: 4
+        };
+        STATE.grid = initEmptyGrid();
+        STATE.voxels = [];
+        STATE.mathStats = { total: 0, correct: 0 };
+        saveCurrentStudentState();
+      }
+      STATE.buildLevel = 0;
+      STATE.blockRotation = 0;
+      STATE.undoStack = [];
+      STATE.redoStack = [];
+    }
+
+    function recordToLeaderboard(name, cls, grade, xp, blocks, progress = calculateHouseProgress()) {
+      try {
+        const raw = localStorage.getItem(LEADERBOARD_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        const todayIso = new Date().toISOString().slice(0, 10);
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const record = {
+          name, className: cls, grade, xp, blocks,
+          coins: STATE.coins, houseLevel: progress.level, houseProgress: progress.percent,
+          accuracy: STATE.mathStats.total ? Math.round(STATE.mathStats.correct / STATE.mathStats.total * 100) : 0,
+          questions: STATE.mathStats.total, date: todayIso, time: timeStr
+        };
+        const existingIdx = list.findIndex(x => x.name === name && x.className === cls && x.date === todayIso);
+        if (existingIdx >= 0) list[existingIdx] = { ...list[existingIdx], ...record };
+        else list.unshift(record);
+        localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(list));
+      } catch(e) {}
+    }
+
+    function makePatternTexture(kind, base, accent) {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = base; ctx.fillRect(0, 0, 64, 64);
+      ctx.strokeStyle = accent; ctx.lineWidth = 4;
+      if (kind === 'wood') {
+        for (let y = 8; y < 64; y += 16) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(64,y); ctx.stroke(); }
+        for (let x = 12; x < 64; x += 28) { ctx.beginPath(); ctx.arc(x, 20, 5, 0, Math.PI * 2); ctx.stroke(); }
+      } else if (kind === 'brick') {
+        for (let y = 0; y <= 64; y += 16) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(64,y); ctx.stroke(); }
+        for (let y = 0; y < 64; y += 16) for (let x = (y / 16) % 2 ? 0 : 16; x < 64; x += 32) { ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y+16); ctx.stroke(); }
+      } else {
+        for (let i = 0; i < 36; i++) { const x = (i * 19) % 64, y = (i * 31) % 64; ctx.fillStyle = accent; ctx.fillRect(x,y,3,3); }
+      }
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter;
+      return tex;
+    }
+
+    function setupVoxelMaterials() {
+      if (V3.materials.wood_wall) return;
+      const mat = (color, opts = {}) => new THREE.MeshLambertMaterial({ color, ...opts });
+      V3.materials = {
+        wood_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#b97932','#754216') }),
+        brick_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('brick','#c74b3c','#f2b6a8') }),
+        stone_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('stone','#7b8794','#aeb8c2') }),
+        glass_wall: mat(0x5fd8ff, { transparent:true, opacity:.55 }),
+        window_glass: mat(0x8be5ff, { transparent:true, opacity:.48 }),
+        door_wood: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#8a4d1e','#4c2a12') }),
+        door_glass: mat(0x4fc3e8, { transparent:true, opacity:.58 }),
+        parquet_floor: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#d79a4c','#9c5e20') }),
+        roof_red: mat(0xc92f2f), roof_blue: mat(0x2563c9), roof_flat: mat(0x475569),
+        stairs_wood: mat(0xa16207), fence_white: mat(0xf8fafc), tree_shade: mat(0x25833a),
+        default: mat(0x9a6a35), preview: mat(0x4ade80, { transparent:true, opacity:.42 })
+      };
+    }
+
+    function createWedgeGeometry() {
+      const v = new Float32Array([
+        -.5,-.5,-.5, .5,-.5,-.5, -.5,-.5,.5, .5,-.5,.5, -.5,.5,.5, .5,.5,.5
+      ]);
+      const idx = [0,1,3,0,3,2, 2,3,5,2,5,4, 0,2,4, 1,5,3, 0,4,5,0,5,1];
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(v,3)); g.setIndex(idx); g.computeVertexNormals();
+      return g;
+    }
+
+    function createVoxelObject(voxel, preview = false) {
+      const group = new THREE.Group();
+      const type = voxel.type || 'wood_wall';
+      const material = preview ? V3.materials.preview : (V3.materials[type] || V3.materials.default);
+      const add = (geo, mat = material, px = 0, py = 0, pz = 0) => {
+        const mesh = new THREE.Mesh(geo, mat); mesh.position.set(px,py,pz); mesh.castShadow = !preview; mesh.receiveShadow = true; group.add(mesh); return mesh;
+      };
+      if (type === 'roof_red' || type === 'roof_blue') {
+        add(createWedgeGeometry());
+      } else if (type === 'parquet_floor') {
+        add(new THREE.BoxGeometry(.96,.96,.96), material);
+      } else if (type === 'roof_flat' || type === 'swimming_pool') {
+        add(new THREE.BoxGeometry(.96,.18,.96), material, 0,-.4,0);
+      } else if (type === 'stairs_wood') {
+        for (let i=0;i<4;i++) add(new THREE.BoxGeometry(.96,(i+1)/4*.9,.24), material,0,-.5+(i+1)/8,-.36+i*.24);
+      } else if (type.startsWith('door_') || type === 'window_glass') {
+        const frame = preview ? material : V3.materials.wood_wall;
+        add(new THREE.BoxGeometry(.9,.12,.18), frame,0,-.44,0);
+        add(new THREE.BoxGeometry(.12,.88,.18), frame,-.39,0,0);
+        add(new THREE.BoxGeometry(.12,.88,.18), frame,.39,0,0);
+        add(new THREE.BoxGeometry(.9,.12,.18), frame,0,.44,0);
+        add(new THREE.BoxGeometry(.66,.68,.10), material,0,0,0);
+        if (type === 'window_glass') add(new THREE.BoxGeometry(.08,.68,.20), frame,0,0,0);
+      } else if (type === 'fence_white') {
+        add(new THREE.BoxGeometry(.13,.95,.13), material,-.36,0,0); add(new THREE.BoxGeometry(.13,.95,.13), material,.36,0,0);
+        add(new THREE.BoxGeometry(.86,.12,.13), material,0,.22,0); add(new THREE.BoxGeometry(.86,.12,.13), material,0,-.22,0);
+      } else if (type === 'tree_shade') {
+        add(new THREE.BoxGeometry(.24,.75,.24), preview ? material : V3.materials.door_wood,0,-.12,0);
+        add(new THREE.BoxGeometry(.9,.55,.9), material,0,.42,0);
+      } else {
+        add(new THREE.BoxGeometry(.96,.96,.96));
+      }
+      group.position.set(voxel.x - GRID_COLS/2 + .5, voxel.y + .5, voxel.z - GRID_ROWS/2 + .5);
+      group.rotation.y = (voxel.rotation || 0) * Math.PI / 2;
+      group.userData.voxel = voxel;
+      return group;
+    }
+
+    function createGroundGrid() {
+      const groundMat = new THREE.MeshLambertMaterial({ map: makePatternTexture('stone','#4fbf62','#3aaa51') });
+      groundMat.map.wrapS = groundMat.map.wrapT = THREE.RepeatWrapping; groundMat.map.repeat.set(14,8);
+      const ground = new THREE.Mesh(new THREE.BoxGeometry(GRID_COLS,.18,GRID_ROWS), groundMat);
+      ground.position.y = -.1; ground.receiveShadow = true; V3.scene.add(ground);
+      const pts = [];
+      for (let x=0;x<=GRID_COLS;x++) pts.push(x-GRID_COLS/2,.01,-GRID_ROWS/2, x-GRID_COLS/2,.01,GRID_ROWS/2);
+      for (let z=0;z<=GRID_ROWS;z++) pts.push(-GRID_COLS/2,.01,z-GRID_ROWS/2, GRID_COLS/2,.01,z-GRID_ROWS/2);
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+      V3.scene.add(new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:0x167c35,transparent:true,opacity:.48})));
+    }
+
+    function initSandboxCanvas() {
+      if (!window.THREE) {
+        document.getElementById('voxel-stage').innerHTML = '<div style="padding:30px;text-align:center;font-weight:900">Enjin 3D tidak dapat dimuat. Sila semak sambungan internet dan muat semula.</div>';
+        return;
+      }
+      const canvas = document.getElementById('voxel-world');
+      const stage = document.getElementById('voxel-stage');
+      if (V3.animationId) cancelAnimationFrame(V3.animationId);
+      V3.scene = new THREE.Scene();
+      V3.scene.background = new THREE.Color(0x8fd3ff);
+      V3.scene.fog = new THREE.Fog(0x8fd3ff, 22, 48);
+      V3.camera = new THREE.PerspectiveCamera(45, 1, .1, 100);
+      V3.renderer = new THREE.WebGLRenderer({ canvas, antialias:true, preserveDrawingBuffer:true, alpha:false });
+      V3.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      V3.renderer.shadowMap.enabled = true;
+      V3.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      V3.raycaster = new THREE.Raycaster();
+      V3.world = new THREE.Group(); V3.scene.add(V3.world);
+      setupVoxelMaterials(); createGroundGrid();
+      V3.scene.add(new THREE.HemisphereLight(0xffffff,0x4b7f35,1.55));
+      const sun = new THREE.DirectionalLight(0xffffff,2.2); sun.position.set(-8,15,10); sun.castShadow=true;
+      sun.shadow.mapSize.set(1024,1024); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; V3.scene.add(sun);
+      V3.buildPlane = new THREE.Mesh(new THREE.PlaneGeometry(GRID_COLS,GRID_ROWS),new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+      V3.buildPlane.rotation.x = -Math.PI/2; V3.scene.add(V3.buildPlane);
+      bindVoxelInput(canvas); resizeVoxelRenderer(); rebuildVoxelWorld(); updateBuildPlane(); updateCamera();
+      if (!V3.resizeBound) { window.addEventListener('resize',resizeVoxelRenderer); V3.resizeBound=true; }
+      const loop = () => { V3.animationId=requestAnimationFrame(loop); V3.renderer.render(V3.scene,V3.camera); }; loop();
+    }
+
+    function resizeVoxelRenderer() {
+      if (!V3.renderer) return;
+      const stage = document.getElementById('voxel-stage');
+      const w = Math.max(1,stage.clientWidth), h = Math.max(1,stage.clientHeight);
+      V3.renderer.setSize(w,h,false); V3.camera.aspect=w/h; V3.camera.updateProjectionMatrix();
+    }
+
+    function updateCamera() {
+      if (!V3.camera) return;
+      const cp=Math.cos(V3.pitch), sp=Math.sin(V3.pitch);
+      V3.camera.position.set(Math.sin(V3.yaw)*cp*V3.distance, sp*V3.distance, Math.cos(V3.yaw)*cp*V3.distance);
+      V3.camera.lookAt(0,2,0);
+    }
+
+    function bindVoxelInput(canvas) {
+      if (V3.inputBound) return;
+      V3.inputBound=true;
+      canvas.addEventListener('contextmenu',e=>e.preventDefault());
+      canvas.addEventListener('pointerdown',e=>{
+        canvas.setPointerCapture(e.pointerId); V3.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+        V3.dragging=true; V3.moved=false; V3.pointerId=e.pointerId; V3.lastX=e.clientX; V3.lastY=e.clientY;
+      });
+      canvas.addEventListener('pointermove',e=>{
+        if (V3.pointers.has(e.pointerId)) V3.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+        if (V3.pointers.size===2) {
+          const p=[...V3.pointers.values()], d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);
+          if (V3.pinchDistance) V3.distance=Math.max(9,Math.min(30,V3.distance-(d-V3.pinchDistance)*.035));
+          V3.pinchDistance=d; V3.moved=true; updateCamera(); return;
+        }
+        if (V3.dragging && e.pointerId===V3.pointerId) {
+          const dx=e.clientX-V3.lastX,dy=e.clientY-V3.lastY;
+          if (Math.abs(dx)+Math.abs(dy)>5) V3.moved=true;
+          if (V3.moved) { V3.yaw-=dx*.009; V3.pitch=Math.max(.3,Math.min(1.2,V3.pitch+dy*.006)); updateCamera(); }
+          V3.lastX=e.clientX; V3.lastY=e.clientY;
+        } else updateTargetFromPointer(e);
+      });
+      canvas.addEventListener('pointerup',e=>{
+        if (!V3.moved && V3.pointers.size<2) { updateTargetFromPointer(e); if(V3.targetCell) handleVoxelCellClicked(V3.targetCell); }
+        V3.pointers.delete(e.pointerId); V3.pinchDistance=0; if(e.pointerId===V3.pointerId)V3.dragging=false;
+      });
+      canvas.addEventListener('pointercancel',e=>{V3.pointers.delete(e.pointerId);V3.dragging=false;V3.pinchDistance=0;});
+      canvas.addEventListener('wheel',e=>{e.preventDefault();V3.distance=Math.max(9,Math.min(30,V3.distance+Math.sign(e.deltaY)));updateCamera();},{passive:false});
+    }
+
+    function updateTargetFromPointer(e) {
+      if (!V3.raycaster || !V3.buildPlane) return;
+      const rect=V3.renderer.domElement.getBoundingClientRect();
+      const pointer=new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-((e.clientY-rect.top)/rect.height)*2+1);
+      V3.raycaster.setFromCamera(pointer,V3.camera);
+      const hit=V3.raycaster.intersectObject(V3.buildPlane,false)[0];
+      if(!hit){V3.targetCell=null;updatePreviewMesh();return;}
+      const x=Math.floor(hit.point.x+GRID_COLS/2), z=Math.floor(hit.point.z+GRID_ROWS/2);
+      V3.targetCell=(x>=0&&x<GRID_COLS&&z>=0&&z<GRID_ROWS)?{x,y:STATE.buildLevel,z}:null;
+      updatePreviewMesh();
+    }
+
+    function updateBuildPlane() {
+      if (V3.buildPlane) V3.buildPlane.position.y=STATE.buildLevel+.02;
+      V3.targetCell=null; updatePreviewMesh();
+    }
+
+    function updatePreviewMesh() {
+      if (!V3.scene) return;
+      if(V3.preview){V3.scene.remove(V3.preview);V3.preview=null;}
+      if(!V3.targetCell||STATE.eraserActive)return;
+      V3.preview=createVoxelObject({...V3.targetCell,type:STATE.activeBlockId,rotation:STATE.blockRotation},true);V3.scene.add(V3.preview);
+    }
+
+    function findVoxel(x,y,z){return (STATE.voxels||[]).find(v=>v.x===x&&v.y===y&&v.z===z);}
+
+    function handleVoxelCellClicked(cell) {
+      audio.init();
+      const existing=findVoxel(cell.x,cell.y,cell.z);
+      if(STATE.eraserActive){
+        if(!existing)return;
+        rememberBuildAction(); STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;
+        STATE.voxels=STATE.voxels.filter(v=>v!==existing); audio.playPop();
+        rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();return showToast('Blok dipadam dan dipulangkan.');
+      }
+      const type=STATE.activeBlockId;
+      if(!type)return showToast('Pilih blok dari alatan dahulu.');
+      if((STATE.inventory[type]||0)<=0)return showToast('Blok ini telah habis. Beli lagi di kedai.');
+      if(cell.y>0&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.');
+      rememberBuildAction();
+      if(existing){STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;STATE.voxels=STATE.voxels.filter(v=>v!==existing);}
+      STATE.voxels.push({...cell,type,rotation:STATE.blockRotation});STATE.inventory[type]--;audio.playPlace();
+      rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();
+    }
+
+    function rebuildVoxelWorld() {
+      if(!V3.world)return;
+      while(V3.world.children.length)V3.world.remove(V3.world.children[0]);
+      (STATE.voxels||[]).forEach(v=>V3.world.add(createVoxelObject(v)));
+    }
+
+    function drawSandboxScene(){ rebuildVoxelWorld(); }
+    function resizeSandboxCanvas(){ resizeVoxelRenderer(); }
+
+    function calculateHouseProgress() {
+      const vox=STATE.voxels||[];
+      const count=fn=>vox.filter(fn).length;
+      const floor=count(v=>v.type==='parquet_floor'||(v.y===0&&['wood_wall','brick_wall','stone_wall'].includes(v.type)));
+      const walls=count(v=>['wood_wall','brick_wall','stone_wall','glass_wall'].includes(v.type));
+      const doors=count(v=>v.type.startsWith('door_'));
+      const windows=count(v=>v.type==='window_glass');
+      const roofs=count(v=>v.type.startsWith('roof_'));
+      const upper=count(v=>v.y>=1);
+      const landscape=count(v=>['fence_white','tree_shade','rose_flower','sunflower','garden_lamp','swimming_pool','fountain'].includes(v.type));
+      let percent=Math.round(Math.min(floor,12)/12*20+Math.min(walls,16)/16*25+(doors?10:0)+Math.min(windows,2)/2*10+Math.min(roofs,8)/8*20+Math.min(upper,5)/5*10+Math.min(landscape,3)/3*5);
+      let level=1,label='Tapak & Asas';
+      if(doors&&walls>=8){level=2;label='Dinding & Pintu';}
+      if(level>=2&&windows>=1&&roofs>=4){level=3;label='Tingkap & Bumbung';}
+      if(level>=3&&walls>=16&&roofs>=8){level=4;label='Rumah Lengkap';}
+      if(level>=4&&upper>=5&&landscape>=3){level=5;label='Rumah Premium';}
+      return {percent,level,label};
+    }
+
+    function updateSandboxHud() {
+      const count=(STATE.voxels||[]).length, p=calculateHouseProgress();
+      const xp=document.getElementById('hud-sandbox-xp'),coins=document.getElementById('hud-sandbox-coins');
+      if(xp)xp.textContent=`${STATE.xp.toLocaleString()} XP`;if(coins)coins.textContent=`${STATE.coins.toLocaleString()} Syiling`;
+      const blocks=document.getElementById('hud-sandbox-blocks');if(blocks)blocks.textContent=`${count} Blok`;
+      const level=document.getElementById('house-level-text');if(level)level.textContent=`Tahap ${p.level} • ${p.label}`;
+      const progress=document.getElementById('house-progress-text');if(progress)progress.textContent=`Kemajuan rumah: ${p.percent}%`;
+      const fill=document.getElementById('house-progress-fill');if(fill)fill.style.width=`${p.percent}%`;
+    }
+
+    function toggleEraserTool() {
+      STATE.eraserActive=!STATE.eraserActive;
+      const btn=document.getElementById('btn-eraser-mode');if(btn)btn.classList.toggle('active',STATE.eraserActive);
+      renderPaletteDock();updatePreviewMesh();audio.init();audio.playPop();
+      showToast(STATE.eraserActive?'🧹 Alat padam aktif. Ketuk blok pada aras dipilih.':'Alat binaan aktif.');
+    }
+
+    function takeHousePhoto() {
+      audio.init();audio.playFanfare();if(!V3.renderer)return;
+      V3.renderer.render(V3.scene,V3.camera);
+      const a=document.createElement('a');a.href=V3.renderer.domElement.toDataURL('image/png');a.download=`Rumah_3D_${STATE.studentName.replace(/ /g,'_')}.png`;
+      document.body.appendChild(a);a.click();a.remove();showToast('📸 Gambar rumah 3D berjaya dimuat turun!');
+    }
+
+    function openShopModal() {
+      document.getElementById('modal-shop').style.display='flex';
+      const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} Syiling`;
+      renderShopCatalog();audio.init();audio.playPop();
+    }
+
+    function renderShopCatalog() {
+      const container=document.getElementById('shop-items-display');if(!container)return;
+      container.innerHTML=BLOCK_CATALOG.filter(b=>b.cat===currentShopCategory).map(item=>`
+        <div class="shop-item-card"><div class="shop-item-icon">${item.icon}</div><div class="shop-item-name">${item.name}</div>
+        <div class="shop-item-price">🪙 ${item.price} Syiling</div><button class="btn-buy-item" onclick="buyBlockItem('${item.id}')">Beli (+1)</button></div>`).join('');
+    }
+
+    let purchaseLocked=false;
+    function buyBlockItem(blockId) {
+      if(purchaseLocked)return;purchaseLocked=true;setTimeout(()=>purchaseLocked=false,180);
+      const item=BLOCK_CATALOG.find(b=>b.id===blockId);if(!item)return;
+      audio.init();if(STATE.coins<item.price){audio.playBoing();return showToast(`❌ Syiling tidak cukup (${STATE.coins}/${item.price}). Main cabaran Matematik!`);}
+      STATE.coins-=item.price;STATE.inventory[blockId]=(STATE.inventory[blockId]||0)+1;STATE.activeBlockId=blockId;STATE.eraserActive=false;
+      audio.playChing();const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} Syiling`;
+      updateSandboxHud();renderPaletteDock();updatePreviewMesh();saveCurrentStudentState();showToast(`✅ ${item.name} dibeli (-${item.price} syiling).`);
+    }
+
+    function awardMathReward(xp, coins) {
+      STATE.xp+=xp;STATE.coins+=coins;STATE.mathStats.total++;STATE.mathStats.correct++;
+      saveCurrentStudentState();return {xp,coins};
+    }
+
+    function recordWrongMathAttempt(){STATE.mathStats.total++;saveCurrentStudentState();}
 
     function showToast(msg) {
       const b = document.getElementById('toast-msg');
