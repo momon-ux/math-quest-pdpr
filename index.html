@@ -38,40 +38,7 @@
       color: #fff;
     }
 
-    /* Rotation Overlay for Portrait Mode */
-    #rotate-device-prompt {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle, #0f172a 0%, #020617 100%);
-      z-index: 9999;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
-    }
-
-    .rotate-phone-icon {
-      font-size: 3.5rem;
-      margin-bottom: 14px;
-      animation: rotate-anim 2s infinite ease-in-out;
-    }
-
-    @keyframes rotate-anim {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(-90deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    /* Auto Show in Portrait on Small Screens */
-    @media (orientation: portrait) and (max-width: 900px) {
-      #rotate-device-prompt {
-        display: flex;
-      }
-    }
-
-    /* Master Landscape Game Container (16:9 widescreen arcade layout) */
+    /* Master Landscape Game Container (16:9 Widescreen Arcade Layout) */
     #game-stage {
       width: 100vw;
       height: 100vh;
@@ -80,6 +47,138 @@
       flex-direction: column;
       background: #050811;
       overflow: hidden;
+    }
+
+    /* Penyesuaian Khas Paparan Skrin Landscape Telefon Pintar */
+    @media (max-height: 520px) {
+      .top-hud {
+        height: 38px !important;
+        padding: 0 10px !important;
+      }
+      .hero-avatar-box {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 1rem !important;
+      }
+      .hero-vitals {
+        width: 80px !important;
+      }
+      .hud-bar-hp, .hud-bar-mp {
+        height: 5px !important;
+      }
+      .hud-timer-badge {
+        font-size: 0.75rem !important;
+        padding: 2px 8px !important;
+      }
+      .hud-stage-badge {
+        font-size: 0.65rem !important;
+        padding: 2px 6px !important;
+      }
+      .hud-score-pill {
+        font-size: 0.72rem !important;
+        padding: 2px 8px !important;
+      }
+      .hud-icon-btn {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.75rem !important;
+      }
+
+      /* Start Dialog Fit (Muat Skrin Landscape) */
+      .start-dialog-box {
+        max-width: 520px !important;
+        max-height: 94vh !important;
+        overflow-y: auto !important;
+        padding: 8px 14px !important;
+        gap: 6px !important;
+      }
+      .creator-tag-header {
+        font-size: 0.62rem !important;
+        padding-bottom: 3px !important;
+      }
+      .game-logo-title {
+        font-size: 1.3rem !important;
+      }
+      .start-inputs-row {
+        gap: 6px !important;
+      }
+      .game-input {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+      }
+      .hero-chip {
+        padding: 4px !important;
+        font-size: 0.72rem !important;
+        gap: 4px !important;
+      }
+      .grade-chip {
+        padding: 4px !important;
+        font-size: 0.72rem !important;
+      }
+      .btn-arcade {
+        padding: 7px !important;
+        font-size: 0.82rem !important;
+      }
+
+      /* Combat Action HUD Fit */
+      .combat-action-hud {
+        bottom: 8px !important;
+        right: 12px !important;
+        gap: 5px !important;
+      }
+      .target-challenge-bubble {
+        padding: 4px 10px !important;
+        max-width: 260px !important;
+      }
+      .challenge-tag {
+        font-size: 0.58rem !important;
+      }
+      .challenge-math {
+        font-size: 0.95rem !important;
+      }
+      .skills-cluster {
+        gap: 8px !important;
+      }
+      .skill-strike-btn {
+        width: 54px !important;
+        height: 54px !important;
+        font-size: 0.92rem !important;
+      }
+      .skill-strike-btn.btn-ult {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 1rem !important;
+      }
+
+      /* Steer Controls Fit */
+      .steer-controls-left {
+        bottom: 10px !important;
+        left: 12px !important;
+        gap: 6px !important;
+      }
+      .steer-btn {
+        width: 48px !important;
+        height: 40px !important;
+        font-size: 1.1rem !important;
+      }
+
+      /* Results & Leaderboard Dialogs Fit */
+      .results-dialog-box {
+        max-width: 460px !important;
+        max-height: 94vh !important;
+        overflow-y: auto !important;
+        padding: 8px 12px !important;
+        gap: 5px !important;
+      }
+      .leaderboard-dialog-box {
+        max-width: 520px !important;
+        max-height: 94vh !important;
+        padding: 8px 12px !important;
+        gap: 6px !important;
+      }
+      .scores-scroll-list {
+        max-height: 42vh !important;
+      }
     }
 
     /* Top MOBA/Arcade HUD */
@@ -644,15 +743,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Amaran Telefon Jika Mod Menegak (Portrait) -->
-  <div id="rotate-device-prompt">
-    <div class="rotate-phone-icon">📱 ➔ 🔄</div>
-    <h2 style="color: #38bdf8; font-size: 1.3rem; margin-bottom: 6px;">SILA PUSINGKAN TELEFON KE MOD MELINTANG (LANDSCAPE)</h2>
-    <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px;">
-      Game ini dimainkan secara melintang penuh seperti <b>Mobile Legends</b> untuk pengalaman aksi arcade sebenar!
-    </p>
-  </div>
 
   <!-- PENTAS PERMAINAN MELINTANG PENUH (LANDSCAPE STAGE) -->
   <div id="game-stage">
@@ -1381,11 +1471,14 @@
         audio.playLaser();
         audio.playChime();
 
+        const heroX = Math.max(50, Math.min(100, G.canvas.width * 0.14));
+        const targetX = G.canvas.width - Math.max(70, Math.min(160, G.canvas.width * 0.2));
+
         // Spawn Laser projectile
         G.lasers.push({
-          x: 100,
+          x: heroX,
           y: G.heroY,
-          tx: G.canvas.width - 160,
+          tx: targetX,
           ty: G.stage === 2 ? G.bossY : G.heroY,
           color: '#22d3ee',
           size: 10
@@ -1399,7 +1492,7 @@
 
           for (let i = 0; i < 20; i++) {
             G.particles.push({
-              x: G.canvas.width - 160,
+              x: targetX,
               y: G.stage === 2 ? G.bossY : G.heroY,
               vx: (Math.random() - 0.5) * 12,
               vy: (Math.random() - 0.5) * 12,
@@ -1563,72 +1656,75 @@
       G.heroY += (G.heroYTarget - G.heroY) * 0.15;
 
       // 2. Render Hero (Player Character)
-      ctx.font = '48px sans-serif';
+      const heroX = Math.max(50, Math.min(100, w * 0.14));
+      ctx.font = (h < 420 ? '38px' : '48px') + ' sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(G.heroEmoji, 100, G.heroY + 16);
+      ctx.fillText(G.heroEmoji, heroX, G.heroY + 16);
 
       // Hero Forcefield aura
       ctx.strokeStyle = 'rgba(6, 182, 212, 0.6)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(100, G.heroY, 32, 0, Math.PI * 2);
+      ctx.arc(heroX, G.heroY, (h < 420 ? 25 : 32), 0, Math.PI * 2);
       ctx.stroke();
 
-      // 3. Render Targets based on Stage
+      // 3. Render Targets based on Stage (Landscape Viewport Responsive)
+      const targetX = w - Math.max(70, Math.min(160, w * 0.2));
+
       if (G.stage === 1) {
         // Stage 1: Security Cyber Towers
-        const towerX = w - 160;
+        const towerX = targetX;
         ctx.fillStyle = '#1e293b';
-        ctx.fillRect(towerX - 25, 60, 50, h - 120);
+        ctx.fillRect(towerX - 25, 45, 50, h - 90);
         ctx.strokeStyle = '#ef4444';
-        ctx.strokeRect(towerX - 25, 60, 50, h - 120);
-        ctx.font = '40px sans-serif';
-        ctx.fillText('📡', towerX, h * 0.4);
-        ctx.fillText('⚡', towerX, h * 0.6);
+        ctx.strokeRect(towerX - 25, 45, 50, h - 90);
+        ctx.font = (h < 420 ? '32px' : '40px') + ' sans-serif';
+        ctx.fillText('📡', towerX, h * 0.38);
+        ctx.fillText('⚡', towerX, h * 0.65);
 
         // Tower Health Info
         ctx.fillStyle = '#f87171';
-        ctx.font = 'bold 12px Chakra Petch, sans-serif';
-        ctx.fillText(`MENARA: GELOMBANG ${G.stageWave + 1}/${G.maxWaves}`, towerX, 48);
+        ctx.font = 'bold 11px Chakra Petch, sans-serif';
+        ctx.fillText(`MENARA: ${G.stageWave + 1}/${G.maxWaves}`, towerX, 36);
 
       } else if (G.stage === 2) {
         // Stage 2: Mech Titan Boss
         G.bossAnimOffset += 0.05;
-        G.bossY = (h * 0.45) + Math.sin(G.bossAnimOffset) * 20;
-        const bX = w - 170;
+        G.bossY = (h * 0.45) + Math.sin(G.bossAnimOffset) * 16;
+        const bX = targetX;
 
         // Dynamic Boss Health Bar above head
-        const barW = 120;
+        const barW = Math.min(120, w * 0.24);
         const currentHpW = Math.max(0, (G.bossHp / G.bossMaxHp) * barW);
         ctx.fillStyle = 'rgba(0,0,0,0.85)';
-        ctx.fillRect(bX - 60, G.bossY - 55, barW, 12);
+        ctx.fillRect(bX - (barW / 2), G.bossY - 50, barW, 10);
         ctx.fillStyle = '#ef4444';
-        ctx.fillRect(bX - 60, G.bossY - 55, currentHpW, 12);
+        ctx.fillRect(bX - (barW / 2), G.bossY - 50, currentHpW, 10);
         ctx.strokeStyle = '#f59e0b';
         ctx.lineWidth = 1.5;
-        ctx.strokeRect(bX - 60, G.bossY - 55, barW, 12);
+        ctx.strokeRect(bX - (barW / 2), G.bossY - 50, barW, 10);
 
         ctx.fillStyle = '#fff';
-        ctx.font = 'bold 11px Chakra Petch, sans-serif';
-        ctx.fillText(`TITAN HP: ${Math.max(0, G.bossHp)}/${G.bossMaxHp}`, bX, G.bossY - 62);
+        ctx.font = 'bold 10px Chakra Petch, sans-serif';
+        ctx.fillText(`TITAN: ${Math.max(0, G.bossHp)}/${G.bossMaxHp} HP`, bX, G.bossY - 56);
 
         // Giant Boss Sprite
-        ctx.font = '68px sans-serif';
-        ctx.fillText('🤖', bX, G.bossY + 22);
+        ctx.font = (h < 420 ? '56px' : '68px') + ' sans-serif';
+        ctx.fillText('🤖', bX, G.bossY + 20);
 
       } else if (G.stage === 3) {
         // Stage 3: Hyper Warp Speed Gates
         ctx.strokeStyle = '#10b981';
         ctx.lineWidth = 4;
-        ctx.strokeRect(w - 180, 70, 80, h - 140);
-        ctx.font = '36px sans-serif';
-        ctx.fillText('🌀', w - 140, h * 0.35);
-        ctx.fillText('💎', w - 140, h * 0.65);
+        ctx.strokeRect(targetX - 35, 45, 70, h - 90);
+        ctx.font = (h < 420 ? '28px' : '36px') + ' sans-serif';
+        ctx.fillText('🌀', targetX, h * 0.36);
+        ctx.fillText('💎', targetX, h * 0.66);
 
         // Warp Gate Info
         ctx.fillStyle = '#34d399';
-        ctx.font = 'bold 12px Chakra Petch, sans-serif';
-        ctx.fillText(`PINTU WARP: ${G.stageWave + 1}/${G.maxWaves}`, w - 140, 52);
+        ctx.font = 'bold 11px Chakra Petch, sans-serif';
+        ctx.fillText(`WARP: ${G.stageWave + 1}/${G.maxWaves}`, targetX, 36);
       }
 
       // 4. Update & Draw Lasers
