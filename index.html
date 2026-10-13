@@ -2,1234 +2,1050 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MATH QUEST: SIBER LEGENDS - SK Ranggu (Pembangun: Mohammad Fikrey)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>MATH SHOOTER — Meriam Belon Matematik SK Ranggu Tawau</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
+    /* ==============================================================
+       MATH SHOOTER CARTOON ARCADE THEME (VIBRANT SKY & GREEN HILLS)
+       ============================================================== */
     :root {
-      --bg-dark: #050811;
-      --cyan: #06b6d4;
-      --cyan-glow: #22d3ee;
-      --emerald: #10b981;
-      --gold: #f59e0b;
-      --crimson: #ef4444;
-      --purple: #8b5cf6;
-      --font-display: 'Chakra Petch', sans-serif;
-      --font-retro: 'Press Start 2P', monospace;
+      --sky-top: #38bdf8;
+      --sky-mid: #60a5fa;
+      --sky-bot: #bae6fd;
+      --grass-green: #22c55e;
+      --grass-dark: #15803d;
+      --wood-brown: #854d0e;
+      --gold-yellow: #facc15;
+      --gold-border: #b45309;
+      --orange-balloon: #f97316;
+      --red-balloon: #ef4444;
+      --blue-balloon: #0ea5e9;
+      --purple-balloon: #a855f7;
+      --dark-text: #0f172a;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Fredoka', 'Nunito', -apple-system, sans-serif;
     }
 
     html, body {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
-      background-color: #000;
-      font-family: var(--font-display);
-      color: #fff;
+      background: #0284c7;
+      color: #0f172a;
     }
 
-    /* Master Landscape Game Container (16:9 Widescreen Arcade Layout) */
-    #game-stage {
+    /* Main Landscape Container (16:9 widescreen focus) */
+    #game-viewport {
+      position: relative;
       width: 100vw;
       height: 100vh;
-      position: relative;
+      max-width: 100%;
+      max-height: 100%;
       display: flex;
       flex-direction: column;
-      background: #050811;
       overflow: hidden;
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-bot) 85%, #86efac 100%);
     }
 
-    /* Penyesuaian Khas Paparan Skrin Landscape Telefon Pintar */
-    @media (max-height: 520px) {
-      .top-hud {
-        height: 38px !important;
-        padding: 0 10px !important;
-      }
-      .hero-avatar-box {
-        width: 30px !important;
-        height: 30px !important;
-        font-size: 1rem !important;
-      }
-      .hero-vitals {
-        width: 80px !important;
-      }
-      .hud-bar-hp, .hud-bar-mp {
-        height: 5px !important;
-      }
-      .hud-timer-badge {
-        font-size: 0.75rem !important;
-        padding: 2px 8px !important;
-      }
-      .hud-stage-badge {
-        font-size: 0.65rem !important;
-        padding: 2px 6px !important;
-      }
-      .hud-score-pill {
-        font-size: 0.72rem !important;
-        padding: 2px 8px !important;
-      }
-      .hud-icon-btn {
-        width: 28px !important;
-        height: 28px !important;
-        font-size: 0.75rem !important;
-      }
-
-      /* Start Dialog Fit (Muat Skrin Landscape) */
-      .start-dialog-box {
-        max-width: 520px !important;
-        max-height: 94vh !important;
-        overflow-y: auto !important;
-        padding: 8px 14px !important;
-        gap: 6px !important;
-      }
-      .creator-tag-header {
-        font-size: 0.62rem !important;
-        padding-bottom: 3px !important;
-      }
-      .game-logo-title {
-        font-size: 1.3rem !important;
-      }
-      .start-inputs-row {
-        gap: 6px !important;
-      }
-      .game-input {
-        padding: 6px 10px !important;
-        font-size: 0.8rem !important;
-      }
-      .hero-chip {
-        padding: 4px !important;
-        font-size: 0.72rem !important;
-        gap: 4px !important;
-      }
-      .grade-chip {
-        padding: 4px !important;
-        font-size: 0.72rem !important;
-      }
-      .btn-arcade {
-        padding: 7px !important;
-        font-size: 0.82rem !important;
-      }
-
-      /* Combat Action HUD Fit */
-      .combat-action-hud {
-        bottom: 8px !important;
-        right: 12px !important;
-        gap: 5px !important;
-      }
-      .target-challenge-bubble {
-        padding: 4px 10px !important;
-        max-width: 260px !important;
-      }
-      .challenge-tag {
-        font-size: 0.58rem !important;
-      }
-      .challenge-math {
-        font-size: 0.95rem !important;
-      }
-      .skills-cluster {
-        gap: 8px !important;
-      }
-      .skill-strike-btn {
-        width: 54px !important;
-        height: 54px !important;
-        font-size: 0.92rem !important;
-      }
-      .skill-strike-btn.btn-ult {
-        width: 60px !important;
-        height: 60px !important;
-        font-size: 1rem !important;
-      }
-
-      /* Steer Controls Fit */
-      .steer-controls-left {
-        bottom: 10px !important;
-        left: 12px !important;
-        gap: 6px !important;
-      }
-      .steer-btn {
-        width: 48px !important;
-        height: 40px !important;
-        font-size: 1.1rem !important;
-      }
-
-      /* Results & Leaderboard Dialogs Fit */
-      .results-dialog-box {
-        max-width: 460px !important;
-        max-height: 94vh !important;
-        overflow-y: auto !important;
-        padding: 8px 12px !important;
-        gap: 5px !important;
-      }
-      .leaderboard-dialog-box {
-        max-width: 520px !important;
-        max-height: 94vh !important;
-        padding: 8px 12px !important;
-        gap: 6px !important;
-      }
-      .scores-scroll-list {
-        max-height: 42vh !important;
-      }
-      .roster-scroll-box {
-        max-height: 60px !important;
-      }
-      .roster-name-chip {
-        padding: 3px 5px !important;
-        font-size: 0.68rem !important;
-      }
-    }
-
-    /* Top MOBA/Arcade HUD */
-    .top-hud {
-      width: 100%;
-      height: 48px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 80%, transparent 100%);
-      border-bottom: 1.5px solid rgba(56, 189, 248, 0.3);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 14px;
-      z-index: 50;
+    /* Moving Cartoon Clouds Background */
+    .clouds-layer {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 60%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
     }
 
-    .hud-hero-profile {
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 50px;
+      opacity: 0.9;
+      animation: floatCloud linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 50%;
+    }
+
+    .cloud-1 { width: 140px; height: 45px; top: 12%; left: -160px; animation-duration: 32s; }
+    .cloud-1::before { width: 55px; height: 55px; top: -25px; left: 20px; }
+    .cloud-1::after { width: 70px; height: 70px; top: -35px; left: 55px; }
+
+    .cloud-2 { width: 180px; height: 55px; top: 28%; left: -220px; animation-duration: 44s; animation-delay: 8s; }
+    .cloud-2::before { width: 65px; height: 65px; top: -30px; left: 30px; }
+    .cloud-2::after { width: 85px; height: 85px; top: -42px; left: 75px; }
+
+    .cloud-3 { width: 110px; height: 38px; top: 6%; left: -130px; animation-duration: 26s; animation-delay: 15s; }
+    .cloud-3::before { width: 45px; height: 45px; top: -20px; left: 15px; }
+    .cloud-3::after { width: 55px; height: 55px; top: -28px; left: 45px; }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(calc(100vw + 250px)); }
+    }
+
+    /* Title Styling matching image */
+    .math-shooter-logo {
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 900;
+      color: #fde047;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      -webkit-text-stroke: 2px #78350f;
+      text-shadow: 
+        0 4px 0 #78350f,
+        0 6px 10px rgba(0,0,0,0.35);
+      line-height: 1.1;
+      display: inline-block;
+    }
+
+    .subtitle-badge {
+      background: #78350f;
+      color: #fef08a;
+      font-size: clamp(0.65rem, 1.4vw, 0.8rem);
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* ==============================================================
+       START SCREEN OVERLAY (LOBBY & ROSTER SELECTION)
+       ============================================================== */
+    #screen-lobby {
+      position: absolute;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.95) 0%, rgba(2, 132, 199, 0.98) 100%);
+      overflow-y: auto;
+    }
+
+    .lobby-card {
+      width: 100%;
+      max-width: 820px;
+      max-height: 94vh;
+      background: rgba(255, 255, 255, 0.97);
+      border: 4px solid #facc15;
+      border-radius: 20px;
+      padding: 14px 20px;
+      box-shadow: 
+        0 8px 0 #b45309,
+        0 15px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .lobby-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed #e2e8f0;
+      padding-bottom: 8px;
+    }
+
+    .developer-credit-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #1e293b;
+      background: #fef08a;
+      border: 1px solid #eab308;
+      border-radius: 8px;
+      padding: 4px 10px;
+      text-align: right;
+    }
+
+    .lobby-grid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 580px) {
+      .lobby-grid-row { grid-template-columns: 1fr; }
+    }
+
+    .selector-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .selector-label {
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #78350f;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .grade-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .grade-btn {
+      padding: 8px;
+      font-size: 0.9rem;
+      font-weight: 900;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 3px 0 #94a3b8;
+    }
+    .grade-btn.active {
+      background: #facc15;
+      color: #78350f;
+      border-color: #b45309;
+      box-shadow: 0 3px 0 #78350f;
+      transform: translateY(-2px);
+    }
+
+    .class-select {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+      cursor: pointer;
+    }
+
+    /* Scrollable Roster Container */
+    .roster-picker-box {
+      border: 2px solid #38bdf8;
+      border-radius: 14px;
+      background: #f0f9ff;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .roster-top-search {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .roster-search-input {
+      flex: 1;
+      max-width: 200px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      border-radius: 8px;
+      border: 1.5px solid #7dd3fc;
+      background: #fff;
+    }
+
+    .roster-names-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 6px;
+      max-height: 120px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .roster-name-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .roster-name-chip:hover {
+      background: #e0f2fe;
+      border-color: #38bdf8;
+    }
+    .roster-name-chip.active {
+      background: #22c55e;
+      color: #ffffff;
+      border-color: #15803d;
+      box-shadow: 0 2px 5px rgba(34, 197, 94, 0.4);
+      transform: scale(1.02);
+    }
+
+    .roster-chosen-alert {
+      background: #fef9c3;
+      border: 1.5px solid #facc15;
+      color: #854d0e;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    /* Cannon Type Picker */
+    .cannon-picker-strip {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .cannon-chip {
+      flex: 1;
+      max-width: 180px;
+      padding: 6px 10px;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cannon-chip.active {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #166534;
+      box-shadow: 0 3px 0 #16a34a;
+    }
+
+    .btn-start-game {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+      border: 2px solid #14532d;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 
+        0 5px 0 #14532d,
+        0 8px 15px rgba(22, 163, 74, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.12s ease;
+    }
+    .btn-start-game:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #14532d;
+    }
+
+    .lobby-foot-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .btn-text-tool {
+      background: none;
+      border: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .btn-text-tool:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    /* ==============================================================
+       GAMEPLAY ARENA HUD (TOP & BOTTOM)
+       ============================================================== */
+    #arena-hud-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 3px solid #facc15;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      z-index: 50;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .hud-player-tag {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
-    .hero-avatar-box {
-      width: 38px;
-      height: 38px;
+    .hud-avatar-circle {
+      width: 32px;
+      height: 32px;
+      background: #fef08a;
+      border: 2px solid #eab308;
       border-radius: 50%;
-      background: #1e293b;
-      border: 2px solid var(--cyan-glow);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+      font-size: 1.1rem;
     }
-
-    .hero-vitals {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      width: 110px;
-    }
-
-    .hud-bar-hp, .hud-bar-mp {
-      height: 6px;
-      background: rgba(0, 0, 0, 0.8);
-      border-radius: 4px;
+    .hud-name-text {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f172a;
+      max-width: 160px;
+      white-space: nowrap;
       overflow: hidden;
-      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      text-overflow: ellipsis;
+    }
+    .hud-class-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 6px;
+      border-radius: 6px;
     }
 
-    .hud-fill-hp {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, #10b981, #34d399);
-      transition: width 0.3s;
-    }
-
-    .hud-fill-mp {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, #0284c7, #38bdf8);
-      transition: width 0.3s;
-    }
-
-    .hud-center-info {
+    .hud-stats-group {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .hud-timer-badge {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--gold);
-      color: #fbbf24;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .hud-stage-badge {
-      background: rgba(99, 102, 241, 0.2);
-      border: 1px solid #818cf8;
-      color: #c7d2fe;
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .hud-stats-right {
+    .hud-stat-pill {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
     }
 
-    .hud-score-pill {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      padding: 3px 10px;
-      border-radius: 14px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--cyan-glow);
+    .hud-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .hud-icon-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1rem;
       cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.15s;
+      box-shadow: 0 2px 0 #94a3b8;
     }
     .hud-icon-btn:active {
-      transform: scale(0.92);
-      background: var(--cyan);
-      color: #000;
+      transform: translateY(1px);
     }
 
-    /* Main Battle Canvas (Full Landscape Screen) */
-    #battle-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 10;
-    }
-
-    /* Landscape Action Overlay (Skill Buttons on Right, Target on Top) */
-    .combat-action-hud {
-      position: absolute;
-      bottom: 14px;
-      right: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      z-index: 45;
-      pointer-events: none;
-    }
-
-    .target-challenge-bubble {
-      background: rgba(15, 23, 42, 0.94);
-      border: 2px solid var(--cyan-glow);
-      border-radius: 14px;
-      padding: 6px 14px;
-      color: #fff;
-      text-align: right;
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-      pointer-events: auto;
-      max-width: 320px;
-      margin-bottom: 2px;
-    }
-
-    .challenge-tag {
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: var(--cyan-glow);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .challenge-math {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-
-    .skills-cluster {
-      display: flex;
-      gap: 10px;
-      pointer-events: auto;
-    }
-
-    .skill-strike-btn {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #0284c7 0%, #0f172a 100%);
-      border: 2.5px solid var(--cyan-glow);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 800;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(6, 182, 212, 0.4);
-      transition: all 0.12s;
-    }
-
-    .skill-strike-btn:active {
-      transform: scale(0.9);
-      background: #22d3ee;
-      color: #000;
-    }
-
-    .skill-strike-btn.btn-alt {
-      background: radial-gradient(circle, #6d28d9 0%, #0f172a 100%);
-      border-color: #a78bfa;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(139, 92, 246, 0.4);
-    }
-
-    .skill-strike-btn.btn-ult {
-      width: 76px;
-      height: 76px;
-      background: radial-gradient(circle, #dc2626 0%, #0f172a 100%);
-      border-color: #f87171;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.6);
-      font-size: 1.15rem;
-    }
-
-    /* Left Steer Controls for Stage 3 (Racer) */
-    .steer-controls-left {
-      position: absolute;
-      bottom: 16px;
-      left: 18px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 45;
-    }
-
-    .steer-btn {
-      width: 60px;
-      height: 52px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 2px solid var(--emerald);
-      color: #6ee7b7;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
-    }
-    .steer-btn:active {
-      transform: scale(0.92);
-      background: var(--emerald);
-      color: #000;
-    }
-
-    /* Screen Shake */
-    .screen-shake {
-      animation: global-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
-    }
-    @keyframes global-shake {
-      10%, 90% { transform: translate3d(-6px, 0, 0); }
-      20%, 80% { transform: translate3d(8px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
-      40%, 60% { transform: translate3d(8px, 0, 0); }
-    }
-
-    /* START SCREEN OVERLAY (Landscape Widescreen) */
-    #overlay-start-screen {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 40%, rgba(14, 165, 233, 0.25) 0%, #030712 80%);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .start-dialog-box {
-      width: 100%;
-      max-width: 580px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 2px solid var(--border-hud);
-      border-radius: 20px;
-      padding: 18px 22px;
-      box-shadow: 0 0 35px rgba(6, 182, 212, 0.35);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-    }
-
-    .creator-tag-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 6px;
-      font-size: 0.72rem;
-      color: #7dd3fc;
-    }
-
-    .game-logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .game-logo-title {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    .start-inputs-row {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 10px;
-    }
-
-    .game-input {
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 10px;
-      padding: 9px 12px;
-      color: #fff;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      outline: none;
-    }
-    .game-input:focus {
-      border-color: var(--cyan-glow);
-      box-shadow: 0 0 10px var(--cyan);
-    }
-
-    .hero-choice-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .hero-chip {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1.5px solid rgba(56, 189, 248, 0.2);
-      border-radius: 10px;
-      padding: 6px;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      transition: all 0.15s;
-    }
-    .hero-chip.active {
-      background: rgba(6, 182, 212, 0.25);
-      border-color: var(--cyan-glow);
-      box-shadow: 0 0 12px var(--cyan);
-    }
-
-    .grade-choice-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .grade-chip {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1.5px solid rgba(56, 189, 248, 0.2);
-      border-radius: 10px;
-      padding: 6px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-    .grade-chip.active {
-      background: rgba(16, 185, 129, 0.25);
-      border-color: var(--emerald);
-      box-shadow: 0 0 12px var(--emerald);
-    }
-
-    .start-action-row {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .btn-arcade {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1rem;
-      text-transform: uppercase;
-      padding: 11px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.15s;
-    }
-    .btn-arcade:active {
-      transform: scale(0.96);
-    }
-    .btn-arcade.btn-play {
-      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
-      color: #fff;
-      border: 1px solid #38bdf8;
-      box-shadow: 0 0 20px var(--cyan);
-    }
-    .btn-arcade.btn-board {
-      background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%);
-      color: #fff;
-      border: 1px solid #a78bfa;
-    }
-
-    .admin-gear-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #38bdf8;
-      border-radius: 8px;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-    .admin-gear-btn:hover {
-      background: rgba(6, 182, 212, 0.3);
-      border-color: var(--cyan-glow);
-      transform: rotate(45deg);
-    }
-
-    /* Roster Picker Styles */
-    .roster-selection-container {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      background: rgba(2, 6, 23, 0.7);
-      border: 1.5px solid rgba(56, 189, 248, 0.3);
-      border-radius: 12px;
-      padding: 6px 10px;
-    }
-    .roster-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
-    .roster-scroll-box {
-      max-height: 90px;
-      overflow-y: auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px;
-      padding-right: 4px;
-    }
-    .roster-name-chip {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 5px 8px;
-      font-size: 0.73rem;
-      font-weight: 700;
-      color: #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: all 0.12s;
-    }
-    .roster-name-chip:hover {
-      background: rgba(56, 189, 248, 0.2);
-      border-color: var(--cyan-glow);
-    }
-    .roster-name-chip.active {
-      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
-      border-color: #fff;
-      color: #fff;
-      font-weight: 800;
-      box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
-    }
-    .roster-selected-banner {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #a5f3fc;
-      text-align: center;
-      padding: 3px 6px;
-      border-radius: 6px;
-      background: rgba(6, 182, 212, 0.12);
-      border: 1px dashed rgba(56, 189, 248, 0.4);
-    }
-
-    /* Admin Auth & Panel Modals */
-    .admin-modal-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 7, 18, 0.94);
-      backdrop-filter: blur(8px);
-      z-index: 120;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-    .admin-card-box {
-      width: 100%;
-      max-width: 540px;
-      max-height: 92vh;
-      overflow-y: auto;
-      background: rgba(15, 23, 42, 0.98);
-      border: 2px solid var(--cyan-glow);
-      border-radius: 18px;
-      padding: 14px 18px;
-      box-shadow: 0 0 35px rgba(6, 182, 212, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .admin-tab-bar {
-      display: flex;
-      gap: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 6px;
-    }
-    .admin-tab-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .admin-tab-btn.active {
-      background: #0284c7;
-      border-color: var(--cyan-glow);
-      color: #fff;
-    }
-    .admin-students-scroll {
-      max-height: 38vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding-right: 4px;
-    }
-    .admin-student-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-    }
-    .admin-btn-delete {
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid #f87171;
-      color: #fca5a5;
-      font-size: 0.75rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .admin-btn-delete:hover {
-      background: #ef4444;
-      color: #fff;
-    }
-
-    /* VICTORY / RESULTS OVERLAY */
-    #overlay-results {
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 7, 18, 0.92);
-      backdrop-filter: blur(10px);
-      z-index: 95;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-    }
-
-    .results-dialog-box {
-      width: 100%;
-      max-width: 520px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 2px solid var(--gold);
-      border-radius: 20px;
-      padding: 16px 20px;
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 8px;
-    }
-
-    /* LEADERBOARD CALENDAR MODAL (LANDSCAPE OPTIMIZED) */
-    #overlay-leaderboard {
-      position: absolute;
-      inset: 0;
-      background: rgba(3, 7, 18, 0.92);
-      backdrop-filter: blur(8px);
-      z-index: 110;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-
-    .leaderboard-dialog-box {
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      background: rgba(15, 23, 42, 0.98);
-      border: 2px solid var(--border-hud);
-      border-radius: 18px;
-      padding: 12px 16px;
-      box-shadow: 0 0 35px rgba(6, 182, 212, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .calendar-filter-strip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      background: rgba(2, 6, 23, 0.8);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 4px 8px;
-      border-radius: 10px;
-    }
-
-    .date-chip-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .date-chip-btn.active {
-      background: #0284c7;
-      border-color: var(--cyan-glow);
-      color: #fff;
-    }
-
-    .scores-scroll-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-height: 46vh;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .date-group-card {
-      background: rgba(2, 6, 23, 0.7);
-      border-left: 3px solid var(--cyan-glow);
-      padding: 4px 8px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: #a5f3fc;
-      border-radius: 0 6px 6px 0;
-    }
-
-    .score-row-item {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 6px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* Toast Notification */
-    .toast-pill {
+    /* Floating Math Question Banner (Center Sky) */
+    #math-question-banner {
       position: absolute;
       top: 56px;
       left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: rgba(15, 23, 42, 0.96);
-      border: 1.5px solid var(--cyan-glow);
-      color: #fff;
-      padding: 6px 16px;
+      transform: translateX(-50%);
+      z-index: 40;
+      background: #ffffff;
+      border: 3.5px solid #f59e0b;
+      border-radius: 16px;
+      padding: 8px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 
+        0 6px 0 #b45309,
+        0 12px 20px rgba(0,0,0,0.25);
+      min-width: 280px;
+      max-width: 85%;
+      animation: popInQuestion 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popInQuestion {
+      0% { transform: translate(-50%, -20px) scale(0.9); opacity: 0; }
+      100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    }
+
+    .question-tag-label {
+      font-size: 0.65rem;
+      font-weight: 900;
+      color: #92400e;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      background: #fef3c7;
+      padding: 1px 8px;
+      border-radius: 6px;
+      margin-bottom: 2px;
+    }
+
+    .question-math-formula {
+      font-size: clamp(1.4rem, 4vw, 2.3rem);
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 1px;
+    }
+
+    /* Main Canvas Area */
+    #game-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      display: block;
+      cursor: crosshair;
+    }
+
+    /* Bottom Quick Action Strip (Tap to Shoot Option Cards) */
+    #arena-bottom-strip {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      max-width: 96%;
+      z-index: 45;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    .balloon-answer-btn {
+      background: #ffffff;
+      border: 3px solid #f97316;
+      border-radius: 16px;
+      padding: 8px 18px;
+      font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+      font-weight: 900;
+      color: #0f172a;
+      cursor: pointer;
+      box-shadow: 
+        0 4px 0 #c2410c,
+        0 6px 12px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.12s ease;
+    }
+    .balloon-answer-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #c2410c;
+    }
+    .balloon-answer-btn.correct-burst {
+      background: #22c55e !important;
+      color: #fff !important;
+      border-color: #14532d !important;
+    }
+    .balloon-answer-btn.wrong-shake {
+      background: #ef4444 !important;
+      color: #fff !important;
+      border-color: #7f1d1d !important;
+      animation: shakeBtn 0.3s ease;
+    }
+
+    @keyframes shakeBtn {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    /* ==============================================================
+       MODALS & OVERLAYS (LEADERBOARD, ADMIN, CERTIFICATE)
+       ============================================================== */
+    .game-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .game-modal-box {
+      width: 100%;
+      max-width: 620px;
+      max-height: 92vh;
+      background: #ffffff;
+      border: 4px solid #facc15;
       border-radius: 20px;
-      font-size: 0.82rem;
+      box-shadow: 
+        0 8px 0 #b45309,
+        0 20px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 20px;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .modal-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed #cbd5e1;
+      padding-bottom: 8px;
+    }
+
+    .modal-title-text {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #78350f;
+    }
+
+    .modal-close-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-weight: 900;
+      color: #64748b;
+    }
+
+    /* Calendar Leaderboard Cards */
+    .filter-chip-strip {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.72rem;
       font-weight: 800;
-      box-shadow: 0 0 18px var(--cyan);
+      cursor: pointer;
+    }
+    .filter-chip.active {
+      background: #facc15;
+      border-color: #b45309;
+      color: #78350f;
+    }
+
+    .score-scroll-area {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .score-item-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 12px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+
+    /* Certificate Modal Specifics */
+    .cert-frame {
+      background: #fffbeb;
+      border: 4px double #d97706;
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Floating Toast */
+    #toast-banner {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-30px);
+      background: #1e293b;
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 300;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.2s ease-out;
-      z-index: 80;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .toast-pill.show {
-      opacity: 1;
+    #toast-banner.show {
       transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- PENTAS PERMAINAN MELINTANG PENUH (LANDSCAPE STAGE) -->
-  <div id="game-stage">
-
-    <!-- Top MOBA Arcade HUD -->
-    <header class="top-hud">
-      <div class="hud-hero-profile">
-        <div class="hero-avatar-box" id="hud-avatar-icon">🦸‍♂️</div>
-        <div class="hero-vitals">
-          <div class="hud-bar-hp"><div class="hud-fill-hp" id="hud-hp-bar"></div></div>
-          <div class="hud-bar-mp"><div class="hud-fill-mp" id="hud-mp-bar"></div></div>
-        </div>
-      </div>
-
-      <div class="hud-center-info">
-        <div class="hud-stage-badge" id="hud-stage-badge">ZON 1: TOWER INVASION</div>
-        <div class="hud-timer-badge" id="hud-timer-badge">⏱️ 15:00</div>
-      </div>
-
-      <div class="hud-stats-right">
-        <div class="hud-score-pill" id="hud-xp-text">⚡ 0 XP</div>
-        <button class="hud-icon-btn" onclick="openLeaderboard()" title="Papan Skor Kalendar">🏆</button>
-        <button class="hud-icon-btn" id="btn-sound-toggle" onclick="toggleSound()" title="Bunyi">🔊</button>
-        <button class="hud-icon-btn" onclick="openAdminAuth()" title="Tetapan Guru (Admin)">⚙️</button>
-      </div>
-    </header>
-
-    <!-- Canvas Grafik Aksi Arcade 60 FPS -->
-    <canvas id="battle-canvas"></canvas>
-
-    <!-- Combat Action Overlay (Skill Attack Buttons di Kanan Bawah) -->
-    <div class="combat-action-hud" id="combat-hud">
-      <div class="target-challenge-bubble" id="challenge-box">
-        <div class="challenge-tag" id="challenge-tag">TEMBAKAN CAS MERIAM</div>
-        <div class="challenge-math" id="challenge-math">8 × 7 = ?</div>
-      </div>
-      <div class="skills-cluster" id="skills-cluster">
-        <button class="skill-strike-btn" id="skill-btn-0" onclick="triggerSkillStrike(0)">56</button>
-        <button class="skill-strike-btn btn-alt" id="skill-btn-1" onclick="triggerSkillStrike(1)">54</button>
-        <button class="skill-strike-btn btn-ult" id="skill-btn-2" onclick="triggerSkillStrike(2)">64</button>
-      </div>
+  <div id="game-viewport">
+    <!-- Animated Clouds -->
+    <div class="clouds-layer">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
     </div>
 
-    <!-- Kawalan Stereng Kiri untuk Zon 3 (Racer) -->
-    <div class="steer-controls-left" id="steer-left-hud">
-      <button class="steer-btn" onclick="steerHero(-1)">⬆️</button>
-      <button class="steer-btn" onclick="steerHero(1)">⬇️</button>
-    </div>
-
-    <!-- Toast Banner -->
-    <div class="toast-pill" id="toast-banner">✨ Mesej Aksi</div>
+    <!-- Toast Notification -->
+    <div id="toast-banner">Notifikasi</div>
 
     <!-- ==============================================================
-         OVERLAY 1: START SCREEN (LANDSCAPE ARCADE MENU)
+         LOBBY SCREEN (LOGIN & PILIH NAMA MURID SK RANGGU)
          ============================================================== -->
-    <div id="overlay-start-screen">
-      <div class="start-dialog-box">
-        <div class="creator-tag-header">
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span>👨‍💻 Pembangun: <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b></span>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span>🏫 SK RANGGU</span>
-            <button class="admin-gear-btn" onclick="openAdminAuth()" title="Tetapan Guru (Admin)">⚙️</button>
-          </div>
-        </div>
-
-        <div class="game-logo-row">
-          <span style="font-size: 1.8rem;">🚀</span>
-          <div class="game-logo-title">MATH QUEST: SIBER</div>
-        </div>
-
-        <!-- Pilihan Tahun & Pilihan Kelas -->
-        <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 8px;">
-          <!-- Pilih Tahun -->
+    <div id="screen-lobby">
+      <div class="lobby-card">
+        <!-- Logo Header -->
+        <div class="lobby-header-row">
           <div>
-            <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-bottom: 2px;">1. PILIH TAHUN:</div>
-            <div class="grade-choice-strip">
-              <div class="grade-chip active" id="chip-g5" onclick="pickGrade(5)">TAHUN 5</div>
-              <div class="grade-chip" id="chip-g6" onclick="pickGrade(6)">TAHUN 6</div>
+            <div class="math-shooter-logo">🎯 MATH SHOOTER</div>
+            <div class="subtitle-badge">Meriam Belon Matematik PDPR — SK Ranggu Tawau</div>
+          </div>
+          <div class="developer-credit-tag">
+            👨‍💻 Pembangun Sistem:<br>
+            <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b>
+          </div>
+        </div>
+
+        <!-- Grade & Class Selection Grid -->
+        <div class="lobby-grid-row">
+          <!-- 1. Pilih Tahun -->
+          <div class="selector-group">
+            <label class="selector-label">1. PILIH TAHUN:</label>
+            <div class="grade-btn-group">
+              <button class="grade-btn active" id="btn-grade-5" onclick="selectGrade(5)">📘 TAHUN 5</button>
+              <button class="grade-btn" id="btn-grade-6" onclick="selectGrade(6)">📙 TAHUN 6</button>
             </div>
           </div>
-          <!-- Pilih Kelas -->
-          <div>
-            <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-bottom: 2px;">2. PILIH KELAS:</div>
-            <select id="select-player-class" class="game-input" onchange="onClassChange(this.value)" style="width:100%; height:32px; font-weight:700; font-size:0.8rem; padding:4px 8px; cursor:pointer;">
-              <!-- Populated dynamically: Khoir, Mumtaz, Jahid, Eltizam (Tahun 5 & 6) -->
+
+          <!-- 2. Pilih Kelas -->
+          <div class="selector-group">
+            <label class="selector-label">2. PILIH KELAS:</label>
+            <select id="select-class-dropdown" class="class-select" onchange="onClassSelected(this.value)">
+              <!-- Populated dynamically: 5 Khoir, 5 Mumtaz, 5 Jahid, 5 Eltizam / 6 Khoir, 6 Mumtaz, 6 Jahid, 6 Eltizam -->
             </select>
           </div>
         </div>
 
-        <!-- Senarai Nama Murid (Scrollable) -->
-        <div class="roster-selection-container">
-          <div class="roster-header-row">
-            <span style="font-size: 0.68rem; color: #7dd3fc; font-weight: 700;" id="roster-header-title">3. SCROLL & KLIK NAMA ANDA:</span>
-            <input type="text" id="roster-search-input" placeholder="🔍 Cari nama..." oninput="filterRosterNames(this.value)" style="background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); color:#fff; font-size:0.68rem; border-radius:6px; padding:2px 6px; width:110px;">
+        <!-- 3. Scrollable Student Name Picker -->
+        <div class="roster-picker-box">
+          <div class="roster-top-search">
+            <span class="selector-label" id="roster-label-title">3. SCROLL & KLIK NAMA ANDA:</span>
+            <input type="text" id="roster-search-box" class="roster-search-input" placeholder="🔍 Cari nama murid..." oninput="filterRosterNames(this.value)">
           </div>
-          <div class="roster-scroll-box" id="roster-names-list">
-            <!-- Populated dynamically by JS -->
+          <div class="roster-names-grid" id="roster-students-container">
+            <!-- Populated dynamically -->
           </div>
-          <div class="roster-selected-banner" id="roster-selected-display">
-            ⚠️ Sila scroll & klik nama anda dari senarai di atas
-          </div>
-        </div>
-
-        <!-- Pilih Hero Avatar -->
-        <div class="hero-choice-strip">
-          <div class="hero-chip active" id="chip-h1" onclick="pickHero('cyber', '🦸‍♂️', 'Ejen Siber')">
-            <span>🦸‍♂️</span> <span>Ejen Siber</span>
-          </div>
-          <div class="hero-chip" id="chip-h2" onclick="pickHero('ninja', '🥷', 'Ninja Kripto')">
-            <span>🥷</span> <span>Ninja Kripto</span>
-          </div>
-          <div class="hero-chip" id="chip-h3" onclick="pickHero('mech', '🤖', 'Mecha-Titan')">
-            <span>🤖</span> <span>Mecha-Titan</span>
+          <div class="roster-chosen-alert" id="roster-chosen-display">
+            ⚠️ Sila scroll dan klik nama anda daripada senarai di atas
           </div>
         </div>
 
-        <!-- Butang Mula Aksi & Papan Skor -->
-        <div class="start-action-row">
-          <button class="btn-arcade btn-board" onclick="openLeaderboard()">
-            <span>📅 PAPAN SKOR</span>
-          </button>
-          <button class="btn-arcade btn-play" onclick="startArcadeBattle()">
-            <span>⚔️ MASUK BATTLEFIELD</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         OVERLAY 2: RESULTS & SIJIL PENGEMBARA
-         ============================================================== -->
-    <div id="overlay-results">
-      <div class="results-dialog-box">
-        <div style="font-size: 2.8rem;" id="res-badge-icon">🏆</div>
-        <h2 style="font-size: 1.4rem; color: #fff;" id="res-badge-title">VICTORY ROYALE!</h2>
-        <div style="display: flex; gap: 8px; font-size: 2.2rem; margin: 2px 0;">
-          <span style="color: #fbbf24;">⭐</span><span style="color: #fbbf24;">⭐</span><span style="color: #fbbf24;">⭐</span>
-        </div>
-        
-        <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 8px 14px; width: 100%; font-size: 0.8rem; text-align: left;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-            <span style="color: #94a3b8;">Wira Ejen:</span>
-            <span style="font-weight: 700; color: #fff;" id="res-name-label">Danial</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-            <span style="color: #94a3b8;">Markah Pertarungan:</span>
-            <span style="font-weight: 800; color: var(--cyan-glow);" id="res-score-label">4,850 XP</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
-            <span style="color: #94a3b8;">Ketepatan Serangan:</span>
-            <span style="font-weight: 700; color: var(--emerald);" id="res-acc-label">92%</span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span style="color: #94a3b8;">Disahkan Oleh:</span>
-            <span style="font-weight: 700; color: #c4b5fd;">Mohammad Fikrey bin Abdul Gapar</span>
+        <!-- 4. Pilih Jenis Meriam (Cannon Skin) -->
+        <div class="selector-group">
+          <label class="selector-label" style="text-align: center;">4. PILIH MERIAM KEGEMARAN:</label>
+          <div class="cannon-picker-strip">
+            <div class="cannon-chip active" id="skin-green" onclick="selectCannonSkin('green', '🟢 Meriam Zamrud')">
+              <span>🟢</span> <span>Meriam Zamrud</span>
+            </div>
+            <div class="cannon-chip" id="skin-red" onclick="selectCannonSkin('red', '🔴 Meriam Berapi')">
+              <span>🔴</span> <span>Meriam Berapi</span>
+            </div>
+            <div class="cannon-chip" id="skin-blue" onclick="selectCannonSkin('blue', '🔵 Meriam Samudera')">
+              <span>🔵</span> <span>Meriam Samudera</span>
+            </div>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%;">
-          <button class="btn-arcade btn-play" onclick="sendWhatsAppProof()" style="font-size: 0.82rem; padding: 9px;">
-            <span>📱 HANTAR WHATSAPP</span>
-          </button>
-          <button class="btn-arcade btn-board" onclick="openLeaderboard()" style="font-size: 0.82rem; padding: 9px;">
-            <span>📅 PAPAN SKOR</span>
-          </button>
-        </div>
-
-        <button onclick="resetToMenu()" style="background: transparent; border: none; color: #94a3b8; font-size: 0.75rem; text-decoration: underline; cursor: pointer;">
-          Kembali ke Menu Utama
+        <!-- Start Button -->
+        <button class="btn-start-game" onclick="startGameSession()">
+          🎯 MULA TEMBAK BELON! 🚀
         </button>
-      </div>
-    </div>
 
-    <!-- ==============================================================
-         OVERLAY 3: PAPAN SKOR KALENDAR (SCROLLABLE & DATE-FILTER)
-         ============================================================== -->
-    <div id="overlay-leaderboard">
-      <div class="leaderboard-dialog-box">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-size: 1rem; font-weight: 800; color: #fff;">📅 PAPAN SKOR KALENDAR PDPR</div>
-            <div style="font-size: 0.65rem; color: #7dd3fc;">Pembangun: Mohammad Fikrey bin Abdul Gapar (SK Ranggu)</div>
-          </div>
-          <button onclick="closeLeaderboard()" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
-        </div>
-
-        <div class="calendar-filter-strip">
-          <div style="display: flex; gap: 4px;">
-            <button class="date-chip-btn active" id="chip-date-all" onclick="filterDate('ALL')">SEMUA</button>
-            <button class="date-chip-btn" id="chip-date-today" onclick="filterDate('TODAY')">HARI INI</button>
-            <button class="date-chip-btn" id="chip-date-yest" onclick="filterDate('YEST')">SEMALAM</button>
-          </div>
-          <input type="date" id="calendar-date-input" onchange="filterCustomDate(this.value)" style="background:#1e293b; border:1px solid #38bdf8; color:#fff; border-radius:6px; font-size:0.7rem; padding:2px 4px;">
-        </div>
-
-        <div class="scores-scroll-list" id="scores-scroll-list">
-          <!-- Populated by JS -->
-        </div>
-
-        <div style="display: flex; gap: 8px;">
-          <button class="btn-arcade btn-play" onclick="exportExcelCsv()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
-            <span>📥 EKSPORT CSV</span>
+        <!-- Lobby Foot Tools -->
+        <div class="lobby-foot-buttons">
+          <button class="btn-text-tool" onclick="openLeaderboard()">
+            <span>📅</span> <span>Papan Skor Kalendar</span>
           </button>
-          <button class="btn-arcade btn-board" onclick="copyTeacherReport()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
-            <span>📋 SALIN FORMAT</span>
+          <button class="btn-text-tool" onclick="openAdminSecurity()">
+            <span>⚙️</span> <span>Tetapan Guru (Admin)</span>
           </button>
         </div>
       </div>
     </div>
 
     <!-- ==============================================================
-         OVERLAY 4: MODAL AKSES KESELAMATAN ADMIN (GURU)
+         GAME ARENA (CANVAS & HUD)
          ============================================================== -->
-    <div id="overlay-admin-auth" class="admin-modal-overlay">
-      <div class="admin-card-box" style="max-width: 360px; text-align: center; align-items: center;">
-        <div style="font-size: 2.2rem;">🔐</div>
-        <div style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">AKSES KHAS GURU / ADMIN</div>
-        <p style="font-size: 0.72rem; color: #94a3b8;">Sila masukkan kod keselamatan pengajar untuk menguruskan kelas & senarai nama murid.</p>
-        
-        <input type="password" id="input-admin-pass" class="game-input" placeholder="Masukkan Kod Laluan..." style="width: 100%; text-align: center; font-size: 1rem; letter-spacing: 2px;">
+    <!-- Top HUD -->
+    <div id="arena-hud-top" style="display: none;">
+      <div class="hud-player-tag">
+        <div class="hud-avatar-circle" id="hud-avatar-icon">🎯</div>
+        <div>
+          <div class="hud-name-text" id="hud-player-name">Murid</div>
+          <span class="hud-class-badge" id="hud-player-class">5 Khoir</span>
+        </div>
+      </div>
 
-        <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px;">
-          <button class="btn-arcade btn-board" onclick="closeAdminAuth()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
-            <span>BATAL</span>
-          </button>
-          <button class="btn-arcade btn-play" onclick="verifyAdminPass()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
-            <span>MASUK</span>
-          </button>
+      <div class="hud-stats-group">
+        <div class="hud-stat-pill" style="color: #ef4444;">
+          <span>❤️</span> <span id="hud-lives-display">3</span>
+        </div>
+        <div class="hud-stat-pill" style="color: #d97706;">
+          <span>🪙</span> <span id="hud-xp-display">0 XP</span>
+        </div>
+        <div class="hud-stat-pill" style="color: #2563eb;">
+          <span>🔥</span> <span id="hud-combo-display">x1</span>
+        </div>
+        <div class="hud-stat-pill" style="color: #059669;">
+          <span>🎯</span> <span id="hud-wave-display">1/5</span>
+        </div>
+        <div class="hud-stat-pill" style="color: #475569;">
+          <span>⏱️</span> <span id="hud-timer-display">15:00</span>
+        </div>
+      </div>
+
+      <div class="hud-actions-group">
+        <button class="hud-icon-btn" id="btn-sound-mute" onclick="toggleMuteAudio()" title="Bunyi">🔊</button>
+        <button class="hud-icon-btn" onclick="openLeaderboard()" title="Papan Skor">📅</button>
+        <button class="hud-icon-btn" onclick="openAdminSecurity()" title="Tetapan Guru">⚙️</button>
+        <button class="hud-icon-btn" onclick="confirmExitGame()" title="Keluar">🚪</button>
+      </div>
+    </div>
+
+    <!-- Floating Math Formula Banner in the Center Sky -->
+    <div id="math-question-banner" style="display: none;">
+      <span class="question-tag-label" id="banner-question-tag">OPERASI ASAS</span>
+      <span class="question-math-formula" id="banner-question-text">2 + 3 = ?</span>
+    </div>
+
+    <!-- Main Game Canvas (Sky, Grassy Hill, Cannon, Balloons, Particles) -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Bottom Quick-Shot Option Cards (Tap button to fire at matching balloon!) -->
+    <div id="arena-bottom-strip" style="display: none;">
+      <!-- Populated dynamically with answer buttons -->
+    </div>
+
+    <!-- ==============================================================
+         MODAL: PAPAN SKOR KALENDAR PDPR
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-leaderboard">
+      <div class="game-modal-box">
+        <div class="modal-head-row">
+          <div class="modal-title-text">📅 Papan Skor Kalendar PDPR</div>
+          <button class="modal-close-btn" onclick="closeLeaderboard()">✕</button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chip-strip">
+          <button class="filter-chip active" id="chip-filter-all" onclick="setLeaderboardFilter('ALL')">Semua Sesi</button>
+          <button class="filter-chip" id="chip-filter-today" onclick="setLeaderboardFilter('TODAY')">Hari Ini</button>
+          <button class="filter-chip" id="chip-filter-yest" onclick="setLeaderboardFilter('YEST')">Semalam</button>
+          <input type="date" id="calendar-filter-input" style="padding: 2px 6px; font-size: 0.72rem; border-radius: 6px; border: 1.5px solid #cbd5e1;" onchange="setLeaderboardFilter('CUSTOM', this.value)">
+        </div>
+
+        <!-- Scrollable Scores List -->
+        <div class="score-scroll-area" id="leaderboard-items-list">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <button onclick="exportScoresToCsv()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 800; background: #e0f2fe; color: #0284c7; border: 1.5px solid #38bdf8; border-radius: 8px; cursor: pointer;">📥 Muat Turun CSV (Excel)</button>
+          <button onclick="copyScoresWhatsApp()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 800; background: #dcfce7; color: #166534; border: 1.5px solid #22c55e; border-radius: 8px; cursor: pointer;">📋 Salin Laporan WhatsApp</button>
         </div>
       </div>
     </div>
 
     <!-- ==============================================================
-         OVERLAY 5: PANEL PENGURUSAN GURU (ADMIN PANEL)
+         MODAL: KOD KESELAMATAN GURU (ADMIN AUTH)
          ============================================================== -->
-    <div id="overlay-admin-panel" class="admin-modal-overlay">
-      <div class="admin-card-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(56, 189, 248, 0.3); padding-bottom: 6px;">
-          <div>
-            <div style="font-size: 1.05rem; font-weight: 800; color: var(--cyan-glow);">⚙️ PANEL TETAPAN PENGURUSAN GURU</div>
-            <div style="font-size: 0.65rem; color: #7dd3fc;">Pengajar: Mohammad Fikrey bin Abdul Gapar (SK Ranggu Tawau)</div>
-          </div>
-          <button onclick="closeAdminPanel()" style="background: none; border: none; color: #fff; font-size: 1.3rem; cursor: pointer;">✕</button>
+    <div class="game-modal-overlay" id="modal-admin-auth">
+      <div class="game-modal-box" style="max-width: 360px;">
+        <div class="modal-head-row">
+          <div class="modal-title-text">🔐 Pengesahan Guru</div>
+          <button class="modal-close-btn" onclick="closeAdminSecurity()">✕</button>
+        </div>
+        <div style="font-size: 0.75rem; color: #64748b;">
+          Sila masukkan kod akses guru untuk mengurus kelas dan senarai murid SK Ranggu:
+        </div>
+        <input type="password" id="input-admin-pass" placeholder="••••••••••" style="width: 100%; padding: 8px; font-size: 0.9rem; border-radius: 8px; border: 2px solid #cbd5e1;" onkeydown="if(event.key==='Enter') verifyAdminPasscode()">
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <button onclick="closeAdminSecurity()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 800; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer;">Batal</button>
+          <button onclick="verifyAdminPasscode()" style="padding: 6px 14px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #166534; border-radius: 8px; cursor: pointer;">Sahkan Kod</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL: PANEL PENGURUSAN GURU (ADMIN PANEL)
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-admin-panel">
+      <div class="game-modal-box" style="max-width: 680px;">
+        <div class="modal-head-row">
+          <div class="modal-title-text">⚙️ Panel Kawalan Guru — SK Ranggu</div>
+          <button class="modal-close-btn" onclick="closeAdminPanel()">✕</button>
         </div>
 
-        <!-- Tab Bar -->
-        <div class="admin-tab-bar">
-          <button class="admin-tab-btn active" id="btn-tab-students" onclick="switchAdminTab('students')">👥 Urus Senarai Murid</button>
-          <button class="admin-tab-btn" id="btn-tab-classes" onclick="switchAdminTab('classes')">➕ Urus & Tambah Kelas</button>
+        <div style="display: flex; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
+          <button id="admin-tab-btn-students" class="filter-chip active" onclick="switchAdminTab('students')">👥 Pengurusan Murid</button>
+          <button id="admin-tab-btn-classes" class="filter-chip" onclick="switchAdminTab('classes')">🏫 Pengurusan Kelas</button>
         </div>
 
-        <!-- TAB 1: URUS SENARAI MURID -->
-        <div id="admin-tab-students-view" style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-            <div style="font-size: 0.72rem; color: #cbd5e1; font-weight: 700;">Pilih Kelas:</div>
-            <select id="admin-select-class" onchange="renderAdminStudentList(this.value)" class="game-input" style="flex: 1; padding: 4px 8px; font-size: 0.78rem;">
-              <!-- Populated by JS -->
+        <!-- Tab 1: Murid -->
+        <div id="admin-view-students" style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <label style="font-size: 0.75rem; font-weight: 800;">Pilih Kelas:</label>
+            <select id="admin-class-picker" class="class-select" style="flex:1;" onchange="renderAdminStudents(this.value)">
+              <!-- Populated -->
             </select>
           </div>
 
-          <!-- Tambah Murid Individu -->
+          <!-- Add Single -->
           <div style="display: flex; gap: 6px;">
-            <input type="text" id="admin-input-new-student" class="game-input" placeholder="Nama Murid Baharu..." style="flex: 1; padding: 6px 8px; font-size: 0.78rem;">
-            <button class="btn-arcade btn-play" onclick="adminAddStudentSingle()" style="padding: 6px 12px; font-size: 0.75rem;">
-              <span>+ TAMBAH</span>
-            </button>
+            <input type="text" id="admin-new-student-name" placeholder="Tambah nama murid baharu..." style="flex:1; padding: 6px 10px; font-size: 0.75rem; border-radius: 8px; border: 1.5px solid #cbd5e1;">
+            <button onclick="adminAddSingleStudent()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;">+ Tambah</button>
           </div>
 
-          <!-- Senarai Murid Semasa -->
-          <div style="font-size: 0.68rem; color: #7dd3fc; font-weight: 700;" id="admin-class-summary-text">Senarai Murid:</div>
-          <div class="admin-students-scroll" id="admin-students-list">
-            <!-- Populated by JS -->
-          </div>
-
-          <!-- Tambah Pukal (Bulk Add) -->
-          <details style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px;">
-            <summary style="font-size: 0.72rem; color: #38bdf8; cursor: pointer; font-weight: 700;">📋 Import Pukal (Tampal Senarai Nama Sekaligus)</summary>
-            <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
-              <textarea id="admin-bulk-input" rows="3" class="game-input" placeholder="Tampal senarai nama di sini (satu nama setiap baris)..." style="font-size: 0.72rem; width: 100%;"></textarea>
-              <button class="btn-arcade btn-board" onclick="adminBulkAddStudents()" style="padding: 6px; font-size: 0.72rem;">
-                <span>📥 Import ke Kelas Ini</span>
-              </button>
-            </div>
+          <!-- Bulk Paste -->
+          <details style="font-size: 0.75rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px;">
+            <summary style="font-weight: 800; cursor: pointer;">📋 Import Pukal (Tampal Senarai APDM / Excel)</summary>
+            <textarea id="admin-bulk-names" rows="3" placeholder="Tampal nama murid (satu nama setiap baris)..." style="width: 100%; margin-top: 6px; padding: 6px; font-size: 0.72rem; border-radius: 6px; border: 1px solid #cbd5e1;"></textarea>
+            <button onclick="adminBulkImport()" style="margin-top: 4px; padding: 4px 10px; font-size: 0.72rem; font-weight: 800; background: #38bdf8; color: #0284c7; border: 1px solid #0284c7; border-radius: 6px; cursor: pointer;">Muat Naik Senarai</button>
           </details>
+
+          <!-- Current Students in Class -->
+          <div style="font-size: 0.72rem; font-weight: 800; color: #475569;" id="admin-class-counter-text">Senarai Murid:</div>
+          <div style="max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px;" id="admin-students-list-view">
+            <!-- Populated -->
+          </div>
         </div>
 
-        <!-- TAB 2: URUS & TAMBAH KELAS -->
-        <div id="admin-tab-classes-view" style="display: none; flex-direction: column; gap: 8px;">
-          <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
-            <div style="font-size: 0.75rem; color: #a5f3fc; font-weight: 800;">➕ Cipta Kelas Baharu:</div>
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 6px;">
-              <input type="text" id="admin-new-class-name" class="game-input" placeholder="Nama Kelas (Cth: 5 Cerdik)" style="padding: 6px; font-size: 0.78rem;">
-              <select id="admin-new-class-grade" class="game-input" style="padding: 6px; font-size: 0.78rem;">
-                <option value="5">Tahun 5</option>
-                <option value="6">Tahun 6</option>
-              </select>
+        <!-- Tab 2: Kelas -->
+        <div id="admin-view-classes" style="display: none; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 6px;">
+            <select id="admin-new-class-grade" class="class-select" style="max-width: 110px;">
+              <option value="5">Tahun 5</option>
+              <option value="6">Tahun 6</option>
+            </select>
+            <input type="text" id="admin-new-class-name" placeholder="Cth: 5 Cemerlang" style="flex:1; padding: 6px 10px; font-size: 0.75rem; border-radius: 8px; border: 1.5px solid #cbd5e1;">
+            <button onclick="adminCreateClass()" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;">Cipta Kelas</button>
+          </div>
+          <div style="font-size: 0.72rem; font-weight: 800; color: #475569;">Senarai Kelas Aktif:</div>
+          <div id="admin-classes-badges" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+        </div>
+
+        <!-- Reset Button -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 8px;">
+          <button onclick="adminResetDefaultRoster()" style="background: none; border: 1px dashed #ef4444; color: #b91c1c; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; cursor: pointer;">🔄 Set Semula Senarai Rasmi SK Ranggu</button>
+          <button onclick="closeAdminPanel()" style="padding: 6px 14px; font-size: 0.75rem; font-weight: 900; background: #0f172a; color: #fff; border-radius: 8px; cursor: pointer;">Selesai</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL: SIJIL PENCAPAIAN PDPR
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-certificate">
+      <div class="game-modal-box" style="max-width: 520px;">
+        <div class="cert-frame">
+          <div style="font-size: 2rem;">🏆</div>
+          <div style="font-size: 1.3rem; font-weight: 900; color: #78350f;">SIJIL PENGHARGAAN PDPR</div>
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 800;">MISI MATH SHOOTER — SK RANGGU TAWAU</div>
+          <div style="width: 100%; height: 2px; background: #fde68a; margin: 4px 0;"></div>
+          <div style="font-size: 0.8rem; color: #475569;">Dengan ini diperakui bahawa:</div>
+          <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;" id="cert-student-name">Nama Murid</div>
+          <div style="font-size: 0.85rem; font-weight: 800; color: #0284c7;" id="cert-student-class">5 Khoir</div>
+          <div style="font-size: 0.8rem; color: #475569; margin-top: 6px;">
+            Telah berjaya menamatkan misi penembak belon matematik dengan cemerlang!
+          </div>
+          <div style="display: flex; gap: 14px; margin: 8px 0;">
+            <div style="background: #fff; border: 1.5px solid #facc15; border-radius: 10px; padding: 4px 10px;">
+              <div style="font-size: 0.65rem; color: #64748b;">SKOR XP</div>
+              <div style="font-size: 1rem; font-weight: 900; color: #b45309;" id="cert-student-xp">5,000 XP</div>
             </div>
-            <button class="btn-arcade btn-play" onclick="adminCreateNewClass()" style="padding: 7px; font-size: 0.78rem;">
-              <span>+ CIPTA KELAS BAHARU</span>
-            </button>
+            <div style="background: #fff; border: 1.5px solid #facc15; border-radius: 10px; padding: 4px 10px;">
+              <div style="font-size: 0.65rem; color: #64748b;">KETEPATAN</div>
+              <div style="font-size: 1rem; font-weight: 900; color: #15803d;" id="cert-student-acc">100%</div>
+            </div>
+            <div style="background: #fff; border: 1.5px solid #facc15; border-radius: 10px; padding: 4px 10px;">
+              <div style="font-size: 0.65rem; color: #64748b;">PENCAPAIAN</div>
+              <div style="font-size: 1rem; font-weight: 900; color: #eab308;" id="cert-student-stars">⭐⭐⭐</div>
+            </div>
           </div>
-
-          <div style="font-size: 0.72rem; color: #cbd5e1; font-weight: 700;">Senarai Semua Kelas Semasa:</div>
-          <div id="admin-classes-badge-list" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 18vh; overflow-y: auto;">
-            <!-- Populated by JS -->
-          </div>
-
-          <!-- Reset Button -->
-          <div style="margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.68rem; color: #94a3b8;">Pulihkan senarai rasmi SK Ranggu:</span>
-            <button onclick="adminResetToDefaultRoster()" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; cursor: pointer;">
-              🔄 Reset ke Asal
-            </button>
+          <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">
+            Disahkan oleh:<br>
+            <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b><br>
+            <span style="font-size: 0.65rem;">Pembangun Sistem & Pereka Gamifikasi Matematik</span>
           </div>
         </div>
-
+        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 8px;">
+          <button onclick="restartGame()" style="padding: 8px 16px; font-size: 0.85rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;">🔄 Main Semula</button>
+          <button onclick="closeCertificate()" style="padding: 8px 16px; font-size: 0.85rem; font-weight: 800; background: #0f172a; color: #fff; border-radius: 10px; cursor: pointer;">Tutup Sijil</button>
+        </div>
       </div>
     </div>
 
@@ -1237,7 +1053,7 @@
 
   <script>
     /* ==============================================================
-       AUDIO ENGINE (SYNTHESIZER WEB AUDIO API)
+       AUDIO SYNTHESIZER (WEB AUDIO API — POP, BOOM & BOING!)
        ============================================================== */
     class ArcadeSound {
       constructor() {
@@ -1246,368 +1062,117 @@
       }
       init() {
         if (!this.ctx) {
-          const AC = window.AudioContext || window.webkitAudioContext;
-          if (AC) this.ctx = new AC();
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
         }
-        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
       }
-      playLaser() {
+      playCannon() {
         if (!this.enabled || !this.ctx) return;
-        try {
-          const osc = this.ctx.createOscillator();
-          const g = this.ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.18);
-          g.gain.setValueAtTime(0.25, this.ctx.currentTime);
-          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.18);
-          osc.connect(g); g.connect(this.ctx.destination);
-          osc.start(); osc.stop(this.ctx.currentTime + 0.18);
-        } catch(e){}
+        const now = this.ctx.currentTime;
+        // Deep punch
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.22);
+        gain.gain.setValueAtTime(0.7, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.24);
+
+        // Noise burst
+        const bufferSize = this.ctx.sampleRate * 0.12;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.35, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+        noise.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+        noise.start(now);
       }
-      playBoom() {
+      playPop() {
         if (!this.enabled || !this.ctx) return;
-        try {
-          const osc = this.ctx.createOscillator();
-          const g = this.ctx.createGain();
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(90, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(30, this.ctx.currentTime + 0.25);
-          g.gain.setValueAtTime(0.35, this.ctx.currentTime);
-          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
-          osc.connect(g); g.connect(this.ctx.destination);
-          osc.start(); osc.stop(this.ctx.currentTime + 0.25);
-        } catch(e){}
+        const now = this.ctx.currentTime;
+        // Sharp pop
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(580, now);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.08);
+        gain.gain.setValueAtTime(0.6, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.09);
+
+        // Chime
+        const chime = this.ctx.createOscillator();
+        const chimeGain = this.ctx.createGain();
+        chime.type = 'triangle';
+        chime.frequency.setValueAtTime(880, now + 0.04);
+        chimeGain.gain.setValueAtTime(0.3, now + 0.04);
+        chimeGain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+        chime.connect(chimeGain);
+        chimeGain.connect(this.ctx.destination);
+        chime.start(now + 0.04);
+        chime.stop(now + 0.3);
       }
-      playChime() {
+      playBoing() {
         if (!this.enabled || !this.ctx) return;
-        try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(320, now + 0.08);
+        osc.frequency.linearRampToValueAtTime(160, now + 0.25);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+      playFanfare() {
+        if (!this.enabled || !this.ctx) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, i) => {
           const osc = this.ctx.createOscillator();
-          const g = this.ctx.createGain();
+          const gain = this.ctx.createGain();
+          const t = this.ctx.currentTime + i * 0.1;
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(587, this.ctx.currentTime);
-          osc.frequency.setValueAtTime(880, this.ctx.currentTime + 0.08);
-          g.gain.setValueAtTime(0.25, this.ctx.currentTime);
-          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
-          osc.connect(g); g.connect(this.ctx.destination);
-          osc.start(); osc.stop(this.ctx.currentTime + 0.2);
-        } catch(e){}
-      }
-      playHit() {
-        if (!this.enabled || !this.ctx) return;
-        try {
-          const osc = this.ctx.createOscillator();
-          const g = this.ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(140, this.ctx.currentTime);
-          g.gain.setValueAtTime(0.2, this.ctx.currentTime);
-          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
-          osc.connect(g); g.connect(this.ctx.destination);
-          osc.start(); osc.stop(this.ctx.currentTime + 0.15);
-        } catch(e){}
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(0.35, t);
+          gain.gain.exponentialRampToValueAtTime(0.01, t + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.28);
+        });
       }
     }
     const audio = new ArcadeSound();
 
-    function toggleSound() {
+    function toggleMuteAudio() {
       audio.enabled = !audio.enabled;
-      document.getElementById('btn-sound-toggle').textContent = audio.enabled ? '🔊' : '🔇';
-      showToast(audio.enabled ? 'Bunyi Aktif' : 'Bunyi Senyap');
-    }
-
-    /* ==============================================================
-       PAPAN SKOR KALENDAR DATA
-       ============================================================== */
-    const LEADERBOARD_KEY = "MATH_QUEST_ML_SCORES_V5";
-    const SAMPLE_RECORDS = [
-      { id: "MQ-1", name: "Muhammad Danial", className: "6 Khoir", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
-      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Khoir", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
-      { id: "MQ-3", name: "Adib Qayyum Syazwan", className: "5 Khoir", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
-      { id: "MQ-4", name: "Airis Nur Raysha Amanda", className: "6 Jahid", grade: 6, xp: 4350, stars: 3, acc: 88, date: "2026-10-13", time: "10:35 AM" },
-      { id: "MQ-5", name: "Aleesya Dania", className: "5 Eltizam", grade: 5, xp: 4200, stars: 3, acc: 86, date: "2026-10-13", time: "11:15 AM" },
-      { id: "MQ-6", name: "Adni Dafinah", className: "6 Eltizam", grade: 6, xp: 4050, stars: 2, acc: 85, date: "2026-10-12", time: "11:20 AM" },
-      { id: "MQ-7", name: "Ab Muhammad Nurasyraf", className: "5 Mumtaz", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
-      { id: "MQ-8", name: "Ameera Nur Izzatunnisa", className: "5 Jahid", grade: 5, xp: 3650, stars: 2, acc: 78, date: "2026-10-12", time: "03:40 PM" },
-      { id: "MQ-9", name: "Afifah Auni Aqilah", className: "6 Mumtaz", grade: 6, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
-    ];
-
-    function getScores() {
-      try {
-        const s = localStorage.getItem(LEADERBOARD_KEY);
-        if (s) {
-          const p = JSON.parse(s);
-          if (Array.isArray(p) && p.length > 0) return p;
-        }
-      } catch(e){}
-      localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(SAMPLE_RECORDS));
-      return [...SAMPLE_RECORDS];
-    }
-
-    function saveScore(rec) {
-      const all = getScores();
-      all.unshift(rec);
-      all.sort((a,b) => b.xp - a.xp);
-      try { localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(all)); } catch(e){}
-    }
-
-    let dateFilterMode = 'ALL';
-    let customDate = '';
-
-    function renderLeaderboard() {
-      const container = document.getElementById('scores-scroll-list');
-      const all = getScores();
-      const todayIso = new Date().toISOString().slice(0, 10);
-      const yestIso = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-
-      let filtered = all;
-      if (dateFilterMode === 'TODAY') filtered = filtered.filter(x => x.date === todayIso);
-      else if (dateFilterMode === 'YEST') filtered = filtered.filter(x => x.date === yestIso);
-      else if (dateFilterMode === 'CUSTOM' && customDate) filtered = filtered.filter(x => x.date === customDate);
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; font-size:0.75rem; color:#94a3b8;">Tiada rekod pada tarikh ini.</div>`;
-        return;
-      }
-
-      // Group by date
-      const groups = {};
-      filtered.forEach(item => {
-        const d = item.date || 'Lain-lain';
-        if (!groups[d]) groups[d] = [];
-        groups[d].push(item);
-      });
-
-      let html = '';
-      Object.keys(groups).sort().reverse().forEach(d => {
-        const items = groups[d];
-        const dateTitle = d === todayIso ? `HARI INI (${d})` : d === yestIso ? `SEMALAM (${d})` : d;
-        html += `<div class="date-group-card">📅 Sesi PDPR: ${dateTitle} (${items.length} Murid)</div>`;
-
-        items.forEach((it, idx) => {
-          const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx+1}`;
-          html += `
-            <div class="score-row-item">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-weight:800; font-size:0.95rem;">${medal}</span>
-                <div>
-                  <div style="font-weight:700; color:#fff; font-size:0.82rem;">${it.name}</div>
-                  <div style="font-size:0.68rem; color:#94a3b8;">${it.className} • Thn ${it.grade} • ${it.time || ''}</div>
-                </div>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-weight:800; color:var(--cyan-glow); font-size:0.85rem;">${Number(it.xp).toLocaleString()} XP</div>
-                <div style="font-size:0.68rem; color:#fbbf24;">${'⭐'.repeat(it.stars || 1)} (${it.acc || 100}%)</div>
-              </div>
-            </div>
-          `;
-        });
-      });
-
-      container.innerHTML = html;
-    }
-
-    function filterDate(mode) {
-      dateFilterMode = mode;
-      document.getElementById('chip-date-all').classList.toggle('active', mode === 'ALL');
-      document.getElementById('chip-date-today').classList.toggle('active', mode === 'TODAY');
-      document.getElementById('chip-date-yest').classList.toggle('active', mode === 'YEST');
-      document.getElementById('calendar-date-input').value = '';
-      renderLeaderboard();
-    }
-
-    function filterCustomDate(val) {
-      if (!val) return;
-      dateFilterMode = 'CUSTOM';
-      customDate = val;
-      document.getElementById('chip-date-all').classList.remove('active');
-      document.getElementById('chip-date-today').classList.remove('active');
-      document.getElementById('chip-date-yest').classList.remove('active');
-      renderLeaderboard();
-    }
-
-    function openLeaderboard() {
-      document.getElementById('overlay-leaderboard').style.display = 'flex';
-      renderLeaderboard();
-      audio.init();
-    }
-
-    function closeLeaderboard() {
-      document.getElementById('overlay-leaderboard').style.display = 'none';
-    }
-
-    function exportExcelCsv() {
-      const data = getScores();
-      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan,Tarikh Selesai,Masa\n";
-      data.forEach((r, i) => {
-        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.stars}","${r.acc}%","${r.date}","${r.time}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const u = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = u; a.download = `Rekod_Markah_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      showToast("Fail CSV dimuat turun untuk Cikgu Mohammad Fikrey!");
-    }
-
-    function copyTeacherReport() {
-      const data = getScores();
-      let t = `📊 *REKOD MARKAH PDPR MATH QUEST (SK RANGGU)* 📊\n`;
-      t += `👨‍💻 Pembangun: Mohammad Fikrey bin Abdul Gapar\n`;
-      t += `Tarikh: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
-      data.forEach((r, i) => {
-        t += `${i+1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${r.xp} XP | ${r.stars}⭐\n`;
-      });
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(t).then(() => showToast("Format Guru disalin!"));
-      }
-    }
-
-    function showToast(msg) {
-      const b = document.getElementById('toast-banner');
-      b.textContent = msg;
-      b.classList.add('show');
-      setTimeout(() => b.classList.remove('show'), 2000);
-    }
-
-    /* ==============================================================
-       BANK SOALAN PANTAS (SNAPPY COMBAT TRIGGERS - KSSR SEMAKAN)
-       ============================================================== */
-    const COMBAT_BANK = {
-      grade5: [
-        { tag: "CAS TEMBAKAN", q: "12 × 5 =", opts: ["60", "50", "70"], ans: 0 },
-        { tag: "PEMECAH PERISAI", q: "150 + 250 =", opts: ["400", "350", "450"], ans: 0 },
-        { tag: "MISIL KOD", q: "Nilai digit 7 dlm 74 200?", opts: ["700", "70 000", "7 000"], ans: 1 },
-        { tag: "SERANGAN RADAR", q: "Nombor perdana antara 10-15?", opts: ["11 & 13", "12 & 14", "9 & 15"], ans: 0 },
-        { tag: "HYPER WARP", q: "Tukar 2 kg kepada gram:", opts: ["200 g", "2 000 g", "20 000 g"], ans: 1 },
-        { tag: "TUMBANGKAN TOWER", q: "Luas segi tiga (Tpk 10, Tgi 6):", opts: ["30 cm²", "60 cm²", "20 cm²"], ans: 0 },
-        { tag: "ULTIMATE BLAST", q: "20% daripada RM500 =", opts: ["RM80", "RM100", "RM120"], ans: 1 },
-        { tag: "PLASMA STRIKE", q: "³/₅ + ¹/₅ =", opts: ["⁴/₅", "⁴/₁₀", "²/₅"], ans: 0 },
-        { tag: "QUANTUM PULSE", q: "0.75 tukar kepada peratus:", opts: ["7.5%", "75%", "750%"], ans: 1 },
-        { tag: "CYBER MISSILE", q: "Bundarkan 48 762 kepada ribu terdekat:", opts: ["49 000", "48 000", "50 000"], ans: 0 },
-        { tag: "TURBO LASER", q: "4 500 ÷ 9 =", opts: ["450", "500", "50"], ans: 1 },
-        { tag: "SONIC BOOM", q: "1.25 km tukar kepada meter:", opts: ["1 250 m", "125 m", "12 500 m"], ans: 0 },
-        { tag: "PERIMETER SHIELD", q: "Perimeter segi empat sama (sisi 8 cm):", opts: ["16 cm", "32 cm", "64 cm"], ans: 1 },
-        { tag: "CHRONO CANNON", q: "3 jam tukar kepada minit:", opts: ["180 minit", "120 minit", "300 minit"], ans: 0 },
-        { tag: "ENERGY BEAM", q: "²/₃ daripada 60 =", opts: ["30", "40", "20"], ans: 1 },
-        { tag: "TREASURE BUSTER", q: "RM1 000 - RM340 =", opts: ["RM660", "RM760", "RM640"], ans: 0 },
-        { tag: "PRIME FORCE", q: "Nombor perdana terkecil:", opts: ["1", "2", "3"], ans: 1 },
-        { tag: "MECHA SLICE", q: "Isi padu kuboid (5cm × 3cm × 2cm):", opts: ["30 cm³", "15 cm³", "25 cm³"], ans: 0 },
-        { tag: "TIME WARP", q: "1 dekad bersamaan berapa tahun?", opts: ["5 tahun", "10 tahun", "100 tahun"], ans: 1 },
-        { tag: "DECIMAL BURST", q: "5.6 + 3.24 =", opts: ["8.84", "8.30", "8.80"], ans: 0 },
-        { tag: "MEGA CHARGE", q: "25 × 40 =", opts: ["100", "1 000", "10 000"], ans: 1 },
-        { tag: "RATIO LOCK", q: "Nisbah 3 epal kepada 5 oren:", opts: ["3 : 5", "5 : 3", "3 : 8"], ans: 0 },
-        { tag: "CENTURY SHIELD", q: "4 abad bersamaan berapa tahun?", opts: ["40 tahun", "400 tahun", "4 000 tahun"], ans: 1 },
-        { tag: "PROFIT SURGE", q: "Kos RM50, Untung RM15. Harga Jual:", opts: ["RM65", "RM35", "RM75"], ans: 0 },
-        { tag: "LIQUID FLOW", q: "7 500 mℓ tukar kepada liter:", opts: ["75 ℓ", "7.5 ℓ", "0.75 ℓ"], ans: 1 }
-      ],
-      grade6: [
-        { tag: "CAS MERIAM JUTA", q: "³/₄ Juta =", opts: ["750 000", "250 000", "500 000"], ans: 0 },
-        { tag: "BODMAS STRIKE", q: "20 + 5 × 4 =", opts: ["100", "40", "60"], ans: 1 },
-        { tag: "PEMECAH SHIELD", q: "(100 - 40) ÷ 6 =", opts: ["10", "15", "8"], ans: 0 },
-        { tag: "PERATUS UNTUNG", q: "Beli RM200 untung 25%. Jual:", opts: ["RM225", "RM250", "RM260"], ans: 1 },
-        { tag: "HYPER SPEED 999", q: "Isi padu kubus bersisi 4 cm:", opts: ["64 cm³", "16 cm³", "32 cm³"], ans: 0 },
-        { tag: "SUDUT POLIGON", q: "Sudut pedalaman segi tiga:", opts: ["90°", "180°", "360°"], ans: 1 },
-        { tag: "ULTIMATE BLAST", q: "0.08 Juta =", opts: ["80 000", "8 000", "800 000"], ans: 0 },
-        { tag: "FRACTION SLASH", q: "¹/₂ ÷ ¹/₄ =", opts: ["¹/₈", "2", "4"], ans: 1 },
-        { tag: "MEGA NUMERIC", q: "1.5 Juta tukar nombor bulat:", opts: ["1 500 000", "150 000", "15 000 000"], ans: 0 },
-        { tag: "ORDER OF ATTACK", q: "(50 + 25) × 2 =", opts: ["100", "150", "125"], ans: 1 },
-        { tag: "BANKING VAULT", q: "Simpan RM1 000, faedah 5% setahun:", opts: ["RM50", "RM5", "RM100"], ans: 0 },
-        { tag: "CIRCLE ROTATION", q: "Sudut putaran lengkap bulatan:", opts: ["180°", "360°", "90°"], ans: 1 },
-        { tag: "DECIMAL MILLION", q: "0.65 Juta bersamaan:", opts: ["650 000", "65 000", "6 500 000"], ans: 0 },
-        { tag: "SIMPLE RATIO", q: "Nisbah 4 kg kepada 12 kg termudah:", opts: ["4 : 12", "1 : 3", "1 : 4"], ans: 1 },
-        { tag: "EIGHTH MILLION", q: "¹/₈ Juta bersamaan:", opts: ["125 000", "250 000", "12 500"], ans: 0 },
-        { tag: "COMBO BREAKER", q: "72 ÷ 8 + 15 =", opts: ["14", "24", "32"], ans: 1 },
-        { tag: "HEXAGON MATRIX", q: "Bilangan sisi sebuah heksagon:", opts: ["6", "8", "5"], ans: 0 },
-        { tag: "DISCOUNT STRIKE", q: "Harga RM80 diskaun 50%. Bayar:", opts: ["RM30", "RM40", "RM50"], ans: 1 },
-        { tag: "CARTESIAN ORIGIN", q: "Titik asalan pada satah Cartes:", opts: ["(0, 0)", "(1, 1)", "(0, 1)"], ans: 0 },
-        { tag: "GLOBAL CLOCK", q: "Beza masa Tokyo (+9) & KL (+8):", opts: ["2 jam", "1 jam", "3 jam"], ans: 1 },
-        { tag: "PROBABILITY SCAN", q: "Matahari terbit dari timur:", opts: ["Pasti", "Mustahil", "Sama Kemungkinan"], ans: 0 },
-        { tag: "MASS SYNTHESIS", q: "2.4 kg + 800 g =", opts: ["10.4 kg", "3.2 kg", "2.8 kg"], ans: 1 },
-        { tag: "FRACTION POWER", q: "³/₄ + ¹/₂ =", opts: ["1 ¹/₄", "⁴/₆", "1 ¹/₂"], ans: 0 },
-        { tag: "BODMAS DEFENSE", q: "100 - (30 × 3) =", opts: ["210", "10", "70"], ans: 1 },
-        { tag: "QUARTER MILLION", q: "¹/₄ Juta bersamaan:", opts: ["250 000", "500 000", "750 000"], ans: 0 }
-      ]
-    };
-
-    // Dynamic generator to provide endless snappy challenges
-    function generateDynamicCombatQuestion(grade) {
-      if (grade === 6) {
-        const type = Math.floor(Math.random() * 4);
-        if (type === 0) {
-          const a = (Math.floor(Math.random() * 8) + 2) * 5;
-          const b = Math.floor(Math.random() * 6) + 2;
-          const c = Math.floor(Math.random() * 10) + 10;
-          const correct = (a * b) + c;
-          return {
-            tag: "BODMAS DINAMIK",
-            q: `${a} × ${b} + ${c} =`,
-            opts: [`${correct}`, `${correct - 10}`, `${correct + 10}`].sort(() => Math.random() - 0.5),
-            ans: 0
-          };
-        } else if (type === 1) {
-          const quarters = [1, 2, 3, 4][Math.floor(Math.random() * 4)];
-          const val = quarters * 250000;
-          const label = quarters === 1 ? "¹/₄" : quarters === 2 ? "¹/₂" : quarters === 3 ? "³/₄" : "1";
-          const opts = [`${val.toLocaleString()}`, `${(val - 100000).toLocaleString()}`, `${(val + 100000).toLocaleString()}`].sort(() => Math.random() - 0.5);
-          return {
-            tag: "PECAHAN JUTA",
-            q: `${label} Juta =`,
-            opts: opts,
-            ans: opts.indexOf(val.toLocaleString())
-          };
-        } else {
-          const pct = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
-          const principal = (Math.floor(Math.random() * 5) + 1) * 200;
-          const correct = Math.round((pct / 100) * principal);
-          const opts = [`RM${correct}`, `RM${correct + 20}`, `RM${Math.max(10, correct - 20)}`].sort(() => Math.random() - 0.5);
-          return {
-            tag: "PERATUS WANG",
-            q: `${pct}% daripada RM${principal} =`,
-            opts: opts,
-            ans: opts.indexOf(`RM${correct}`)
-          };
-        }
-      } else {
-        const type = Math.floor(Math.random() * 3);
-        if (type === 0) {
-          const m1 = Math.floor(Math.random() * 8) + 3;
-          const m2 = Math.floor(Math.random() * 8) + 3;
-          const correct = m1 * m2;
-          const opts = [`${correct}`, `${correct + 4}`, `${Math.max(2, correct - 4)}`].sort(() => Math.random() - 0.5);
-          return {
-            tag: "SIFIR KILAT",
-            q: `${m1} × ${m2} =`,
-            opts: opts,
-            ans: opts.indexOf(`${correct}`)
-          };
-        } else if (type === 1) {
-          const kg = (Math.floor(Math.random() * 8) + 2);
-          const g = kg * 1000;
-          const opts = [`${g} g`, `${g / 10} g`, `${g * 10} g`].sort(() => Math.random() - 0.5);
-          return {
-            tag: "UKURAN JISIM",
-            q: `Tukar ${kg} kg kepada gram:`,
-            opts: opts,
-            ans: opts.indexOf(`${g} g`)
-          };
-        } else {
-          const side = Math.floor(Math.random() * 9) + 3;
-          const peri = side * 4;
-          const opts = [`${peri} cm`, `${peri + 4} cm`, `${side * 2} cm`].sort(() => Math.random() - 0.5);
-          return {
-            tag: "PERIMETER KOTAK",
-            q: `Perimeter segi empat sama (sisi ${side} cm):`,
-            opts: opts,
-            ans: opts.indexOf(`${peri} cm`)
-          };
-        }
-      }
+      document.getElementById('btn-sound-mute').textContent = audio.enabled ? '🔊' : '🔇';
+      showToast(audio.enabled ? 'Bunyi Diaktifkan' : 'Bunyi Senyap');
     }
 
     /* ==============================================================
        PENGKALAN DATA KELAS & SENARAI NAMA MURID SK RANGGU TAWAU
        ============================================================== */
-    const DEFAULT_ROSTERS = {
+const DEFAULT_ROSTERS = {
       grade5: {
         "5 Khoir": [
           "Adib Qayyum Syazwan bin Abdul Rahmat",
@@ -1927,20 +1492,247 @@
     }
 
     function saveRosters(data) {
-      try {
-        localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(data));
-      } catch(e) {}
+      try { localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
     }
 
-    function initRosterUI() {
+    /* ==============================================================
+       PAPAN SKOR KALENDAR DATA
+       ============================================================== */
+const SAMPLE_RECORDS = [
+      { id: "MQ-1", name: "Muhammad Danial", className: "6 Khoir", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
+      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Khoir", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
+      { id: "MQ-3", name: "Adib Qayyum Syazwan", className: "5 Khoir", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
+      { id: "MQ-4", name: "Airis Nur Raysha Amanda", className: "6 Jahid", grade: 6, xp: 4350, stars: 3, acc: 88, date: "2026-10-13", time: "10:35 AM" },
+      { id: "MQ-5", name: "Aleesya Dania", className: "5 Eltizam", grade: 5, xp: 4200, stars: 3, acc: 86, date: "2026-10-13", time: "11:15 AM" },
+      { id: "MQ-6", name: "Adni Dafinah", className: "6 Eltizam", grade: 6, xp: 4050, stars: 2, acc: 85, date: "2026-10-12", time: "11:20 AM" },
+      { id: "MQ-7", name: "Ab Muhammad Nurasyraf", className: "5 Mumtaz", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
+      { id: "MQ-8", name: "Ameera Nur Izzatunnisa", className: "5 Jahid", grade: 5, xp: 3650, stars: 2, acc: 78, date: "2026-10-12", time: "03:40 PM" },
+      { id: "MQ-9", name: "Afifah Auni Aqilah", className: "6 Mumtaz", grade: 6, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
+    ];
+
+    function getScores() {
+      try {
+        const s = localStorage.getItem(LEADERBOARD_KEY);
+        if (s) {
+          const p = JSON.parse(s);
+          if (Array.isArray(p) && p.length > 0) return p;
+        }
+      } catch(e) {}
+      localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(SAMPLE_RECORDS));
+      return [...SAMPLE_RECORDS];
+    }
+
+    function saveScore(rec) {
+      const all = getScores();
+      all.unshift(rec);
+      all.sort((a,b) => b.xp - a.xp);
+      try { localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(all)); } catch(e) {}
+    }
+
+    /* ==============================================================
+       BANK SOALAN PANTAS (KSSR SEMAKAN TAHUN 5 & 6)
+       ============================================================== */
+const COMBAT_BANK = {
+      grade5: [
+        { tag: "CAS TEMBAKAN", q: "12 × 5 =", opts: ["60", "50", "70"], ans: 0 },
+        { tag: "PEMECAH PERISAI", q: "150 + 250 =", opts: ["400", "350", "450"], ans: 0 },
+        { tag: "MISIL KOD", q: "Nilai digit 7 dlm 74 200?", opts: ["700", "70 000", "7 000"], ans: 1 },
+        { tag: "SERANGAN RADAR", q: "Nombor perdana antara 10-15?", opts: ["11 & 13", "12 & 14", "9 & 15"], ans: 0 },
+        { tag: "HYPER WARP", q: "Tukar 2 kg kepada gram:", opts: ["200 g", "2 000 g", "20 000 g"], ans: 1 },
+        { tag: "TUMBANGKAN TOWER", q: "Luas segi tiga (Tpk 10, Tgi 6):", opts: ["30 cm²", "60 cm²", "20 cm²"], ans: 0 },
+        { tag: "ULTIMATE BLAST", q: "20% daripada RM500 =", opts: ["RM80", "RM100", "RM120"], ans: 1 },
+        { tag: "PLASMA STRIKE", q: "³/₅ + ¹/₅ =", opts: ["⁴/₅", "⁴/₁₀", "²/₅"], ans: 0 },
+        { tag: "QUANTUM PULSE", q: "0.75 tukar kepada peratus:", opts: ["7.5%", "75%", "750%"], ans: 1 },
+        { tag: "CYBER MISSILE", q: "Bundarkan 48 762 kepada ribu terdekat:", opts: ["49 000", "48 000", "50 000"], ans: 0 },
+        { tag: "TURBO LASER", q: "4 500 ÷ 9 =", opts: ["450", "500", "50"], ans: 1 },
+        { tag: "SONIC BOOM", q: "1.25 km tukar kepada meter:", opts: ["1 250 m", "125 m", "12 500 m"], ans: 0 },
+        { tag: "PERIMETER SHIELD", q: "Perimeter segi empat sama (sisi 8 cm):", opts: ["16 cm", "32 cm", "64 cm"], ans: 1 },
+        { tag: "CHRONO CANNON", q: "3 jam tukar kepada minit:", opts: ["180 minit", "120 minit", "300 minit"], ans: 0 },
+        { tag: "ENERGY BEAM", q: "²/₃ daripada 60 =", opts: ["30", "40", "20"], ans: 1 },
+        { tag: "TREASURE BUSTER", q: "RM1 000 - RM340 =", opts: ["RM660", "RM760", "RM640"], ans: 0 },
+        { tag: "PRIME FORCE", q: "Nombor perdana terkecil:", opts: ["1", "2", "3"], ans: 1 },
+        { tag: "MECHA SLICE", q: "Isi padu kuboid (5cm × 3cm × 2cm):", opts: ["30 cm³", "15 cm³", "25 cm³"], ans: 0 },
+        { tag: "TIME WARP", q: "1 dekad bersamaan berapa tahun?", opts: ["5 tahun", "10 tahun", "100 tahun"], ans: 1 },
+        { tag: "DECIMAL BURST", q: "5.6 + 3.24 =", opts: ["8.84", "8.30", "8.80"], ans: 0 },
+        { tag: "MEGA CHARGE", q: "25 × 40 =", opts: ["100", "1 000", "10 000"], ans: 1 },
+        { tag: "RATIO LOCK", q: "Nisbah 3 epal kepada 5 oren:", opts: ["3 : 5", "5 : 3", "3 : 8"], ans: 0 },
+        { tag: "CENTURY SHIELD", q: "4 abad bersamaan berapa tahun?", opts: ["40 tahun", "400 tahun", "4 000 tahun"], ans: 1 },
+        { tag: "PROFIT SURGE", q: "Kos RM50, Untung RM15. Harga Jual:", opts: ["RM65", "RM35", "RM75"], ans: 0 },
+        { tag: "LIQUID FLOW", q: "7 500 mℓ tukar kepada liter:", opts: ["75 ℓ", "7.5 ℓ", "0.75 ℓ"], ans: 1 }
+      ],
+      grade6: [
+        { tag: "CAS MERIAM JUTA", q: "³/₄ Juta =", opts: ["750 000", "250 000", "500 000"], ans: 0 },
+        { tag: "BODMAS STRIKE", q: "20 + 5 × 4 =", opts: ["100", "40", "60"], ans: 1 },
+        { tag: "PEMECAH SHIELD", q: "(100 - 40) ÷ 6 =", opts: ["10", "15", "8"], ans: 0 },
+        { tag: "PERATUS UNTUNG", q: "Beli RM200 untung 25%. Jual:", opts: ["RM225", "RM250", "RM260"], ans: 1 },
+        { tag: "HYPER SPEED 999", q: "Isi padu kubus bersisi 4 cm:", opts: ["64 cm³", "16 cm³", "32 cm³"], ans: 0 },
+        { tag: "SUDUT POLIGON", q: "Sudut pedalaman segi tiga:", opts: ["90°", "180°", "360°"], ans: 1 },
+        { tag: "ULTIMATE BLAST", q: "0.08 Juta =", opts: ["80 000", "8 000", "800 000"], ans: 0 },
+        { tag: "FRACTION SLASH", q: "¹/₂ ÷ ¹/₄ =", opts: ["¹/₈", "2", "4"], ans: 1 },
+        { tag: "MEGA NUMERIC", q: "1.5 Juta tukar nombor bulat:", opts: ["1 500 000", "150 000", "15 000 000"], ans: 0 },
+        { tag: "ORDER OF ATTACK", q: "(50 + 25) × 2 =", opts: ["100", "150", "125"], ans: 1 },
+        { tag: "BANKING VAULT", q: "Simpan RM1 000, faedah 5% setahun:", opts: ["RM50", "RM5", "RM100"], ans: 0 },
+        { tag: "CIRCLE ROTATION", q: "Sudut putaran lengkap bulatan:", opts: ["180°", "360°", "90°"], ans: 1 },
+        { tag: "DECIMAL MILLION", q: "0.65 Juta bersamaan:", opts: ["650 000", "65 000", "6 500 000"], ans: 0 },
+        { tag: "SIMPLE RATIO", q: "Nisbah 4 kg kepada 12 kg termudah:", opts: ["4 : 12", "1 : 3", "1 : 4"], ans: 1 },
+        { tag: "EIGHTH MILLION", q: "¹/₈ Juta bersamaan:", opts: ["125 000", "250 000", "12 500"], ans: 0 },
+        { tag: "COMBO BREAKER", q: "72 ÷ 8 + 15 =", opts: ["14", "24", "32"], ans: 1 },
+        { tag: "HEXAGON MATRIX", q: "Bilangan sisi sebuah heksagon:", opts: ["6", "8", "5"], ans: 0 },
+        { tag: "DISCOUNT STRIKE", q: "Harga RM80 diskaun 50%. Bayar:", opts: ["RM30", "RM40", "RM50"], ans: 1 },
+        { tag: "CARTESIAN ORIGIN", q: "Titik asalan pada satah Cartes:", opts: ["(0, 0)", "(1, 1)", "(0, 1)"], ans: 0 },
+        { tag: "GLOBAL CLOCK", q: "Beza masa Tokyo (+9) & KL (+8):", opts: ["2 jam", "1 jam", "3 jam"], ans: 1 },
+        { tag: "PROBABILITY SCAN", q: "Matahari terbit dari timur:", opts: ["Pasti", "Mustahil", "Sama Kemungkinan"], ans: 0 },
+        { tag: "MASS SYNTHESIS", q: "2.4 kg + 800 g =", opts: ["10.4 kg", "3.2 kg", "2.8 kg"], ans: 1 },
+        { tag: "FRACTION POWER", q: "³/₄ + ¹/₂ =", opts: ["1 ¹/₄", "⁴/₆", "1 ¹/₂"], ans: 0 },
+        { tag: "BODMAS DEFENSE", q: "100 - (30 × 3) =", opts: ["210", "10", "70"], ans: 1 },
+        { tag: "QUARTER MILLION", q: "¹/₄ Juta bersamaan:", opts: ["250 000", "500 000", "750 000"], ans: 0 }
+      ]
+    };
+
+    function generateDynamicCombatQuestion(grade) {
+      if (grade === 6) {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const a = (Math.floor(Math.random() * 8) + 2) * 5;
+          const b = Math.floor(Math.random() * 6) + 2;
+          const c = Math.floor(Math.random() * 10) + 10;
+          const correct = (a * b) + c;
+          const opts = [`${correct}`, `${correct - 10}`, `${correct + 10}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "BODMAS KILAT",
+            q: `${a} × ${b} + ${c} =`,
+            opts: opts,
+            ans: opts.indexOf(`${correct}`)
+          };
+        } else if (type === 1) {
+          const quarters = [1, 2, 3][Math.floor(Math.random() * 3)];
+          const val = quarters * 250000;
+          const label = quarters === 1 ? "¹/₄" : quarters === 2 ? "¹/₂" : "³/₄";
+          const opts = [`${val.toLocaleString()}`, `${(val - 100000).toLocaleString()}`, `${(val + 100000).toLocaleString()}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PECAHAN JUTA",
+            q: `${label} Juta =`,
+            opts: opts,
+            ans: opts.indexOf(val.toLocaleString())
+          };
+        } else {
+          const pct = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
+          const principal = (Math.floor(Math.random() * 5) + 1) * 200;
+          const correct = Math.round((pct / 100) * principal);
+          const opts = [`RM${correct}`, `RM${correct + 20}`, `RM${Math.max(10, correct - 20)}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PERATUS WANG",
+            q: `${pct}% daripada RM${principal} =`,
+            opts: opts,
+            ans: opts.indexOf(`RM${correct}`)
+          };
+        }
+      } else {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const m1 = Math.floor(Math.random() * 8) + 3;
+          const m2 = Math.floor(Math.random() * 8) + 3;
+          const correct = m1 * m2;
+          const opts = [`${correct}`, `${correct + 4}`, `${Math.max(2, correct - 4)}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "SIFIR KILAT",
+            q: `${m1} × ${m2} =`,
+            opts: opts,
+            ans: opts.indexOf(`${correct}`)
+          };
+        } else if (type === 1) {
+          const kg = (Math.floor(Math.random() * 8) + 2);
+          const g = kg * 1000;
+          const opts = [`${g} g`, `${g / 10} g`, `${g * 10} g`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "UKURAN JISIM",
+            q: `Tukar ${kg} kg kepada gram:`,
+            opts: opts,
+            ans: opts.indexOf(`${g} g`)
+          };
+        } else {
+          const side = Math.floor(Math.random() * 9) + 3;
+          const peri = side * 4;
+          const opts = [`${peri} cm`, `${peri + 4} cm`, `${side * 2} cm`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PERIMETER SEGI EMPAT",
+            q: `Perimeter segi empat sama (sisi ${side} cm):`,
+            opts: opts,
+            ans: opts.indexOf(`${peri} cm`)
+          };
+        }
+      }
+    }
+
+    /* ==============================================================
+       MATH SHOOTER STATE MACHINE & CANVAS ENGINE
+       ============================================================== */
+    const G = {
+      grade: 5,
+      heroClass: '5 Khoir',
+      heroName: '',
+      cannonSkin: 'green',
+      
+      hp: 3,
+      maxHp: 3,
+      xp: 0,
+      combo: 1,
+      wave: 1,
+      maxWaves: 5,
+      
+      seconds: 15 * 60,
+      timerId: null,
+      totalAnswered: 0,
+      totalCorrect: 0,
+      
+      currentQ: null,
+      questions: [],
+      qIndex: 0,
+      
+      // Canvas Engine
+      canvas: null,
+      ctx: null,
+      animId: null,
+      lastTime: 0,
+      
+      // Cannon
+      cannon: {
+        x: 100,
+        y: 350,
+        angle: -Math.PI / 4,
+        targetAngle: -Math.PI / 4,
+        recoil: 0,
+        isFiring: false
+      },
+      
+      balloons: [],      // Active flying targets
+      cannonballs: [],   // Active fired projectiles
+      particles: [],     // Balloon burst confetti
+      smokeParticles: [],// Cannon smoke
+      floatingTexts: []  // "+100 XP!" texts
+    };
+
+    /* ==============================================================
+       LOBBY SETUP & EVENT HANDLERS
+       ============================================================== */
+    function initLobby() {
       updateClassDropdown(G.grade);
+    }
+
+    function selectGrade(g) {
+      G.grade = g;
+      document.getElementById('btn-grade-5').classList.toggle('active', g === 5);
+      document.getElementById('btn-grade-6').classList.toggle('active', g === 6);
+      updateClassDropdown(g);
+      audio.init();
+      audio.playPop();
     }
 
     function updateClassDropdown(grade) {
       const rosters = getRosters();
       const gradeKey = grade === 5 ? 'grade5' : 'grade6';
       const classList = Object.keys(rosters[gradeKey] || {});
-      const select = document.getElementById('select-player-class');
+      const select = document.getElementById('select-class-dropdown');
       if (!select) return;
 
       select.innerHTML = '';
@@ -1959,26 +1751,26 @@
       }
 
       G.heroName = '';
-      const banner = document.getElementById('roster-selected-display');
-      if (banner) banner.textContent = '⚠️ Sila scroll & klik nama anda dari senarai di atas';
+      const display = document.getElementById('roster-chosen-display');
+      if (display) display.textContent = '⚠️ Sila scroll dan klik nama anda daripada senarai di atas';
 
-      renderRosterNamesList();
+      renderRosterList();
     }
 
-    function onClassChange(className) {
-      G.heroClass = className;
+    function onClassSelected(cls) {
+      G.heroClass = cls;
       G.heroName = '';
-      const banner = document.getElementById('roster-selected-display');
-      if (banner) banner.textContent = '⚠️ Sila scroll & klik nama anda dari senarai di atas';
-      renderRosterNamesList();
+      const display = document.getElementById('roster-chosen-display');
+      if (display) display.textContent = '⚠️ Sila scroll dan klik nama anda daripada senarai di atas';
+      renderRosterList();
     }
 
-    function renderRosterNamesList(filterQuery = '') {
+    function renderRosterList(filterQuery = '') {
       const rosters = getRosters();
       const gradeKey = G.grade === 5 ? 'grade5' : 'grade6';
       const students = (rosters[gradeKey] && rosters[gradeKey][G.heroClass]) || [];
-      const container = document.getElementById('roster-names-list');
-      const title = document.getElementById('roster-header-title');
+      const container = document.getElementById('roster-students-container');
+      const title = document.getElementById('roster-label-title');
       if (!container) return;
 
       const q = filterQuery.trim().toLowerCase();
@@ -2006,155 +1798,959 @@
     }
 
     function filterRosterNames(query) {
-      renderRosterNamesList(query);
+      renderRosterList(query);
     }
 
     function selectStudentName(name) {
       G.heroName = name;
-      const banner = document.getElementById('roster-selected-display');
-      if (banner) {
-        banner.textContent = `✅ Wira Ejen: ${name} (${G.heroClass})`;
+      const display = document.getElementById('roster-chosen-display');
+      if (display) {
+        display.textContent = `✅ Penembak Meriam: ${name} (${G.heroClass})`;
       }
-      renderRosterNamesList(document.getElementById('roster-search-input') ? document.getElementById('roster-search-input').value : '');
-      audio.init(); audio.playChime();
-      showToast(`Wira Dipilih: ${name}`);
+      renderRosterList(document.getElementById('roster-search-box') ? document.getElementById('roster-search-box').value : '');
+      audio.init();
+      audio.playPop();
+      showToast(`Penembak Dipilih: ${name}`);
+    }
+
+    function selectCannonSkin(skin, label) {
+      G.cannonSkin = skin;
+      document.getElementById('skin-green').classList.toggle('active', skin === 'green');
+      document.getElementById('skin-red').classList.toggle('active', skin === 'red');
+      document.getElementById('skin-blue').classList.toggle('active', skin === 'blue');
+      audio.init();
+      audio.playPop();
+      showToast(`Pilihan: ${label}`);
     }
 
     /* ==============================================================
-       ADMIN / GURU SECURITY & MANAGEMENT FUNCTIONS
+       GAME SESSION LAUNCH & FLOW
        ============================================================== */
-    function openAdminAuth() {
-      document.getElementById('overlay-admin-auth').style.display = 'flex';
+    function startGameSession() {
+      audio.init();
+
+      if (!G.heroName) {
+        showToast("⚠️ Sila scroll & klik nama anda daripada senarai murid!");
+        const box = document.querySelector('.roster-picker-box');
+        if (box) {
+          box.style.borderColor = '#ef4444';
+          setTimeout(() => box.style.borderColor = '#38bdf8', 1500);
+        }
+        return;
+      }
+
+      // Hide Lobby, Show Game Arena
+      document.getElementById('screen-lobby').style.display = 'none';
+      document.getElementById('arena-hud-top').style.display = 'flex';
+      document.getElementById('math-question-banner').style.display = 'flex';
+      document.getElementById('arena-bottom-strip').style.display = 'flex';
+
+      // Update HUD
+      document.getElementById('hud-player-name').textContent = G.heroName;
+      document.getElementById('hud-player-class').textContent = G.heroClass;
+      document.getElementById('hud-avatar-icon').textContent = G.cannonSkin === 'red' ? '🔴' : G.cannonSkin === 'blue' ? '🔵' : '🟢';
+
+      // Reset Game Variables
+      G.hp = 3;
+      G.xp = 0;
+      G.combo = 1;
+      G.wave = 1;
+      G.seconds = 15 * 60;
+      G.totalAnswered = 0;
+      G.totalCorrect = 0;
+
+      updateHudDisplays();
+      startTimer();
+
+      // Load Questions
+      const pool = G.grade === 5 ? COMBAT_BANK.grade5 : COMBAT_BANK.grade6;
+      G.questions = [...pool].sort(() => Math.random() - 0.5);
+      G.qIndex = 0;
+
+      initCanvas();
+      loadNextQuestion();
+      showToast("Misi Bermula! Tembak belon dengan jawapan tepat! 🎯");
+    }
+
+    function updateHudDisplays() {
+      document.getElementById('hud-lives-display').textContent = '❤️'.repeat(Math.max(0, G.hp));
+      document.getElementById('hud-xp-display').textContent = `${G.xp.toLocaleString()} XP`;
+      document.getElementById('hud-combo-display').textContent = `x${G.combo}`;
+      document.getElementById('hud-wave-display').textContent = `${G.wave}/${G.maxWaves}`;
+    }
+
+    function startTimer() {
+      if (G.timerId) clearInterval(G.timerId);
+      G.timerId = setInterval(() => {
+        G.seconds--;
+        const m = Math.floor(G.seconds / 60);
+        const s = G.seconds % 60;
+        const timeEl = document.getElementById('hud-timer-display');
+        if (timeEl) timeEl.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        if (G.seconds <= 0) {
+          clearInterval(G.timerId);
+          finishGameSession(true);
+        }
+      }, 1000);
+    }
+
+    /* ==============================================================
+       CANVAS RENDERING & BALLOON / CANNON MECHANICS
+       ============================================================== */
+    function initCanvas() {
+      G.canvas = document.getElementById('game-canvas');
+      G.ctx = G.canvas.getContext('2d');
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Canvas Pointer Click/Tap Listener
+      G.canvas.addEventListener('pointerdown', (e) => {
+        const rect = G.canvas.getBoundingClientRect();
+        const scaleX = G.canvas.width / rect.width;
+        const scaleY = G.canvas.height / rect.height;
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+        handleCanvasTap(clickX, clickY);
+      });
+
+      if (G.animId) cancelAnimationFrame(G.animId);
+      G.lastTime = performance.now();
+      gameLoop(G.lastTime);
+    }
+
+    function resizeCanvas() {
+      if (!G.canvas) return;
+      G.canvas.width = window.innerWidth;
+      G.canvas.height = window.innerHeight;
+      G.cannon.x = Math.max(90, G.canvas.width * 0.12);
+      G.cannon.y = G.canvas.height - 70;
+      repositionBalloons();
+    }
+
+    function loadNextQuestion() {
+      if (G.qIndex >= G.questions.length) {
+        G.questions.push(generateDynamicCombatQuestion(G.grade));
+      }
+      G.currentQ = G.questions[G.qIndex];
+
+      // Update question banner
+      document.getElementById('banner-question-tag').textContent = G.currentQ.tag || "OPERASI MATEMATIK";
+      document.getElementById('banner-question-text').textContent = G.currentQ.q;
+
+      // Create Balloons
+      createBalloonsForQuestion(G.currentQ);
+
+      // Create Bottom Option Buttons
+      renderBottomOptionButtons(G.currentQ);
+    }
+
+    function createBalloonsForQuestion(q) {
+      G.balloons = [];
+      const count = q.opts.length;
+      const startX = G.canvas.width * 0.40;
+      const endX = G.canvas.width * 0.88;
+      const step = count > 1 ? (endX - startX) / (count - 1) : 0;
+      
+      const colors = [
+        { main: '#f97316', dark: '#c2410c' }, // Orange (like image)
+        { main: '#ef4444', dark: '#b91c1c' }, // Red
+        { main: '#0ea5e9', dark: '#0369a1' }, // Blue
+        { main: '#a855f7', dark: '#7e22ce' }  // Purple
+      ];
+
+      q.opts.forEach((opt, idx) => {
+        const color = colors[idx % colors.length];
+        const bx = count === 1 ? (startX + endX) / 2 : startX + idx * step;
+        const by = G.canvas.height * 0.38 + (idx % 2 === 0 ? -15 : 15);
+        G.balloons.push({
+          idx: idx,
+          text: opt,
+          isCorrect: idx === q.ans,
+          x: bx,
+          y: by,
+          baseY: by,
+          radius: Math.min(52, Math.max(38, G.canvas.width * 0.042)),
+          color: color.main,
+          darkColor: color.dark,
+          wobbleOffset: Math.random() * Math.PI * 2,
+          driftSpeed: 0.8 + Math.random() * 0.4,
+          popped: false,
+          shakeTime: 0
+        });
+      });
+    }
+
+    function repositionBalloons() {
+      if (!G.currentQ || !G.balloons) return;
+      const count = G.balloons.length;
+      const startX = G.canvas.width * 0.40;
+      const endX = G.canvas.width * 0.88;
+      const step = count > 1 ? (endX - startX) / (count - 1) : 0;
+      G.balloons.forEach((b, idx) => {
+        b.x = count === 1 ? (startX + endX) / 2 : startX + idx * step;
+        b.baseY = G.canvas.height * 0.38 + (idx % 2 === 0 ? -15 : 15);
+        b.radius = Math.min(52, Math.max(38, G.canvas.width * 0.042));
+      });
+    }
+
+    function renderBottomOptionButtons(q) {
+      const strip = document.getElementById('arena-bottom-strip');
+      if (!strip) return;
+      strip.innerHTML = '';
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'balloon-answer-btn';
+        btn.id = `btn-opt-${idx}`;
+        btn.innerHTML = `<span>🎈</span> <span>${opt}</span>`;
+        btn.onclick = () => fireCannonAtBalloon(idx);
+        strip.appendChild(btn);
+      });
+    }
+
+    function handleCanvasTap(clickX, clickY) {
+      if (!G.balloons || G.balloons.length === 0) return;
+      // Find closest unpopped balloon clicked
+      for (let i = 0; i < G.balloons.length; i++) {
+        const b = G.balloons[i];
+        if (b.popped) continue;
+        const dist = Math.hypot(clickX - b.x, clickY - b.y);
+        if (dist <= b.radius + 18) {
+          fireCannonAtBalloon(i);
+          return;
+        }
+      }
+    }
+
+    function fireCannonAtBalloon(balloonIdx) {
+      if (G.cannon.isFiring) return;
+      const target = G.balloons[balloonIdx];
+      if (!target || target.popped) return;
+
+      G.cannon.isFiring = true;
+      audio.init();
+
+      // Calculate angle from cannon muzzle to balloon
+      const dx = target.x - G.cannon.x;
+      const dy = target.y - G.cannon.y;
+      G.cannon.targetAngle = Math.atan2(dy, dx);
+      G.cannon.angle = G.cannon.targetAngle;
+
+      // Recoil & smoke
+      G.cannon.recoil = 18;
+      audio.playCannon();
+
+      // Emit cannon smoke puff
+      emitCannonSmoke(G.cannon.x + Math.cos(G.cannon.angle) * 60, G.cannon.y + Math.sin(G.cannon.angle) * 60);
+
+      // Launch cannonball
+      const startX = G.cannon.x + Math.cos(G.cannon.angle) * 65;
+      const startY = G.cannon.y + Math.sin(G.cannon.angle) * 65;
+      G.cannonballs.push({
+        x: startX,
+        y: startY,
+        targetX: target.x,
+        targetY: target.y,
+        balloonIdx: balloonIdx,
+        speed: 26,
+        radius: 12
+      });
+    }
+
+    function emitCannonSmoke(x, y) {
+      for (let i = 0; i < 8; i++) {
+        G.smokeParticles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 3 + Math.cos(G.cannon.angle) * 2,
+          vy: (Math.random() - 0.5) * 3 + Math.sin(G.cannon.angle) * 2,
+          radius: 8 + Math.random() * 8,
+          alpha: 0.8,
+          life: 1
+        });
+      }
+    }
+
+    function onCannonballHitBalloon(cb) {
+      const b = G.balloons[cb.balloonIdx];
+      if (!b) return;
+
+      G.totalAnswered++;
+      const optBtn = document.getElementById(`btn-opt-${cb.balloonIdx}`);
+
+      if (b.isCorrect) {
+        // CORRECT ANSWER! POP!
+        b.popped = true;
+        G.totalCorrect++;
+        G.xp += 100 * G.combo;
+        G.combo++;
+
+        if (optBtn) optBtn.classList.add('correct-burst');
+        audio.playPop();
+
+        // Confetti burst from balloon
+        spawnBalloonPopParticles(b.x, b.y, b.color);
+        spawnFloatingText(b.x, b.y - 20, `+${100 * (G.combo - 1)} XP!`);
+
+        updateHudDisplays();
+
+        // Next Question after delay
+        setTimeout(() => {
+          G.qIndex++;
+          if (G.qIndex % 3 === 0 && G.wave < G.maxWaves) {
+            G.wave++;
+            showToast(`🌟 Pusingan ${G.wave} / ${G.maxWaves} Dibuka!`);
+            audio.playFanfare();
+          }
+          if (G.wave >= G.maxWaves && G.qIndex >= 12) {
+            finishGameSession(true);
+          } else {
+            loadNextQuestion();
+            G.cannon.isFiring = false;
+          }
+        }, 650);
+
+      } else {
+        // WRONG ANSWER! BOING!
+        audio.playBoing();
+        b.shakeTime = 12;
+        G.hp--;
+        G.combo = 1;
+
+        if (optBtn) {
+          optBtn.classList.add('wrong-shake');
+          setTimeout(() => optBtn.classList.remove('wrong-shake'), 400);
+        }
+
+        spawnFloatingText(b.x, b.y - 20, "OOPS! Cuba lagi!");
+        updateHudDisplays();
+
+        if (G.hp <= 0) {
+          setTimeout(() => finishGameSession(false), 800);
+        } else {
+          setTimeout(() => G.cannon.isFiring = false, 400);
+        }
+      }
+    }
+
+    function spawnBalloonPopParticles(x, y, color) {
+      for (let i = 0; i < 30; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 3 + Math.random() * 8;
+        G.particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: 3 + Math.random() * 4,
+          color: Math.random() > 0.4 ? color : '#facc15',
+          alpha: 1,
+          gravity: 0.15
+        });
+      }
+    }
+
+    function spawnFloatingText(x, y, text) {
+      G.floatingTexts.push({
+        x: x,
+        y: y,
+        text: text,
+        alpha: 1,
+        vy: -1.5
+      });
+    }
+
+    /* ==============================================================
+       CANVAS 60 FPS GAME LOOP & DRAWING ROUTINES
+       ============================================================== */
+    function gameLoop(time) {
+      const dt = (time - G.lastTime) / 1000;
+      G.lastTime = time;
+
+      renderCanvasScene(time);
+
+      G.animId = requestAnimationFrame(gameLoop);
+    }
+
+    function renderCanvasScene(time) {
+      if (!G.ctx || !G.canvas) return;
+      const ctx = G.ctx;
+      const w = G.canvas.width;
+      const h = G.canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. Draw Grassy Hills in Foreground
+      drawRollingHills(ctx, w, h);
+
+      // 2. Draw Cannon on Hill
+      drawGreenCannon(ctx);
+
+      // 3. Update & Draw Cannonballs
+      updateAndDrawCannonballs(ctx);
+
+      // 4. Update & Draw Balloons
+      updateAndDrawBalloons(ctx, time);
+
+      // 5. Update & Draw Particles (Confetti & Smoke)
+      updateAndDrawParticles(ctx);
+
+      // 6. Draw Floating Text
+      updateAndDrawFloatingTexts(ctx);
+    }
+
+    function drawRollingHills(ctx, w, h) {
+      // Back green hill
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath();
+      ctx.ellipse(w * 0.25, h + 30, w * 0.45, 120, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Front hill where cannon rests
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath();
+      ctx.ellipse(G.cannon.x + 20, h + 20, 180, 110, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Grass tufts
+      ctx.fillStyle = '#15803d';
+      ctx.beginPath();
+      ctx.arc(G.cannon.x - 40, h - 35, 12, 0, Math.PI, true);
+      ctx.arc(G.cannon.x + 80, h - 30, 15, 0, Math.PI, true);
+      ctx.fill();
+    }
+
+    function drawGreenCannon(ctx) {
+      const c = G.cannon;
+      const skinColor = G.cannonSkin === 'red' ? '#ef4444' : G.cannonSkin === 'blue' ? '#0ea5e9' : '#15803d';
+      const barrelColor = G.cannonSkin === 'red' ? '#dc2626' : G.cannonSkin === 'blue' ? '#0284c7' : '#16a34a';
+
+      ctx.save();
+      ctx.translate(c.x, c.y);
+
+      // Cannon Base (Wheel & Mount)
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.arc(0, 12, 26, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = skinColor;
+      ctx.beginPath();
+      ctx.arc(0, 12, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#facc15';
+      ctx.beginPath();
+      ctx.arc(0, 12, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Cannon Barrel (Rotates towards target)
+      ctx.rotate(c.angle);
+      const recoilOffset = -c.recoil;
+      if (c.recoil > 0) c.recoil = Math.max(0, c.recoil - 1.5);
+
+      // Barrel Tube
+      ctx.fillStyle = barrelColor;
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.roundRect(recoilOffset - 10, -18, 75, 36, [4, 12, 12, 4]);
+      ctx.fill();
+      ctx.stroke();
+
+      // Barrel Rim / Muzzle Ring
+      ctx.fillStyle = '#facc15';
+      ctx.beginPath();
+      ctx.roundRect(recoilOffset + 60, -21, 10, 42, 3);
+      ctx.fill();
+      ctx.stroke();
+
+      // Inner Dark Muzzle
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.ellipse(recoilOffset + 65, 0, 3, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function updateAndDrawBalloons(ctx, time) {
+      G.balloons.forEach(b => {
+        if (b.popped) return;
+
+        // Gentle floating wobble
+        const wobble = Math.sin((time / 1000) * 2 + b.wobbleOffset) * 8;
+        b.y = b.baseY + wobble;
+
+        // Shake when wrong
+        let shakeX = 0;
+        if (b.shakeTime > 0) {
+          shakeX = Math.sin(b.shakeTime * 4) * 6;
+          b.shakeTime--;
+        }
+
+        const bx = b.x + shakeX;
+        const by = b.y;
+
+        ctx.save();
+
+        // 1. Balloon Dangling String
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(bx, by + b.radius * 1.1);
+        ctx.bezierCurveTo(bx - 8, by + b.radius + 18, bx + 12, by + b.radius + 32, bx + 2, by + b.radius + 45);
+        ctx.stroke();
+
+        // 2. Balloon Knot
+        ctx.fillStyle = b.darkColor;
+        ctx.beginPath();
+        ctx.moveTo(bx, by + b.radius + 4);
+        ctx.lineTo(bx - 6, by + b.radius + 12);
+        ctx.lineTo(bx + 6, by + b.radius + 12);
+        ctx.closePath();
+        ctx.fill();
+
+        // 3. Balloon Body (Oval with outline)
+        ctx.fillStyle = b.color;
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.ellipse(bx, by, b.radius, b.radius * 1.15, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // 4. Cartoon Shiny Highlight spot
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.beginPath();
+        ctx.ellipse(bx - b.radius * 0.35, by - b.radius * 0.45, b.radius * 0.22, b.radius * 0.4, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 5. Answer Text inside Balloon
+        ctx.fillStyle = '#0f172a';
+        ctx.font = `900 ${Math.max(16, b.radius * 0.52)}px 'Fredoka', 'Nunito', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // White shadow/outline for readability
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#ffffff';
+        ctx.strokeText(b.text, bx, by);
+        ctx.fillText(b.text, bx, by);
+
+        ctx.restore();
+      });
+    }
+
+    function updateAndDrawCannonballs(ctx) {
+      for (let i = G.cannonballs.length - 1; i >= 0; i--) {
+        const cb = G.cannonballs[i];
+        const dx = cb.targetX - cb.x;
+        const dy = cb.targetY - cb.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist <= cb.speed) {
+          // Reached target!
+          onCannonballHitBalloon(cb);
+          G.cannonballs.splice(i, 1);
+          continue;
+        }
+
+        // Move towards target
+        const angle = Math.atan2(dy, dx);
+        cb.x += Math.cos(angle) * cb.speed;
+        cb.y += Math.sin(angle) * cb.speed;
+
+        // Spark trail
+        G.particles.push({
+          x: cb.x,
+          y: cb.y,
+          vx: (Math.random() - 0.5) * 2 - Math.cos(angle) * 3,
+          vy: (Math.random() - 0.5) * 2 - Math.sin(angle) * 3,
+          radius: 3 + Math.random() * 2,
+          color: '#fbbf24',
+          alpha: 0.9,
+          gravity: 0.05
+        });
+
+        // Draw Cannonball (Glowing fiery sphere)
+        ctx.save();
+        ctx.fillStyle = '#f97316';
+        ctx.strokeStyle = '#7c2d12';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(cb.x, cb.y, cb.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(cb.x - 3, cb.y - 3, cb.radius * 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function updateAndDrawParticles(ctx) {
+      // Balloon fragments
+      for (let i = G.particles.length - 1; i >= 0; i--) {
+        const p = G.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= 0.022;
+
+        if (p.alpha <= 0) {
+          G.particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Cannon Smoke
+      for (let i = G.smokeParticles.length - 1; i >= 0; i--) {
+        const s = G.smokeParticles[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.radius += 0.4;
+        s.alpha -= 0.025;
+
+        if (s.alpha <= 0) {
+          G.smokeParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = s.alpha;
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function updateAndDrawFloatingTexts(ctx) {
+      for (let i = G.floatingTexts.length - 1; i >= 0; i--) {
+        const ft = G.floatingTexts[i];
+        ft.y += ft.vy;
+        ft.alpha -= 0.02;
+
+        if (ft.alpha <= 0) {
+          G.floatingTexts.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = ft.alpha;
+        ctx.font = "900 1.25rem 'Fredoka', 'Nunito', sans-serif";
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#fde047';
+        ctx.strokeStyle = '#78350f';
+        ctx.lineWidth = 3.5;
+        ctx.strokeText(ft.text, ft.x, ft.y);
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ctx.restore();
+      }
+    }
+
+    /* ==============================================================
+       SESSION END & CERTIFICATE
+       ============================================================== */
+    function finishGameSession(isVictory) {
+      if (G.timerId) clearInterval(G.timerId);
+      audio.init();
+
+      const acc = G.totalAnswered > 0 ? Math.round((G.totalCorrect / G.totalAnswered) * 100) : 100;
+      const stars = acc >= 85 ? 3 : acc >= 60 ? 2 : 1;
+
+      // Save Score Record to Calendar Leaderboard
+      const now = new Date();
+      const rec = {
+        id: "MQ-" + Date.now().toString().slice(-4),
+        name: G.heroName,
+        className: G.heroClass,
+        grade: G.grade,
+        xp: G.xp,
+        stars: stars,
+        acc: acc,
+        date: now.toISOString().slice(0, 10),
+        time: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+      };
+      saveScore(rec);
+
+      if (isVictory) {
+        audio.playFanfare();
+        openCertificate(rec);
+      } else {
+        showToast("Nyawa habis! Cuba lagi!");
+        setTimeout(() => {
+          openLeaderboard();
+          restartGame();
+        }, 1200);
+      }
+    }
+
+    function openCertificate(rec) {
+      document.getElementById('cert-student-name').textContent = rec.name;
+      document.getElementById('cert-student-class').textContent = `${rec.className} • Tahun ${rec.grade}`;
+      document.getElementById('cert-student-xp').textContent = `${rec.xp.toLocaleString()} XP`;
+      document.getElementById('cert-student-acc').textContent = `${rec.acc}%`;
+      document.getElementById('cert-student-stars').textContent = '⭐'.repeat(rec.stars);
+      document.getElementById('modal-certificate').style.display = 'flex';
+    }
+
+    function closeCertificate() {
+      document.getElementById('modal-certificate').style.display = 'none';
+      restartGame();
+    }
+
+    function restartGame() {
+      if (G.timerId) clearInterval(G.timerId);
+      document.getElementById('modal-certificate').style.display = 'none';
+      document.getElementById('screen-lobby').style.display = 'flex';
+      document.getElementById('arena-hud-top').style.display = 'none';
+      document.getElementById('math-question-banner').style.display = 'none';
+      document.getElementById('arena-bottom-strip').style.display = 'none';
+    }
+
+    function confirmExitGame() {
+      if (confirm("Adakah anda pasti mahu keluar ke menu utama?")) {
+        restartGame();
+      }
+    }
+
+    /* ==============================================================
+       LEADERBOARD FUNCTIONS (PAPAN SKOR KALENDAR)
+       ============================================================== */
+    let currentLeaderboardMode = 'ALL';
+    let customLeaderboardDate = '';
+
+    function openLeaderboard() {
+      document.getElementById('modal-leaderboard').style.display = 'flex';
+      renderLeaderboardView();
+      audio.init();
+    }
+
+    function closeLeaderboard() {
+      document.getElementById('modal-leaderboard').style.display = 'none';
+    }
+
+    function setLeaderboardFilter(mode, val = '') {
+      currentLeaderboardMode = mode;
+      customLeaderboardDate = val;
+      document.getElementById('chip-filter-all').classList.toggle('active', mode === 'ALL');
+      document.getElementById('chip-filter-today').classList.toggle('active', mode === 'TODAY');
+      document.getElementById('chip-filter-yest').classList.toggle('active', mode === 'YEST');
+      renderLeaderboardView();
+    }
+
+    function renderLeaderboardView() {
+      const container = document.getElementById('leaderboard-items-list');
+      const all = getScores();
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const yestIso = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+
+      let filtered = all;
+      if (currentLeaderboardMode === 'TODAY') filtered = filtered.filter(x => x.date === todayIso);
+      else if (currentLeaderboardMode === 'YEST') filtered = filtered.filter(x => x.date === yestIso);
+      else if (currentLeaderboardMode === 'CUSTOM' && customLeaderboardDate) filtered = filtered.filter(x => x.date === customLeaderboardDate);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; font-size:0.75rem; color:#94a3b8;">Tiada rekod pada tarikh ini.</div>`;
+        return;
+      }
+
+      // Group by date
+      const groups = {};
+      filtered.forEach(it => {
+        const d = it.date || 'Lain-lain';
+        if (!groups[d]) groups[d] = [];
+        groups[d].push(it);
+      });
+
+      let html = '';
+      Object.keys(groups).sort().reverse().forEach(d => {
+        const items = groups[d];
+        const dateTitle = d === todayIso ? `HARI INI (${d})` : d === yestIso ? `SEMALAM (${d})` : d;
+        html += `<div style="font-size:0.75rem; font-weight:900; color:#0284c7; margin-top:4px;">📅 Sesi PDPR: ${dateTitle} (${items.length} Murid)</div>`;
+        items.forEach((it, idx) => {
+          const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx+1}`;
+          html += `
+            <div class="score-item-card">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight:900; font-size:0.95rem;">${medal}</span>
+                <div>
+                  <div style="font-weight:800; color:#0f172a;">${it.name}</div>
+                  <div style="font-size:0.68rem; color:#64748b;">${it.className} • Thn ${it.grade} • ${it.time || ''}</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-weight:900; color:#b45309;">${Number(it.xp).toLocaleString()} XP</div>
+                <div style="font-size:0.68rem; color:#eab308;">${'⭐'.repeat(it.stars || 1)} (${it.acc || 100}%)</div>
+              </div>
+            </div>
+          `;
+        });
+      });
+      container.innerHTML = html;
+    }
+
+    function exportScoresToCsv() {
+      const data = getScores();
+      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan,Tarikh Selesai,Masa\n";
+      data.forEach((r, i) => {
+        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.stars}","${r.acc}%","${r.date}","${r.time}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const u = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = u;
+      a.download = `Rekod_Math_Shooter_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast("Fail CSV dimuat turun untuk Cikgu Mohammad Fikrey!");
+    }
+
+    function copyScoresWhatsApp() {
+      const data = getScores();
+      let t = `📊 *REKOD MARKAH PDPR MATH SHOOTER (SK RANGGU)* 📊\n`;
+      t += `👨‍💻 Pembangun: Mohammad Fikrey bin Abdul Gapar\n`;
+      t += `Tarikh: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
+      data.forEach((r, i) => {
+        t += `${i+1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${r.xp} XP | ${r.stars}⭐\n`;
+      });
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(t).then(() => showToast("Format WhatsApp berjaya disalin!"));
+      }
+    }
+
+    /* ==============================================================
+       ADMIN & SECURITY ROUTINES (KOD RAHSIA: TS.FIKREY37)
+       ============================================================== */
+    function openAdminSecurity() {
+      document.getElementById('modal-admin-auth').style.display = 'flex';
       const inp = document.getElementById('input-admin-pass');
       inp.value = '';
       setTimeout(() => inp.focus(), 150);
       audio.init();
     }
 
-    function closeAdminAuth() {
-      document.getElementById('overlay-admin-auth').style.display = 'none';
+    function closeAdminSecurity() {
+      document.getElementById('modal-admin-auth').style.display = 'none';
       document.getElementById('input-admin-pass').value = '';
     }
 
-    function verifyAdminPass() {
-      const code = document.getElementById('input-admin-pass').value.trim();
-      if (code === "TS.FIKREY37") {
-        closeAdminAuth();
+    function verifyAdminPasscode() {
+      const val = document.getElementById('input-admin-pass').value.trim();
+      if (val === "TS.FIKREY37") {
+        closeAdminSecurity();
         openAdminPanel();
-        showToast("Akses Guru Disahkan! Selamat datang Cikgu Fikrey.");
+        showToast("Akses Pengajar Disahkan! Selamat datang Cikgu Fikrey.");
       } else {
-        showToast("❌ Kod Keselamatan Tidak Sah!");
-        audio.playHit();
+        showToast("❌ Kod Laluan Tidak Sah!");
+        audio.playBoing();
       }
     }
 
     function openAdminPanel() {
-      document.getElementById('overlay-admin-panel').style.display = 'flex';
-      populateAdminClassSelect();
+      document.getElementById('modal-admin-panel').style.display = 'flex';
+      populateAdminClassSelector();
       renderAdminClassesList();
     }
 
     function closeAdminPanel() {
-      document.getElementById('overlay-admin-panel').style.display = 'none';
+      document.getElementById('modal-admin-panel').style.display = 'none';
       updateClassDropdown(G.grade);
-      showToast("Kemaskini kelas disimpan!");
+      showToast("Pangkalan data dikemaskini!");
     }
 
     function switchAdminTab(tab) {
-      document.getElementById('btn-tab-students').classList.toggle('active', tab === 'students');
-      document.getElementById('btn-tab-classes').classList.toggle('active', tab === 'classes');
-      document.getElementById('admin-tab-students-view').style.display = (tab === 'students' ? 'flex' : 'none');
-      document.getElementById('admin-tab-classes-view').style.display = (tab === 'classes' ? 'flex' : 'none');
+      document.getElementById('admin-tab-btn-students').classList.toggle('active', tab === 'students');
+      document.getElementById('admin-tab-btn-classes').classList.toggle('active', tab === 'classes');
+      document.getElementById('admin-view-students').style.display = (tab === 'students' ? 'flex' : 'none');
+      document.getElementById('admin-view-classes').style.display = (tab === 'classes' ? 'flex' : 'none');
     }
 
-    function populateAdminClassSelect() {
+    function populateAdminClassSelector() {
       const rosters = getRosters();
-      const select = document.getElementById('admin-select-class');
-      if (!select) return;
-
-      select.innerHTML = '';
+      const sel = document.getElementById('admin-class-picker');
+      if (!sel) return;
+      sel.innerHTML = '';
       ['grade5', 'grade6'].forEach(gKey => {
-        const gradeTitle = gKey === 'grade5' ? 'Tahun 5' : 'Tahun 6';
-        const classes = Object.keys(rosters[gKey] || {});
-        classes.forEach(cls => {
+        const title = gKey === 'grade5' ? 'Tahun 5' : 'Tahun 6';
+        Object.keys(rosters[gKey] || {}).forEach(cls => {
           const opt = document.createElement('option');
           opt.value = `${gKey}|${cls}`;
-          opt.textContent = `${cls} (${gradeTitle})`;
-          select.appendChild(opt);
+          opt.textContent = `${cls} (${title})`;
+          sel.appendChild(opt);
         });
       });
-
-      if (select.options.length > 0) {
-        renderAdminStudentList(select.options[0].value);
-      }
+      if (sel.options.length > 0) renderAdminStudents(sel.options[0].value);
     }
 
-    function renderAdminStudentList(val) {
+    function renderAdminStudents(val) {
       if (!val) return;
       const [gKey, className] = val.split('|');
       const rosters = getRosters();
       const students = (rosters[gKey] && rosters[gKey][className]) || [];
-      const container = document.getElementById('admin-students-list');
-      const summary = document.getElementById('admin-class-summary-text');
+      const container = document.getElementById('admin-students-list-view');
+      const counter = document.getElementById('admin-class-counter-text');
 
-      if (summary) summary.textContent = `Senarai Murid ${className} (${students.length} Orang):`;
+      if (counter) counter.textContent = `Senarai Murid ${className} (${students.length} Orang):`;
 
       if (students.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:12px; font-size:0.75rem; color:#94a3b8;">Tiada murid dalam kelas ini lagi.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:10px; font-size:0.75rem; color:#94a3b8;">Tiada murid dikesan.</div>`;
         return;
       }
 
       let html = '';
-      students.forEach((name, idx) => {
-        const safeName = name.replace(/"/g, '&quot;');
+      students.forEach((s, idx) => {
+        const safeStudent = s.replace(/"/g, '&quot;');
         html += `
-          <div class="admin-student-row">
-            <span>${idx + 1}. <b>${name}</b></span>
-            <button class="admin-btn-delete" data-student="${safeName}" onclick="adminDeleteStudent('${gKey}', '${className}', this.getAttribute('data-student'))">🗑️ Padam</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 8px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; font-size:0.75rem;">
+            <span>${idx + 1}. <b>${s}</b></span>
+            <button data-student="${safeStudent}" onclick="adminDeleteStudent('${gKey}', '${className}', this.getAttribute('data-student'))" style="background:none; border:none; color:#ef4444; font-size:0.75rem; cursor:pointer;">🗑️</button>
           </div>
         `;
       });
       container.innerHTML = html;
     }
 
-    function adminAddStudentSingle() {
-      const input = document.getElementById('admin-input-new-student');
-      const val = input.value.trim();
-      const selectVal = document.getElementById('admin-select-class').value;
-      if (!val || !selectVal) {
-        showToast("Sila masukkan nama murid!");
-        return;
-      }
+    function adminAddSingleStudent() {
+      const input = document.getElementById('admin-new-student-name');
+      const name = input.value.trim();
+      const selVal = document.getElementById('admin-class-picker').value;
+      if (!name || !selVal) return;
 
-      const [gKey, className] = selectVal.split('|');
+      const [gKey, className] = selVal.split('|');
       const rosters = getRosters();
       if (!rosters[gKey][className]) rosters[gKey][className] = [];
-
-      if (rosters[gKey][className].includes(val)) {
-        showToast("Nama murid ini sudah wujud dalam kelas!");
+      if (rosters[gKey][className].includes(name)) {
+        showToast("Nama murid sudah wujud!");
         return;
       }
-
-      rosters[gKey][className].push(val);
+      rosters[gKey][className].push(name);
       saveRosters(rosters);
       input.value = '';
-      renderAdminStudentList(selectVal);
-      showToast(`${val} ditambah ke ${className}!`);
+      renderAdminStudents(selVal);
+      showToast(`${name} ditambah!`);
     }
 
-    function adminBulkAddStudents() {
-      const area = document.getElementById('admin-bulk-input');
-      const text = area.value.trim();
-      const selectVal = document.getElementById('admin-select-class').value;
-      if (!text || !selectVal) {
-        showToast("Sila tampal senarai nama murid!");
-        return;
-      }
+    function adminBulkImport() {
+      const text = document.getElementById('admin-bulk-names').value.trim();
+      const selVal = document.getElementById('admin-class-picker').value;
+      if (!text || !selVal) return;
 
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       if (lines.length === 0) return;
 
-      const [gKey, className] = selectVal.split('|');
+      const [gKey, className] = selVal.split('|');
       const rosters = getRosters();
       if (!rosters[gKey][className]) rosters[gKey][className] = [];
 
@@ -2165,11 +2761,10 @@
           added++;
         }
       });
-
       saveRosters(rosters);
-      area.value = '';
-      renderAdminStudentList(selectVal);
-      showToast(`Berjaya import ${added} murid ke ${className}!`);
+      document.getElementById('admin-bulk-names').value = '';
+      renderAdminStudents(selVal);
+      showToast(`${added} murid berjaya diimport!`);
     }
 
     function adminDeleteStudent(gKey, className, studentName) {
@@ -2177,50 +2772,42 @@
       if (!rosters[gKey] || !rosters[gKey][className]) return;
       rosters[gKey][className] = rosters[gKey][className].filter(s => s !== studentName);
       saveRosters(rosters);
-      renderAdminStudentList(`${gKey}|${className}`);
+      renderAdminStudents(`${gKey}|${className}`);
       showToast(`${studentName} dipadam.`);
     }
 
-    function adminCreateNewClass() {
-      const nameInput = document.getElementById('admin-new-class-name');
-      const gradeInput = document.getElementById('admin-new-class-grade');
-      const className = nameInput.value.trim();
-      const grade = gradeInput.value;
+    function adminCreateClass() {
+      const grade = document.getElementById('admin-new-class-grade').value;
+      const name = document.getElementById('admin-new-class-name').value.trim();
+      if (!name) return;
+
       const gKey = grade === '5' ? 'grade5' : 'grade6';
-
-      if (!className) {
-        showToast("Sila masukkan nama kelas!");
-        return;
-      }
-
       const rosters = getRosters();
-      if (rosters[gKey][className]) {
+      if (rosters[gKey][name]) {
         showToast("Kelas ini sudah wujud!");
         return;
       }
-
-      rosters[gKey][className] = [];
+      rosters[gKey][name] = [];
       saveRosters(rosters);
-      nameInput.value = '';
-      populateAdminClassSelect();
+      document.getElementById('admin-new-class-name').value = '';
+      populateAdminClassSelector();
       renderAdminClassesList();
-      showToast(`Kelas ${className} berjaya dicipta!`);
+      showToast(`Kelas ${name} dicipta!`);
     }
 
     function renderAdminClassesList() {
       const rosters = getRosters();
-      const container = document.getElementById('admin-classes-badge-list');
+      const container = document.getElementById('admin-classes-badges');
       if (!container) return;
-
       let html = '';
       ['grade5', 'grade6'].forEach(gKey => {
-        const gradeTitle = gKey === 'grade5' ? 'Thn 5' : 'Thn 6';
+        const title = gKey === 'grade5' ? 'Thn 5' : 'Thn 6';
         Object.keys(rosters[gKey] || {}).forEach(cls => {
           const count = (rosters[gKey][cls] || []).length;
           html += `
-            <div class="admin-class-badge">
-              <span>🏫 ${cls} (${gradeTitle} - ${count} murid)</span>
-              <button onclick="adminDeleteClass('${gKey}', '${cls}')" style="background:none; border:none; color:#fca5a5; cursor:pointer; font-size:0.75rem; margin-left:4px;" title="Padam Kelas">✕</button>
+            <div style="background:#e0f2fe; border:1px solid #7dd3fc; border-radius:6px; padding:3px 8px; font-size:0.75rem; font-weight:800; display:flex; align-items:center; gap:6px;">
+              <span>🏫 ${cls} (${title} - ${count} murid)</span>
+              <button onclick="adminDeleteClass('${gKey}', '${cls}')" style="background:none; border:none; color:#ef4444; font-size:0.75rem; cursor:pointer;">✕</button>
             </div>
           `;
         });
@@ -2229,491 +2816,35 @@
     }
 
     function adminDeleteClass(gKey, className) {
-      if (!confirm(`Adakah anda pasti mahu memadam kelas "${className}" berserta semua senarai muridnya?`)) return;
+      if (!confirm(`Padam kelas "${className}" berserta semua muridnya?`)) return;
       const rosters = getRosters();
       delete rosters[gKey][className];
       saveRosters(rosters);
-      populateAdminClassSelect();
+      populateAdminClassSelector();
       renderAdminClassesList();
       showToast(`Kelas ${className} dipadam.`);
     }
 
-    function adminResetToDefaultRoster() {
-      if (!confirm("Adakah anda pasti mahu set semula senarai rasmi SK Ranggu (Semua kelas Tahun 5 & 6: Khoir, Mumtaz, Jahid, Eltizam)?")) return;
+    function adminResetDefaultRoster() {
+      if (!confirm("Set semula ke 8 kelas rasmi SK Ranggu (Khoir, Mumtaz, Jahid, Eltizam)?")) return;
       localStorage.setItem(ROSTER_STORAGE_KEY, JSON.stringify(DEFAULT_ROSTERS));
-      populateAdminClassSelect();
+      populateAdminClassSelector();
       renderAdminClassesList();
       updateClassDropdown(G.grade);
-      showToast("Senarai kelas & murid berjaya dipulihkan!");
+      showToast("Pangkalan data rasmi 8 kelas dipulihkan!");
     }
 
-    /* ==============================================================
-       REAL ARCADE GAME STATE MACHINE & CANVAS 60 FPS
-       ============================================================== */
-    const G = {
-      heroType: 'cyber',
-      heroEmoji: '🦸‍♂️',
-      heroName: '',
-      heroClass: '5 Khoir',
-      grade: 5,
-      hp: 100,
-      xp: 0,
-      combo: 0,
-      seconds: 15 * 60,
-      timerId: null,
-
-      stage: 1, // 1=Towers, 2=Boss Titan, 3=Hyper Racer
-      stageWave: 0,
-      maxWaves: 4,
-
-      questions: [],
-      qIndex: 0,
-
-      // Canvas entities
-      canvas: null,
-      ctx: null,
-      animId: null,
-
-      heroY: 200,
-      heroYTarget: 200,
-
-      // Boss
-      bossHp: 500,
-      bossMaxHp: 500,
-      bossY: 180,
-      bossAnimOffset: 0,
-
-      // Projectiles & Particles
-      particles: [],
-      lasers: []
-    };
-
-    function pickHero(type, emoji, title) {
-      G.heroType = type;
-      G.heroEmoji = emoji;
-      document.getElementById('chip-h1').classList.toggle('active', type === 'cyber');
-      document.getElementById('chip-h2').classList.toggle('active', type === 'ninja');
-      document.getElementById('chip-h3').classList.toggle('active', type === 'mech');
-      document.getElementById('hud-avatar-icon').textContent = emoji;
-      audio.init(); audio.playChime();
+    function showToast(msg) {
+      const b = document.getElementById('toast-banner');
+      if (!b) return;
+      b.textContent = msg;
+      b.classList.add('show');
+      setTimeout(() => b.classList.remove('show'), 2200);
     }
 
-    function pickGrade(g) {
-      G.grade = g;
-      document.getElementById('chip-g5').classList.toggle('active', g === 5);
-      document.getElementById('chip-g6').classList.toggle('active', g === 6);
-      updateClassDropdown(g);
-      audio.init(); audio.playChime();
-    }
-
-    function startArcadeBattle() {
-      audio.init();
-
-      if (!G.heroName) {
-        showToast("⚠️ Sila scroll & klik nama anda dari senarai murid!");
-        const container = document.querySelector('.roster-selection-container');
-        if (container) {
-          container.style.borderColor = '#ef4444';
-          setTimeout(() => container.style.borderColor = 'rgba(56, 189, 248, 0.3)', 1500);
-        }
-        return;
-      }
-
-      G.hp = 100;
-      G.xp = 0;
-      G.combo = 0;
-      G.stage = 1;
-      G.stageWave = 0;
-      G.seconds = 15 * 60;
-      G.particles = [];
-      G.lasers = [];
-
-      document.getElementById('overlay-start-screen').style.display = 'none';
-      document.getElementById('combat-hud').style.display = 'flex';
-      document.getElementById('steer-left-hud').style.display = 'none';
-
-      // Load combat question pool
-      const pool = G.grade === 5 ? COMBAT_BANK.grade5 : COMBAT_BANK.grade6;
-      G.questions = [...pool].sort(() => Math.random() - 0.5);
-      G.qIndex = 0;
-
-      // Init Canvas
-      G.canvas = document.getElementById('battle-canvas');
-      G.ctx = G.canvas.getContext('2d');
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-
-      updateHudDisplay();
-      startMatchTimer();
-      loadCurrentChallenge();
-
-      showToast(`BATTLEFIELD READY: ${G.heroName}!`);
-      audio.playBoom();
-
-      cancelAnimationFrame(G.animId);
-      runArcadeLoop();
-    }
-
-    function resizeCanvas() {
-      if (!G.canvas) return;
-      G.canvas.width = window.innerWidth;
-      G.canvas.height = window.innerHeight;
-      G.heroY = G.canvas.height * 0.55;
-      G.heroYTarget = G.heroY;
-    }
-
-    function startMatchTimer() {
-      clearInterval(G.timerId);
-      G.timerId = setInterval(() => {
-        G.seconds--;
-        const m = Math.floor(G.seconds / 60);
-        const s = G.seconds % 60;
-        document.getElementById('hud-timer-badge').textContent = `⏱️ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-        if (G.seconds <= 0) {
-          clearInterval(G.timerId);
-          finishBattle(false);
-        }
-      }, 1000);
-    }
-
-    function updateHudDisplay() {
-      document.getElementById('hud-hp-bar').style.width = `${Math.max(0, G.hp)}%`;
-      document.getElementById('hud-xp-text').textContent = `⚡ ${G.xp.toLocaleString()} XP`;
-      
-      const stTitles = [
-        "ZON 1: TOWER INVASION",
-        "ZON 2: TITAN MECHA BOSS",
-        "ZON 3: HYPER WARP SPEED 999"
-      ];
-      document.getElementById('hud-stage-badge').textContent = stTitles[G.stage - 1] || "BATTLE ARENA";
-    }
-
-    function loadCurrentChallenge() {
-      let q;
-      if (G.qIndex < G.questions.length) {
-        q = G.questions[G.qIndex];
-      } else {
-        q = generateDynamicCombatQuestion(G.grade);
-        G.questions.push(q);
-      }
-      document.getElementById('challenge-tag').textContent = `🔥 ${q.tag}`;
-      document.getElementById('challenge-math').textContent = q.q;
-
-      // Update 3 Skill Buttons
-      q.opts.forEach((optText, idx) => {
-        const btn = document.getElementById(`skill-btn-${idx}`);
-        if (btn) btn.textContent = optText;
-      });
-    }
-
-    function triggerSkillStrike(btnIndex) {
-      audio.init();
-      const q = G.questions[G.qIndex];
-
-      if (btnIndex === q.ans) {
-        // TEPAT! HERO SHOOTS ENERGY CANNON!
-        G.combo++;
-        const dmg = 80 + (G.combo * 20);
-        const gainXp = 250 + (G.combo * 50);
-        G.xp += gainXp;
-
-        if (G.stage === 2) {
-          G.bossHp = Math.max(0, G.bossHp - Math.ceil(G.bossMaxHp / G.maxWaves));
-        }
-
-        audio.playLaser();
-        audio.playChime();
-
-        const heroX = Math.max(50, Math.min(100, G.canvas.width * 0.14));
-        const targetX = G.canvas.width - Math.max(70, Math.min(160, G.canvas.width * 0.2));
-
-        // Spawn Laser projectile
-        G.lasers.push({
-          x: heroX,
-          y: G.heroY,
-          tx: targetX,
-          ty: G.stage === 2 ? G.bossY : G.heroY,
-          color: '#22d3ee',
-          size: 10
-        });
-
-        // Spawn hit particles
-        setTimeout(() => {
-          audio.playBoom();
-          document.body.classList.add('screen-shake');
-          setTimeout(() => document.body.classList.remove('screen-shake'), 300);
-
-          for (let i = 0; i < 20; i++) {
-            G.particles.push({
-              x: targetX,
-              y: G.stage === 2 ? G.bossY : G.heroY,
-              vx: (Math.random() - 0.5) * 12,
-              vy: (Math.random() - 0.5) * 12,
-              color: Math.random() > 0.5 ? '#f59e0b' : '#ef4444',
-              life: 25
-            });
-          }
-        }, 120);
-
-        showToast(`💥 CRITICAL STRIKE! +${gainXp} XP`);
-
-        G.stageWave++;
-        G.qIndex++;
-
-        // Semak pertukaran Stage
-        if (G.stageWave >= G.maxWaves) {
-          G.stageWave = 0;
-          advanceToNextStage();
-        } else {
-          loadCurrentChallenge();
-        }
-
-      } else {
-        // SALAH! HERO GETS HIT!
-        G.hp -= 25;
-        G.combo = 0;
-        audio.playHit();
-        document.body.classList.add('screen-shake');
-        setTimeout(() => document.body.classList.remove('screen-shake'), 300);
-        showToast("⚠️ SERANGAN TERSASAR! Musuh serang balas!");
-
-        if (G.hp <= 0) {
-          finishBattle(false);
-          return;
-        }
-
-        G.qIndex++;
-        loadCurrentChallenge();
-      }
-
-      updateHudDisplay();
-    }
-
-    function steerHero(dir) {
-      G.heroYTarget = Math.max(120, Math.min(G.canvas.height - 120, G.heroYTarget + (dir * 70)));
-      audio.init(); audio.playChime();
-    }
-
-    function advanceToNextStage() {
-      G.stage++;
-      if (G.stage > 3) {
-        finishBattle(true);
-        return;
-      }
-
-      audio.playBoom();
-      if (G.stage === 2) {
-        G.bossHp = G.bossMaxHp;
-        showToast("⚠️ AMARAN: MECHA-TITAN MUNCUL!");
-        document.getElementById('steer-left-hud').style.display = 'none';
-      } else if (G.stage === 3) {
-        showToast("🚀 ZON 3: MEMECUT 999 KM/J HYPER-SPEED!");
-        document.getElementById('steer-left-hud').style.display = 'flex';
-      }
-
-      loadCurrentChallenge();
-      updateHudDisplay();
-    }
-
-    function finishBattle(isVictory) {
-      clearInterval(G.timerId);
-      cancelAnimationFrame(G.animId);
-
-      document.getElementById('overlay-results').style.display = 'flex';
-      document.getElementById('combat-hud').style.display = 'none';
-      document.getElementById('steer-left-hud').style.display = 'none';
-
-      const accPct = Math.min(100, Math.max(70, Math.round(85 + (G.combo * 2))));
-      document.getElementById('res-name-label').textContent = `${G.heroName} (${G.heroClass})`;
-      document.getElementById('res-score-label').textContent = `${G.xp.toLocaleString()} XP`;
-      document.getElementById('res-acc-label').textContent = `${accPct}%`;
-
-      if (isVictory) {
-        audio.playBoom();
-        document.getElementById('res-badge-icon').textContent = "🏆";
-        document.getElementById('res-badge-title').textContent = "VICTORY ROYALE!";
-      } else {
-        document.getElementById('res-badge-icon').textContent = "🛡️";
-        document.getElementById('res-badge-title').textContent = "BATTLE SELESAI";
-      }
-
-      // Record to Calendar Leaderboard
-      const today = new Date();
-      saveScore({
-        id: "MQ-" + Date.now(),
-        name: G.heroName,
-        className: G.heroClass,
-        grade: G.grade,
-        xp: G.xp,
-        stars: isVictory ? 3 : 2,
-        acc: accPct,
-        date: today.toISOString().slice(0, 10),
-        time: today.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-      });
-    }
-
-    function resetToMenu() {
-      document.getElementById('overlay-results').style.display = 'none';
-      document.getElementById('overlay-start-screen').style.display = 'flex';
-      document.getElementById('combat-hud').style.display = 'none';
-    }
-
-    function sendWhatsAppProof() {
-      const msg = `📋 *LAPORAN PDPR MATH QUEST (SK RANGGU)* 📋\n` +
-        `👨‍💻 *Pembangun Sistem:* Mohammad Fikrey bin Abdul Gapar\n` +
-        `-----------------------------------------\n` +
-        `👤 *Wira Ejen:* ${G.heroName}\n` +
-        `🏫 *Kelas:* ${G.heroClass} (Tahun ${G.grade})\n` +
-        `⚡ *Markah Aksi:* ${G.xp.toLocaleString()} XP ⭐⭐⭐\n` +
-        `📅 *Tarikh:* ${new Date().toLocaleDateString('ms-MY')}\n` +
-        `🌟 *Status:* Selesai Sesi Pertarungan Battlefield!\n` +
-        `-----------------------------------------\n` +
-        `Cikgu Mohammad Fikrey, saya telah selesai bermain Math Quest hari ini. Terima kasih! 🚀`;
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    /* ==============================================================
-       60 FPS ARCADE RENDER LOOP (CANVAS GRAPHICS)
-       ============================================================== */
-    let bgScroll = 0;
-
-    function runArcadeLoop() {
-      const ctx = G.ctx;
-      const w = G.canvas.width;
-      const h = G.canvas.height;
-
-      ctx.clearRect(0, 0, w, h);
-
-      // 1. Moving Cyber Grid Background (Widescreen Highway)
-      bgScroll = (bgScroll + (G.stage === 3 ? 18 : 6)) % 60;
-      ctx.fillStyle = '#050813';
-      ctx.fillRect(0, 0, w, h);
-
-      // Starfield / Speed lines
-      ctx.strokeStyle = G.stage === 3 ? 'rgba(34, 211, 238, 0.4)' : 'rgba(56, 189, 248, 0.15)';
-      ctx.lineWidth = G.stage === 3 ? 2.5 : 1;
-      for (let y = 0; y < h; y += 45) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(w, y);
-        ctx.stroke();
-      }
-      for (let x = -60; x < w; x += 60) {
-        ctx.beginPath();
-        ctx.moveTo(x - bgScroll, 0);
-        ctx.lineTo(x - bgScroll, h);
-        ctx.stroke();
-      }
-
-      // Smooth hero interpolation
-      G.heroY += (G.heroYTarget - G.heroY) * 0.15;
-
-      // 2. Render Hero (Player Character)
-      const heroX = Math.max(50, Math.min(100, w * 0.14));
-      ctx.font = (h < 420 ? '38px' : '48px') + ' sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(G.heroEmoji, heroX, G.heroY + 16);
-
-      // Hero Forcefield aura
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.6)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(heroX, G.heroY, (h < 420 ? 25 : 32), 0, Math.PI * 2);
-      ctx.stroke();
-
-      // 3. Render Targets based on Stage (Landscape Viewport Responsive)
-      const targetX = w - Math.max(70, Math.min(160, w * 0.2));
-
-      if (G.stage === 1) {
-        // Stage 1: Security Cyber Towers
-        const towerX = targetX;
-        ctx.fillStyle = '#1e293b';
-        ctx.fillRect(towerX - 25, 45, 50, h - 90);
-        ctx.strokeStyle = '#ef4444';
-        ctx.strokeRect(towerX - 25, 45, 50, h - 90);
-        ctx.font = (h < 420 ? '32px' : '40px') + ' sans-serif';
-        ctx.fillText('📡', towerX, h * 0.38);
-        ctx.fillText('⚡', towerX, h * 0.65);
-
-        // Tower Health Info
-        ctx.fillStyle = '#f87171';
-        ctx.font = 'bold 11px Chakra Petch, sans-serif';
-        ctx.fillText(`MENARA: ${G.stageWave + 1}/${G.maxWaves}`, towerX, 36);
-
-      } else if (G.stage === 2) {
-        // Stage 2: Mech Titan Boss
-        G.bossAnimOffset += 0.05;
-        G.bossY = (h * 0.45) + Math.sin(G.bossAnimOffset) * 16;
-        const bX = targetX;
-
-        // Dynamic Boss Health Bar above head
-        const barW = Math.min(120, w * 0.24);
-        const currentHpW = Math.max(0, (G.bossHp / G.bossMaxHp) * barW);
-        ctx.fillStyle = 'rgba(0,0,0,0.85)';
-        ctx.fillRect(bX - (barW / 2), G.bossY - 50, barW, 10);
-        ctx.fillStyle = '#ef4444';
-        ctx.fillRect(bX - (barW / 2), G.bossY - 50, currentHpW, 10);
-        ctx.strokeStyle = '#f59e0b';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(bX - (barW / 2), G.bossY - 50, barW, 10);
-
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 10px Chakra Petch, sans-serif';
-        ctx.fillText(`TITAN: ${Math.max(0, G.bossHp)}/${G.bossMaxHp} HP`, bX, G.bossY - 56);
-
-        // Giant Boss Sprite
-        ctx.font = (h < 420 ? '56px' : '68px') + ' sans-serif';
-        ctx.fillText('🤖', bX, G.bossY + 20);
-
-      } else if (G.stage === 3) {
-        // Stage 3: Hyper Warp Speed Gates
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(targetX - 35, 45, 70, h - 90);
-        ctx.font = (h < 420 ? '28px' : '36px') + ' sans-serif';
-        ctx.fillText('🌀', targetX, h * 0.36);
-        ctx.fillText('💎', targetX, h * 0.66);
-
-        // Warp Gate Info
-        ctx.fillStyle = '#34d399';
-        ctx.font = 'bold 11px Chakra Petch, sans-serif';
-        ctx.fillText(`WARP: ${G.stageWave + 1}/${G.maxWaves}`, targetX, 36);
-      }
-
-      // 4. Update & Draw Lasers
-      for (let i = G.lasers.length - 1; i >= 0; i--) {
-        const l = G.lasers[i];
-        l.x += 40;
-        ctx.strokeStyle = l.color;
-        ctx.lineWidth = l.size;
-        ctx.beginPath();
-        ctx.moveTo(l.x - 30, l.y);
-        ctx.lineTo(l.x, l.y);
-        ctx.stroke();
-
-        if (l.x >= l.tx) G.lasers.splice(i, 1);
-      }
-
-      // 5. Update & Draw Particles
-      for (let i = G.particles.length - 1; i >= 0; i--) {
-        const p = G.particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life--;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, Math.max(1, p.life * 0.25), 0, Math.PI * 2);
-        ctx.fill();
-
-        if (p.life <= 0) G.particles.splice(i, 1);
-      }
-
-      G.animId = requestAnimationFrame(runArcadeLoop);
-    }
-
-    // Inisialisasi Senarai Kelas & Murid SK Ranggu
-    window.addEventListener('DOMContentLoaded', initRosterUI);
-    setTimeout(initRosterUI, 100);
+    // Startup
+    window.addEventListener('DOMContentLoaded', initLobby);
+    setTimeout(initLobby, 100);
   </script>
 </body>
 </html>

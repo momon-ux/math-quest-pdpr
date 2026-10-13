@@ -1,50 +1,58 @@
-# 🎮 MATH QUEST: Pengembaraan Siber Matematik PDPR (Tahun 5 & Tahun 6)
+# 🎯 MATH SHOOTER: Meriam Belon Matematik PDPR (Tahun 5 & Tahun 6)
 ### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
 ---
 
-## 🌟 Pengenalan & Revolusi Pengembaraan (Mod Melintang Penuh 16:9 Widescreen)
+## 🌟 Pengenalan & Konsep Permainan (Math Shooter / Meriam Belon)
 
-Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau. Berbeza dengan kuiz dalam talian konvensional yang penuh dengan teks panjang membosankan, **Math Quest** dibina sebagai sebuah **Game Arcade Aksi Sebenar (Mobile Legends / Clash of Clans Style)**:
+Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau berpandukan konsep permainan arked **MATH SHOOTER** (Meriam Tembak Belon):
 
-1. **Mod Melintang Penuh (Landscape Mode):** Dimainkan secara horizontal 16:9 widescreen di telefon pintar dengan sistem amaran auto-pusing jika dipegang menegak.
-2. **Pilihan Wira Avatar:** Murid memilih watak wira (*Ejen Siber*, *Ninja Kripto*, *Mecha-Titan*).
-3. **Papan Pemuka Pertarungan MOBA (Top HUD & Combat Action):** Dilengkapi bar nyawa HP/MP, timer 15 minit, dan 3 butang serangan pantas (*Skill 1, Skill 2, Ultimate Blast*).
-4. **Pilihan Tahun & Kelas Rasmi SK Ranggu Tawau:**
+1. **Konsep Visual Kartun Mesra Murid (Sky & Grassy Hills):** Langit biru cerah dengan awan berarak, bukit hijau ceria, dan meriam kartun hijau yang berputar secara dinamik membidik belon-belon terapung.
+2. **Aksi Tembak Meriam Sebenar (Arcade Cannon Physics):**
+   - Murid menekan belon yang mengandungi jawapan tepat di langit (atau menggunakan butang pantas di bawah).
+   - Meriam kartun berputar menghadap belon sasaran, berundur (*recoil*), melepaskan kepulan asap putih, dan menembak peluru meriam berapi!
+   - Peluru meriam meletupkan belon (*POP! 🎈💥*) dengan taburan serpihan getah warna-warni dan bintang bersinar apabila jawapan betul!
+3. **Pilihan Tahun & 8 Kelas Rasmi SK Ranggu Tawau:**
    - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jahid`, `5 Eltizam`
    - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jahid`, `6 Eltizam`
-5. **Scroll & Pilih Nama Murid:** Murid tidak perlu menaip manual; murid memilih kelas dan scroll senarai nama rasmi kelas mereka.
-6. **Panel Tetapan Guru (Admin) ⚙️:** Guru boleh menekan ikon ⚙️ dan memasukkan kod keselamatan pengajar untuk menambah/memadam kelas, menambah murid secara individu atau import pukal (*bulk paste*).
-7. **Soalan Pantas Sebagai Pencetus Serangan (Zero Reading Fatigue):** Tiada petikan cerita panjang! Soalan Matematik KSSR Semakan (Tahun 5 & Tahun 6) disajikan secara pantas (Cth: `8 × 7 = ?`, `³/₄ Juta = ?`) sebagai cas laser tenaga!
-8. **Bank Soalan Luas + Penjana Dinamik (Infinite Endless Play):** 50+ soalan silibus KSSR Semakan lengkap dengan penjana automatik tanpa henti.
+4. **Scroll & Pilih Nama Murid:** Murid memilih kelas dan men-scroll senarai rasmi 287 murid SK Ranggu (lengkap dengan kotak carian pantas `🔍 Cari nama...`) tanpa perlu menaip manual.
+5. **Panel Tetapan Guru (Admin) ⚙️:** Guru boleh menekan ikon ⚙️ dan memasukkan kod laluan keselamatan pengajar untuk menambah/memadam kelas, menambah murid secara individu atau import pukal (*bulk paste*).
+6. **Koleksi Meriam Kartun:** Pilihan meriam kegemaran (*Meriam Zamrud*, *Meriam Berapi*, *Meriam Samudera*).
+7. **Pilihan Soalan Pantas KSSR Semakan:** Tiada petikan teks panjang membosankan! Soalan matematik disajikan secara jelas di papan tanda awan di tengah langit.
 
 ---
 
-## 🕹️ 3 Zon Pengembaraan Aksi (Canvas Interactive Graphics)
+## 🕹️ Pusingan Permainan (Waves of Adventure)
 
 ```
-[PILIHAN WIRA: 🦸‍♂️ / 🥷 / 🤖] ──► [PETA DUNIA SIBER]
-                                         │
-                                         ▼
-   🔐 ZON 1: KUBU LASER CYBER-VAULT (Canvas Minigame)
-   • Pengimbas laser merah berputar secara dinamik di atas kanvas.
-   • Cas kod keselamatan pantas untuk melumpuhkan laser dan membuka pintu kebal gelongsor!
-                                         │
-                                         ▼
-   ⚔️ ZON 2: PERTEMBUNGAN MECH-TITAN (Real Boss Action)
-   • Robot gergasi Mech-Titan melayang dengan animasi mata visor bercahaya.
-   • Setiap jawapan pantas menembak Meriam Plasma (-100 DMG Critical Hits!).
-   • Gegaran skrin (screen shake) & letupan partikel setiap kali boss diserang!
-                                         │
-                                         ▼
-   🚀 ZON 3: LEBUHRAYA ANGKASA HYPER-SPEED (Top-Down Real-Time Racer)
-   • Kenderaan angkasa dipandu di atas kanvas merentasi 3 lorong laju.
-   • Sentuh lorong gerbang jawapan yang tepat untuk mengaktifkan mod pecutan 999 KM/J!
-                                         │
-                                         ▼
-   🏆 SIJIL PENGIKTIRAFAN & PAPAN SKOR KALENDAR
-   • Sijil tamat pengembaraan disahkan secara digital oleh Mohammad Fikrey bin Abdul Gapar.
+[LOBBY: PILIH KELAS & NAMA MURID] ──► [ARENA MERIAM MATH SHOOTER]
+                                              │
+                                              ▼
+   🎯 PUSINGAN 1: SASARAN OPERASI ASAS (Tambah, Tolak, Sifir Kilat)
+   • Belon terapung membawa nombor jawapan.
+   • Tembak tepat untuk kutip 100 XP dan aktifkan rentetan kombo!
+                                              │
+                                              ▼
+   🎈 PUSINGAN 2: BELON PECAHAN & PERPULUHAN
+   • Selesaikan pecahan wajar, pecahan juta dan penukaran perpuluhan.
+                                              │
+                                              ▼
+   🚀 PUSINGAN 3: BELON SASARAN PANTAS & BERGERAK
+   • Belon berayun lembut ditiup angin menguji ketepatan dan masa membidik.
+                                              │
+                                              ▼
+   💰 PUSINGAN 4: CABARAN WANG, MASA & UKURAN
+   • Peratus wang simpanan, unit masa dunia, jisim dan perimeter.
+                                              │
+                                              ▼
+   👑 PUSINGAN 5 (BOSS STAGE): BELON UDARA GERGASI (MEGA BLIMP)
+   • Belon gergasi melayang di langit dengan perisai tebal.
+   • Lakukan 3 tembakan berturut-turut untuk meletupkan belon gergasi!
+                                              │
+                                              ▼
+   🏆 SIJIL PENGHARGAAN DIGITAL & PAPAN SKOR KALENDAR
+   • Sijil pencapaian disahkan secara digital oleh Mohammad Fikrey bin Abdul Gapar.
    • Markah murid direkodkan serta-merta ke Papan Skor Kalendar PDPR.
 ```
 
