@@ -1,69 +1,70 @@
-# 🎯 MATH SHOOTER: Meriam Belon Matematik PDPR (Tahun 5 & Tahun 6)
+# 🏡 MATH CRAFT & SHOOTER: Kelab Bina Rumah Impian PDPR (Tahun 5 & 6)
 ### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
 ---
 
-## 🌟 Pengenalan & Konsep Permainan (Math Shooter / Meriam Belon)
+## 🌟 Pengenalan & Konsep Permainan (Sandbox Crafting + Math XP Quest)
 
-Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau berpandukan konsep permainan arked **MATH SHOOTER** (Meriam Tembak Belon):
+Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau yang menggabungkan elemen kreativiti **Lego / Minecraft Sandbox (Bina Rumah Impian)** dengan minigame arked matematik yang mencabar:
 
-1. **Konsep Visual Kartun Mesra Murid (Sky & Grassy Hills):** Langit biru cerah dengan awan berarak, bukit hijau ceria, dan meriam kartun hijau yang berputar secara dinamik membidik belon-belon terapung.
-2. **Aksi Tembak Meriam Sebenar (Arcade Cannon Physics):**
-   - Murid menekan belon yang mengandungi jawapan tepat di langit (atau menggunakan butang pantas di bawah).
-   - Meriam kartun berputar menghadap belon sasaran, berundur (*recoil*), melepaskan kepulan asap putih, dan menembak peluru meriam berapi!
-   - Peluru meriam meletupkan belon (*POP! 🎈💥*) dengan taburan serpihan getah warna-warni dan bintang bersinar apabila jawapan betul!
-3. **Pilihan Tahun & 8 Kelas Rasmi SK Ranggu Tawau:**
+1. **Padang Rumput Binaan Rumah Impian (Creative Building Plot):**
+   - Setiap murid diberikan sebidang tanah lapangan rumput bergrid (14 × 8 petak) sendiri.
+   - Murid boleh menyusun blok-blok binaan untuk mendirikan rumah impian, bumbung, pintu, tingkap kaca, halaman taman, kolam renang, pagar, kenderaan (kereta lumba, basikal, helikopter, roket) serta haiwan peliharaan!
+   - Dilengkapi alatan letak blok, alatan pemadam (*eraser*), dan butang tangkap gambar (*snapshot*) untuk memuat turun hasil karya rumah murid.
+
+2. **Ekonomi XP & Kedai Blok (XP Block Shop):**
+   - Setiap blok dan hiasan mempunyai harga XP (cth: Dinding Kayu = 20 XP, Bata Merah = 30 XP, Pintu = 40 XP, Kereta Sukan = 250 XP, Kolam Renang = 80 XP, Roket = 500 XP).
+   - Murid bermula dengan pek alu-aluan 150 XP dan 8 blok asas percuma.
+   - Apabila XP habis, murid perlu mengembara ke zon cabaran matematik untuk mengumpul XP!
+
+3. **2 Zon Minigame Cari XP (Zero Reading Fatigue):**
+   - 🎯 **Math Shooter (Meriam Belon):** Meriam kartun hijau di atas bukit membidik belon-belon terapung. Tembak belon dengan jawapan betul -> **POP! 🎈💥** meletup dan dapat **+100 XP** terus ke akaun!
+   - 🎡 **Roda Sifir & Operasi (Spinning Wheel):** Putar roda berputar, jawab soalan kilat dalam masa 15 saat -> dapat bonus **+150 XP** sehingga **+300 XP (Jackpot)**!
+   - Jika jawab salah: tiada XP diberikan, murid digalakkan mencuba lagi.
+
+4. **Penyimpanan Perkembangan Murid (Persistent Auto-Save per Student):**
+   - Binaan rumah dan baki XP setiap murid disimpan secara automatik dalam `localStorage`.
+   - Setiap kali murid login dengan nama mereka, rumah impian mereka akan dipaparkan semula seperti mana mereka tinggalkan.
+
+5. **Pilihan 8 Kelas & 287 Murid Rasmi SK Ranggu Tawau:**
    - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jahid`, `5 Eltizam`
    - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jahid`, `6 Eltizam`
-4. **Scroll & Pilih Nama Murid:** Murid memilih kelas dan men-scroll senarai rasmi 287 murid SK Ranggu (lengkap dengan kotak carian pantas `🔍 Cari nama...`) tanpa perlu menaip manual.
-5. **Panel Tetapan Guru (Admin) ⚙️:** Guru boleh menekan ikon ⚙️ dan memasukkan kod laluan keselamatan pengajar untuk menambah/memadam kelas, menambah murid secara individu atau import pukal (*bulk paste*).
-6. **Koleksi Meriam Kartun:** Pilihan meriam kegemaran (*Meriam Zamrud*, *Meriam Berapi*, *Meriam Samudera*).
-7. **Pilihan Soalan Pantas KSSR Semakan:** Tiada petikan teks panjang membosankan! Soalan matematik disajikan secara jelas di papan tanda awan di tengah langit.
+   - Murid hanya perlu scroll atau buat carian pantas `🔍 Cari nama...` untuk klik nama mereka sendiri.
+
+6. **📅 Papan Skor Kalendar PDPR (Scrollable mengikut Tarikh):**
+   - Menyenaraikan semua murid SK Ranggu yang aktif mengumpul XP dan membina rumah.
+   - Boleh di-filter mengikut tarikh kalendar PDPR.
+   - Lengkap dengan fungsi muat turun fail Excel (CSV) dan butang salin laporan ke WhatsApp Cikgu.
+
+7. **⚙️ Panel Kawalan Guru (Admin Kod: TS.FIKREY37):**
+   - Membolehkan Cikgu Fikrey mengurus murid, menambah kelas, import senarai pukal, atau menetapkan semula pangkalan data 8 kelas SK Ranggu bila-bila masa.
 
 ---
 
-## 🕹️ Pusingan Permainan (Waves of Adventure)
+## 🕹️ Aliran Permainan (Gameplay Loop)
 
 ```
-[LOBBY: PILIH KELAS & NAMA MURID] ──► [ARENA MERIAM MATH SHOOTER]
-                                              │
-                                              ▼
-   🎯 PUSINGAN 1: SASARAN OPERASI ASAS (Tambah, Tolak, Sifir Kilat)
-   • Belon terapung membawa nombor jawapan.
-   • Tembak tepat untuk kutip 100 XP dan aktifkan rentetan kombo!
-                                              │
-                                              ▼
-   🎈 PUSINGAN 2: BELON PECAHAN & PERPULUHAN
-   • Selesaikan pecahan wajar, pecahan juta dan penukaran perpuluhan.
-                                              │
-                                              ▼
-   🚀 PUSINGAN 3: BELON SASARAN PANTAS & BERGERAK
-   • Belon berayun lembut ditiup angin menguji ketepatan dan masa membidik.
-                                              │
-                                              ▼
-   💰 PUSINGAN 4: CABARAN WANG, MASA & UKURAN
-   • Peratus wang simpanan, unit masa dunia, jisim dan perimeter.
-                                              │
-                                              ▼
-   👑 PUSINGAN 5 (BOSS STAGE): BELON UDARA GERGASI (MEGA BLIMP)
-   • Belon gergasi melayang di langit dengan perisai tebal.
-   • Lakukan 3 tembakan berturut-turut untuk meletupkan belon gergasi!
-                                              │
-                                              ▼
-   🏆 SIJIL PENGHARGAAN DIGITAL & PAPAN SKOR KALENDAR
-   • Sijil pencapaian disahkan secara digital oleh Mohammad Fikrey bin Abdul Gapar.
-   • Markah murid direkodkan serta-merta ke Papan Skor Kalendar PDPR.
+[LOBBY: PILIH KELAS & NAMA MURID + AVATAR]
+                  │
+                  ▼
+   🏡 PADANG RUMPUT BINAAN RUMAH IMPIAN (SANDBOX PLOT)
+   • Letak blok, dinding, pintu, tingkap, kereta, kolam renang.
+   • Beli blok baharu di Kedai Blok menggunakan XP.
+                  │
+                  ├──────────────────────────────┐
+                  ▼                              ▼
+   🎯 ZON CARI XP: MATH SHOOTER    🎡 ZON CARI XP: RODA SIFIR
+   • Tembak belon jawapan tepat!   • Putar roda & jawab soalan kilat!
+   • Dapat +100 XP setiap tembakan! • Menangi +150 XP hingga +300 XP!
+                  │                              │
+                  └──────────────┬───────────────┘
+                                 │
+                                 ▼
+   💰 KEMBALI KE PADANG RUMAH DENGAN POKET PENUH XP!
+   • Beli blok impian dan teruskan membina rumah tercantik!
+   • Tangkap gambar rumah 📸 & rekod markah ke Papan Skor Kalendar!
 ```
-
----
-
-## 📅 Papan Skor Kalendar PDPR (Boleh Di-Scroll Mengikut Tarikh)
-
-* **Pengelompokan Tarikh:** Rekod disusun kemas mengikut tarikh sesi (*Hari Ini*, *Semalam*, atau tarikh lepas).
-* **Scrollable List:** Guru boleh scroll dengan lancar melihat semua senarai nama murid, kelas, masa selesai, markah XP, bintang, dan peratus ketepatan.
-* **Penapis Kalendar:** Boleh pilih mana-mana tarikh PDPR menggunakan kalendar untuk melihat murid yang menyertai pada tarikh tersebut.
-* **Alat Guru:** Eksport Excel (CSV) dan butang satu klik untuk salin laporan ke WhatsApp Cikgu.
 
 ---
 
