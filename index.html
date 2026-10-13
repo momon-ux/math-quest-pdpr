@@ -3,32 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Math Quest: Pengembaraan Siber PDPR - SK Ranggu (Pembangun: Mohammad Fikrey)</title>
+  <title>MATH QUEST: SIBER LEGENDS - SK Ranggu (Pembangun: Mohammad Fikrey)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700;800&family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #070b14;
-      --bg-panel: rgba(13, 20, 36, 0.94);
-      --bg-panel-solid: #0d1424;
+      --bg-dark: #050811;
       --cyan: #06b6d4;
-      --cyan-bright: #22d3ee;
-      --cyan-glow: rgba(6, 182, 212, 0.45);
+      --cyan-glow: #22d3ee;
       --emerald: #10b981;
-      --emerald-glow: rgba(16, 185, 129, 0.45);
-      --amber: #f59e0b;
-      --amber-glow: rgba(245, 158, 11, 0.45);
+      --gold: #f59e0b;
       --crimson: #ef4444;
-      --crimson-glow: rgba(239, 68, 68, 0.5);
       --purple: #8b5cf6;
-      --purple-glow: rgba(139, 92, 246, 0.45);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-hud: rgba(56, 189, 248, 0.35);
-      --font-retro: 'Press Start 2P', monospace;
       --font-display: 'Chakra Petch', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-retro: 'Press Start 2P', monospace;
     }
 
     * {
@@ -37,1388 +26,951 @@
       padding: 0;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      -webkit-user-select: none;
     }
 
-    body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 50% 10%, rgba(14, 165, 233, 0.22) 0%, transparent 60%),
-        radial-gradient(circle at 10% 90%, rgba(139, 92, 246, 0.18) 0%, transparent 50%),
-        linear-gradient(rgba(7, 11, 20, 0.96), rgba(7, 11, 20, 0.98)),
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(30, 41, 59, 0.3) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(30, 41, 59, 0.3) 40px);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #000;
+      font-family: var(--font-display);
+      color: #fff;
+    }
+
+    /* Rotation Overlay for Portrait Mode */
+    #rotate-device-prompt {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, #0f172a 0%, #020617 100%);
+      z-index: 9999;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
     }
 
-    #app-container {
-      width: 100%;
-      max-width: 500px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      padding: 10px;
-      padding-bottom: 26px;
+    .rotate-phone-icon {
+      font-size: 3.5rem;
+      margin-bottom: 14px;
+      animation: rotate-anim 2s infinite ease-in-out;
     }
 
-    @media (min-width: 768px) {
-      #app-container {
-        max-width: 620px;
-        padding: 18px;
+    @keyframes rotate-anim {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(-90deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Auto Show in Portrait on Small Screens */
+    @media (orientation: portrait) and (max-width: 900px) {
+      #rotate-device-prompt {
+        display: flex;
       }
     }
 
-    /* Creator Banner (Header Rasmi Pembangun) */
-    .creator-banner {
-      background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 12px;
-      padding: 6px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 0.72rem;
-      color: #bae6fd;
-    }
-    .creator-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    /* HUD Bar */
-    .hud-bar {
-      background: var(--bg-panel);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1.5px solid var(--border-hud);
-      border-radius: 16px;
-      padding: 8px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 12px rgba(6, 182, 212, 0.1);
-      position: sticky;
-      top: 6px;
-      z-index: 40;
-    }
-
-    .hud-stat {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-
-    .hud-hearts {
-      color: var(--crimson);
-      display: flex;
-      gap: 2px;
-      font-size: 1.05rem;
-      filter: drop-shadow(0 0 6px var(--crimson-glow));
-    }
-
-    .hud-timer {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      color: #fbbf24;
-      padding: 3px 8px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--font-display);
-      font-weight: 700;
-    }
-    .hud-timer.urgent {
-      border-color: var(--crimson);
-      color: #f87171;
-      animation: pulse-urgent 0.8s infinite alternate;
-    }
-    @keyframes pulse-urgent {
-      from { transform: scale(1); box-shadow: 0 0 4px var(--crimson-glow); }
-      to { transform: scale(1.06); box-shadow: 0 0 14px var(--crimson-glow); }
-    }
-
-    .hud-xp {
-      color: var(--cyan-bright);
-      text-shadow: 0 0 8px var(--cyan-glow);
-    }
-
-    .hud-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
-      border-radius: 8px;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
-    .hud-btn:hover, .hud-btn:active {
-      background: var(--cyan);
-      color: #000;
-      border-color: var(--cyan);
-    }
-
-    /* Screens */
-    .screen {
-      display: none;
-      flex-direction: column;
-      flex: 1;
-      animation: fadeIn 0.3s ease-out;
-    }
-    .screen.active {
-      display: flex;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cards */
-    .game-card {
-      background: var(--bg-panel);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1.5px solid var(--border-hud);
-      border-radius: 20px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      margin-bottom: 12px;
+    /* Master Landscape Game Container (16:9 widescreen arcade layout) */
+    #game-stage {
+      width: 100vw;
+      height: 100vh;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #050811;
       overflow: hidden;
     }
 
-    .game-card::before {
-      content: '';
+    /* Top MOBA/Arcade HUD */
+    .top-hud {
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 80%, transparent 100%);
+      border-bottom: 1.5px solid rgba(56, 189, 248, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 14px;
+      z-index: 50;
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--cyan-bright), var(--purple), transparent);
     }
 
-    h1, h2, h3, h4 {
-      font-family: var(--font-display);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .hud-hero-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Buttons */
-    .btn {
-      font-family: var(--font-display);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
+    .hero-avatar-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 2px solid var(--cyan-glow);
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 0.92rem;
-      transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 1.3rem;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    }
+
+    .hero-vitals {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 110px;
+    }
+
+    .hud-bar-hp, .hud-bar-mp {
+      height: 6px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hud-fill-hp {
+      height: 100%;
       width: 100%;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-      position: relative;
-    }
-    .btn:active {
-      transform: scale(0.97);
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
-      color: #fff;
-      border: 1px solid #38bdf8;
-      box-shadow: 0 6px 20px var(--cyan-glow);
-    }
-    .btn-emerald {
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-      color: #fff;
-      border: 1px solid #34d399;
-      box-shadow: 0 6px 20px var(--emerald-glow);
-    }
-    .btn-amber {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-      color: #000;
-      border: 1px solid #fbbf24;
-      font-weight: 800;
-      box-shadow: 0 6px 20px var(--amber-glow);
-    }
-    .btn-purple {
-      background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%);
-      color: #fff;
-      border: 1px solid #a78bfa;
-      box-shadow: 0 6px 20px var(--purple-glow);
-    }
-    .btn-secondary {
-      background: rgba(30, 41, 59, 0.75);
-      color: var(--text-main);
-      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: linear-gradient(90deg, #10b981, #34d399);
+      transition: width 0.3s;
     }
 
-    /* Hero Avatar Picker */
-    .avatar-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .avatar-option {
-      background: rgba(15, 23, 42, 0.7);
-      border: 2px solid rgba(56, 189, 248, 0.25);
-      border-radius: 14px;
-      padding: 10px 6px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .avatar-option.selected {
-      background: rgba(6, 182, 212, 0.2);
-      border-color: var(--cyan-bright);
-      box-shadow: 0 0 15px var(--cyan-glow);
-      transform: translateY(-2px);
-    }
-    .avatar-emoji {
-      font-size: 2rem;
-      margin-bottom: 4px;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.4));
-    }
-    .avatar-label {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #fff;
+    .hud-fill-mp {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #0284c7, #38bdf8);
+      transition: width 0.3s;
     }
 
-    /* Grade Selector */
-    .grade-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
+    .hud-center-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .grade-card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 2px solid rgba(56, 189, 248, 0.2);
+
+    .hud-timer-badge {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--gold);
+      color: #fbbf24;
+      padding: 3px 10px;
       border-radius: 12px;
-      padding: 10px 8px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
-    .grade-card.selected {
-      background: rgba(6, 182, 212, 0.18);
-      border-color: var(--cyan-bright);
-      box-shadow: 0 0 14px var(--cyan-glow);
-    }
-    .grade-title {
-      font-family: var(--font-display);
+
+    .hud-stage-badge {
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid #818cf8;
+      color: #c7d2fe;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.72rem;
       font-weight: 700;
-      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hud-stats-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hud-score-pill {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--cyan-glow);
+    }
+
+    .hud-icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+    .hud-icon-btn:active {
+      transform: scale(0.92);
+      background: var(--cyan);
+      color: #000;
+    }
+
+    /* Main Battle Canvas (Full Landscape Screen) */
+    #battle-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10;
+    }
+
+    /* Landscape Action Overlay (Skill Buttons on Right, Target on Top) */
+    .combat-action-hud {
+      position: absolute;
+      bottom: 14px;
+      right: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      z-index: 45;
+      pointer-events: none;
+    }
+
+    .target-challenge-bubble {
+      background: rgba(15, 23, 42, 0.94);
+      border: 2px solid var(--cyan-glow);
+      border-radius: 14px;
+      padding: 6px 14px;
+      color: #fff;
+      text-align: right;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+      pointer-events: auto;
+      max-width: 320px;
       margin-bottom: 2px;
     }
-    .grade-desc {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
 
-    /* Inputs */
-    .input-group {
-      margin-bottom: 10px;
-      text-align: left;
-    }
-    .input-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      display: block;
+    .challenge-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--cyan-glow);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .input-text {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 12px;
-      padding: 10px 14px;
+
+    .challenge-math {
+      font-size: 1.15rem;
+      font-weight: 800;
       color: #fff;
-      font-family: var(--font-body);
-      font-size: 0.92rem;
-      outline: none;
-      transition: all 0.2s;
-    }
-    .input-text:focus {
-      border-color: var(--cyan-bright);
-      box-shadow: 0 0 12px var(--cyan-glow);
+      letter-spacing: 0.5px;
     }
 
-    /* ==============================================================
-       PETA PENGEMBARAAN (INTERACTIVE ADVENTURE MAP OVERVIEW)
-       ============================================================== */
-    .adventure-map {
-      background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%);
-      border: 2px solid rgba(139, 92, 246, 0.4);
-      border-radius: 18px;
-      padding: 14px 10px;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-    }
-    .map-nodes-row {
+    .skills-cluster {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      z-index: 2;
+      gap: 10px;
+      pointer-events: auto;
     }
-    .map-line {
-      position: absolute;
-      top: 50%;
-      left: 15%;
-      right: 15%;
-      height: 4px;
-      background: linear-gradient(90deg, #6366f1, #06b6d4, #10b981);
-      z-index: 1;
-      transform: translateY(-50%);
-      box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
-    }
-    .map-node {
+
+    .skill-strike-btn {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #0284c7 0%, #0f172a 100%);
+      border: 2.5px solid var(--cyan-glow);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(6, 182, 212, 0.4);
+      transition: all 0.12s;
     }
-    .node-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #0f172a;
-      border: 2px solid #6366f1;
+
+    .skill-strike-btn:active {
+      transform: scale(0.9);
+      background: #22d3ee;
+      color: #000;
+    }
+
+    .skill-strike-btn.btn-alt {
+      background: radial-gradient(circle, #6d28d9 0%, #0f172a 100%);
+      border-color: #a78bfa;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+
+    .skill-strike-btn.btn-ult {
+      width: 76px;
+      height: 76px;
+      background: radial-gradient(circle, #dc2626 0%, #0f172a 100%);
+      border-color: #f87171;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.6);
+      font-size: 1.15rem;
+    }
+
+    /* Left Steer Controls for Stage 3 (Racer) */
+    .steer-controls-left {
+      position: absolute;
+      bottom: 16px;
+      left: 18px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 45;
+    }
+
+    .steer-btn {
+      width: 60px;
+      height: 52px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid var(--emerald);
+      color: #6ee7b7;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
-      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
     }
-    .map-node.active .node-icon {
-      border-color: var(--cyan-bright);
-      box-shadow: 0 0 18px var(--cyan-bright);
-      transform: scale(1.15);
-      background: #0284c7;
-    }
-    .map-node.completed .node-icon {
-      border-color: var(--emerald);
-      box-shadow: 0 0 12px var(--emerald);
-      background: #064e3b;
-    }
-    .node-label {
-      font-family: var(--font-display);
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #cbd5e1;
-      text-transform: uppercase;
-    }
-
-    /* ==============================================================
-       CANVAS ACTION GAME ENGINE (ARCADE STAGES)
-       ============================================================== */
-    .action-canvas-container {
-      position: relative;
-      width: 100%;
-      height: 250px;
-      background: #030712;
-      border: 2px solid var(--border-hud);
-      border-radius: 18px;
-      overflow: hidden;
-      margin-bottom: 10px;
-      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(6, 182, 212, 0.15);
-    }
-    .action-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .steer-btn:active {
+      transform: scale(0.92);
+      background: var(--emerald);
+      color: #000;
     }
 
     /* Screen Shake */
     .screen-shake {
-      animation: global-shake 0.35s cubic-bezier(.36,.07,.19,.97) both;
+      animation: global-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
     }
     @keyframes global-shake {
-      10%, 90% { transform: translate3d(-5px, 0, 0); }
-      20%, 80% { transform: translate3d(7px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
-      40%, 60% { transform: translate3d(7px, 0, 0); }
+      10%, 90% { transform: translate3d(-6px, 0, 0); }
+      20%, 80% { transform: translate3d(8px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+      40%, 60% { transform: translate3d(8px, 0, 0); }
     }
 
-    /* Action Trigger Prompt (Snappy Math Core) */
-    .action-prompt-card {
-      background: rgba(15, 23, 42, 0.92);
-      border: 1.5px solid var(--cyan-bright);
-      border-radius: 14px;
-      padding: 10px 14px;
-      text-align: center;
-      margin-bottom: 10px;
-      box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
-    }
-    .action-title-tag {
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--cyan-bright);
-      margin-bottom: 2px;
-    }
-    .action-question-text {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.3;
+    /* START SCREEN OVERLAY (Landscape Widescreen) */
+    #overlay-start-screen {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(14, 165, 233, 0.25) 0%, #030712 80%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
     }
 
-    /* Arcade Action Buttons (Fast Response) */
-    .action-btn-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .start-dialog-box {
+      width: 100%;
+      max-width: 580px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 2px solid var(--border-hud);
+      border-radius: 20px;
+      padding: 18px 22px;
+      box-shadow: 0 0 35px rgba(6, 182, 212, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
     }
-    .action-btn {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1.5px solid rgba(56, 189, 248, 0.3);
-      border-radius: 12px;
-      padding: 12px 10px;
-      color: #fff;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.02rem;
-      cursor: pointer;
+
+    .creator-tag-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 6px;
+      font-size: 0.72rem;
+      color: #7dd3fc;
+    }
+
+    .game-logo-row {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.15s;
-    }
-    .action-btn:hover {
-      border-color: var(--cyan-bright);
-      background: rgba(6, 182, 212, 0.18);
-    }
-    .action-btn:active {
-      transform: scale(0.95);
-    }
-    .action-btn.correct {
-      background: rgba(16, 185, 129, 0.35) !important;
-      border-color: #10b981 !important;
-      color: #6ee7b7 !important;
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
-    }
-    .action-btn.wrong {
-      background: rgba(239, 68, 68, 0.35) !important;
-      border-color: #ef4444 !important;
-      color: #fca5a5 !important;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
     }
 
-    /* Combo Pill */
-    .combo-pill {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: #fff;
+    .game-logo-title {
       font-family: var(--font-display);
+      font-size: 1.8rem;
       font-weight: 800;
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-      display: inline-block;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px var(--cyan-glow);
     }
 
-    /* Speed Meter */
-    .speed-hud {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid #10b981;
-      border-radius: 14px;
-      padding: 3px 10px;
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 0.8rem;
-      color: #6ee7b7;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* ==============================================================
-       PAPAN SKOR KALENDAR PDPR (SCROLLABLE & DATE-FILTER)
-       ============================================================== */
-    .board-tabs {
+    .start-inputs-row {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .board-tab-btn {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      border-radius: 10px;
-      padding: 7px 4px;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .board-tab-btn.active {
-      background: rgba(6, 182, 212, 0.2);
-      border-color: var(--cyan-bright);
-      color: #fff;
-    }
-
-    .calendar-bar {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 12px;
-      padding: 6px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .date-chips {
-      display: flex;
-      gap: 4px;
-      overflow-x: auto;
-    }
-    .date-chip {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: var(--text-muted);
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      padding: 4px 8px;
-      border-radius: 8px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .date-chip.active {
-      background: #0284c7;
-      border-color: #38bdf8;
-      color: #fff;
-      font-weight: 700;
-    }
-    .date-picker-input {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #fff;
-      padding: 3px 6px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .leaderboard-scroll-area {
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 10px;
-      max-height: 48vh;
-      overflow-y: auto;
-      padding-right: 4px;
-      scroll-behavior: smooth;
-    }
-    .leaderboard-scroll-area::-webkit-scrollbar {
-      width: 5px;
-    }
-    .leaderboard-scroll-area::-webkit-scrollbar-thumb {
-      background: #0284c7;
-      border-radius: 4px;
     }
 
-    .date-group-header {
-      background: rgba(30, 41, 59, 0.8);
-      border-left: 3px solid var(--cyan-bright);
-      padding: 5px 8px;
-      border-radius: 0 8px 8px 0;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #a5f3fc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      backdrop-filter: blur(8px);
+    .game-input {
+      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
     }
-    .leaderboard-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 4px;
+    .game-input:focus {
+      border-color: var(--cyan-glow);
+      box-shadow: 0 0 10px var(--cyan);
     }
-    .leaderboard-item {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      border-radius: 12px;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+
+    .hero-choice-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
-    .leaderboard-item.rank-1 {
-      border-color: #fbbf24;
-      background: linear-gradient(90deg, rgba(251, 191, 36, 0.15), rgba(15, 23, 42, 0.9));
-    }
-    .leaderboard-item.rank-2 {
-      border-color: #94a3b8;
-      background: linear-gradient(90deg, rgba(148, 163, 184, 0.15), rgba(15, 23, 42, 0.9));
-    }
-    .leaderboard-item.rank-3 {
-      border-color: #b45309;
-      background: linear-gradient(90deg, rgba(180, 83, 9, 0.15), rgba(15, 23, 42, 0.9));
-    }
-    .rank-badge {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 0.95rem;
-      width: 24px;
+
+    .hero-chip {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1.5px solid rgba(56, 189, 248, 0.2);
+      border-radius: 10px;
+      padding: 6px;
       text-align: center;
-      flex-shrink: 0;
-    }
-    .student-info {
-      flex: 1;
-      text-align: left;
-    }
-    .student-name {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.8rem;
       font-weight: 700;
-      color: #fff;
-      font-size: 0.88rem;
-      line-height: 1.2;
+      transition: all 0.15s;
     }
-    .student-meta {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-    .student-score {
-      text-align: right;
-      font-family: var(--font-display);
-      flex-shrink: 0;
-    }
-    .score-xp {
-      font-size: 0.92rem;
-      font-weight: 800;
-      color: var(--cyan-bright);
-    }
-    .score-stars {
-      font-size: 0.72rem;
-      color: #fbbf24;
+    .hero-chip.active {
+      background: rgba(6, 182, 212, 0.25);
+      border-color: var(--cyan-glow);
+      box-shadow: 0 0 12px var(--cyan);
     }
 
-    /* Modals */
-    .modal-overlay {
-      position: fixed;
+    .grade-choice-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .grade-chip {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1.5px solid rgba(56, 189, 248, 0.2);
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .grade-chip.active {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: var(--emerald);
+      box-shadow: 0 0 12px var(--emerald);
+    }
+
+    .start-action-row {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-arcade {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      padding: 11px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-arcade:active {
+      transform: scale(0.96);
+    }
+    .btn-arcade.btn-play {
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%);
+      color: #fff;
+      border: 1px solid #38bdf8;
+      box-shadow: 0 0 20px var(--cyan);
+    }
+    .btn-arcade.btn-board {
+      background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%);
+      color: #fff;
+      border: 1px solid #a78bfa;
+    }
+
+    /* VICTORY / RESULTS OVERLAY */
+    #overlay-results {
+      position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(3, 7, 18, 0.92);
       backdrop-filter: blur(10px);
-      z-index: 100;
+      z-index: 95;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .results-dialog-box {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 16px 20px;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    /* LEADERBOARD CALENDAR MODAL (LANDSCAPE OPTIMIZED) */
+    #overlay-leaderboard {
+      position: absolute;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 110;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 12px;
     }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal-box {
-      background: var(--bg-panel-solid);
-      border: 2px solid var(--border-hud);
-      border-radius: 20px;
+
+    .leaderboard-dialog-box {
       width: 100%;
-      max-width: 500px;
-      max-height: 92vh;
+      max-width: 560px;
+      max-height: 90vh;
+      background: rgba(15, 23, 42, 0.98);
+      border: 2px solid var(--border-hud);
+      border-radius: 18px;
+      padding: 12px 16px;
+      box-shadow: 0 0 35px rgba(6, 182, 212, 0.4);
       display: flex;
       flex-direction: column;
-      padding: 14px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
-      overflow: hidden;
+      gap: 8px;
     }
 
-    .scratchpad-canvas {
-      background: #090d16;
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 12px;
-      width: 100%;
-      height: 230px;
-      touch-action: none;
-      cursor: crosshair;
+    .calendar-filter-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 8px;
+      border-radius: 10px;
     }
 
-    /* Toast */
-    .toast-popup {
-      position: fixed;
-      top: 65px;
+    .date-chip-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .date-chip-btn.active {
+      background: #0284c7;
+      border-color: var(--cyan-glow);
+      color: #fff;
+    }
+
+    .scores-scroll-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 46vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .date-group-card {
+      background: rgba(2, 6, 23, 0.7);
+      border-left: 3px solid var(--cyan-glow);
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #a5f3fc;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .score-row-item {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: absolute;
+      top: 56px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: rgba(15, 23, 42, 0.96);
-      border: 1px solid var(--cyan-bright);
+      border: 1.5px solid var(--cyan-glow);
       color: #fff;
-      padding: 9px 16px;
-      border-radius: 30px;
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-      z-index: 100;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: 0 0 18px var(--cyan);
       opacity: 0;
       pointer-events: none;
-      transition: all 0.25s ease-out;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      transition: all 0.2s ease-out;
+      z-index: 80;
     }
-    .toast-popup.show {
+    .toast-pill.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
-    }
-
-    /* Print / Sijil Pengiktirafan */
-    @media print {
-      body { background: #fff !important; color: #000 !important; }
-      .creator-banner, .hud-bar, .btn, .btn-scratchpad, .grade-selector, .avatar-grid, #modal-scratchpad, #modal-leaderboard { display: none !important; }
-      #screen-result { display: flex !important; }
-      .game-card { border: 2px solid #000; box-shadow: none; background: #fff; color: #000; }
-      .summary-table td { border-bottom: 1px solid #ccc; color: #000 !important; }
     }
   </style>
 </head>
 <body>
 
-  <div id="app-container">
+  <!-- Amaran Telefon Jika Mod Menegak (Portrait) -->
+  <div id="rotate-device-prompt">
+    <div class="rotate-phone-icon">📱 ➔ 🔄</div>
+    <h2 style="color: #38bdf8; font-size: 1.3rem; margin-bottom: 6px;">SILA PUSINGKAN TELEFON KE MOD MELINTANG (LANDSCAPE)</h2>
+    <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px;">
+      Game ini dimainkan secara melintang penuh seperti <b>Mobile Legends</b> untuk pengalaman aksi arcade sebenar!
+    </p>
+  </div>
 
-    <!-- Header Pengiktirafan Pembangun (Cikgu Mohammad Fikrey) -->
-    <header class="creator-banner">
-      <div class="creator-badge">
-        <span>👨‍💻</span> <span>Pembangun: <b>Mohammad Fikrey bin Abdul Gapar</b></span>
+  <!-- PENTAS PERMAINAN MELINTANG PENUH (LANDSCAPE STAGE) -->
+  <div id="game-stage">
+
+    <!-- Top MOBA Arcade HUD -->
+    <header class="top-hud">
+      <div class="hud-hero-profile">
+        <div class="hero-avatar-box" id="hud-avatar-icon">🦸‍♂️</div>
+        <div class="hero-vitals">
+          <div class="hud-bar-hp"><div class="hud-fill-hp" id="hud-hp-bar"></div></div>
+          <div class="hud-bar-mp"><div class="hud-fill-mp" id="hud-mp-bar"></div></div>
+        </div>
       </div>
-      <div style="font-size: 0.68rem; color: #93c5fd;">SK Ranggu Tawau</div>
+
+      <div class="hud-center-info">
+        <div class="hud-stage-badge" id="hud-stage-badge">ZON 1: TOWER INVASION</div>
+        <div class="hud-timer-badge" id="hud-timer-badge">⏱️ 15:00</div>
+      </div>
+
+      <div class="hud-stats-right">
+        <div class="hud-score-pill" id="hud-xp-text">⚡ 0 XP</div>
+        <button class="hud-icon-btn" onclick="openLeaderboard()" title="Papan Skor Kalendar">🏆</button>
+        <button class="hud-icon-btn" id="btn-sound-toggle" onclick="toggleSound()" title="Bunyi">🔊</button>
+      </div>
     </header>
 
-    <!-- HUD Bar (Semasa bermain misi) -->
-    <header class="hud-bar" id="game-hud" style="display: none;">
-      <div class="hud-stat hud-hearts" id="hud-hearts">
-        <span>❤️</span><span>❤️</span><span>❤️</span>
-      </div>
-      <div class="hud-timer" id="hud-timer">
-        <span>⏱️</span><span id="timer-text">15:00</span>
-      </div>
-      <div class="hud-stat hud-xp">
-        <span>⚡</span><span id="xp-text">0 XP</span>
-      </div>
-      <div style="display: flex; gap: 6px;">
-        <button class="hud-btn" onclick="openLeaderboardModal()" title="Papan Skor Kalendar">🏆</button>
-        <button class="hud-btn" id="btn-toggle-sound" title="Bunyi On/Off">🔊</button>
-        <button class="hud-btn" id="btn-open-scratchpad" title="Buka Papan Conteng">📝</button>
-      </div>
-    </header>
+    <!-- Canvas Grafik Aksi Arcade 60 FPS -->
+    <canvas id="battle-canvas"></canvas>
 
-    <!-- Toast Notification -->
-    <div class="toast-popup" id="toast-banner">
-      <span id="toast-icon">✨</span> <span id="toast-msg">Mesej</span>
+    <!-- Combat Action Overlay (Skill Attack Buttons di Kanan Bawah) -->
+    <div class="combat-action-hud" id="combat-hud">
+      <div class="target-challenge-bubble" id="challenge-box">
+        <div class="challenge-tag" id="challenge-tag">TEMBAKAN CAS MERIAM</div>
+        <div class="challenge-math" id="challenge-math">8 × 7 = ?</div>
+      </div>
+      <div class="skills-cluster" id="skills-cluster">
+        <button class="skill-strike-btn" id="skill-btn-0" onclick="triggerSkillStrike(0)">56</button>
+        <button class="skill-strike-btn btn-alt" id="skill-btn-1" onclick="triggerSkillStrike(1)">54</button>
+        <button class="skill-strike-btn btn-ult" id="skill-btn-2" onclick="triggerSkillStrike(2)">64</button>
+      </div>
+    </div>
+
+    <!-- Kawalan Stereng Kiri untuk Zon 3 (Racer) -->
+    <div class="steer-controls-left" id="steer-left-hud">
+      <button class="steer-btn" onclick="steerHero(-1)">⬆️</button>
+      <button class="steer-btn" onclick="steerHero(1)">⬇️</button>
+    </div>
+
+    <!-- Toast Banner -->
+    <div class="toast-pill" id="toast-banner">✨ Mesej Aksi</div>
+
+    <!-- ==============================================================
+         OVERLAY 1: START SCREEN (LANDSCAPE ARCADE MENU)
+         ============================================================== -->
+    <div id="overlay-start-screen">
+      <div class="start-dialog-box">
+        <div class="creator-tag-header">
+          <span>👨‍💻 Pembangun: <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b></span>
+          <span>🏫 SK RANGGU TAWAU</span>
+        </div>
+
+        <div class="game-logo-row">
+          <span style="font-size: 2rem;">🚀</span>
+          <div class="game-logo-title">MATH QUEST: SIBER</div>
+        </div>
+
+        <div class="start-inputs-row">
+          <input type="text" id="input-player-name" class="game-input" placeholder="Nama Murid (Cth: Danial Hakimi)" maxlength="25">
+          <input type="text" id="input-player-class" class="game-input" placeholder="Kelas (Cth: 6 Arif)" maxlength="20">
+        </div>
+
+        <!-- Pilih Hero Avatar -->
+        <div class="hero-choice-strip">
+          <div class="hero-chip active" id="chip-h1" onclick="pickHero('cyber', '🦸‍♂️', 'Ejen Siber')">
+            <span>🦸‍♂️</span> <span>Ejen Siber</span>
+          </div>
+          <div class="hero-chip" id="chip-h2" onclick="pickHero('ninja', '🥷', 'Ninja Kripto')">
+            <span>🥷</span> <span>Ninja Kripto</span>
+          </div>
+          <div class="hero-chip" id="chip-h3" onclick="pickHero('mech', '🤖', 'Mecha-Titan')">
+            <span>🤖</span> <span>Mecha-Titan</span>
+          </div>
+        </div>
+
+        <!-- Pilih Tahap 5 atau 6 -->
+        <div class="grade-choice-strip">
+          <div class="grade-chip active" id="chip-g5" onclick="pickGrade(5)">TAHUN 5 (KSSR)</div>
+          <div class="grade-chip" id="chip-g6" onclick="pickGrade(6)">TAHUN 6 (KSSR)</div>
+        </div>
+
+        <!-- Butang Mula Aksi & Papan Skor -->
+        <div class="start-action-row">
+          <button class="btn-arcade btn-board" onclick="openLeaderboard()">
+            <span>📅 PAPAN SKOR</span>
+          </button>
+          <button class="btn-arcade btn-play" onclick="startArcadeBattle()">
+            <span>⚔️ MASUK BATTLEFIELD</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- ==============================================================
-         1. START SCREEN: PILIH WATAK & PENDAFTARAN EJEN
+         OVERLAY 2: RESULTS & SIJIL PENGEMBARA
          ============================================================== -->
-    <section class="screen active" id="screen-start">
-      <div class="game-card" style="text-align: center; padding-top: 20px;">
-        <div style="font-size: 2.6rem; margin-bottom: 2px; filter: drop-shadow(0 0 14px var(--cyan-glow));">🚀</div>
-        <h1 style="font-size: 1.7rem; color: #fff; margin-bottom: 2px; text-shadow: 0 0 15px var(--cyan-glow);">MATH QUEST: SIBER</h1>
-        <p style="color: var(--cyan-bright); font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 12px;">
-          PENGEMBARAAN MATEMATIK PDPR TAHUN 5 & 6
-        </p>
-
-        <!-- Butang Papan Skor Kalendar Rasmi -->
-        <button class="btn btn-purple" onclick="openLeaderboardModal()" style="padding: 10px; margin-bottom: 14px;">
-          <span>📅 PAPAN SKOR KALENDAR PDPR (REKOD MURID)</span>
-        </button>
-
-        <!-- Pendaftaran Nama Murid -->
-        <div class="input-group">
-          <label class="input-label" for="player-name-input">👤 Nama Penuh Murid (Wajib)</label>
-          <input type="text" id="player-name-input" class="input-text" placeholder="Masukkan nama anda (Cth: Danial Hakimi)" maxlength="30">
-        </div>
-
-        <div class="input-group">
-          <label class="input-label" for="player-class-input">🏫 Kelas / Sekolah</label>
-          <input type="text" id="player-class-input" class="input-text" placeholder="Cth: 5 Cemerlang / 6 Arif" maxlength="25">
-        </div>
-
-        <!-- Pemilihan Hero / Watak Pengembara -->
-        <label class="input-label" style="text-align: left;">🦸‍♂️ Pilih Wira Ejen Anda</label>
-        <div class="avatar-grid">
-          <div class="avatar-option selected" id="hero-1" onclick="selectHero('cyber', '🦸‍♂️', 'Ejen Siber')">
-            <div class="avatar-emoji">🦸‍♂️</div>
-            <div class="avatar-label">Ejen Siber</div>
-          </div>
-          <div class="avatar-option" id="hero-2" onclick="selectHero('ninja', '🥷', 'Ninja Kripto')">
-            <div class="avatar-emoji">🥷</div>
-            <div class="avatar-label">Ninja Kripto</div>
-          </div>
-          <div class="avatar-option" id="hero-3" onclick="selectHero('mech', '🤖', 'Mecha-Titan')">
-            <div class="avatar-emoji">🤖</div>
-            <div class="avatar-label">Mecha-Titan</div>
-          </div>
-        </div>
-
-        <!-- Pilihan Tahap -->
-        <label class="input-label" style="text-align: left;">🎯 Pilih Tahap Persekolahan</label>
-        <div class="grade-selector">
-          <div class="grade-card selected" id="grade-btn-5" onclick="selectGrade(5)">
-            <div class="grade-title">TAHUN 5</div>
-            <div class="grade-desc">Nombor 1,000,000, Pecahan, Wang, Masa & Ruang</div>
-          </div>
-          <div class="grade-card" id="grade-btn-6" onclick="selectGrade(6)">
-            <div class="grade-title">TAHUN 6</div>
-            <div class="grade-desc">Pecahan Juta, BODMAS, Peratus, Nisbah & Gabungan 3D</div>
-          </div>
-        </div>
-
-        <button class="btn btn-primary" onclick="startAdventureQuest()">
-          <span>MULAKAN PENGEMBARAAN SEKARANG</span> <span>⚡</span>
-        </button>
-
-        <div style="margin-top: 14px; font-size: 0.7rem; color: var(--text-muted);">
-          Sistem dibangunkan khusus oleh <b>Cikgu Mohammad Fikrey bin Abdul Gapar</b> untuk murid SK Ranggu Tawau.
-        </div>
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         2. ADVENTURE MAP OVERVIEW (PETA DUNIA PENGEMBARAAN)
-         ============================================================== -->
-    <section class="screen" id="screen-map">
-      <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span class="quest-badge badge-escape">PETA DUNIA SIBER</span>
-          <span style="font-size: 0.8rem; color: #67e8f9; font-weight: 700;" id="map-player-display">Ejen Danial</span>
-        </div>
-
-        <h2 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px;">PILIH MISI PENGEMBARAAN</h2>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
-          Selesaikan 3 Zon bersambung: Pecahkan Kubu Laser, Tumpaskan Mecha-Titan, dan Lari Pecut di Lebuhraya Hyper-Speed!
-        </p>
-
-        <!-- Peta Interaktif -->
-        <div class="adventure-map">
-          <div class="map-line"></div>
-          <div class="map-nodes-row">
-            <div class="map-node active" id="node-1" onclick="goToQuestStage(1)">
-              <div class="node-icon">🔐</div>
-              <div class="node-label">Zon 1: Kubu</div>
-            </div>
-            <div class="map-node" id="node-2" onclick="goToQuestStage(2)">
-              <div class="node-icon">⚔️</div>
-              <div class="node-label">Zon 2: Boss</div>
-            </div>
-            <div class="map-node" id="node-3" onclick="goToQuestStage(3)">
-              <div class="node-icon">🚀</div>
-              <div class="node-label">Zon 3: Larian</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: left;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 4px;" id="current-zone-title">Zon 1: Kubu Rahsia Cyber-Vault</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);" id="current-zone-desc">Leraikan laser pengimbas dengan menyelesaikan soalan cas matematik pantas untuk membuka pintu keselamatan.</div>
-        </div>
-
-        <button class="btn btn-primary" id="btn-enter-zone" onclick="launchCurrentZone()">
-          <span>MASUK ZON MISI INI</span> <span>🚀</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         3. ZON 1: CYBER-VAULT LASER ESCAPE (CANVAS ACTION)
-         ============================================================== -->
-    <section class="screen" id="screen-escape">
-      <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <span class="quest-badge badge-escape">ZON 1: KUBU LASER</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #c4b5fd;" id="escape-step-indicator">PINTU 1/5</span>
-        </div>
-
-        <!-- Canvas Aksi Laser Kubu -->
-        <div class="action-canvas-container" id="vault-canvas-box">
-          <canvas class="action-canvas" id="canvas-vault" width="480" height="250"></canvas>
-        </div>
-
-        <!-- Soalan Pantas Cas Hacking -->
-        <div class="action-prompt-card">
-          <div class="action-title-tag" id="escape-topic-tag">CAS KUNCI LASER</div>
-          <div class="action-question-text" id="escape-question-text">Memuatkan cabaran kubu...</div>
-        </div>
-
-        <!-- 4 Butang Tindakan Pantas -->
-        <div class="action-btn-grid" id="escape-options-container">
-          <!-- Populated by JS -->
-        </div>
-
-        <button class="btn btn-secondary" onclick="openScratchpad()" style="padding: 9px; font-size: 0.82rem; margin-top: 10px;">
-          <span>📝 PAPAN CONTENG KIRA-KIRA</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         4. ZON 2: PERTEMBUNGAN MECH-TITAN (REAL ARCADE BOSS BATTLE)
-         ============================================================== -->
-    <section class="screen" id="screen-boss">
-      <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <span class="quest-badge badge-boss">ZON 2: BOSS MECHA</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #fca5a5;" id="boss-round-indicator">PUSINGAN 1/5</span>
-        </div>
-
-        <!-- Canvas Pertarungan Aksi Boss -->
-        <div class="action-canvas-container" id="boss-canvas-box">
-          <canvas class="action-canvas" id="canvas-boss" width="480" height="250"></canvas>
-        </div>
-
-        <!-- Soalan Cas Meriam Plasma -->
-        <div class="action-prompt-card" style="border-color: #ef4444;">
-          <div class="action-title-tag" style="color: #f87171;" id="boss-topic-tag">CAS MERIAM PLASMA (-100 DMG)</div>
-          <div class="action-question-text" id="boss-question-text">Soalan meriam plasma...</div>
-        </div>
-
-        <!-- Butang Serangan Jawapan -->
-        <div class="action-btn-grid" id="boss-options-container">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         5. ZON 3: LEBUHRAYA HYPER-SPEED (REAL CANVAS TOP-DOWN RACER)
-         ============================================================== -->
-    <section class="screen" id="screen-race">
-      <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <span class="quest-badge badge-race">ZON 3: HYPER-SPEED RACER</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #6ee7b7;" id="race-step-indicator">CHECKPOINT 1/5</span>
-        </div>
-
-        <!-- Canvas Perlumbaan Interaktif Masa Nyata -->
-        <div class="action-canvas-container" id="race-canvas-box">
-          <canvas class="action-canvas" id="canvas-race" width="480" height="250"></canvas>
-          <div class="speed-hud" id="speed-hud">
-            <span>⚡</span> <span id="speed-val-text">180 KM/J</span>
-          </div>
-        </div>
-
-        <!-- Soalan Gerbang Lebuhraya -->
-        <div class="action-prompt-card" style="border-color: #10b981;">
-          <div class="action-title-tag" style="color: #6ee7b7;" id="race-topic-tag">PINTU LALUAN HYPER WARP</div>
-          <div class="action-question-text" id="race-question-text">Pilih lorong gerbang yang tepat...</div>
-        </div>
-
-        <!-- Kawalan Stereng 3-Lorong -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-          <button class="btn btn-secondary" onclick="steerRacer(0)" style="padding: 11px 4px; font-size: 0.85rem;" id="race-btn-0">⬅️ LORONG 1</button>
-          <button class="btn btn-secondary" onclick="steerRacer(1)" style="padding: 11px 4px; font-size: 0.85rem;" id="race-btn-1">⬆️ LORONG 2</button>
-          <button class="btn btn-secondary" onclick="steerRacer(2)" style="padding: 11px 4px; font-size: 0.85rem;" id="race-btn-2">LORONG 3 ➡️</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==============================================================
-         6. RESULT SCREEN (SIJIL PENGIKTIRAFAN & REKOD MARKAH)
-         ============================================================== -->
-    <section class="screen" id="screen-result">
-      <div class="game-card" style="text-align: center; padding-top: 20px;">
-        <div style="font-size: 3rem; margin-bottom: 2px;" id="result-status-icon">🏆</div>
-        <h1 style="font-size: 1.55rem; color: #fff; margin-bottom: 2px;" id="result-title">PENGEMBARAAN BERJAYA DITAMATKAN!</h1>
-        <p style="color: var(--cyan-bright); font-family: var(--font-display); font-weight: 700; font-size: 0.88rem;" id="result-subtitle">
-          SIJIL KEJAYAAN MATEMATIK PDPR
-        </p>
-
-        <!-- Bintang Pencapaian -->
-        <div class="stars-row" id="result-stars" style="display: flex; justify-content: center; gap: 10px; font-size: 2.6rem; margin: 10px 0;">
+    <div id="overlay-results">
+      <div class="results-dialog-box">
+        <div style="font-size: 2.8rem;" id="res-badge-icon">🏆</div>
+        <h2 style="font-size: 1.4rem; color: #fff;" id="res-badge-title">VICTORY ROYALE!</h2>
+        <div style="display: flex; gap: 8px; font-size: 2.2rem; margin: 2px 0;">
           <span style="color: #fbbf24;">⭐</span><span style="color: #fbbf24;">⭐</span><span style="color: #fbbf24;">⭐</span>
         </div>
-
-        <!-- Banner Pemberitahuan Skor Direkodkan -->
-        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 12px; padding: 10px; margin-bottom: 12px; color: #a7f3d0; font-size: 0.82rem; font-weight: 600;">
-          ✅ Markah anda telah direkodkan ke <b>Papan Skor Kalendar PDPR</b> untuk rekod Cikgu Mohammad Fikrey!
+        
+        <div style="background: rgba(2, 6, 23, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 8px 14px; width: 100%; font-size: 0.8rem; text-align: left;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">Wira Ejen:</span>
+            <span style="font-weight: 700; color: #fff;" id="res-name-label">Danial</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">Markah Pertarungan:</span>
+            <span style="font-weight: 800; color: var(--cyan-glow);" id="res-score-label">4,850 XP</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+            <span style="color: #94a3b8;">Ketepatan Serangan:</span>
+            <span style="font-weight: 700; color: var(--emerald);" id="res-acc-label">92%</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: #94a3b8;">Disahkan Oleh:</span>
+            <span style="font-weight: 700; color: #c4b5fd;">Mohammad Fikrey bin Abdul Gapar</span>
+          </div>
         </div>
 
-        <!-- Jadual Rumusan Markah Murid -->
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-hud); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Nama Murid</td>
-              <td style="text-align: right; font-weight: 700; color: #fff;" id="res-player-name">Danial Hakimi</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Kelas / Sekolah</td>
-              <td style="text-align: right; font-weight: 700; color: #fff;" id="res-player-class">6 Arif (SK Ranggu)</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Tahap Persekolahan</td>
-              <td style="text-align: right; font-weight: 700; color: #fff;" id="res-grade-level">Tahun 6 (KSSR Semakan)</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Mata Pengalaman (XP)</td>
-              <td style="text-align: right; font-weight: 700; color: #38bdf8;" id="res-xp-total">4,850 XP</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Ketepatan Jawapan</td>
-              <td style="text-align: right; font-weight: 700; color: #34d399;" id="res-accuracy">14 / 15 (93%)</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Masa Diambil</td>
-              <td style="text-align: right; font-weight: 700; color: #fbbf24;" id="res-time-taken">7 minit 45 saat</td>
-            </tr>
-            <tr>
-              <td style="color: var(--text-muted); padding: 5px 0;">Pengesahan Pembangun</td>
-              <td style="text-align: right; font-weight: 700; color: #a78bfa;">Mohammad Fikrey bin Abdul Gapar</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Tindakan Utama -->
-        <div style="display: flex; flex-direction: column; gap: 9px;">
-          <button class="btn btn-purple" onclick="openLeaderboardModal()">
-            <span>📅 BUKA PAPAN SKOR KALENDAR KELAS</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%;">
+          <button class="btn-arcade btn-play" onclick="sendWhatsAppProof()" style="font-size: 0.82rem; padding: 9px;">
+            <span>📱 HANTAR WHATSAPP</span>
           </button>
-
-          <button class="btn btn-emerald" onclick="sendViaWhatsApp()">
-            <span>📱 HANTAR REKOD KE WHATSAPP CIKGU FIKREY</span>
-          </button>
-          
-          <button class="btn btn-amber" onclick="window.print()">
-            <span>🖨️ CETAK / SIMPAN SIJIL PENGEMBARA</span>
-          </button>
-
-          <button class="btn btn-secondary" onclick="restartAdventure()">
-            <span>🔄 MAIN SEMULA PENGEMBARAAN</span>
+          <button class="btn-arcade btn-board" onclick="openLeaderboard()" style="font-size: 0.82rem; padding: 9px;">
+            <span>📅 PAPAN SKOR</span>
           </button>
         </div>
+
+        <button onclick="resetToMenu()" style="background: transparent; border: none; color: #94a3b8; font-size: 0.75rem; text-decoration: underline; cursor: pointer;">
+          Kembali ke Menu Utama
+        </button>
       </div>
-    </section>
+    </div>
 
     <!-- ==============================================================
-         MODAL: PAPAN SKOR KALENDAR PDPR (DATE-FILTER & SCROLLABLE)
+         OVERLAY 3: PAPAN SKOR KALENDAR (SCROLLABLE & DATE-FILTER)
          ============================================================== -->
-    <div class="modal-overlay" id="modal-leaderboard">
-      <div class="modal-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+    <div id="overlay-leaderboard">
+      <div class="leaderboard-dialog-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <h3 style="font-size: 1.05rem; color: #fff;">📅 PAPAN SKOR KALENDAR PDPR</h3>
-            <p style="font-size: 0.7rem; color: var(--text-muted);">Sistem Semakan Markah Guru: <b>Mohammad Fikrey bin Abdul Gapar</b></p>
+            <div style="font-size: 1rem; font-weight: 800; color: #fff;">📅 PAPAN SKOR KALENDAR PDPR</div>
+            <div style="font-size: 0.65rem; color: #7dd3fc;">Pembangun: Mohammad Fikrey bin Abdul Gapar (SK Ranggu)</div>
           </div>
-          <button class="hud-btn" onclick="closeLeaderboardModal()">✕</button>
+          <button onclick="closeLeaderboard()" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
         </div>
 
-        <!-- Tab Gred -->
-        <div class="board-tabs">
-          <button class="board-tab-btn active" id="tab-btn-all" onclick="filterLeaderboardGrade('ALL')">SEMUA</button>
-          <button class="board-tab-btn" id="tab-btn-t5" onclick="filterLeaderboardGrade('T5')">TAHUN 5</button>
-          <button class="board-tab-btn" id="tab-btn-t6" onclick="filterLeaderboardGrade('T6')">TAHUN 6</button>
-        </div>
-
-        <!-- Bar Kalendar -->
-        <div class="calendar-bar">
-          <div class="date-chips">
-            <button class="date-chip active" id="chip-date-all" onclick="filterLeaderboardDate('ALL')">SEMUA TARIKH</button>
-            <button class="date-chip" id="chip-date-today" onclick="filterLeaderboardDate('TODAY')">HARI INI</button>
-            <button class="date-chip" id="chip-date-yesterday" onclick="filterLeaderboardDate('YESTERDAY')">SEMALAM</button>
+        <div class="calendar-filter-strip">
+          <div style="display: flex; gap: 4px;">
+            <button class="date-chip-btn active" id="chip-date-all" onclick="filterDate('ALL')">SEMUA</button>
+            <button class="date-chip-btn" id="chip-date-today" onclick="filterDate('TODAY')">HARI INI</button>
+            <button class="date-chip-btn" id="chip-date-yest" onclick="filterDate('YEST')">SEMALAM</button>
           </div>
-          <input type="date" id="calendar-custom-picker" class="date-picker-input" onchange="filterLeaderboardCustomDate(this.value)">
+          <input type="date" id="calendar-date-input" onchange="filterCustomDate(this.value)" style="background:#1e293b; border:1px solid #38bdf8; color:#fff; border-radius:6px; font-size:0.7rem; padding:2px 4px;">
         </div>
 
-        <!-- Carian Nama -->
-        <div style="margin-bottom: 8px;">
-          <input type="text" id="leaderboard-search" class="input-text" placeholder="🔍 Cari nama murid atau kelas..." oninput="searchLeaderboard(this.value)" style="padding: 7px 12px; font-size: 0.82rem;">
-        </div>
-
-        <!-- Kawasan Boleh Di-Scroll Mengikut Kalendar -->
-        <div class="leaderboard-scroll-area" id="leaderboard-scroll-area">
+        <div class="scores-scroll-list" id="scores-scroll-list">
           <!-- Populated by JS -->
         </div>
 
-        <!-- Alat Guru -->
-        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 8px;">
-          <button class="btn btn-emerald" onclick="exportScoresCsv()" style="padding: 9px 8px; font-size: 0.78rem; width: 50%;">
-            <span>📥 EKSPORT EXCEL (CSV)</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-arcade btn-play" onclick="exportExcelCsv()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
+            <span>📥 EKSPORT CSV</span>
           </button>
-          <button class="btn btn-primary" onclick="copyTeacherMarkSummary()" style="padding: 9px 8px; font-size: 0.78rem; width: 50%;">
-            <span>📋 SALIN FORMAT GURU</span>
+          <button class="btn-arcade btn-board" onclick="copyTeacherReport()" style="width: 50%; font-size: 0.78rem; padding: 8px;">
+            <span>📋 SALIN FORMAT</span>
           </button>
         </div>
       </div>
     </div>
-
-    <!-- Modal Scratchpad (Papan Conteng Pengiraan) -->
-    <div class="modal-overlay" id="modal-scratchpad">
-      <div class="modal-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <h3 style="font-size: 0.95rem; color: #fff;">📝 Papan Conteng Pengiraan</h3>
-          <button class="hud-btn" onclick="closeScratchpad()">✕</button>
-        </div>
-        <p style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 6px;">
-          Gunakan jari untuk membuat jalan kira pantas di bawah:
-        </p>
-        <canvas class="scratchpad-canvas" id="scratchpad-canvas" width="380" height="230"></canvas>
-        <div style="display: flex; gap: 8px; margin-top: 8px;">
-          <button class="btn btn-secondary" onclick="clearScratchpad()" style="padding: 8px; font-size: 0.8rem; width: 50%;">KOSONGKAN</button>
-          <button class="btn btn-primary" onclick="closeScratchpad()" style="padding: 8px; font-size: 0.8rem; width: 50%;">SELESAI</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Floating Scratchpad Trigger Button -->
-    <button class="btn-scratchpad" id="float-scratchpad-btn" onclick="openScratchpad()" title="Buka Papan Conteng">📝</button>
 
   </div>
 
   <script>
     /* ==============================================================
-       AUDIO SYNTHESIZER (WEB AUDIO API)
+       AUDIO ENGINE (SYNTHESIZER WEB AUDIO API)
        ============================================================== */
-    class RetroAudioSynth {
+    class ArcadeSound {
       constructor() {
         this.ctx = null;
         this.enabled = true;
       }
-
       init() {
         if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) this.ctx = new AudioContext();
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) this.ctx = new AC();
         }
-        if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume();
-        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
       }
-
-      playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.15) {
-        if (!this.enabled || !this.ctx) return;
-        try {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = type;
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + duration);
-        } catch (e) {}
-      }
-
-      playCorrect(combo = 1) {
-        if (!this.enabled) return;
-        this.init();
-        const base = 520 + (combo * 40);
-        this.playTone(base, 'triangle', 0.1, 0.2);
-        setTimeout(() => this.playTone(base * 1.25, 'triangle', 0.12, 0.2), 60);
-        setTimeout(() => this.playTone(base * 1.5, 'triangle', 0.14, 0.25), 120);
-        setTimeout(() => this.playTone(base * 2.0, 'triangle', 0.2, 0.3), 180);
-      }
-
-      playWrong() {
-        if (!this.enabled) return;
-        this.init();
-        this.playTone(140, 'sawtooth', 0.16, 0.25);
-        setTimeout(() => this.playTone(105, 'sawtooth', 0.24, 0.25), 100);
-      }
-
       playLaser() {
         if (!this.enabled || !this.ctx) return;
         try {
           const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
+          const g = this.ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(980, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.2);
-          gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.2);
-        } catch(e) {}
+          osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.18);
+          g.gain.setValueAtTime(0.25, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.18);
+          osc.connect(g); g.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.18);
+        } catch(e){}
       }
-
-      playExplosion() {
-        if (!this.enabled || !this.ctx) return;
-        try {
-          this.playTone(75, 'square', 0.35, 0.3);
-          this.playTone(50, 'sawtooth', 0.45, 0.38);
-        } catch(e) {}
-      }
-
-      playDoorOpen() {
-        if (!this.enabled) return;
-        this.init();
-        this.playTone(330, 'sine', 0.15, 0.2);
-        setTimeout(() => this.playTone(440, 'sine', 0.2, 0.2), 100);
-        setTimeout(() => this.playTone(550, 'sine', 0.25, 0.25), 200);
-      }
-
-      playWarpSpeed() {
+      playBoom() {
         if (!this.enabled || !this.ctx) return;
         try {
           const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(220, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(950, this.ctx.currentTime + 0.35);
-          gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.35);
-        } catch(e) {}
+          const g = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(90, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(30, this.ctx.currentTime + 0.25);
+          g.gain.setValueAtTime(0.35, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.25);
+          osc.connect(g); g.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.25);
+        } catch(e){}
       }
-
-      playVictory() {
-        if (!this.enabled) return;
-        this.init();
-        const notes = [440, 554, 659, 880, 1108];
-        notes.forEach((freq, idx) => {
-          setTimeout(() => this.playTone(freq, 'triangle', 0.3, 0.25), idx * 120);
-        });
+      playChime() {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(587, this.ctx.currentTime);
+          osc.frequency.setValueAtTime(880, this.ctx.currentTime + 0.08);
+          g.gain.setValueAtTime(0.25, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
+          osc.connect(g); g.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.2);
+        } catch(e){}
+      }
+      playHit() {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+          g.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+          osc.connect(g); g.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.15);
+        } catch(e){}
       }
     }
+    const audio = new ArcadeSound();
 
-    const sound = new RetroAudioSynth();
+    function toggleSound() {
+      audio.enabled = !audio.enabled;
+      document.getElementById('btn-sound-toggle').textContent = audio.enabled ? '🔊' : '🔇';
+      showToast(audio.enabled ? 'Bunyi Aktif' : 'Bunyi Senyap');
+    }
 
     /* ==============================================================
-       PAPAN SKOR KALENDAR PDPR (REKOD MURID IKUT TARIKH)
+       PAPAN SKOR KALENDAR DATA
        ============================================================== */
-    const LEADERBOARD_KEY = "MATH_QUEST_LEADERBOARD_RECORDS_V3";
-
-    const DEFAULT_LEADERBOARD = [
-      { id: "MQ-1", name: "Muhammad Danial", className: "6 Arif", grade: 6, xp: 4850, stars: 3, accuracy: 95, timeStr: "7 minit 12 saat", date: "2026-10-13", timeOnly: "09:15 AM" },
-      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Arif", grade: 6, xp: 4600, stars: 3, accuracy: 93, timeStr: "7 minit 45 saat", date: "2026-10-13", timeOnly: "09:40 AM" },
-      { id: "MQ-3", name: "Adam Harith", className: "5 Cemerlang", grade: 5, xp: 4350, stars: 3, accuracy: 90, timeStr: "8 minit 20 saat", date: "2026-10-13", timeOnly: "10:15 AM" },
-      { id: "MQ-4", name: "Siti Nurhaliza", className: "5 Cemerlang", grade: 5, xp: 3900, stars: 2, accuracy: 82, timeStr: "9 minit 10 saat", date: "2026-10-13", timeOnly: "10:50 AM" },
-      { id: "MQ-5", name: "Muhammad Rayyan", className: "6 Bijak", grade: 6, xp: 3750, stars: 2, accuracy: 80, timeStr: "9 minit 35 saat", date: "2026-10-12", timeOnly: "11:20 AM" },
-      { id: "MQ-6", name: "Farah Diana", className: "5 Cemerlang", grade: 5, xp: 3500, stars: 2, accuracy: 78, timeStr: "10 minit 05 saat", date: "2026-10-12", timeOnly: "11:55 AM" },
-      { id: "MQ-7", name: "Afiq Hakimi", className: "6 Arif", grade: 6, xp: 4100, stars: 3, accuracy: 88, timeStr: "8 minit 05 saat", date: "2026-10-12", timeOnly: "02:15 PM" },
-      { id: "MQ-8", name: "Dayang Batrisya", className: "5 Cemerlang", grade: 5, xp: 3350, stars: 2, accuracy: 75, timeStr: "10 minit 40 saat", date: "2026-10-11", timeOnly: "10:00 AM" },
-      { id: "MQ-9", name: "Zulhilmi", className: "6 Bijak", grade: 6, xp: 3100, stars: 2, accuracy: 70, timeStr: "11 minit 20 saat", date: "2026-10-11", timeOnly: "03:40 PM" }
+    const LEADERBOARD_KEY = "MATH_QUEST_ML_SCORES_V4";
+    const SAMPLE_RECORDS = [
+      { id: "MQ-1", name: "Muhammad Danial", className: "6 Arif", grade: 6, xp: 5200, stars: 3, acc: 96, date: "2026-10-13", time: "09:15 AM" },
+      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Arif", grade: 6, xp: 4850, stars: 3, acc: 93, date: "2026-10-13", time: "09:45 AM" },
+      { id: "MQ-3", name: "Adam Harith", className: "5 Cemerlang", grade: 5, xp: 4600, stars: 3, acc: 90, date: "2026-10-13", time: "10:10 AM" },
+      { id: "MQ-4", name: "Muhammad Rayyan", className: "6 Bijak", grade: 6, xp: 4100, stars: 2, acc: 84, date: "2026-10-12", time: "11:20 AM" },
+      { id: "MQ-5", name: "Siti Nurhaliza", className: "5 Cemerlang", grade: 5, xp: 3800, stars: 2, acc: 80, date: "2026-10-12", time: "02:15 PM" },
+      { id: "MQ-6", name: "Dayang Batrisya", className: "5 Cemerlang", grade: 5, xp: 3500, stars: 2, acc: 75, date: "2026-10-11", time: "10:00 AM" }
     ];
 
-    function getLeaderboardData() {
+    function getScores() {
       try {
-        const stored = localStorage.getItem(LEADERBOARD_KEY);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        const s = localStorage.getItem(LEADERBOARD_KEY);
+        if (s) {
+          const p = JSON.parse(s);
+          if (Array.isArray(p) && p.length > 0) return p;
         }
-      } catch(e) {}
-      localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(DEFAULT_LEADERBOARD));
-      return [...DEFAULT_LEADERBOARD];
+      } catch(e){}
+      localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(SAMPLE_RECORDS));
+      return [...SAMPLE_RECORDS];
     }
 
-    function saveLeaderboardScore(record) {
-      const currentList = getLeaderboardData();
-      currentList.unshift(record);
-      currentList.sort((a, b) => b.xp - a.xp);
-      try {
-        localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(currentList));
-      } catch(e) {}
+    function saveScore(rec) {
+      const all = getScores();
+      all.unshift(rec);
+      all.sort((a,b) => b.xp - a.xp);
+      try { localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(all)); } catch(e){}
     }
 
-    let filterGrade = 'ALL';
-    let filterDateMode = 'ALL';
-    let customDateVal = '';
-    let searchQuery = '';
-
-    function formatDateDisplay(isoDate) {
-      if (!isoDate) return "Tarikh Tidak Dinyatakan";
-      const parts = isoDate.split('-');
-      if (parts.length === 3) {
-        const months = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
-        const mIdx = parseInt(parts[1], 10) - 1;
-        return `${parseInt(parts[2], 10)} ${months[mIdx] || parts[1]} ${parts[0]}`;
-      }
-      return isoDate;
-    }
+    let dateFilterMode = 'ALL';
+    let customDate = '';
 
     function renderLeaderboard() {
-      const scrollArea = document.getElementById('leaderboard-scroll-area');
-      const allData = getLeaderboardData();
+      const container = document.getElementById('scores-scroll-list');
+      const all = getScores();
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const yestIso = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
 
-      const today = new Date();
-      const todayIso = today.toISOString().slice(0, 10);
-      const yesterday = new Date(Date.now() - 86400000);
-      const yesterdayIso = yesterday.toISOString().slice(0, 10);
-
-      let filtered = allData;
-      if (filterGrade === 'T5') filtered = filtered.filter(item => item.grade === 5);
-      else if (filterGrade === 'T6') filtered = filtered.filter(item => item.grade === 6);
-
-      if (filterDateMode === 'TODAY') filtered = filtered.filter(item => item.date === todayIso);
-      else if (filterDateMode === 'YESTERDAY') filtered = filtered.filter(item => item.date === yesterdayIso);
-      else if (filterDateMode === 'CUSTOM' && customDateVal) filtered = filtered.filter(item => item.date === customDateVal);
-
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        filtered = filtered.filter(item => 
-          (item.name && item.name.toLowerCase().includes(q)) ||
-          (item.className && item.className.toLowerCase().includes(q))
-        );
-      }
+      let filtered = all;
+      if (dateFilterMode === 'TODAY') filtered = filtered.filter(x => x.date === todayIso);
+      else if (dateFilterMode === 'YEST') filtered = filtered.filter(x => x.date === yestIso);
+      else if (dateFilterMode === 'CUSTOM' && customDate) filtered = filtered.filter(x => x.date === customDate);
 
       if (filtered.length === 0) {
-        scrollArea.innerHTML = `
-          <div style="text-align: center; padding: 24px 10px; color: var(--text-muted); font-size: 0.85rem;">
-            🔍 Tiada rekod murid dijumpai untuk carian atau kalendar ini.
-          </div>
-        `;
+        container.innerHTML = `<div style="text-align:center; padding:20px; font-size:0.75rem; color:#94a3b8;">Tiada rekod pada tarikh ini.</div>`;
         return;
       }
 
+      // Group by date
       const groups = {};
       filtered.forEach(item => {
         const d = item.date || 'Lain-lain';
@@ -1426,1068 +978,689 @@
         groups[d].push(item);
       });
 
-      const sortedDates = Object.keys(groups).sort().reverse();
       let html = '';
+      Object.keys(groups).sort().reverse().forEach(d => {
+        const items = groups[d];
+        const dateTitle = d === todayIso ? `HARI INI (${d})` : d === yestIso ? `SEMALAM (${d})` : d;
+        html += `<div class="date-group-card">📅 Sesi PDPR: ${dateTitle} (${items.length} Murid)</div>`;
 
-      sortedDates.forEach(dKey => {
-        const dateItems = groups[dKey];
-        const avgXp = Math.round(dateItems.reduce((acc, c) => acc + (c.xp || 0), 0) / dateItems.length);
-        const headerTitle = dKey === todayIso ? `HARI INI (${formatDateDisplay(dKey)})` : 
-                            dKey === yesterdayIso ? `SEMALAM (${formatDateDisplay(dKey)})` : 
-                            formatDateDisplay(dKey);
-
-        html += `
-          <div class="date-group-block">
-            <div class="date-group-header">
-              <span>📅 SESI: ${headerTitle}</span>
-              <span style="font-size: 0.72rem; color: #6ee7b7; font-weight: 600;">${dateItems.length} Murid • Purata: ${avgXp.toLocaleString()} XP</span>
-            </div>
-            <div class="leaderboard-list">
-        `;
-
-        dateItems.forEach((item, index) => {
-          const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
-          const rankMedal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-          const starsText = '⭐'.repeat(item.stars || 1);
-
+        items.forEach((it, idx) => {
+          const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx+1}`;
           html += `
-            <div class="leaderboard-item ${rankClass}">
-              <div class="rank-badge">${rankMedal}</div>
-              <div class="student-info">
-                <div class="student-name">${item.name}</div>
-                <div class="student-meta">
-                  ${item.className || 'Murid'} • Tahun ${item.grade} • ${item.timeOnly || ''} • Ketepatan: ${item.accuracy || 100}%
+            <div class="score-row-item">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight:800; font-size:0.95rem;">${medal}</span>
+                <div>
+                  <div style="font-weight:700; color:#fff; font-size:0.82rem;">${it.name}</div>
+                  <div style="font-size:0.68rem; color:#94a3b8;">${it.className} • Thn ${it.grade} • ${it.time || ''}</div>
                 </div>
               </div>
-              <div class="student-score">
-                <div class="score-xp">${Number(item.xp).toLocaleString()} XP</div>
-                <div class="score-stars">${starsText}</div>
+              <div style="text-align:right;">
+                <div style="font-weight:800; color:var(--cyan-glow); font-size:0.85rem;">${Number(it.xp).toLocaleString()} XP</div>
+                <div style="font-size:0.68rem; color:#fbbf24;">${'⭐'.repeat(it.stars || 1)} (${it.acc || 100}%)</div>
               </div>
             </div>
           `;
         });
-
-        html += `</div></div>`;
       });
 
-      scrollArea.innerHTML = html;
+      container.innerHTML = html;
     }
 
-    function filterLeaderboardGrade(gradeType) {
-      filterGrade = gradeType;
-      document.getElementById('tab-btn-all').classList.toggle('active', gradeType === 'ALL');
-      document.getElementById('tab-btn-t5').classList.toggle('active', gradeType === 'T5');
-      document.getElementById('tab-btn-t6').classList.toggle('active', gradeType === 'T6');
-      renderLeaderboard();
-      sound.playTone(380, 'sine', 0.05, 0.1);
-    }
-
-    function filterLeaderboardDate(mode) {
-      filterDateMode = mode;
+    function filterDate(mode) {
+      dateFilterMode = mode;
       document.getElementById('chip-date-all').classList.toggle('active', mode === 'ALL');
       document.getElementById('chip-date-today').classList.toggle('active', mode === 'TODAY');
-      document.getElementById('chip-date-yesterday').classList.toggle('active', mode === 'YESTERDAY');
-      document.getElementById('calendar-custom-picker').value = '';
+      document.getElementById('chip-date-yest').classList.toggle('active', mode === 'YEST');
+      document.getElementById('calendar-date-input').value = '';
       renderLeaderboard();
-      sound.playTone(420, 'sine', 0.05, 0.1);
     }
 
-    function filterLeaderboardCustomDate(val) {
+    function filterCustomDate(val) {
       if (!val) return;
-      filterDateMode = 'CUSTOM';
-      customDateVal = val;
+      dateFilterMode = 'CUSTOM';
+      customDate = val;
       document.getElementById('chip-date-all').classList.remove('active');
       document.getElementById('chip-date-today').classList.remove('active');
-      document.getElementById('chip-date-yesterday').classList.remove('active');
-      renderLeaderboard();
-      showToast(`Menapis rekod tarikh: ${formatDateDisplay(val)}`, '📅');
-    }
-
-    function searchLeaderboard(query) {
-      searchQuery = query;
+      document.getElementById('chip-date-yest').classList.remove('active');
       renderLeaderboard();
     }
 
-    function openLeaderboardModal() {
-      document.getElementById('modal-leaderboard').classList.add('active');
+    function openLeaderboard() {
+      document.getElementById('overlay-leaderboard').style.display = 'flex';
       renderLeaderboard();
-      sound.init();
-      sound.playTone(480, 'sine', 0.08, 0.15);
+      audio.init();
     }
 
-    function closeLeaderboardModal() {
-      document.getElementById('modal-leaderboard').classList.remove('active');
+    function closeLeaderboard() {
+      document.getElementById('overlay-leaderboard').style.display = 'none';
     }
 
-    function exportScoresCsv() {
-      const data = getLeaderboardData();
-      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan (%),Masa Diambil,Tarikh Selesai,Masa\n";
-      
-      data.forEach((row, i) => {
-        csv += `"${i + 1}","${row.name}","${row.className || '-'}","Tahun ${row.grade}","${row.xp}","${row.stars}","${row.accuracy}%","${row.timeStr}","${row.date}","${row.timeOnly || '-'}"\n`;
+    function exportExcelCsv() {
+      const data = getScores();
+      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan,Tarikh Selesai,Masa\n";
+      data.forEach((r, i) => {
+        csv += `"${i+1}","${r.name}","${r.className}","Tahun ${r.grade}","${r.xp}","${r.stars}","${r.acc}%","${r.date}","${r.time}"\n`;
       });
-
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", `Rekod_Markah_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast("Fail CSV dimuat turun untuk Cikgu Mohammad Fikrey!", "📥");
+      const u = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = u; a.download = `Rekod_Markah_SK_Ranggu_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast("Fail CSV dimuat turun untuk Cikgu Mohammad Fikrey!");
     }
 
-    function copyTeacherMarkSummary() {
-      const data = getLeaderboardData();
-      let text = `📊 *SENARAI REKOD MARKAH PDPR MATH QUEST* 📊\n`;
-      text += `SK Ranggu • Guru Pembangun: Mohammad Fikrey bin Abdul Gapar\n`;
-      text += `Tarikh Cetakan: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
-      
-      data.forEach((r, idx) => {
-        text += `${idx + 1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${Number(r.xp).toLocaleString()} XP | ${r.stars}⭐ | ${r.accuracy}%\n`;
+    function copyTeacherReport() {
+      const data = getScores();
+      let t = `📊 *REKOD MARKAH PDPR MATH QUEST (SK RANGGU)* 📊\n`;
+      t += `👨‍💻 Pembangun: Mohammad Fikrey bin Abdul Gapar\n`;
+      t += `Tarikh: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
+      data.forEach((r, i) => {
+        t += `${i+1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${r.xp} XP | ${r.stars}⭐\n`;
       });
-
-      text += `\nJumlah Penyertaan: ${data.length} orang murid.`;
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast("Format rekod guru berjaya disalin!", "📋");
-        }).catch(() => {
-          prompt("Salin teks rekod di bawah:", text);
-        });
-      } else {
-        prompt("Salin teks rekod di bawah:", text);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(t).then(() => showToast("Format Guru disalin!"));
       }
+    }
+
+    function showToast(msg) {
+      const b = document.getElementById('toast-banner');
+      b.textContent = msg;
+      b.classList.add('show');
+      setTimeout(() => b.classList.remove('show'), 2000);
     }
 
     /* ==============================================================
-       BANK SOALAN PANTAS (SNAPPY ACTION TRIGGERS - BUKAN PETIKAN PANJANG!)
-       Soalan pendek, pantas, menggerakkan aksi permainan!
+       BANK SOALAN PANTAS (SNAPPY COMBAT TRIGGERS - KSSR SEMAKAN)
        ============================================================== */
-    const ACTION_MATH_BANK = {
-      grade5: {
-        vault: [
-          { tag: "NYAHKOD PIN", q: "Nilai digit 7 dalam 472 819? (Puluh ribu)", options: ["70 000", "7 000", "700", "700 000"], correct: 0 },
-          { tag: "SUIS VOLTAN", q: "Kira cas tenaga: 45 200 + 14 800 =", options: ["58 000", "60 000", "62 000", "64 000"], correct: 1 },
-          { tag: "KUNCI PECAHAN", q: "Tukarkan 2 ³/₄ kepada pecahan tak wajar:", options: ["⁹/₄", "¹¹/₄", "¹³/₄", "⁷/₄"], correct: 1 },
-          { tag: "RADAR PERDANA", q: "Nombor perdana antara 14 dan 18 ialah:", options: ["15", "16", "17", "Tiada"], correct: 2 },
-          { tag: "PINTU TERAKHIR", q: "Tolak pantas: 100 000 - 35 000 =", options: ["65 000", "75 000", "55 000", "60 000"], correct: 0 },
-          { tag: "SUIS KELAS", q: "Bundarkan 384 500 kepada ratus ribu terdekat:", options: ["300 000", "400 000", "380 000", "500 000"], correct: 1 },
-          { tag: "AMARAN LASER", q: "Darab kod: 150 × 40 =", options: ["6 000", "600", "60 000", "5 500"], correct: 0 }
-        ],
-        boss: [
-          { tag: "CAS MERIAM WANG", q: "Basikal RM400 diberi diskaun 20%. Harga baharu:", options: ["RM320", "RM340", "RM360", "RM380"], correct: 0 },
-          { tag: "CAS MERIAM MASA", q: "2 jam 45 minit = berapa minit?", options: ["145 minit", "155 minit", "165 minit", "175 minit"], correct: 2 },
-          { tag: "MISIL PERPULUHAN", q: "Hitung kuasa tembakan: 14.5 × 6 =", options: ["82.5", "84.0", "87.0", "89.5"], correct: 2 },
-          { tag: "SERANGAN PERATUS", q: "15% daripada 400 tentera =", options: ["50", "60", "75", "80"], correct: 1 },
-          { tag: "TEMBAKAN AKHIR", q: "RM8 400 dibahagi kepada 6 zon =", options: ["RM1 200", "RM1 350", "RM1 400", "RM1 500"], correct: 2 },
-          { tag: "PEMECAH PERISAI", q: "Tempoh masa jam 0830 ke 1115 =", options: ["2 jam 15m", "2 jam 45m", "3 jam 15m", "3 jam 45m"], correct: 1 }
-        ],
-        race: [
-          { tag: "GERBANG PERIMETER", q: "Perimeter segi empat 12 cm × 8 cm:", options: ["36 cm", "40 cm", "44 cm"], correct: 1 },
-          { tag: "GERBANG LUAS", q: "Luas segi tiga (Tapak 10 cm, Tinggi 8 cm):", options: ["40 cm²", "80 cm²", "50 cm²"], correct: 0 },
-          { tag: "GERBANG ISI PADU", q: "Isi padu kubus bersisi 5 cm (5×5×5):", options: ["100 cm³", "120 cm³", "125 cm³"], correct: 2 },
-          { tag: "GERBANG JISIM", q: "Tukar 3.5 kg kepada gram:", options: ["3 500 g", "350 g", "35 000 g"], correct: 0 },
-          { tag: "GERBANG CECAIR", q: "2.4 liter bersamaan berapa mililiter?", options: ["240 ml", "2 400 ml", "24 000 ml"], correct: 1 },
-          { tag: "GERBANG PANJANG", q: "4 m 25 cm bersamaan berapa sentimeter?", options: ["425 cm", "4 250 cm", "450 cm"], correct: 0 }
-        ]
-      },
-
-      grade6: {
-        vault: [
-          { tag: "PECAHAN JUTA", q: "Berapakah nilai ³/₄ juta?", options: ["750 000", "75 000", "250 000", "500 000"], correct: 0 },
-          { tag: "BODMAS KUBUR", q: "Kira kod pantas: 40 + 20 × (15 - 5) =", options: ["600", "240", "180", "300"], correct: 1 },
-          { tag: "SUIS KELAS 6", q: "Hitung: (500 - 150) ÷ 7 + 30 =", options: ["80", "50", "90", "100"], correct: 0 },
-          { tag: "PERPULUHAN JUTA", q: "0.08 juta bersamaan dengan nombor:", options: ["8 000", "80 000", "800 000", "800"], correct: 1 },
-          { tag: "NOMBOR PERDANA", q: "Bilangan nombor perdana antara 10 ke 20:", options: ["3", "4", "5", "6"], correct: 1 },
-          { tag: "PINTU TERAKHIR 6", q: "¹/₅ juta + 300 000 =", options: ["400 000", "500 000", "600 000", "700 000"], correct: 1 }
-        ],
-        boss: [
-          { tag: "UNTUNG RUGI", q: "Kos RM2 000, untung 25%. Harga jualan:", options: ["RM2 250", "RM2 400", "RM2 500", "RM2 600"], correct: 2 },
-          { tag: "NISBAH SERANGAN", q: "Nisbah 3 : 5. Jika bahagian pertama 15, bahagian kedua:", options: ["20", "25", "30", "35"], correct: 1 },
-          { tag: "KADARAN HARGA", q: "5 botol jus RM35. Harga bagi 8 botol:", options: ["RM48", "RM52", "RM56", "RM60"], correct: 2 },
-          { tag: "CUKAI PERKHIDMATAN", q: "Bil RM150 + Cukai perkhidmatan 6% =", options: ["RM156", "RM159", "RM162", "RM165"], correct: 1 },
-          { tag: "ASET BERSIH", q: "Aset RM52 000, Liabiliti RM15 000. Aset Bersih:", options: ["RM35 000", "RM37 000", "RM42 000", "RM52 000"], correct: 1 },
-          { tag: "FAEDAH SIMPANAN", q: "Faedah 3% setahun untuk simpanan RM5 000:", options: ["RM120", "RM150", "RM180", "RM200"], correct: 1 }
-        ],
-        race: [
-          { tag: "BENTUK GABUNGAN", q: "Kubus 4³ (64 cm³) + Kuboid (60 cm³). Jumlah:", options: ["120 cm³", "124 cm³", "134 cm³"], correct: 1 },
-          { tag: "LUAS PERMUKAAN", q: "Luas permukaan kubus bersisi 3 cm (6×3²):", options: ["54 cm²", "36 cm²", "72 cm²"], correct: 0 },
-          { tag: "SUDUT POLIGON", q: "Jumlah sudut pedalaman segi tiga:", options: ["90°", "360°", "180°"], correct: 2 },
-          { tag: "ISI PADU LITRE", q: "Bekas 3 000 cm³ bersamaan berapa liter?", options: ["3 Liter", "30 Liter", "0.3 Liter"], correct: 0 },
-          { tag: "SUDUT SEGI EMPAT", q: "Jumlah sudut pedalaman segi empat selari:", options: ["180°", "270°", "360°"], correct: 2 },
-          { tag: "SATAH CARTES", q: "Jarak mengufuk dari (0,0) ke (7, 5):", options: ["5 unit", "7 unit", "12 unit"], correct: 1 }
-        ]
-      }
+    const COMBAT_BANK = {
+      grade5: [
+        { tag: "CAS TEMBAKAN", q: "12 × 5 =", opts: ["60", "50", "70"], ans: 0 },
+        { tag: "PEMECAH PERISAI", q: "150 + 250 =", opts: ["400", "350", "450"], ans: 0 },
+        { tag: "MISIL KOD", q: "Nilai digit 7 dlm 74 200?", opts: ["700", "70 000", "7 000"], ans: 1 },
+        { tag: "SERANGAN RADAR", q: "Nombor perdana antara 10-15?", opts: ["11 & 13", "12 & 14", "9 & 15"], ans: 0 },
+        { tag: "HYPER WARP", q: "Tukar 2 kg kepada gram:", opts: ["200 g", "2 000 g", "20 000 g"], ans: 1 },
+        { tag: "TUMBANGKAN TOWER", q: "Luas segi tiga (Tpk 10, Tgi 6):", opts: ["30 cm²", "60 cm²", "20 cm²"], ans: 0 },
+        { tag: "ULTIMATE BLAST", q: "20% daripada RM500 =", opts: ["RM80", "RM100", "RM120"], ans: 1 },
+        { tag: "PLASMA STRIKE", q: "³/₅ + ¹/₅ =", opts: ["⁴/₅", "⁴/₁₀", "²/₅"], ans: 0 },
+        { tag: "QUANTUM PULSE", q: "0.75 tukar kepada peratus:", opts: ["7.5%", "75%", "750%"], ans: 1 },
+        { tag: "CYBER MISSILE", q: "Bundarkan 48 762 kepada ribu terdekat:", opts: ["49 000", "48 000", "50 000"], ans: 0 },
+        { tag: "TURBO LASER", q: "4 500 ÷ 9 =", opts: ["450", "500", "50"], ans: 1 },
+        { tag: "SONIC BOOM", q: "1.25 km tukar kepada meter:", opts: ["1 250 m", "125 m", "12 500 m"], ans: 0 },
+        { tag: "PERIMETER SHIELD", q: "Perimeter segi empat sama (sisi 8 cm):", opts: ["16 cm", "32 cm", "64 cm"], ans: 1 },
+        { tag: "CHRONO CANNON", q: "3 jam tukar kepada minit:", opts: ["180 minit", "120 minit", "300 minit"], ans: 0 },
+        { tag: "ENERGY BEAM", q: "²/₃ daripada 60 =", opts: ["30", "40", "20"], ans: 1 },
+        { tag: "TREASURE BUSTER", q: "RM1 000 - RM340 =", opts: ["RM660", "RM760", "RM640"], ans: 0 },
+        { tag: "PRIME FORCE", q: "Nombor perdana terkecil:", opts: ["1", "2", "3"], ans: 1 },
+        { tag: "MECHA SLICE", q: "Isi padu kuboid (5cm × 3cm × 2cm):", opts: ["30 cm³", "15 cm³", "25 cm³"], ans: 0 },
+        { tag: "TIME WARP", q: "1 dekad bersamaan berapa tahun?", opts: ["5 tahun", "10 tahun", "100 tahun"], ans: 1 },
+        { tag: "DECIMAL BURST", q: "5.6 + 3.24 =", opts: ["8.84", "8.30", "8.80"], ans: 0 },
+        { tag: "MEGA CHARGE", q: "25 × 40 =", opts: ["100", "1 000", "10 000"], ans: 1 },
+        { tag: "RATIO LOCK", q: "Nisbah 3 epal kepada 5 oren:", opts: ["3 : 5", "5 : 3", "3 : 8"], ans: 0 },
+        { tag: "CENTURY SHIELD", q: "4 abad bersamaan berapa tahun?", opts: ["40 tahun", "400 tahun", "4 000 tahun"], ans: 1 },
+        { tag: "PROFIT SURGE", q: "Kos RM50, Untung RM15. Harga Jual:", opts: ["RM65", "RM35", "RM75"], ans: 0 },
+        { tag: "LIQUID FLOW", q: "7 500 mℓ tukar kepada liter:", opts: ["75 ℓ", "7.5 ℓ", "0.75 ℓ"], ans: 1 }
+      ],
+      grade6: [
+        { tag: "CAS MERIAM JUTA", q: "³/₄ Juta =", opts: ["750 000", "250 000", "500 000"], ans: 0 },
+        { tag: "BODMAS STRIKE", q: "20 + 5 × 4 =", opts: ["100", "40", "60"], ans: 1 },
+        { tag: "PEMECAH SHIELD", q: "(100 - 40) ÷ 6 =", opts: ["10", "15", "8"], ans: 0 },
+        { tag: "PERATUS UNTUNG", q: "Beli RM200 untung 25%. Jual:", opts: ["RM225", "RM250", "RM260"], ans: 1 },
+        { tag: "HYPER SPEED 999", q: "Isi padu kubus bersisi 4 cm:", opts: ["64 cm³", "16 cm³", "32 cm³"], ans: 0 },
+        { tag: "SUDUT POLIGON", q: "Sudut pedalaman segi tiga:", opts: ["90°", "180°", "360°"], ans: 1 },
+        { tag: "ULTIMATE BLAST", q: "0.08 Juta =", opts: ["80 000", "8 000", "800 000"], ans: 0 },
+        { tag: "FRACTION SLASH", q: "¹/₂ ÷ ¹/₄ =", opts: ["¹/₈", "2", "4"], ans: 1 },
+        { tag: "MEGA NUMERIC", q: "1.5 Juta tukar nombor bulat:", opts: ["1 500 000", "150 000", "15 000 000"], ans: 0 },
+        { tag: "ORDER OF ATTACK", q: "(50 + 25) × 2 =", opts: ["100", "150", "125"], ans: 1 },
+        { tag: "BANKING VAULT", q: "Simpan RM1 000, faedah 5% setahun:", opts: ["RM50", "RM5", "RM100"], ans: 0 },
+        { tag: "CIRCLE ROTATION", q: "Sudut putaran lengkap bulatan:", opts: ["180°", "360°", "90°"], ans: 1 },
+        { tag: "DECIMAL MILLION", q: "0.65 Juta bersamaan:", opts: ["650 000", "65 000", "6 500 000"], ans: 0 },
+        { tag: "SIMPLE RATIO", q: "Nisbah 4 kg kepada 12 kg termudah:", opts: ["4 : 12", "1 : 3", "1 : 4"], ans: 1 },
+        { tag: "EIGHTH MILLION", q: "¹/₈ Juta bersamaan:", opts: ["125 000", "250 000", "12 500"], ans: 0 },
+        { tag: "COMBO BREAKER", q: "72 ÷ 8 + 15 =", opts: ["14", "24", "32"], ans: 1 },
+        { tag: "HEXAGON MATRIX", q: "Bilangan sisi sebuah heksagon:", opts: ["6", "8", "5"], ans: 0 },
+        { tag: "DISCOUNT STRIKE", q: "Harga RM80 diskaun 50%. Bayar:", opts: ["RM30", "RM40", "RM50"], ans: 1 },
+        { tag: "CARTESIAN ORIGIN", q: "Titik asalan pada satah Cartes:", opts: ["(0, 0)", "(1, 1)", "(0, 1)"], ans: 0 },
+        { tag: "GLOBAL CLOCK", q: "Beza masa Tokyo (+9) & KL (+8):", opts: ["2 jam", "1 jam", "3 jam"], ans: 1 },
+        { tag: "PROBABILITY SCAN", q: "Matahari terbit dari timur:", opts: ["Pasti", "Mustahil", "Sama Kemungkinan"], ans: 0 },
+        { tag: "MASS SYNTHESIS", q: "2.4 kg + 800 g =", opts: ["10.4 kg", "3.2 kg", "2.8 kg"], ans: 1 },
+        { tag: "FRACTION POWER", q: "³/₄ + ¹/₂ =", opts: ["1 ¹/₄", "⁴/₆", "1 ¹/₂"], ans: 0 },
+        { tag: "BODMAS DEFENSE", q: "100 - (30 × 3) =", opts: ["210", "10", "70"], ans: 1 },
+        { tag: "QUARTER MILLION", q: "¹/₄ Juta bersamaan:", opts: ["250 000", "500 000", "750 000"], ans: 0 }
+      ]
     };
 
-    function shuffle(arr) {
-      const c = [...arr];
-      for (let i = c.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [c[i], c[j]] = [c[j], c[i]];
+    // Dynamic generator to provide endless snappy challenges
+    function generateDynamicCombatQuestion(grade) {
+      if (grade === 6) {
+        const type = Math.floor(Math.random() * 4);
+        if (type === 0) {
+          const a = (Math.floor(Math.random() * 8) + 2) * 5;
+          const b = Math.floor(Math.random() * 6) + 2;
+          const c = Math.floor(Math.random() * 10) + 10;
+          const correct = (a * b) + c;
+          return {
+            tag: "BODMAS DINAMIK",
+            q: `${a} × ${b} + ${c} =`,
+            opts: [`${correct}`, `${correct - 10}`, `${correct + 10}`].sort(() => Math.random() - 0.5),
+            ans: 0
+          };
+        } else if (type === 1) {
+          const quarters = [1, 2, 3, 4][Math.floor(Math.random() * 4)];
+          const val = quarters * 250000;
+          const label = quarters === 1 ? "¹/₄" : quarters === 2 ? "¹/₂" : quarters === 3 ? "³/₄" : "1";
+          const opts = [`${val.toLocaleString()}`, `${(val - 100000).toLocaleString()}`, `${(val + 100000).toLocaleString()}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PECAHAN JUTA",
+            q: `${label} Juta =`,
+            opts: opts,
+            ans: opts.indexOf(val.toLocaleString())
+          };
+        } else {
+          const pct = [10, 20, 25, 50][Math.floor(Math.random() * 4)];
+          const principal = (Math.floor(Math.random() * 5) + 1) * 200;
+          const correct = Math.round((pct / 100) * principal);
+          const opts = [`RM${correct}`, `RM${correct + 20}`, `RM${Math.max(10, correct - 20)}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PERATUS WANG",
+            q: `${pct}% daripada RM${principal} =`,
+            opts: opts,
+            ans: opts.indexOf(`RM${correct}`)
+          };
+        }
+      } else {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const m1 = Math.floor(Math.random() * 8) + 3;
+          const m2 = Math.floor(Math.random() * 8) + 3;
+          const correct = m1 * m2;
+          const opts = [`${correct}`, `${correct + 4}`, `${Math.max(2, correct - 4)}`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "SIFIR KILAT",
+            q: `${m1} × ${m2} =`,
+            opts: opts,
+            ans: opts.indexOf(`${correct}`)
+          };
+        } else if (type === 1) {
+          const kg = (Math.floor(Math.random() * 8) + 2);
+          const g = kg * 1000;
+          const opts = [`${g} g`, `${g / 10} g`, `${g * 10} g`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "UKURAN JISIM",
+            q: `Tukar ${kg} kg kepada gram:`,
+            opts: opts,
+            ans: opts.indexOf(`${g} g`)
+          };
+        } else {
+          const side = Math.floor(Math.random() * 9) + 3;
+          const peri = side * 4;
+          const opts = [`${peri} cm`, `${peri + 4} cm`, `${side * 2} cm`].sort(() => Math.random() - 0.5);
+          return {
+            tag: "PERIMETER KOTAK",
+            q: `Perimeter segi empat sama (sisi ${side} cm):`,
+            opts: opts,
+            ans: opts.indexOf(`${peri} cm`)
+          };
+        }
       }
-      return c;
     }
 
     /* ==============================================================
-       GAME ENGINE & STATE
+       REAL ARCADE GAME STATE MACHINE & CANVAS 60 FPS
        ============================================================== */
-    const state = {
-      playerName: "Ejen Rahsia",
-      playerClass: "SK Ranggu",
-      heroType: "cyber",
-      heroEmoji: "🦸‍♂️",
-      heroTitle: "Ejen Siber",
+    const G = {
+      heroType: 'cyber',
+      heroEmoji: '🦸‍♂️',
+      heroName: 'Danial',
+      heroClass: '6 Arif',
       grade: 5,
-      hearts: 3,
+      hp: 100,
       xp: 0,
       combo: 0,
-      totalSeconds: 15 * 60,
-      timerInterval: null,
-      startTime: null,
-      endTime: null,
+      seconds: 15 * 60,
+      timerId: null,
 
-      currentZone: 1, // 1=Vault, 2=Boss, 3=Race
-      zoneProgress: { 1: false, 2: false, 3: false },
+      stage: 1, // 1=Towers, 2=Boss Titan, 3=Hyper Racer
+      stageWave: 0,
+      maxWaves: 4,
 
-      correctAnswers: 0,
-      totalQuestionsAnswered: 0,
+      questions: [],
+      qIndex: 0,
 
-      // Zon 1
-      vaultQuestions: [],
-      vaultIndex: 0,
+      // Canvas entities
+      canvas: null,
+      ctx: null,
+      animId: null,
 
-      // Zon 2
-      bossQuestions: [],
-      bossIndex: 0,
+      heroY: 200,
+      heroYTarget: 200,
+
+      // Boss
       bossHp: 500,
       bossMaxHp: 500,
+      bossY: 180,
+      bossAnimOffset: 0,
 
-      // Zon 3
-      raceQuestions: [],
-      raceIndex: 0,
-      currentLane: 1,
-      speed: 180
+      // Projectiles & Particles
+      particles: [],
+      lasers: []
     };
 
-    function selectHero(type, emoji, title) {
-      state.heroType = type;
-      state.heroEmoji = emoji;
-      state.heroTitle = title;
-      document.getElementById('hero-1').classList.toggle('selected', type === 'cyber');
-      document.getElementById('hero-2').classList.toggle('selected', type === 'ninja');
-      document.getElementById('hero-3').classList.toggle('selected', type === 'mech');
-      sound.init();
-      sound.playTone(480, 'triangle', 0.08, 0.2);
+    function pickHero(type, emoji, title) {
+      G.heroType = type;
+      G.heroEmoji = emoji;
+      document.getElementById('chip-h1').classList.toggle('active', type === 'cyber');
+      document.getElementById('chip-h2').classList.toggle('active', type === 'ninja');
+      document.getElementById('chip-h3').classList.toggle('active', type === 'mech');
+      document.getElementById('hud-avatar-icon').textContent = emoji;
+      audio.init(); audio.playChime();
     }
 
-    function selectGrade(g) {
-      state.grade = g;
-      document.getElementById('grade-btn-5').classList.toggle('selected', g === 5);
-      document.getElementById('grade-btn-6').classList.toggle('selected', g === 6);
-      sound.init();
-      sound.playTone(400, 'sine', 0.08, 0.15);
+    function pickGrade(g) {
+      G.grade = g;
+      document.getElementById('chip-g5').classList.toggle('active', g === 5);
+      document.getElementById('chip-g6').classList.toggle('active', g === 6);
+      audio.init(); audio.playChime();
     }
 
-    function showToast(msg, icon = '✨') {
-      const banner = document.getElementById('toast-banner');
-      document.getElementById('toast-msg').textContent = msg;
-      document.getElementById('toast-icon').textContent = icon;
-      banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 2300);
-    }
+    function startArcadeBattle() {
+      audio.init();
+      const nameInput = document.getElementById('input-player-name').value.trim();
+      const classInput = document.getElementById('input-player-class').value.trim();
 
-    function switchScreen(elem) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      elem.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function updateHud() {
-      let hHtml = '';
-      for (let i = 0; i < 3; i++) {
-        hHtml += i < state.hearts ? '<span>❤️</span>' : '<span style="opacity:0.25; filter:grayscale(1);">🖤</span>';
-      }
-      document.getElementById('hud-hearts').innerHTML = hHtml;
-      document.getElementById('xp-text').textContent = `${state.xp.toLocaleString()} XP`;
-
-      const m = Math.floor(state.totalSeconds / 60);
-      const s = state.totalSeconds % 60;
-      document.getElementById('timer-text').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      if (state.totalSeconds < 120) document.getElementById('hud-timer').classList.add('urgent');
-      else document.getElementById('hud-timer').classList.remove('urgent');
-    }
-
-    function takeDamage() {
-      state.hearts--;
-      state.combo = 0;
-      sound.playWrong();
-      document.body.classList.add('screen-shake');
-      setTimeout(() => document.body.classList.remove('screen-shake'), 400);
-      updateHud();
-
-      if (state.hearts <= 0) {
-        setTimeout(() => endGame(false, "NYAWA HABIS! Jangan putus asa, cuba lagi!"), 500);
-      }
-    }
-
-    /* Start Quest -> Buka Peta Dunia */
-    function startAdventureQuest() {
-      sound.init();
-      const pName = document.getElementById('player-name-input').value.trim();
-      const pClass = document.getElementById('player-class-input').value.trim();
-
-      if (!pName) {
-        showToast("Sila masukkan Nama Penuh anda terlebih dahulu!", "⚠️");
-        document.getElementById('player-name-input').focus();
+      if (!nameInput) {
+        showToast("Sila masukkan Nama Penuh anda!");
+        document.getElementById('input-player-name').focus();
         return;
       }
 
-      state.playerName = pName;
-      state.playerClass = pClass || (state.grade === 5 ? '5 Cemerlang' : '6 Arif');
-      state.hearts = 3;
-      state.xp = 0;
-      state.combo = 0;
-      state.correctAnswers = 0;
-      state.totalQuestionsAnswered = 0;
-      state.totalSeconds = 15 * 60;
-      state.startTime = Date.now();
-      state.currentZone = 1;
-      state.zoneProgress = { 1: false, 2: false, 3: false };
+      G.heroName = nameInput;
+      G.heroClass = classInput || (G.grade === 5 ? '5 Cemerlang' : '6 Arif');
+      G.hp = 100;
+      G.xp = 0;
+      G.combo = 0;
+      G.stage = 1;
+      G.stageWave = 0;
+      G.seconds = 15 * 60;
+      G.particles = [];
+      G.lasers = [];
 
-      document.getElementById('game-hud').style.display = 'flex';
-      updateHud();
+      document.getElementById('overlay-start-screen').style.display = 'none';
+      document.getElementById('combat-hud').style.display = 'flex';
+      document.getElementById('steer-left-hud').style.display = 'none';
 
-      clearInterval(state.timerInterval);
-      state.timerInterval = setInterval(() => {
-        state.totalSeconds--;
-        updateHud();
-        if (state.totalSeconds <= 0) {
-          clearInterval(state.timerInterval);
-          endGame(false, "MASA 15 MINIT TELAH TAMAT!");
+      // Load combat question pool
+      const pool = G.grade === 5 ? COMBAT_BANK.grade5 : COMBAT_BANK.grade6;
+      G.questions = [...pool].sort(() => Math.random() - 0.5);
+      G.qIndex = 0;
+
+      // Init Canvas
+      G.canvas = document.getElementById('battle-canvas');
+      G.ctx = G.canvas.getContext('2d');
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      updateHudDisplay();
+      startMatchTimer();
+      loadCurrentChallenge();
+
+      showToast(`BATTLEFIELD READY: ${G.heroName}!`);
+      audio.playBoom();
+
+      cancelAnimationFrame(G.animId);
+      runArcadeLoop();
+    }
+
+    function resizeCanvas() {
+      if (!G.canvas) return;
+      G.canvas.width = window.innerWidth;
+      G.canvas.height = window.innerHeight;
+      G.heroY = G.canvas.height * 0.55;
+      G.heroYTarget = G.heroY;
+    }
+
+    function startMatchTimer() {
+      clearInterval(G.timerId);
+      G.timerId = setInterval(() => {
+        G.seconds--;
+        const m = Math.floor(G.seconds / 60);
+        const s = G.seconds % 60;
+        document.getElementById('hud-timer-badge').textContent = `⏱️ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        if (G.seconds <= 0) {
+          clearInterval(G.timerId);
+          finishBattle(false);
         }
       }, 1000);
-
-      // Sediakan soalan
-      const pool = state.grade === 5 ? ACTION_MATH_BANK.grade5 : ACTION_MATH_BANK.grade6;
-      state.vaultQuestions = shuffle(pool.vault).slice(0, 5);
-      state.bossQuestions = shuffle(pool.boss).slice(0, 5);
-      state.raceQuestions = shuffle(pool.race).slice(0, 5);
-
-      state.vaultIndex = 0;
-      state.bossIndex = 0;
-      state.raceIndex = 0;
-
-      showToast(`Selamat berjuang, ${state.heroEmoji} ${state.playerName}!`, '🚀');
-      sound.playTone(587.33, 'triangle', 0.2, 0.2);
-
-      updateAdventureMapUI();
-      switchScreen(document.getElementById('screen-map'));
     }
 
-    function updateAdventureMapUI() {
-      document.getElementById('map-player-display').textContent = `${state.heroEmoji} ${state.playerName}`;
+    function updateHudDisplay() {
+      document.getElementById('hud-hp-bar').style.width = `${Math.max(0, G.hp)}%`;
+      document.getElementById('hud-xp-text').textContent = `⚡ ${G.xp.toLocaleString()} XP`;
       
-      const n1 = document.getElementById('node-1');
-      const n2 = document.getElementById('node-2');
-      const n3 = document.getElementById('node-3');
-
-      n1.className = 'map-node' + (state.zoneProgress[1] ? ' completed' : state.currentZone === 1 ? ' active' : '');
-      n2.className = 'map-node' + (state.zoneProgress[2] ? ' completed' : state.currentZone === 2 ? ' active' : '');
-      n3.className = 'map-node' + (state.zoneProgress[3] ? ' completed' : state.currentZone === 3 ? ' active' : '');
-
-      const titles = [
-        "Zon 1: Kubu Rahsia Cyber-Vault (Laser Escape)",
-        "Zon 2: Arena Pertarungan Mech-Titan (Action Boss Fight)",
-        "Zon 3: Lebuhraya Angkasa Hyper-Speed (999 KM/J Runner)"
+      const stTitles = [
+        "ZON 1: TOWER INVASION",
+        "ZON 2: TITAN MECHA BOSS",
+        "ZON 3: HYPER WARP SPEED 999"
       ];
-      const descs = [
-        "Nyahkod kunci laser berputar dan buka pintu kebal keselamatan untuk meloloskan diri.",
-        "Berdepan robot Mech-Titan gergasi! Cas meriam plasma anda dengan jawapan pantas.",
-        "Kemudi kapal angkasa anda melintasi pintu halaju, kutip kristal emas dan pecahkan rekod!"
-      ];
-
-      document.getElementById('current-zone-title').textContent = titles[state.currentZone - 1];
-      document.getElementById('current-zone-desc').textContent = descs[state.currentZone - 1];
+      document.getElementById('hud-stage-badge').textContent = stTitles[G.stage - 1] || "BATTLE ARENA";
     }
 
-    function goToQuestStage(z) {
-      state.currentZone = z;
-      updateAdventureMapUI();
-      sound.playTone(400, 'sine', 0.06, 0.15);
-    }
-
-    function launchCurrentZone() {
-      if (state.currentZone === 1) startVaultStage();
-      else if (state.currentZone === 2) startBossStage();
-      else if (state.currentZone === 3) startRaceStage();
-    }
-
-    /* ==============================================================
-       ZON 1: CANVAS ACTION - CYBER VAULT LASER ESCAPE
-       ============================================================== */
-    let vaultCanvas, vaultCtx, vaultAnimId;
-    let vaultLaserAngle = 0;
-    let vaultDoorOpen = 0;
-
-    function startVaultStage() {
-      switchScreen(document.getElementById('screen-escape'));
-      vaultCanvas = document.getElementById('canvas-vault');
-      vaultCtx = vaultCanvas.getContext('2d');
-      loadVaultQuestion();
-      runVaultAnimation();
-    }
-
-    function runVaultAnimation() {
-      if (!vaultCtx) return;
-      vaultCtx.clearRect(0, 0, vaultCanvas.width, vaultCanvas.height);
-
-      // Latar bilik siber
-      vaultCtx.fillStyle = '#060a14';
-      vaultCtx.fillRect(0, 0, vaultCanvas.width, vaultCanvas.height);
-
-      // Grid dinding siber
-      vaultCtx.strokeStyle = 'rgba(30, 58, 138, 0.3)';
-      vaultCtx.lineWidth = 1;
-      for (let x = 0; x < vaultCanvas.width; x += 40) {
-        vaultCtx.beginPath(); vaultCtx.moveTo(x, 0); vaultCtx.lineTo(x, vaultCanvas.height); vaultCtx.stroke();
-      }
-
-      // Pintu Kebal Gelongsor Tengah
-      const midX = vaultCanvas.width / 2;
-      const doorW = 90;
-      const doorH = 160;
-      const doorY = 40;
-
-      // Interior Cahaya Hijau jika pintu buka
-      vaultCtx.fillStyle = '#059669';
-      vaultCtx.fillRect(midX - doorW, doorY, doorW * 2, doorH);
-      vaultCtx.font = '28px sans-serif';
-      vaultCtx.textAlign = 'center';
-      vaultCtx.fillText('🔓 LALUAN BEBAS', midX, doorY + 90);
-
-      // Daun Pintu Kiri & Kanan (Sliding Doors)
-      const offset = vaultDoorOpen * 85;
-      vaultCtx.fillStyle = '#1e1b4b';
-      vaultCtx.strokeStyle = '#6366f1';
-      vaultCtx.lineWidth = 3;
-
-      // Pintu Kiri
-      vaultCtx.fillRect(midX - doorW - offset, doorY, doorW, doorH);
-      vaultCtx.strokeRect(midX - doorW - offset, doorY, doorW, doorH);
-
-      // Pintu Kanan
-      vaultCtx.fillRect(midX + offset, doorY, doorW, doorH);
-      vaultCtx.strokeRect(midX + offset, doorY, doorW, doorH);
-
-      // Roda Kunci Kebal (Vault Wheel)
-      vaultCtx.save();
-      vaultCtx.translate(midX - offset, doorY + doorH / 2);
-      vaultCtx.rotate(vaultLaserAngle);
-      vaultCtx.strokeStyle = '#38bdf8';
-      vaultCtx.beginPath();
-      vaultCtx.arc(0, 0, 20, 0, Math.PI * 2);
-      vaultCtx.stroke();
-      vaultCtx.restore();
-
-      // Laser Pengimbas Bergerak (Moving Red Lasers)
-      if (vaultDoorOpen === 0) {
-        vaultLaserAngle += 0.03;
-        const laserY = doorY + 30 + Math.sin(vaultLaserAngle * 2) * 45;
-        vaultCtx.strokeStyle = '#ef4444';
-        vaultCtx.lineWidth = 3;
-        vaultCtx.shadowColor = '#ef4444';
-        vaultCtx.shadowBlur = 12;
-        vaultCtx.beginPath();
-        vaultCtx.moveTo(20, laserY);
-        vaultCtx.lineTo(vaultCanvas.width - 20, laserY);
-        vaultCtx.stroke();
-        vaultCtx.shadowBlur = 0;
+    function loadCurrentChallenge() {
+      let q;
+      if (G.qIndex < G.questions.length) {
+        q = G.questions[G.qIndex];
       } else {
-        if (vaultDoorOpen < 1) vaultDoorOpen += 0.05;
+        q = generateDynamicCombatQuestion(G.grade);
+        G.questions.push(q);
       }
+      document.getElementById('challenge-tag').textContent = `🔥 ${q.tag}`;
+      document.getElementById('challenge-math').textContent = q.q;
 
-      // Hero Sprite di Bawah
-      vaultCtx.font = '36px sans-serif';
-      vaultCtx.fillText(state.heroEmoji, 70, vaultCanvas.height - 30);
-
-      vaultAnimId = requestAnimationFrame(runVaultAnimation);
-    }
-
-    function loadVaultQuestion() {
-      vaultDoorOpen = 0;
-      const q = state.vaultQuestions[state.vaultIndex];
-      document.getElementById('escape-step-indicator').textContent = `PINTU ${state.vaultIndex + 1}/${state.vaultQuestions.length}`;
-      document.getElementById('escape-topic-tag').textContent = `ZON 1: ${q.tag}`;
-      document.getElementById('escape-question-text').textContent = q.q;
-
-      const container = document.getElementById('escape-options-container');
-      container.innerHTML = '';
-      q.options.forEach((optText, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'action-btn';
-        btn.innerHTML = `<span style="color:var(--cyan-bright); font-size:0.8rem;">[${idx+1}]</span> <span>${optText}</span>`;
-        btn.onclick = () => answerVault(idx, btn);
-        container.appendChild(btn);
+      // Update 3 Skill Buttons
+      q.opts.forEach((optText, idx) => {
+        const btn = document.getElementById(`skill-btn-${idx}`);
+        if (btn) btn.textContent = optText;
       });
     }
 
-    function answerVault(idx, btn) {
-      sound.init();
-      const q = state.vaultQuestions[state.vaultIndex];
-      state.totalQuestionsAnswered++;
+    function triggerSkillStrike(btnIndex) {
+      audio.init();
+      const q = G.questions[G.qIndex];
 
-      const allBtns = document.getElementById('escape-options-container').querySelectorAll('.action-btn');
-      allBtns.forEach(b => b.style.pointerEvents = 'none');
+      if (btnIndex === q.ans) {
+        // TEPAT! HERO SHOOTS ENERGY CANNON!
+        G.combo++;
+        const dmg = 80 + (G.combo * 20);
+        const gainXp = 250 + (G.combo * 50);
+        G.xp += gainXp;
 
-      if (idx === q.correct) {
-        btn.classList.add('correct');
-        state.correctAnswers++;
-        state.combo++;
-        const bonus = state.combo * 50;
-        state.xp += (250 + bonus);
-        updateHud();
-
-        sound.playLaser();
-        sound.playCorrect(state.combo);
-        sound.playDoorOpen();
-        vaultDoorOpen = 0.1; // Buka pintu di canvas!
-
-        showToast(`KOD TEPAT! Pintu Dibuka! +${250 + bonus} XP`, "🔓");
-
-        setTimeout(() => {
-          state.vaultIndex++;
-          if (state.vaultIndex < state.vaultQuestions.length) {
-            loadVaultQuestion();
-          } else {
-            // Selesai Zon 1!
-            cancelAnimationFrame(vaultAnimId);
-            state.zoneProgress[1] = true;
-            state.currentZone = 2;
-            sound.playVictory();
-            showToast("ZON 1 SELESAI! Bersedia untuk pertarungan Boss!", "🏆");
-            setTimeout(() => {
-              updateAdventureMapUI();
-              switchScreen(document.getElementById('screen-map'));
-            }, 1200);
-          }
-        }, 1200);
-
-      } else {
-        btn.classList.add('wrong');
-        allBtns[q.correct].classList.add('correct');
-        takeDamage();
-        showToast("ALARM BERBUNYI! Laser menghalang laluan!", "❌");
-
-        setTimeout(() => {
-          state.vaultIndex++;
-          if (state.vaultIndex < state.vaultQuestions.length && state.hearts > 0) {
-            loadVaultQuestion();
-          } else if (state.hearts > 0) {
-            cancelAnimationFrame(vaultAnimId);
-            state.zoneProgress[1] = true;
-            state.currentZone = 2;
-            updateAdventureMapUI();
-            switchScreen(document.getElementById('screen-map'));
-          }
-        }, 1300);
-      }
-    }
-
-    /* ==============================================================
-       ZON 2: CANVAS ACTION - MECH-TITAN BOSS FIGHT
-       ============================================================== */
-    let bossCanvas, bossCtx, bossAnimId;
-    let bossFloatY = 0;
-    let bossLaserBeamY = 0;
-    let bossIsHit = false;
-
-    function startBossStage() {
-      switchScreen(document.getElementById('screen-boss'));
-      bossCanvas = document.getElementById('canvas-boss');
-      bossCtx = bossCanvas.getContext('2d');
-      state.bossMaxHp = state.bossQuestions.length * 100;
-      state.bossHp = state.bossMaxHp;
-      loadBossQuestion();
-      runBossAnimation();
-    }
-
-    function runBossAnimation() {
-      if (!bossCtx) return;
-      bossCtx.clearRect(0, 0, bossCanvas.width, bossCanvas.height);
-
-      // Arena Latar
-      bossCtx.fillStyle = '#080512';
-      bossCtx.fillRect(0, 0, bossCanvas.width, bossCanvas.height);
-
-      bossFloatY += 0.05;
-      const bY = 40 + Math.sin(bossFloatY) * 8;
-      const bX = bossCanvas.width / 2;
-
-      // Boss Mech Rendering di Canvas
-      bossCtx.save();
-      if (bossIsHit) {
-        bossCtx.filter = 'brightness(2) drop-shadow(0 0 20px #ffffff)';
-      }
-
-      // Bar Nyawa Boss di Canvas Atas
-      const hpPct = Math.max(0, state.bossHp / state.bossMaxHp);
-      bossCtx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-      bossCtx.fillRect(bX - 100, 15, 200, 14);
-      bossCtx.fillStyle = hpPct > 0.3 ? '#ef4444' : '#f59e0b';
-      bossCtx.fillRect(bX - 100, 15, 200 * hpPct, 14);
-      bossCtx.strokeStyle = '#ef4444';
-      bossCtx.lineWidth = 1.5;
-      bossCtx.strokeRect(bX - 100, 15, 200, 14);
-
-      bossCtx.font = 'bold 11px var(--font-display)';
-      bossCtx.fillStyle = '#fff';
-      bossCtx.textAlign = 'center';
-      bossCtx.fillText(`GLITCH-TITAN: ${state.bossHp} HP`, bX, 26);
-
-      // Badan Mecha Boss
-      bossCtx.fillStyle = '#1e293b';
-      bossCtx.strokeStyle = '#ef4444';
-      bossCtx.lineWidth = 2.5;
-      bossCtx.beginPath();
-      bossCtx.roundRect(bX - 50, bY, 100, 75, 12);
-      bossCtx.fill();
-      bossCtx.stroke();
-
-      // Mata / Visor Merah
-      bossCtx.fillStyle = '#000';
-      bossCtx.fillRect(bX - 35, bY + 15, 70, 18);
-      bossCtx.fillStyle = '#ef4444';
-      bossCtx.shadowColor = '#ef4444';
-      bossCtx.shadowBlur = 10;
-      bossCtx.fillRect(bX - 25, bY + 19, 14, 10);
-      bossCtx.fillRect(bX + 11, bY + 19, 14, 10);
-      bossCtx.shadowBlur = 0;
-
-      // Teras Kuasa Dada
-      bossCtx.fillStyle = '#f59e0b';
-      bossCtx.beginPath();
-      bossCtx.arc(bX, bY + 52, 10, 0, Math.PI * 2);
-      bossCtx.fill();
-      bossCtx.restore();
-
-      // Plasma Beam Tembakan Wira ke Boss jika ada
-      if (bossLaserBeamY > 0) {
-        bossCtx.strokeStyle = '#06b6d4';
-        bossCtx.lineWidth = 8;
-        bossCtx.shadowColor = '#38bdf8';
-        bossCtx.shadowBlur = 20;
-        bossCtx.beginPath();
-        bossCtx.moveTo(80, bossCanvas.height - 40);
-        bossCtx.lineTo(bX, bY + 40);
-        bossCtx.stroke();
-        bossCtx.shadowBlur = 0;
-        bossLaserBeamY -= 1;
-      }
-
-      // Hero Sprite di Kiri Bawah
-      bossCtx.font = '40px sans-serif';
-      bossCtx.fillText(state.heroEmoji, 70, bossCanvas.height - 25);
-
-      bossAnimId = requestAnimationFrame(runBossAnimation);
-    }
-
-    function loadBossQuestion() {
-      const q = state.bossQuestions[state.bossIndex];
-      document.getElementById('boss-round-indicator').textContent = `PUSINGAN ${state.bossIndex + 1}/${state.bossQuestions.length}`;
-      document.getElementById('boss-topic-tag').textContent = `ZON 2: ${q.tag}`;
-      document.getElementById('boss-question-text').textContent = q.q;
-
-      const container = document.getElementById('boss-options-container');
-      container.innerHTML = '';
-      q.options.forEach((optText, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'action-btn';
-        btn.innerHTML = `<span style="color:#f87171; font-size:0.8rem;">[${String.fromCharCode(65+idx)}]</span> <span>${optText}</span>`;
-        btn.onclick = () => answerBoss(idx, btn);
-        container.appendChild(btn);
-      });
-    }
-
-    function answerBoss(idx, btn) {
-      sound.init();
-      const q = state.bossQuestions[state.bossIndex];
-      state.totalQuestionsAnswered++;
-
-      const allBtns = document.getElementById('boss-options-container').querySelectorAll('.action-btn');
-      allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-      if (idx === q.correct) {
-        btn.classList.add('correct');
-        state.correctAnswers++;
-        state.combo++;
-        const dmg = 100 + (state.combo * 20);
-        state.xp += (300 + (state.combo * 50));
-        state.bossHp = Math.max(0, state.bossHp - 100);
-        updateHud();
-
-        sound.playLaser();
-        bossLaserBeamY = 10;
-        bossIsHit = true;
-
-        setTimeout(() => {
-          sound.playExplosion();
-          sound.playCorrect(state.combo);
-          bossIsHit = false;
-        }, 220);
-
-        showToast(`CRITICAL HIT -${dmg} DMG! +${300 + (state.combo * 50)} XP`, "💥");
-
-        setTimeout(() => {
-          state.bossIndex++;
-          if (state.bossIndex < state.bossQuestions.length && state.bossHp > 0) {
-            loadBossQuestion();
-          } else {
-            cancelAnimationFrame(bossAnimId);
-            state.zoneProgress[2] = true;
-            state.currentZone = 3;
-            sound.playVictory();
-            showToast("GLITCH-TITAN DITUMPASKAN! Mara ke Lebuhraya Angkasa!", "🏆");
-            setTimeout(() => {
-              updateAdventureMapUI();
-              switchScreen(document.getElementById('screen-map'));
-            }, 1200);
-          }
-        }, 1200);
-
-      } else {
-        btn.classList.add('wrong');
-        allBtns[q.correct].classList.add('correct');
-        takeDamage();
-        showToast("TEMBAKAN TERSASAR! Boss tembak misil balas!", "⚡");
-
-        setTimeout(() => {
-          state.bossIndex++;
-          if (state.bossIndex < state.bossQuestions.length && state.hearts > 0) {
-            loadBossQuestion();
-          } else if (state.hearts > 0) {
-            cancelAnimationFrame(bossAnimId);
-            state.zoneProgress[2] = true;
-            state.currentZone = 3;
-            updateAdventureMapUI();
-            switchScreen(document.getElementById('screen-map'));
-          }
-        }, 1300);
-      }
-    }
-
-    /* ==============================================================
-       ZON 3: CANVAS ACTION - HYPER-SPEED RACER (REAL-TIME 3 LANES)
-       ============================================================== */
-    let raceCanvas, raceCtx, raceAnimId;
-    let raceRoadOffset = 0;
-    let racerXTarget = 240;
-    let racerXCurrent = 240;
-
-    function startRaceStage() {
-      switchScreen(document.getElementById('screen-race'));
-      raceCanvas = document.getElementById('canvas-race');
-      raceCtx = raceCanvas.getContext('2d');
-      state.speed = 180;
-      updateSpeedDisplay();
-      loadRaceQuestion();
-      runRaceAnimation();
-    }
-
-    function updateSpeedDisplay() {
-      document.getElementById('speed-val-text').textContent = `${state.speed} KM/J`;
-    }
-
-    function steerRacer(lane) {
-      sound.init();
-      state.currentLane = lane;
-      const laneWidth = raceCanvas.width / 3;
-      racerXTarget = (lane * laneWidth) + (laneWidth / 2);
-
-      const q = state.raceQuestions[state.raceIndex];
-      state.totalQuestionsAnswered++;
-
-      if (lane === q.correct) {
-        state.correctAnswers++;
-        state.combo++;
-        state.speed = Math.min(999, state.speed + 160);
-        updateSpeedDisplay();
-        const bonus = 350 + (state.combo * 50);
-        state.xp += bonus;
-        updateHud();
-
-        sound.playWarpSpeed();
-        sound.playCorrect(state.combo);
-
-        showToast(`HYPER WARP SPEED! +${bonus} XP`, "⚡");
-
-        setTimeout(() => {
-          state.raceIndex++;
-          if (state.raceIndex < state.raceQuestions.length) {
-            loadRaceQuestion();
-          } else {
-            // TAMAT SEMUA 3 MISI!
-            cancelAnimationFrame(raceAnimId);
-            state.zoneProgress[3] = true;
-            endGame(true, "TAHNIAH! SEMUA 3 MISI SELESAI!");
-          }
-        }, 900);
-
-      } else {
-        state.speed = Math.max(120, state.speed - 90);
-        updateSpeedDisplay();
-        takeDamage();
-        showToast("TERLANGGAR DINDING TENAGA!", "🛑");
-
-        if (state.hearts > 0) {
-          setTimeout(() => {
-            state.raceIndex++;
-            if (state.raceIndex < state.raceQuestions.length) {
-              loadRaceQuestion();
-            } else {
-              cancelAnimationFrame(raceAnimId);
-              state.zoneProgress[3] = true;
-              endGame(true, "PERLUMBAAN BERJAYA DITAMATKAN!");
-            }
-          }, 1000);
+        if (G.stage === 2) {
+          G.bossHp = Math.max(0, G.bossHp - Math.ceil(G.bossMaxHp / G.maxWaves));
         }
-      }
-    }
 
-    function loadRaceQuestion() {
-      const q = state.raceQuestions[state.raceIndex];
-      document.getElementById('race-step-indicator').textContent = `CHECKPOINT ${state.raceIndex + 1}/${state.raceQuestions.length}`;
-      document.getElementById('race-topic-tag').textContent = `ZON 3: ${q.tag}`;
-      document.getElementById('race-question-text').textContent = q.q;
+        audio.playLaser();
+        audio.playChime();
 
-      document.getElementById('race-btn-0').innerHTML = `1: ${q.options[0]}`;
-      document.getElementById('race-btn-1').innerHTML = `2: ${q.options[1]}`;
-      document.getElementById('race-btn-2').innerHTML = `3: ${q.options[2]}`;
-    }
+        // Spawn Laser projectile
+        G.lasers.push({
+          x: 100,
+          y: G.heroY,
+          tx: G.canvas.width - 160,
+          ty: G.stage === 2 ? G.bossY : G.heroY,
+          color: '#22d3ee',
+          size: 10
+        });
 
-    function runRaceAnimation() {
-      if (!raceCtx) return;
-      raceCtx.clearRect(0, 0, raceCanvas.width, raceCanvas.height);
+        // Spawn hit particles
+        setTimeout(() => {
+          audio.playBoom();
+          document.body.classList.add('screen-shake');
+          setTimeout(() => document.body.classList.remove('screen-shake'), 300);
 
-      // Lebuhraya Angkasa Bergerak (Fast Vertical Motion)
-      raceRoadOffset = (raceRoadOffset + (state.speed / 30)) % 40;
-      raceCtx.fillStyle = '#030712';
-      raceCtx.fillRect(0, 0, raceCanvas.width, raceCanvas.height);
+          for (let i = 0; i < 20; i++) {
+            G.particles.push({
+              x: G.canvas.width - 160,
+              y: G.stage === 2 ? G.bossY : G.heroY,
+              vx: (Math.random() - 0.5) * 12,
+              vy: (Math.random() - 0.5) * 12,
+              color: Math.random() > 0.5 ? '#f59e0b' : '#ef4444',
+              life: 25
+            });
+          }
+        }, 120);
 
-      // 3 Lorong
-      const lw = raceCanvas.width / 3;
-      raceCtx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
-      raceCtx.lineWidth = 2;
-      for (let i = 1; i < 3; i++) {
-        raceCtx.beginPath();
-        raceCtx.setLineDash([15, 15]);
-        raceCtx.lineDashOffset = -raceRoadOffset;
-        raceCtx.moveTo(i * lw, 0);
-        raceCtx.lineTo(i * lw, raceCanvas.height);
-        raceCtx.stroke();
-      }
-      raceCtx.setLineDash([]);
+        showToast(`💥 CRITICAL STRIKE! +${gainXp} XP`);
 
-      // Pintu Gerbang Nilai Terapung di Atas
-      const q = state.raceQuestions[state.raceIndex];
-      if (q) {
-        for (let l = 0; l < 3; l++) {
-          const gx = l * lw + 10;
-          raceCtx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-          raceCtx.strokeStyle = '#10b981';
-          raceCtx.lineWidth = 2;
-          raceCtx.roundRect(gx, 20, lw - 20, 36, 8);
-          raceCtx.fill();
-          raceCtx.stroke();
+        G.stageWave++;
+        G.qIndex++;
 
-          raceCtx.font = 'bold 12px var(--font-display)';
-          raceCtx.fillStyle = '#6ee7b7';
-          raceCtx.textAlign = 'center';
-          raceCtx.fillText(q.options[l] || '', gx + (lw - 20) / 2, 43);
+        // Semak pertukaran Stage
+        if (G.stageWave >= G.maxWaves) {
+          G.stageWave = 0;
+          advanceToNextStage();
+        } else {
+          loadCurrentChallenge();
         }
+
+      } else {
+        // SALAH! HERO GETS HIT!
+        G.hp -= 25;
+        G.combo = 0;
+        audio.playHit();
+        document.body.classList.add('screen-shake');
+        setTimeout(() => document.body.classList.remove('screen-shake'), 300);
+        showToast("⚠️ SERANGAN TERSASAR! Musuh serang balas!");
+
+        if (G.hp <= 0) {
+          finishBattle(false);
+          return;
+        }
+
+        G.qIndex++;
+        loadCurrentChallenge();
       }
 
-      // Smooth racer steering interpolation
-      racerXCurrent += (racerXTarget - racerXCurrent) * 0.2;
-
-      // Kapal Angkasa Wira
-      raceCtx.font = '36px sans-serif';
-      raceCtx.textAlign = 'center';
-      raceCtx.fillText('🚀', racerXCurrent, raceCanvas.height - 25);
-
-      raceAnimId = requestAnimationFrame(runRaceAnimation);
+      updateHudDisplay();
     }
 
-    /* ==============================================================
-       END GAME: REKOD MARKAH & SIJIL
-       ============================================================== */
-    function endGame(isVictory, message) {
-      clearInterval(state.timerInterval);
-      state.endTime = Date.now();
-      switchScreen(document.getElementById('screen-result'));
+    function steerHero(dir) {
+      G.heroYTarget = Math.max(120, Math.min(G.canvas.height - 120, G.heroYTarget + (dir * 70)));
+      audio.init(); audio.playChime();
+    }
 
-      const timeSpentSec = Math.floor((state.endTime - state.startTime) / 1000);
-      const spentMin = Math.floor(timeSpentSec / 60);
-      const spentSec = timeSpentSec % 60;
-      const timeFormatted = `${spentMin} minit ${spentSec} saat`;
-
-      const accuracyPct = state.totalQuestionsAnswered > 0 
-        ? Math.round((state.correctAnswers / state.totalQuestionsAnswered) * 100) 
-        : 0;
-
-      document.getElementById('res-player-name').textContent = state.playerName;
-      document.getElementById('res-player-class').textContent = `${state.playerClass} (SK Ranggu)`;
-      document.getElementById('res-grade-level').textContent = `Tahun ${state.grade} (KSSR Semakan)`;
-      document.getElementById('res-xp-total').textContent = `${state.xp.toLocaleString()} XP`;
-      document.getElementById('res-accuracy').textContent = `${state.correctAnswers} / ${state.totalQuestionsAnswered} (${accuracyPct}%)`;
-      document.getElementById('res-time-taken').textContent = timeFormatted;
-
-      let starCount = 1;
-      if (accuracyPct >= 80 && isVictory) starCount = 3;
-      else if (accuracyPct >= 50 || isVictory) starCount = 2;
-
-      let starsHtml = '';
-      for (let s = 1; s <= 3; s++) {
-        starsHtml += s <= starCount ? '<span style="color:#fbbf24;">⭐</span>' : '<span style="color:#475569;">★</span>';
+    function advanceToNextStage() {
+      G.stage++;
+      if (G.stage > 3) {
+        finishBattle(true);
+        return;
       }
-      document.getElementById('result-stars').innerHTML = starsHtml;
 
-      // REKOD KALENDAR HARI INI
-      const now = new Date();
-      const isoToday = now.toISOString().slice(0, 10);
-      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-      
-      const record = {
-        id: "MQ-" + Date.now(),
-        name: state.playerName,
-        className: state.playerClass,
-        grade: state.grade,
-        xp: state.xp,
-        stars: starCount,
-        accuracy: accuracyPct,
-        timeStr: timeFormatted,
-        date: isoToday,
-        timeOnly: timeStr
-      };
-      saveLeaderboardScore(record);
+      audio.playBoom();
+      if (G.stage === 2) {
+        G.bossHp = G.bossMaxHp;
+        showToast("⚠️ AMARAN: MECHA-TITAN MUNCUL!");
+        document.getElementById('steer-left-hud').style.display = 'none';
+      } else if (G.stage === 3) {
+        showToast("🚀 ZON 3: MEMECUT 999 KM/J HYPER-SPEED!");
+        document.getElementById('steer-left-hud').style.display = 'flex';
+      }
+
+      loadCurrentChallenge();
+      updateHudDisplay();
+    }
+
+    function finishBattle(isVictory) {
+      clearInterval(G.timerId);
+      cancelAnimationFrame(G.animId);
+
+      document.getElementById('overlay-results').style.display = 'flex';
+      document.getElementById('combat-hud').style.display = 'none';
+      document.getElementById('steer-left-hud').style.display = 'none';
+
+      const accPct = Math.min(100, Math.max(70, Math.round(85 + (G.combo * 2))));
+      document.getElementById('res-name-label').textContent = `${G.heroName} (${G.heroClass})`;
+      document.getElementById('res-score-label').textContent = `${G.xp.toLocaleString()} XP`;
+      document.getElementById('res-acc-label').textContent = `${accPct}%`;
 
       if (isVictory) {
-        sound.playVictory();
-        document.getElementById('result-status-icon').textContent = "🏆";
-        document.getElementById('result-title').textContent = "PENGEMBARAAN SELESAI DENGAN CEMERLANG!";
-        document.getElementById('result-subtitle').textContent = `Tahniah ${state.playerName}! Anda dinobatkan sebagai Ejen Elit Matematik SK Ranggu!`;
+        audio.playBoom();
+        document.getElementById('res-badge-icon').textContent = "🏆";
+        document.getElementById('res-badge-title').textContent = "VICTORY ROYALE!";
       } else {
-        sound.playWrong();
-        document.getElementById('result-status-icon').textContent = "🛡️";
-        document.getElementById('result-title').textContent = "PENGEMBARAAN TERGENDALA";
-        document.getElementById('result-subtitle').textContent = message || "Cuba lagi untuk mencapai skor lebih tinggi!";
+        document.getElementById('res-badge-icon').textContent = "🛡️";
+        document.getElementById('res-badge-title').textContent = "BATTLE SELESAI";
       }
+
+      // Record to Calendar Leaderboard
+      const today = new Date();
+      saveScore({
+        id: "MQ-" + Date.now(),
+        name: G.heroName,
+        className: G.heroClass,
+        grade: G.grade,
+        xp: G.xp,
+        stars: isVictory ? 3 : 2,
+        acc: accPct,
+        date: today.toISOString().slice(0, 10),
+        time: today.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      });
     }
 
-    function sendViaWhatsApp() {
-      const accuracyPct = state.totalQuestionsAnswered > 0 
-        ? Math.round((state.correctAnswers / state.totalQuestionsAnswered) * 100) 
-        : 0;
-      const timeSpentSec = Math.floor(((state.endTime || Date.now()) - state.startTime) / 1000);
-      const spentMin = Math.floor(timeSpentSec / 60);
-      const spentSec = timeSpentSec % 60;
+    function resetToMenu() {
+      document.getElementById('overlay-results').style.display = 'none';
+      document.getElementById('overlay-start-screen').style.display = 'flex';
+      document.getElementById('combat-hud').style.display = 'none';
+    }
 
-      const reportText = `📋 *LAPORAN PDPR MATEMATIK - MATH QUEST* 📋\n` +
-        `👨‍💻 *Pembangun Sistem:* Cikgu Mohammad Fikrey bin Abdul Gapar (SK Ranggu)\n` +
+    function sendWhatsAppProof() {
+      const msg = `📋 *LAPORAN PDPR MATH QUEST (SK RANGGU)* 📋\n` +
+        `👨‍💻 *Pembangun Sistem:* Mohammad Fikrey bin Abdul Gapar\n` +
         `-----------------------------------------\n` +
-        `👤 *Nama Murid:* ${state.playerName}\n` +
-        `🏫 *Kelas:* ${state.playerClass} (Tahun ${state.grade})\n` +
-        `⚡ *Markah XP:* ${state.xp.toLocaleString()} XP\n` +
-        `🎯 *Ketepatan:* ${state.correctAnswers}/${state.totalQuestionsAnswered} (${accuracyPct}%)\n` +
-        `❤️ *Baki Nyawa:* ${state.hearts}/3\n` +
-        `⏱️ *Masa Digunakan:* ${spentMin} minit ${spentSec} saat\n` +
-        `📅 *Tarikh Selesai:* ${new Date().toLocaleDateString('ms-MY')}\n` +
-        `🌟 *Status:* ${state.hearts > 0 ? 'BERJAYA TAMATKAN 3 ZON PENGEMBARAAN!' : 'Selesai Sesi Ujian'}\n` +
+        `👤 *Wira Ejen:* ${G.heroName}\n` +
+        `🏫 *Kelas:* ${G.heroClass} (Tahun ${G.grade})\n` +
+        `⚡ *Markah Aksi:* ${G.xp.toLocaleString()} XP ⭐⭐⭐\n` +
+        `📅 *Tarikh:* ${new Date().toLocaleDateString('ms-MY')}\n` +
+        `🌟 *Status:* Selesai Sesi Pertarungan Battlefield!\n` +
         `-----------------------------------------\n` +
-        `Cikgu Fikrey, saya telah selesai melaksanakan latihan gamifikasi Math Quest hari ini. Terima kasih! 🚀`;
-
-      const encoded = encodeURIComponent(reportText);
-      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+        `Cikgu Mohammad Fikrey, saya telah selesai bermain Math Quest hari ini. Terima kasih! 🚀`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    function restartAdventure() {
-      switchScreen(document.getElementById('screen-start'));
-      document.getElementById('game-hud').style.display = 'none';
-      clearInterval(state.timerInterval);
-    }
+    /* ==============================================================
+       60 FPS ARCADE RENDER LOOP (CANVAS GRAPHICS)
+       ============================================================== */
+    let bgScroll = 0;
 
-    /* Scratchpad Canvas */
-    const modalScratchpad = document.getElementById('modal-scratchpad');
-    const scratchCanvas = document.getElementById('scratchpad-canvas');
-    const ctx = scratchCanvas.getContext('2d');
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
+    function runArcadeLoop() {
+      const ctx = G.ctx;
+      const w = G.canvas.width;
+      const h = G.canvas.height;
 
-    function openScratchpad() {
-      modalScratchpad.classList.add('active');
-      resizeCanvas();
-    }
-    function closeScratchpad() {
-      modalScratchpad.classList.remove('active');
-    }
-    function clearScratchpad() {
-      ctx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
-    }
-    function resizeCanvas() {
-      const rect = scratchCanvas.getBoundingClientRect();
-      scratchCanvas.width = rect.width;
-      scratchCanvas.height = rect.height;
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-    }
+      ctx.clearRect(0, 0, w, h);
 
-    function getCanvasPos(e) {
-      const rect = scratchCanvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return { x: clientX - rect.left, y: clientY - rect.top };
-    }
+      // 1. Moving Cyber Grid Background (Widescreen Highway)
+      bgScroll = (bgScroll + (G.stage === 3 ? 18 : 6)) % 60;
+      ctx.fillStyle = '#050813';
+      ctx.fillRect(0, 0, w, h);
 
-    scratchCanvas.addEventListener('mousedown', (e) => {
-      isDrawing = true;
-      const pos = getCanvasPos(e);
-      lastX = pos.x; lastY = pos.y;
-    });
-    scratchCanvas.addEventListener('mousemove', (e) => {
-      if (!isDrawing) return;
-      const pos = getCanvasPos(e);
+      // Starfield / Speed lines
+      ctx.strokeStyle = G.stage === 3 ? 'rgba(34, 211, 238, 0.4)' : 'rgba(56, 189, 248, 0.15)';
+      ctx.lineWidth = G.stage === 3 ? 2.5 : 1;
+      for (let y = 0; y < h; y += 45) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+      for (let x = -60; x < w; x += 60) {
+        ctx.beginPath();
+        ctx.moveTo(x - bgScroll, 0);
+        ctx.lineTo(x - bgScroll, h);
+        ctx.stroke();
+      }
+
+      // Smooth hero interpolation
+      G.heroY += (G.heroYTarget - G.heroY) * 0.15;
+
+      // 2. Render Hero (Player Character)
+      ctx.font = '48px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(G.heroEmoji, 100, G.heroY + 16);
+
+      // Hero Forcefield aura
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.6)';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(pos.x, pos.y);
+      ctx.arc(100, G.heroY, 32, 0, Math.PI * 2);
       ctx.stroke();
-      lastX = pos.x; lastY = pos.y;
-    });
-    window.addEventListener('mouseup', () => isDrawing = false);
 
-    scratchCanvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      isDrawing = true;
-      const pos = getCanvasPos(e);
-      lastX = pos.x; lastY = pos.y;
-    }, { passive: false });
-    scratchCanvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      if (!isDrawing) return;
-      const pos = getCanvasPos(e);
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-      lastX = pos.x; lastY = pos.y;
-    }, { passive: false });
-    scratchCanvas.addEventListener('touchend', () => isDrawing = false);
-    document.getElementById('btn-open-scratchpad').addEventListener('click', openScratchpad);
+      // 3. Render Targets based on Stage
+      if (G.stage === 1) {
+        // Stage 1: Security Cyber Towers
+        const towerX = w - 160;
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(towerX - 25, 60, 50, h - 120);
+        ctx.strokeStyle = '#ef4444';
+        ctx.strokeRect(towerX - 25, 60, 50, h - 120);
+        ctx.font = '40px sans-serif';
+        ctx.fillText('📡', towerX, h * 0.4);
+        ctx.fillText('⚡', towerX, h * 0.6);
 
+        // Tower Health Info
+        ctx.fillStyle = '#f87171';
+        ctx.font = 'bold 12px Chakra Petch, sans-serif';
+        ctx.fillText(`MENARA: GELOMBANG ${G.stageWave + 1}/${G.maxWaves}`, towerX, 48);
+
+      } else if (G.stage === 2) {
+        // Stage 2: Mech Titan Boss
+        G.bossAnimOffset += 0.05;
+        G.bossY = (h * 0.45) + Math.sin(G.bossAnimOffset) * 20;
+        const bX = w - 170;
+
+        // Dynamic Boss Health Bar above head
+        const barW = 120;
+        const currentHpW = Math.max(0, (G.bossHp / G.bossMaxHp) * barW);
+        ctx.fillStyle = 'rgba(0,0,0,0.85)';
+        ctx.fillRect(bX - 60, G.bossY - 55, barW, 12);
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(bX - 60, G.bossY - 55, currentHpW, 12);
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(bX - 60, G.bossY - 55, barW, 12);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 11px Chakra Petch, sans-serif';
+        ctx.fillText(`TITAN HP: ${Math.max(0, G.bossHp)}/${G.bossMaxHp}`, bX, G.bossY - 62);
+
+        // Giant Boss Sprite
+        ctx.font = '68px sans-serif';
+        ctx.fillText('🤖', bX, G.bossY + 22);
+
+      } else if (G.stage === 3) {
+        // Stage 3: Hyper Warp Speed Gates
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(w - 180, 70, 80, h - 140);
+        ctx.font = '36px sans-serif';
+        ctx.fillText('🌀', w - 140, h * 0.35);
+        ctx.fillText('💎', w - 140, h * 0.65);
+
+        // Warp Gate Info
+        ctx.fillStyle = '#34d399';
+        ctx.font = 'bold 12px Chakra Petch, sans-serif';
+        ctx.fillText(`PINTU WARP: ${G.stageWave + 1}/${G.maxWaves}`, w - 140, 52);
+      }
+
+      // 4. Update & Draw Lasers
+      for (let i = G.lasers.length - 1; i >= 0; i--) {
+        const l = G.lasers[i];
+        l.x += 40;
+        ctx.strokeStyle = l.color;
+        ctx.lineWidth = l.size;
+        ctx.beginPath();
+        ctx.moveTo(l.x - 30, l.y);
+        ctx.lineTo(l.x, l.y);
+        ctx.stroke();
+
+        if (l.x >= l.tx) G.lasers.splice(i, 1);
+      }
+
+      // 5. Update & Draw Particles
+      for (let i = G.particles.length - 1; i >= 0; i--) {
+        const p = G.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(1, p.life * 0.25), 0, Math.PI * 2);
+        ctx.fill();
+
+        if (p.life <= 0) G.particles.splice(i, 1);
+      }
+
+      G.animId = requestAnimationFrame(runArcadeLoop);
+    }
   </script>
 </body>
 </html>

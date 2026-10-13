@@ -4,13 +4,15 @@
 
 ---
 
-## 🌟 Pengenalan & Revolusi Pengembaraan (Bukan Sekadar Kuiz Teks!)
+## 🌟 Pengenalan & Revolusi Pengembaraan (Mod Melintang Penuh 16:9 Widescreen)
 
-Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau. Berbeza dengan kuiz dalam talian konvensional yang penuh dengan petikan teks panjang membosankan, **Math Quest** dibina sebagai sebuah **Game Pengembaraan Aksi Sebenar (Arcade Adventure RPG)**:
+Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau. Berbeza dengan kuiz dalam talian konvensional yang penuh dengan teks panjang membosankan, **Math Quest** dibina sebagai sebuah **Game Arcade Aksi Sebenar (Mobile Legends / Clash of Clans Style)**:
 
-1. **Pilihan Wira Avatar:** Murid memilih watak wira (*Ejen Siber*, *Ninja Kripto*, *Mecha-Titan*).
-2. **Peta Dunia Interaktif (Interactive World Map):** Menjejaki laluan pengembaraan dari Zon 1 hingga Zon 3.
-3. **Soalan Pantas Sebagai Pencetus Aksi (Snappy Action Triggers):** Tiada petikan cerita berpanjangan! Matematik dijadikan cas kuasa (*Power Charge*) untuk menembak meriam, melumpuhkan pancaran laser, dan memecutkan kenderaan!
+1. **Mod Melintang Penuh (Landscape Mode):** Dimainkan secara horizontal 16:9 widescreen di telefon pintar dengan sistem amaran auto-pusing jika dipegang menegak.
+2. **Pilihan Wira Avatar:** Murid memilih watak wira (*Ejen Siber*, *Ninja Kripto*, *Mecha-Titan*).
+3. **Papan Pemuka Pertarungan MOBA (Top HUD & Combat Action):** Dilengkapi bar nyawa HP/MP, timer 15 minit, dan 3 butang serangan pantas (*Skill 1, Skill 2, Ultimate Blast*).
+4. **Soalan Pantas Sebagai Pencetus Serangan (Zero Reading Fatigue):** Tiada petikan cerita panjang! Soalan Matematik KSSR Semakan (Tahun 5 & Tahun 6) disajikan secara pantas (Cth: `8 × 7 = ?`, `³/₄ Juta = ?`) sebagai cas laser tenaga!
+5. **Bank Soalan Luas + Penjana Dinamik (Infinite Endless Play):** 50+ soalan silibus KSSR Semakan lengkap dengan penjana automatik tanpa henti.
 
 ---
 
