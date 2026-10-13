@@ -1,62 +1,59 @@
-# 🎮 MATH QUEST: Misi Gamifikasi Matematik PDPR (Tahun 5 & Tahun 6)
-### *Aplikasi Gamifikasi Pendidikan Matematik Rendah Berasaskan DSKP KSSR Semakan — SK Ranggu*
+# 🎮 MATH QUEST: Pengembaraan Siber Matematik PDPR (Tahun 5 & Tahun 6)
+### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
+### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
 ---
 
-## 🌟 Pengenalan & Matlamat Projek
+## 🌟 Pengenalan & Revolusi Pengembaraan (Bukan Sekadar Kuiz Teks!)
 
-**Math Quest** dibangunkan khas bagi Pengajaran dan Pembelajaran di Rumah (PDPR) Matematik Tahun 5 dan Tahun 6. Aplikasi ini membolehkan murid bermain sambil belajar, manakala guru dapat **merekod markah murid** secara langsung melalui **Papan Skor Ejen Murid** yang dipaparkan dalam game.
+Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** untuk murid-murid SK Ranggu Tawau. Berbeza dengan kuiz dalam talian konvensional yang penuh dengan petikan teks panjang membosankan, **Math Quest** dibina sebagai sebuah **Game Pengembaraan Aksi Sebenar (Arcade Adventure RPG)**:
+
+1. **Pilihan Wira Avatar:** Murid memilih watak wira (*Ejen Siber*, *Ninja Kripto*, *Mecha-Titan*).
+2. **Peta Dunia Interaktif (Interactive World Map):** Menjejaki laluan pengembaraan dari Zon 1 hingga Zon 3.
+3. **Soalan Pantas Sebagai Pencetus Aksi (Snappy Action Triggers):** Tiada petikan cerita berpanjangan! Matematik dijadikan cas kuasa (*Power Charge*) untuk menembak meriam, melumpuhkan pancaran laser, dan memecutkan kenderaan!
 
 ---
 
-## 🕹️ 3 Konsep Permainan Bersambung (15 Minit Sesi PDPR)
+## 🕹️ 3 Zon Pengembaraan Aksi (Canvas Interactive Graphics)
 
 ```
-[PENDAFTARAN EJEN: NAMA MURID & KELAS]
-               │
-               ▼
-   🔐 FASA 1: ESCAPE ROOM (Bilik Kebal Rahsia)
-   • Murid menyahkod pintu keselamatan menggunakan keypad nombor siber.
-   • Setiap jawapan membuka mekanisme pintu bergeser.
-               │
-               ▼
-   ⚔️ FASA 2: BOSS BATTLE (Glitch-Titan Mecha)
-   • Berhadapan Robot Glitch gergasi (HP Bar & Critical Damage).
-   • Jawapan betul menembak meriam plasma laser (-100 DMG); jawapan salah tolak nyawa!
-               │
-               ▼
-   🏁 FASA 3: ADVENTURE RACE (Lebuhraya Hyperlane)
-   • Mengemudi kenderaan siber merentasi 3 lorong (Kiri, Tengah, Kanan).
-   • Menembusi gerbang portal dengan jawapan yang tepat untuk Hyper Warp Speed!
-               │
-               ▼
-   🏆 KEPUTUSAN, PAPAN SKOR KELAS & REKOD CIKGU
-   • Markah murid direkodkan serta-merta ke Papan Skor Kelas (Leaderboard).
-   • Semua murid boleh melihat kedudukan rakan sekelas (#1 🥇, #2 🥈, #3 🥉...).
-   • Guru boleh mengeksport senarai markah ke fail Excel (CSV) atau salin teks PBD.
-   • Murid boleh terus menekan butang untuk menghantar laporan ke WhatsApp Cikgu.
+[PILIHAN WIRA: 🦸‍♂️ / 🥷 / 🤖] ──► [PETA DUNIA SIBER]
+                                         │
+                                         ▼
+   🔐 ZON 1: KUBU LASER CYBER-VAULT (Canvas Minigame)
+   • Pengimbas laser merah berputar secara dinamik di atas kanvas.
+   • Cas kod keselamatan pantas untuk melumpuhkan laser dan membuka pintu kebal gelongsor!
+                                         │
+                                         ▼
+   ⚔️ ZON 2: PERTEMBUNGAN MECH-TITAN (Real Boss Action)
+   • Robot gergasi Mech-Titan melayang dengan animasi mata visor bercahaya.
+   • Setiap jawapan pantas menembak Meriam Plasma (-100 DMG Critical Hits!).
+   • Gegaran skrin (screen shake) & letupan partikel setiap kali boss diserang!
+                                         │
+                                         ▼
+   🚀 ZON 3: LEBUHRAYA ANGKASA HYPER-SPEED (Top-Down Real-Time Racer)
+   • Kenderaan angkasa dipandu di atas kanvas merentasi 3 lorong laju.
+   • Sentuh lorong gerbang jawapan yang tepat untuk mengaktifkan mod pecutan 999 KM/J!
+                                         │
+                                         ▼
+   🏆 SIJIL PENGIKTIRAFAN & PAPAN SKOR KALENDAR
+   • Sijil tamat pengembaraan disahkan secara digital oleh Mohammad Fikrey bin Abdul Gapar.
+   • Markah murid direkodkan serta-merta ke Papan Skor Kalendar PDPR.
 ```
 
 ---
 
-## 📊 Sistem Papan Skor Murid & Pengurusan Rekod Markah Guru
+## 📅 Papan Skor Kalendar PDPR (Boleh Di-Scroll Mengikut Tarikh)
 
-Aplikasi ini dilengkapi sistem pengesanan skor penuh:
-1. **Pendaftaran Wajib Murid:** Sebelum memulakan misi, murid wajib memasukkan Nama Penuh dan Kelas (cth: *Muhammad Danial - 6 Arif*).
-2. **Papan Skor Ejen Kelas (Live Leaderboard):**
-   - Boleh dibuka pada bila-bila masa melalui butang `🏆 PAPAN SKOR & KEDUDUKAN EJEN KELAS`.
-   - Menyenaraikan semua murid mengikut kedudukan mata XP tertinggi.
-   - Dilengkapi penapis kategori (*Semua*, *Tahun 5*, *Tahun 6*) dan carian pantas nama murid.
-3. **Panel Khas Guru:**
-   - **📥 Eksport Excel (CSV):** Muat turun fail `.csv` yang mengandungi Nama Murid, Kelas, Tahap, Skor XP, Bintang, Peratus Ketepatan, Masa, dan Tarikh.
-   - **📋 Salin Format Guru:** Salin teks jadual markah untuk dimasukkan terus ke fail buku rekod mengajar atau grup WhatsApp.
+* **Pengelompokan Tarikh:** Rekod disusun kemas mengikut tarikh sesi (*Hari Ini*, *Semalam*, atau tarikh lepas).
+* **Scrollable List:** Guru boleh scroll dengan lancar melihat semua senarai nama murid, kelas, masa selesai, markah XP, bintang, dan peratus ketepatan.
+* **Penapis Kalendar:** Boleh pilih mana-mana tarikh PDPR menggunakan kalendar untuk melihat murid yang menyertai pada tarikh tersebut.
+* **Alat Guru:** Eksport Excel (CSV) dan butang satu klik untuk salin laporan ke WhatsApp Cikgu.
 
 ---
 
-## 🚀 Pelancaran & Deployment GitHub
+## 🌐 Pautan Rasmi & Deployment
 
-Aplikasi ini dideploy di bawah akaun GitHub `momon-ux`:
-- **Repositori GitHub:** `https://github.com/momon-ux/math-quest-pdpr`
-- **Pautan Web Langsung (GitHub Pages):** `https://momon-ux.github.io/math-quest-pdpr/`
-
-Murid hanya perlu membuka pautan tersebut pada telefon pintar mereka untuk terus bermain tanpa perlu memasang sebarang aplikasi tambahan!
+- **Pautan Langsung:** [https://momon-ux.github.io/math-quest-pdpr/](https://momon-ux.github.io/math-quest-pdpr/)
+- **Repositori GitHub:** [https://github.com/momon-ux/math-quest-pdpr](https://github.com/momon-ux/math-quest-pdpr)
+- **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (SK Ranggu Tawau)
