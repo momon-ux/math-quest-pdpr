@@ -48,8 +48,8 @@ Aplikasi ini dibangunkan secara khas oleh **Mohammad Fikrey bin Abdul Gapar** un
    - Setiap kali murid login dengan nama mereka, rumah impian mereka akan dipaparkan semula seperti mana mereka tinggalkan.
 
 5. **Nama Kendiri & Pilihan 8 Kelas SK Ranggu Tawau:**
-   - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jahid`, `5 Eltizam`
-   - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jahid`, `6 Eltizam`
+   - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jayyid`, `5 Iltizam`
+   - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jayyid`, `6 Iltizam`
    - Murid menaip nama sendiri; tiada nama murid disimpan dalam kod awam.
 
 6. **📅 Papan Skor Kalendar PDPR (Scrollable mengikut Tarikh):**
