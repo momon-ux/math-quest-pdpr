@@ -10,7 +10,7 @@
   <style>
     :root {
       --bg-dark: #080c16;
-      --bg-panel: rgba(15, 23, 42, 0.9);
+      --bg-panel: rgba(15, 23, 42, 0.92);
       --bg-panel-solid: #0f172a;
       --cyan: #06b6d4;
       --cyan-bright: #22d3ee;
@@ -41,8 +41,8 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 60%),
-        radial-gradient(circle at 10% 90%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
         linear-gradient(rgba(8, 12, 22, 0.95), rgba(8, 12, 22, 0.98)),
         repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(30, 41, 59, 0.25) 40px),
         repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(30, 41, 59, 0.25) 40px);
@@ -56,21 +56,20 @@
       justify-content: flex-start;
     }
 
-    /* Outer Wrapper for Mobile-First & Desktop Responsiveness */
     #app-container {
       width: 100%;
-      max-width: 480px;
+      max-width: 490px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
       padding: 12px;
-      padding-bottom: 28px;
+      padding-bottom: 30px;
     }
 
     @media (min-width: 768px) {
       #app-container {
-        max-width: 580px;
+        max-width: 600px;
         padding: 20px;
       }
     }
@@ -78,8 +77,8 @@
     /* HUD Top Bar */
     .hud-bar {
       background: var(--bg-panel);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-hud);
       border-radius: 16px;
       padding: 10px 14px;
@@ -87,7 +86,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(6, 182, 212, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(6, 182, 212, 0.08);
       position: sticky;
       top: 8px;
       z-index: 40;
@@ -111,7 +110,7 @@
     }
 
     .hud-timer {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(245, 158, 11, 0.4);
       color: #fbbf24;
       padding: 4px 10px;
@@ -137,6 +136,25 @@
     .hud-xp {
       color: var(--cyan-bright);
       text-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    /* Combo Badge Floating */
+    .combo-pill {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+      animation: pop-combo 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-block;
+    }
+
+    @keyframes pop-combo {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .hud-btn {
@@ -200,7 +218,6 @@
       background: linear-gradient(90deg, transparent, var(--cyan-bright), transparent);
     }
 
-    /* Typography */
     h1, h2, h3, h4 {
       font-family: var(--font-display);
       text-transform: uppercase;
@@ -332,13 +349,13 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
       z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 14px;
+      padding: 12px;
     }
     .modal-overlay.active {
       display: flex;
@@ -348,12 +365,12 @@
       border: 2px solid var(--border-hud);
       border-radius: 20px;
       width: 100%;
-      max-width: 480px;
-      max-height: 90vh;
+      max-width: 500px;
+      max-height: 92vh;
       display: flex;
       flex-direction: column;
       padding: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
       overflow: hidden;
     }
 
@@ -369,14 +386,14 @@
 
     /* Inputs */
     .input-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       text-align: left;
     }
     .input-label {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       display: block;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -440,19 +457,36 @@
       background: linear-gradient(180deg, #090e1a 0%, #0f172a 100%);
       border: 2px solid rgba(139, 92, 246, 0.4);
       border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(139, 92, 246, 0.15);
       overflow: hidden;
     }
 
+    .alarm-flash {
+      position: absolute;
+      inset: 0;
+      background: rgba(239, 68, 68, 0.15);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .alarm-flash.active {
+      opacity: 1;
+      animation: blink-alarm 0.8s infinite alternate;
+    }
+    @keyframes blink-alarm {
+      from { opacity: 0.05; }
+      to { opacity: 0.35; }
+    }
+
     .door-visual {
-      height: 135px;
+      height: 130px;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       perspective: 800px;
     }
 
@@ -519,7 +553,7 @@
       text-align: center;
       color: #a5b4fc;
       box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.9);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       min-height: 44px;
       display: flex;
       align-items: center;
@@ -529,8 +563,8 @@
     .keypad-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 8px;
+      gap: 7px;
+      margin-top: 6px;
     }
 
     .key-btn {
@@ -568,7 +602,7 @@
     }
 
     /* ==============================================================
-       MISI 2: BOSS BATTLE STYLES
+       MISI 2: BOSS BATTLE STYLES (DENGAN RAGE MODE & SHIELD)
        ============================================================== */
     .boss-arena {
       background: radial-gradient(circle at 50% 30%, rgba(220, 38, 38, 0.2) 0%, #090e17 80%);
@@ -579,6 +613,12 @@
       margin-bottom: 12px;
       overflow: hidden;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(239, 68, 68, 0.15);
+      transition: all 0.3s;
+    }
+    .boss-arena.enraged {
+      border-color: #f59e0b;
+      background: radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.45) 0%, #1e1111 80%);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
     }
 
     .boss-display {
@@ -586,7 +626,26 @@
       flex-direction: column;
       align-items: center;
       position: relative;
-      padding: 8px 0;
+      padding: 6px 0;
+    }
+
+    .boss-mode-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+    }
+    .boss-mode-badge.enrage {
+      background: #dc2626;
+      color: #fff;
+      animation: pulse-urgent 0.8s infinite alternate;
     }
 
     .boss-avatar-wrapper {
@@ -596,7 +655,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .boss-shield-ring {
+      position: absolute;
+      inset: -8px;
+      border: 3px dashed #38bdf8;
+      border-radius: 50%;
+      animation: rotate-shield 4s linear infinite;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+      display: none;
+    }
+    .boss-shield-ring.active {
+      display: block;
+    }
+    @keyframes rotate-shield {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .boss-svg {
@@ -618,28 +694,28 @@
     }
 
     @keyframes boss-shake {
-      10%, 90% { transform: translate3d(-3px, 0, 0) scale(0.96); }
-      20%, 80% { transform: translate3d(5px, 0, 0) scale(1.04); }
-      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-      40%, 60% { transform: translate3d(6px, 0, 0); }
+      10%, 90% { transform: translate3d(-4px, 0, 0) scale(0.95); }
+      20%, 80% { transform: translate3d(6px, 0, 0) scale(1.05); }
+      30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
+      40%, 60% { transform: translate3d(7px, 0, 0); }
     }
 
     .laser-beam {
       position: absolute;
       bottom: 20px;
       left: 50%;
-      width: 8px;
+      width: 10px;
       height: 0;
       background: linear-gradient(0deg, #06b6d4, #ffffff);
-      box-shadow: 0 0 15px #06b6d4, 0 0 25px #38bdf8;
-      border-radius: 4px;
+      box-shadow: 0 0 15px #06b6d4, 0 0 30px #38bdf8;
+      border-radius: 5px;
       transform: translateX(-50%);
       z-index: 10;
       opacity: 0;
       transition: height 0.18s ease-out, opacity 0.1s;
     }
     .laser-beam.firing {
-      height: 170px;
+      height: 175px;
       opacity: 1;
     }
 
@@ -667,7 +743,7 @@
       top: 25px;
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       color: #fef08a;
       text-shadow: 0 0 10px #eab308, 0 0 20px #dc2626;
       opacity: 0;
@@ -681,7 +757,6 @@
       transform: translateY(-25px) scale(1.2);
     }
 
-    /* Multiple Choice Grid */
     .mc-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -746,17 +821,17 @@
     }
 
     /* ==============================================================
-       MISI 3: ADVENTURE RACE STYLES
+       MISI 3: ADVENTURE RACE (SPEEDOMETER & 5 CHECKPOINTS)
        ============================================================== */
     .race-track-wrapper {
       position: relative;
       width: 100%;
-      height: 250px;
+      height: 260px;
       background: linear-gradient(180deg, #020617 0%, #064e3b 100%);
       border: 2px solid rgba(16, 185, 129, 0.4);
       border-radius: 20px;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(16, 185, 129, 0.2);
     }
 
@@ -773,6 +848,24 @@
     @keyframes road-motion {
       from { background-position-y: 0px; }
       to { background-position-y: 36px; }
+    }
+
+    .speed-badge {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #10b981;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #6ee7b7;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .lanes-container {
@@ -793,11 +886,11 @@
       padding-top: 14px;
     }
     .race-lane:active {
-      background: rgba(16, 185, 129, 0.1);
+      background: rgba(16, 185, 129, 0.12);
     }
 
     .portal-gate {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.92);
       border: 2px solid #10b981;
       border-radius: 12px;
       padding: 8px 6px;
@@ -820,9 +913,9 @@
     .player-racer {
       position: absolute;
       bottom: 14px;
-      width: 48px;
-      height: 48px;
-      transition: left 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 50px;
+      height: 50px;
+      transition: left 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 15;
       transform: translateX(-50%);
       filter: drop-shadow(0 0 12px #38bdf8);
@@ -831,7 +924,7 @@
     .warp-speed-flash {
       position: absolute;
       inset: 0;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.45);
       opacity: 0;
       pointer-events: none;
       z-index: 25;
@@ -891,13 +984,13 @@
     }
 
     /* ==============================================================
-       LEADERBOARD / PAPAN SKOR MURID & CIKGU STYLES
+       PAPAN SKOR KALENDAR & REKOD MURID (ADVANCED SCROLLABLE VIEW)
        ============================================================== */
     .board-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 6px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .board-tab-btn {
       background: rgba(30, 41, 59, 0.6);
@@ -918,20 +1011,109 @@
       color: #fff;
     }
 
+    /* Calendar Filter Bar */
+    .calendar-bar {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .date-chips {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .date-chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      padding: 4px 8px;
+      border-radius: 8px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .date-chip.active {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .date-picker-input {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-family: var(--font-body);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Scrollable Leaderboard Container */
+    .leaderboard-scroll-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding-right: 4px;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    .leaderboard-scroll-area::-webkit-scrollbar {
+      width: 5px;
+    }
+    .leaderboard-scroll-area::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 4px;
+    }
+    .leaderboard-scroll-area::-webkit-scrollbar-thumb {
+      background: #0284c7;
+      border-radius: 4px;
+    }
+
+    .date-group-header {
+      background: rgba(30, 41, 59, 0.7);
+      border-left: 3px solid var(--cyan-bright);
+      padding: 6px 10px;
+      border-radius: 0 8px 8px 0;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #a5f3fc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+    }
+
     .leaderboard-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      max-height: 52vh;
-      overflow-y: auto;
-      padding-right: 4px;
+      gap: 7px;
     }
 
     .leaderboard-item {
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(56, 189, 248, 0.2);
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 9px 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -954,8 +1136,8 @@
     .rank-badge {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1rem;
-      width: 28px;
+      font-size: 0.95rem;
+      width: 26px;
       text-align: center;
       flex-shrink: 0;
     }
@@ -967,7 +1149,7 @@
     .student-name {
       font-weight: 700;
       color: #fff;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       line-height: 1.2;
     }
     .student-meta {
@@ -1018,7 +1200,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Print / Sijil styles */
     @media print {
       body { background: #fff !important; color: #000 !important; }
       .hud-bar, .btn, .btn-scratchpad, .grade-selector, #modal-scratchpad, #modal-leaderboard { display: none !important; }
@@ -1044,7 +1225,7 @@
         <span>⚡</span><span id="xp-text">0 XP</span>
       </div>
       <div style="display: flex; gap: 6px;">
-        <button class="hud-btn" onclick="openLeaderboardModal()" title="Papan Skor">🏆</button>
+        <button class="hud-btn" onclick="openLeaderboardModal()" title="Papan Skor Kalendar">🏆</button>
         <button class="hud-btn" id="btn-toggle-sound" title="Bunyi On/Off">🔊</button>
         <button class="hud-btn" id="btn-open-scratchpad" title="Buka Papan Pengiraan">📝</button>
       </div>
@@ -1066,9 +1247,9 @@
           MISI MATEMATIK PDPR (TAHUN 5 & 6)
         </p>
 
-        <!-- Butang Papan Skor Murid (PENTING untuk semua murid semak) -->
+        <!-- Butang Papan Skor Murid Ikut Kalendar -->
         <button class="btn btn-purple" onclick="openLeaderboardModal()" style="padding: 10px; margin-bottom: 16px;">
-          <span>🏆 PAPAN SKOR & KEDUDUKAN EJEN KELAS</span>
+          <span>📅 PAPAN SKOR KALENDAR & KEDUDUKAN MURID</span>
         </button>
 
         <!-- Pendaftaran Murid -->
@@ -1095,19 +1276,19 @@
           </div>
         </div>
 
-        <!-- Misi Preview -->
+        <!-- Misi Preview & Cabaran Ekstra -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 18px; text-align: center;">
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 10px; padding: 7px 4px;">
             <div style="font-size: 1.1rem;">🔐</div>
-            <div style="font-size: 0.68rem; font-weight: 700; color: #c4b5fd;">1. ESCAPE</div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: #c4b5fd;">5 KEBUT KOD</div>
           </div>
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 7px 4px;">
             <div style="font-size: 1.1rem;">⚔️</div>
-            <div style="font-size: 0.68rem; font-weight: 700; color: #fca5a5;">2. BOSS</div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: #fca5a5;">BOSS RAGE</div>
           </div>
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 7px 4px;">
             <div style="font-size: 1.1rem;">🏁</div>
-            <div style="font-size: 0.68rem; font-weight: 700; color: #6ee7b7;">3. RACE</div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: #6ee7b7;">999 KM/J RACE</div>
           </div>
         </div>
 
@@ -1119,27 +1300,32 @@
     </section>
 
     <!-- ==============================================================
-         2. MISSION 1: ESCAPE ROOM (BILIK KEBAL SIBER)
+         2. MISSION 1: ESCAPE ROOM (5 BILIK KEBAL BERLAPIS)
          ============================================================== -->
     <section class="screen" id="screen-escape">
       <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
           <span class="quest-badge badge-escape">MISI 1: ESCAPE ROOM</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #c4b5fd;" id="escape-step-indicator">PINTU 1/3</span>
+          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #c4b5fd;" id="escape-step-indicator">PINTU 1/5</span>
         </div>
 
-        <h2 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px;">NYAHKOD KUNCI KESELAMATAN</h2>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-          Pintu kebal terkunci! Selesaikan soalan matematik di bawah untuk mendapatkan kod digit dan membuka pintu.
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h2 style="font-size: 1.15rem; color: #fff;">NYAHKOD KUNCI KESELAMATAN</h2>
+          <span id="combo-display-escape"></span>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+          Pintu kebal terkunci! Selesaikan soalan matematik di bawah untuk mendapatkan kod digit dan membuka laluan.
         </p>
 
         <!-- Visual Bilik Pintu Kebal -->
         <div class="escape-chamber">
+          <div class="alarm-flash" id="alarm-flash"></div>
           <div class="door-visual" id="vault-door-container">
             <div class="door-interior">
-              <div style="font-size: 2rem; margin-bottom: 4px;">🔓</div>
-              <div>PINTU DIBUKA!</div>
-              <div style="font-size: 0.72rem; color: #d1fae5; font-weight: 400;">Laluan selamat ke arena boss...</div>
+              <div style="font-size: 2rem; margin-bottom: 2px;">🔓</div>
+              <div>PINTU BERJAYA DIBUKA!</div>
+              <div style="font-size: 0.72rem; color: #d1fae5; font-weight: 400;">Menuju ke zon seterusnya...</div>
             </div>
             <div class="door-panel door-left" id="door-left">
               <div class="vault-status-light" id="door-light-left"></div>
@@ -1150,7 +1336,7 @@
           </div>
 
           <!-- Paparan Soalan -->
-          <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center;">
+          <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: center;">
             <div style="font-size: 0.72rem; color: #c4b5fd; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;" id="escape-topic-tag">TOPIK MATEMATIK</div>
             <div style="font-size: 1.02rem; font-weight: 700; color: #fff; line-height: 1.4;" id="escape-question-text">Memuatkan cabaran...</div>
           </div>
@@ -1183,27 +1369,34 @@
     </section>
 
     <!-- ==============================================================
-         3. MISSION 2: BOSS BATTLE (PERTEMBUNGAN MECHA-GLITCH)
+         3. MISSION 2: BOSS BATTLE (GLITCH-TITAN 3 FASA & RAGE MODE)
          ============================================================== -->
     <section class="screen" id="screen-boss">
       <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
           <span class="quest-badge badge-boss">MISI 2: BOSS BATTLE</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #fca5a5;" id="boss-round-indicator">PUSINGAN 1/4</span>
+          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #fca5a5;" id="boss-round-indicator">PUSINGAN 1/5</span>
         </div>
 
-        <h2 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px;">PERTAHANKAN PANGKALAN</h2>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-          Glitch-Titan menghalang laluan! Pilih jawapan yang tepat untuk menembak meriam plasma dan mengurangkan HP musuh.
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h2 style="font-size: 1.15rem; color: #fff;">SERANGAN MERIAM KAWALAN</h2>
+          <span id="combo-display-boss"></span>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+          Glitch-Titan mengaktifkan mod perisai! Pilih jawapan pantas untuk tembak meriam plasma dan leraikan kuasa boss.
         </p>
 
         <!-- Arena Boss -->
-        <div class="boss-arena">
+        <div class="boss-arena" id="boss-arena-box">
+          <div class="boss-mode-badge" id="boss-mode-badge">FASA 1: SHIELD ACTIVE</div>
+
           <div class="boss-display">
-            <div class="damage-popup" id="damage-popup">-100 DMG!</div>
+            <div class="damage-popup" id="damage-popup">-120 DMG!</div>
             <div class="laser-beam" id="player-laser"></div>
 
             <div class="boss-avatar-wrapper">
+              <div class="boss-shield-ring active" id="boss-shield-ring"></div>
               <!-- Animated SVG Robot Boss -->
               <svg class="boss-svg" id="boss-svg-elem" viewBox="0 0 100 100">
                 <defs>
@@ -1215,24 +1408,27 @@
                   <filter id="red-glow">
                     <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ef4444" />
                   </filter>
+                  <filter id="rage-glow">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f59e0b" />
+                  </filter>
                 </defs>
-                <path d="M 30 20 L 15 5 L 25 5 Z" fill="#dc2626" />
-                <path d="M 70 20 L 85 5 L 75 5 Z" fill="#dc2626" />
-                <circle cx="50" cy="8" r="4" fill="#f87171" filter="url(#red-glow)" />
+                <path d="M 30 20 L 15 5 L 25 5 Z" fill="#dc2626" id="horn-l" />
+                <path d="M 70 20 L 85 5 L 75 5 Z" fill="#dc2626" id="horn-r" />
+                <circle cx="50" cy="8" r="4" fill="#f87171" filter="url(#red-glow)" id="antenna-light" />
                 <line x1="50" y1="8" x2="50" y2="20" stroke="#94a3b8" stroke-width="2" />
                 <polygon points="25,22 75,22 85,60 15,60" fill="url(#boss-metal)" stroke="#ef4444" stroke-width="2" />
                 <rect x="26" y="32" width="48" height="12" rx="4" fill="#000" stroke="#f87171" stroke-width="1.5" />
-                <circle cx="38" cy="38" r="3.5" fill="#ef4444" filter="url(#red-glow)" />
-                <circle cx="62" cy="38" r="3.5" fill="#ef4444" filter="url(#red-glow)" />
+                <circle cx="38" cy="38" r="3.5" fill="#ef4444" filter="url(#red-glow)" id="eye-l" />
+                <circle cx="62" cy="38" r="3.5" fill="#ef4444" filter="url(#red-glow)" id="eye-r" />
                 <polygon points="10,62 90,62 75,95 25,95" fill="url(#boss-metal)" stroke="#ef4444" stroke-width="2" />
                 <circle cx="50" cy="78" r="10" fill="#7f1d1d" stroke="#fca5a5" stroke-width="2" />
-                <circle cx="50" cy="78" r="5" fill="#ef4444" filter="url(#red-glow)" />
+                <circle cx="50" cy="78" r="5" fill="#ef4444" filter="url(#red-glow)" id="core-light" />
               </svg>
             </div>
 
             <div style="display: flex; justify-content: space-between; width: 100%; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;">
-              <span style="color: #fca5a5;">GLITCH-TITAN</span>
-              <span style="color: #f87171;" id="boss-hp-text">400 / 400 HP</span>
+              <span style="color: #fca5a5;" id="boss-name-label">GLITCH-TITAN</span>
+              <span style="color: #f87171;" id="boss-hp-text">500 / 500 HP</span>
             </div>
 
             <div class="boss-hp-bar-bg">
@@ -1242,7 +1438,7 @@
         </div>
 
         <!-- Soalan Boss -->
-        <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 14px; padding: 14px; text-align: center;">
+        <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 14px; padding: 13px; text-align: center;">
           <div style="font-size: 0.72rem; color: #fca5a5; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;" id="boss-topic-tag">TOPIK SERANGAN</div>
           <div style="font-size: 1.02rem; font-weight: 700; color: #fff; line-height: 1.4;" id="boss-question-text">Soalan serangan bersedia...</div>
         </div>
@@ -1256,30 +1452,38 @@
     </section>
 
     <!-- ==============================================================
-         4. MISSION 3: ADVENTURE RACE (PERLUMBAAN HYPERLANE)
+         4. MISSION 3: ADVENTURE RACE (SPEEDOMETER & 5 CHECKPOINTS)
          ============================================================== -->
     <section class="screen" id="screen-race">
       <div class="game-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
           <span class="quest-badge badge-race">MISI 3: ADVENTURE RACE</span>
-          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #6ee7b7;" id="race-step-indicator">CHECKPOINT 1/4</span>
+          <span style="font-family: var(--font-display); font-size: 0.8rem; color: #6ee7b7;" id="race-step-indicator">CHECKPOINT 1/5</span>
         </div>
 
-        <h2 style="font-size: 1.15rem; color: #fff; margin-bottom: 6px;">PANDU KE LORONG YANG TEPAT!</h2>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-          Sentuh lorong (Kiri, Tengah, atau Kanan) yang memaparkan jawapan yang betul untuk melepasi gerbang halaju!
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h2 style="font-size: 1.15rem; color: #fff;">PANDU KE LORONG TEPAT!</h2>
+          <span id="combo-display-race"></span>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+          Pilih lorong yang membawa nilai yang betul untuk mengaktifkan mod Hyper Warp Speed dan elak dinding ralat!
         </p>
 
         <!-- Soalan Race terpapar di atas trek -->
-        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 12px; padding: 12px; text-align: center; margin-bottom: 10px;">
-          <div style="font-size: 0.72rem; color: #6ee7b7; text-transform: uppercase; font-weight: 700; margin-bottom: 4px;" id="race-topic-tag">PENGIRAAN RUANG & UKURAN</div>
+        <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 12px; padding: 11px; text-align: center; margin-bottom: 10px;">
+          <div style="font-size: 0.72rem; color: #6ee7b7; text-transform: uppercase; font-weight: 700; margin-bottom: 3px;" id="race-topic-tag">PENGIRAAN RUANG & UKURAN</div>
           <div style="font-size: 1.02rem; font-weight: 700; color: #fff; line-height: 1.4;" id="race-question-text">Soalan lebuhraya bersedia...</div>
         </div>
 
         <!-- Trek Perlumbaan Interaktif -->
         <div class="race-track-wrapper" id="race-track">
-          <div class="highway-grid"></div>
+          <div class="highway-grid" id="highway-grid"></div>
           <div class="warp-speed-flash" id="warp-flash"></div>
+
+          <div class="speed-badge" id="speed-badge">
+            <span>⚡</span> <span id="speed-text">180 KM/J</span>
+          </div>
 
           <!-- 3 Lorong Gerbang -->
           <div class="lanes-container">
@@ -1307,7 +1511,7 @@
           </div>
         </div>
 
-        <!-- Butang Kawalan Alternatif (Bawah trek) -->
+        <!-- Butang Kawalan Alternatif -->
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
           <button class="btn btn-secondary" onclick="chooseRaceLane(0)" style="padding: 10px 4px; font-size: 0.85rem;">⬅️ KIRI</button>
           <button class="btn btn-secondary" onclick="chooseRaceLane(1)" style="padding: 10px 4px; font-size: 0.85rem;">⬆️ TENGAH</button>
@@ -1337,7 +1541,7 @@
 
         <!-- Banner Pemberitahuan Skor Direkodkan -->
         <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 12px; padding: 10px; margin-bottom: 14px; color: #a7f3d0; font-size: 0.85rem; font-weight: 600;">
-          ✅ Markah anda telah direkodkan ke <b>Papan Skor Kelas</b> untuk semakan Guru!
+          ✅ Markah anda telah direkodkan ke <b>Papan Skor Kalendar</b> untuk semakan Guru!
         </div>
 
         <!-- Jadual Rumusan Markah Murid -->
@@ -1357,11 +1561,11 @@
             </tr>
             <tr>
               <td style="color: var(--text-muted);">Mata Pengalaman (XP)</td>
-              <td id="res-xp-total" style="color: #38bdf8;">3,450 XP</td>
+              <td id="res-xp-total" style="color: #38bdf8;">4,250 XP</td>
             </tr>
             <tr>
               <td style="color: var(--text-muted);">Ketepatan Jawapan</td>
-              <td id="res-accuracy" style="color: #34d399;">10 / 11 (91%)</td>
+              <td id="res-accuracy" style="color: #34d399;">14 / 15 (93%)</td>
             </tr>
             <tr>
               <td style="color: var(--text-muted);">Baki Nyawa</td>
@@ -1369,7 +1573,7 @@
             </tr>
             <tr>
               <td style="color: var(--text-muted);">Masa Diambil</td>
-              <td id="res-time-taken" style="color: #fbbf24;">6 minit 42 saat</td>
+              <td id="res-time-taken" style="color: #fbbf24;">8 minit 15 saat</td>
             </tr>
           </table>
         </div>
@@ -1377,7 +1581,7 @@
         <!-- Tindakan Utama Murid & Guru -->
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <button class="btn btn-purple" onclick="openLeaderboardModal()">
-            <span>🏆 LIHAT KEDUDUKAN DALAM PAPAN SKOR</span>
+            <span>📅 BUKA PAPAN SKOR KALENDAR KELAS</span>
           </button>
 
           <button class="btn btn-emerald" onclick="sendViaWhatsApp()">
@@ -1397,37 +1601,47 @@
     </section>
 
     <!-- ==============================================================
-         MODAL: PAPAN SKOR MURID & PANEL REKOD CIKGU (LEADERBOARD)
+         MODAL: PAPAN SKOR KALENDAR MURID & REKOD CIKGU
          ============================================================== -->
     <div class="modal-overlay" id="modal-leaderboard">
       <div class="modal-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <div>
-            <h3 style="font-size: 1.1rem; color: #fff;">🏆 PAPAN SKOR EJEN KELAS</h3>
-            <p style="font-size: 0.72rem; color: var(--text-muted);">Rekod markah murid yang telah menyertai Math Quest</p>
+            <h3 style="font-size: 1.1rem; color: #fff;">📅 PAPAN SKOR KALENDAR PDPR</h3>
+            <p style="font-size: 0.72rem; color: var(--text-muted);">Semak rekod murid mengikut tarikh sesi persekolahan</p>
           </div>
           <button class="hud-btn" onclick="closeLeaderboardModal()">✕</button>
         </div>
 
-        <!-- Tab Pilihan (Semua / T5 / T6 / Mod Cikgu) -->
+        <!-- Tab Tahap (Semua / T5 / T6) -->
         <div class="board-tabs">
-          <button class="board-tab-btn active" id="tab-btn-all" onclick="filterLeaderboard('ALL')">SEMUA</button>
-          <button class="board-tab-btn" id="tab-btn-t5" onclick="filterLeaderboard('T5')">TAHUN 5</button>
-          <button class="board-tab-btn" id="tab-btn-t6" onclick="filterLeaderboard('T6')">TAHUN 6</button>
+          <button class="board-tab-btn active" id="tab-btn-all" onclick="filterLeaderboardGrade('ALL')">SEMUA</button>
+          <button class="board-tab-btn" id="tab-btn-t5" onclick="filterLeaderboardGrade('T5')">TAHUN 5</button>
+          <button class="board-tab-btn" id="tab-btn-t6" onclick="filterLeaderboardGrade('T6')">TAHUN 6</button>
+        </div>
+
+        <!-- Bar Penapis Kalendar & Tarikh -->
+        <div class="calendar-bar">
+          <div class="date-chips">
+            <button class="date-chip active" id="chip-date-all" onclick="filterLeaderboardDate('ALL')">SEMUA TARIKH</button>
+            <button class="date-chip" id="chip-date-today" onclick="filterLeaderboardDate('TODAY')">HARI INI</button>
+            <button class="date-chip" id="chip-date-yesterday" onclick="filterLeaderboardDate('YESTERDAY')">SEMALAM</button>
+          </div>
+          <input type="date" id="calendar-custom-picker" class="date-picker-input" onchange="filterLeaderboardCustomDate(this.value)">
         </div>
 
         <!-- Carian Nama Murid -->
-        <div style="margin-bottom: 10px;">
-          <input type="text" id="leaderboard-search" class="input-text" placeholder="🔍 Cari nama murid..." oninput="searchLeaderboard(this.value)" style="padding: 8px 12px; font-size: 0.85rem;">
+        <div style="margin-bottom: 8px;">
+          <input type="text" id="leaderboard-search" class="input-text" placeholder="🔍 Cari nama murid atau kelas..." oninput="searchLeaderboard(this.value)" style="padding: 8px 12px; font-size: 0.85rem;">
         </div>
 
-        <!-- Senarai Rekod Murid -->
-        <div class="leaderboard-list" id="leaderboard-list-container">
+        <!-- Senarai Rekod Murid Boleh Di-Scroll Mengikut Kalendar -->
+        <div class="leaderboard-scroll-area" id="leaderboard-scroll-area">
           <!-- Populated by JS -->
         </div>
 
         <!-- Bahagian Bawah: Alat Rekod Guru -->
-        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 8px;">
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; gap: 8px;">
           <button class="btn btn-emerald" onclick="exportScoresCsv()" style="padding: 9px 8px; font-size: 0.8rem; width: 50%;">
             <span>📥 EKSPORT EXCEL (CSV)</span>
           </button>
@@ -1464,7 +1678,6 @@
   <script>
     /* ==============================================================
        AUDIO SYNTHESIZER (WEB AUDIO API)
-       Tiada fail luaran diperlukan. Berfungsi pada semua telefon pintar.
        ============================================================== */
     class RetroAudioSynth {
       constructor() {
@@ -1500,13 +1713,14 @@
         } catch (e) {}
       }
 
-      playCorrect() {
+      playCorrect(combo = 1) {
         if (!this.enabled) return;
         this.init();
-        this.playTone(523.25, 'triangle', 0.1, 0.2);
-        setTimeout(() => this.playTone(659.25, 'triangle', 0.12, 0.2), 80);
-        setTimeout(() => this.playTone(783.99, 'triangle', 0.15, 0.25), 160);
-        setTimeout(() => this.playTone(1046.50, 'triangle', 0.25, 0.3), 240);
+        const base = 523.25 + (combo * 50);
+        this.playTone(base, 'triangle', 0.1, 0.2);
+        setTimeout(() => this.playTone(base * 1.25, 'triangle', 0.12, 0.2), 70);
+        setTimeout(() => this.playTone(base * 1.5, 'triangle', 0.15, 0.25), 140);
+        setTimeout(() => this.playTone(base * 2.0, 'triangle', 0.25, 0.3), 210);
       }
 
       playWrong() {
@@ -1522,8 +1736,8 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(880, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.22);
+          osc.frequency.setValueAtTime(950, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.22);
           gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
           gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.22);
           osc.connect(gain);
@@ -1545,8 +1759,8 @@
         if (!this.enabled) return;
         this.init();
         this.playTone(330, 'sine', 0.15, 0.2);
-        setTimeout(() => this.playTone(440, 'sine', 0.2, 0.2), 120);
-        setTimeout(() => this.playTone(550, 'sine', 0.3, 0.25), 240);
+        setTimeout(() => this.playTone(440, 'sine', 0.2, 0.2), 110);
+        setTimeout(() => this.playTone(550, 'sine', 0.28, 0.25), 220);
       }
 
       playWarpSpeed() {
@@ -1556,22 +1770,22 @@
           const gain = this.ctx.createGain();
           osc.type = 'sine';
           osc.frequency.setValueAtTime(220, this.ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(900, this.ctx.currentTime + 0.4);
+          osc.frequency.exponentialRampToValueAtTime(950, this.ctx.currentTime + 0.38);
           gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.4);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.38);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start();
-          osc.stop(this.ctx.currentTime + 0.4);
+          osc.stop(this.ctx.currentTime + 0.38);
         } catch(e) {}
       }
 
       playVictory() {
         if (!this.enabled) return;
         this.init();
-        const notes = [440, 554, 659, 880];
+        const notes = [440, 554, 659, 880, 1108];
         notes.forEach((freq, idx) => {
-          setTimeout(() => this.playTone(freq, 'triangle', 0.3, 0.25), idx * 140);
+          setTimeout(() => this.playTone(freq, 'triangle', 0.3, 0.25), idx * 130);
         });
       }
     }
@@ -1579,18 +1793,21 @@
     const sound = new RetroAudioSynth();
 
     /* ==============================================================
-       SISTEM REKOD MARKAH & PAPAN SKOR MURID (LEADERBOARD)
+       SISTEM REKOD KALENDAR & PAPAN SKOR MURID
        ============================================================== */
-    const LEADERBOARD_KEY = "MATH_QUEST_LEADERBOARD_RECORDS_V1";
+    const LEADERBOARD_KEY = "MATH_QUEST_LEADERBOARD_RECORDS_V2";
 
-    // Rekod permulaan kelas SK Ranggu
+    // Rekod sampel kalendar (13 Okt, 12 Okt, 11 Okt 2026)
     const DEFAULT_LEADERBOARD = [
-      { id: "MQ-1", name: "Muhammad Danial", className: "6 Arif", grade: 6, xp: 4250, stars: 3, accuracy: 95, timeStr: "7 minit 12 saat", date: "13/10/2026, 09:15" },
-      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Arif", grade: 6, xp: 3950, stars: 3, accuracy: 91, timeStr: "8 minit 05 saat", date: "13/10/2026, 09:30" },
-      { id: "MQ-3", name: "Adam Harith", className: "5 Cemerlang", grade: 5, xp: 3750, stars: 3, accuracy: 90, timeStr: "8 minit 40 saat", date: "13/10/2026, 10:10" },
-      { id: "MQ-4", name: "Siti Nurhaliza", className: "5 Cemerlang", grade: 5, xp: 3400, stars: 2, accuracy: 82, timeStr: "9 minit 22 saat", date: "13/10/2026, 10:45" },
-      { id: "MQ-5", name: "Muhammad Rayyan", className: "6 Bijak", grade: 6, xp: 3150, stars: 2, accuracy: 78, timeStr: "10 minit 05 saat", date: "13/10/2026, 11:20" },
-      { id: "MQ-6", name: "Farah Diana", className: "5 Cemerlang", grade: 5, xp: 2900, stars: 2, accuracy: 75, timeStr: "11 minit 10 saat", date: "13/10/2026, 11:50" }
+      { id: "MQ-1", name: "Muhammad Danial", className: "6 Arif", grade: 6, xp: 4850, stars: 3, accuracy: 95, timeStr: "7 minit 12 saat", date: "2026-10-13", timeOnly: "09:15 AM" },
+      { id: "MQ-2", name: "Nur Alya Natasha", className: "6 Arif", grade: 6, xp: 4600, stars: 3, accuracy: 93, timeStr: "7 minit 45 saat", date: "2026-10-13", timeOnly: "09:40 AM" },
+      { id: "MQ-3", name: "Adam Harith", className: "5 Cemerlang", grade: 5, xp: 4350, stars: 3, accuracy: 90, timeStr: "8 minit 20 saat", date: "2026-10-13", timeOnly: "10:15 AM" },
+      { id: "MQ-4", name: "Siti Nurhaliza", className: "5 Cemerlang", grade: 5, xp: 3900, stars: 2, accuracy: 82, timeStr: "9 minit 10 saat", date: "2026-10-13", timeOnly: "10:50 AM" },
+      { id: "MQ-5", name: "Muhammad Rayyan", className: "6 Bijak", grade: 6, xp: 3750, stars: 2, accuracy: 80, timeStr: "9 minit 35 saat", date: "2026-10-12", timeOnly: "11:20 AM" },
+      { id: "MQ-6", name: "Farah Diana", className: "5 Cemerlang", grade: 5, xp: 3500, stars: 2, accuracy: 78, timeStr: "10 minit 05 saat", date: "2026-10-12", timeOnly: "11:55 AM" },
+      { id: "MQ-7", name: "Afiq Hakimi", className: "6 Arif", grade: 6, xp: 4100, stars: 3, accuracy: 88, timeStr: "8 minit 05 saat", date: "2026-10-12", timeOnly: "02:15 PM" },
+      { id: "MQ-8", name: "Dayang Batrisya", className: "5 Cemerlang", grade: 5, xp: 3350, stars: 2, accuracy: 75, timeStr: "10 minit 40 saat", date: "2026-10-11", timeOnly: "10:00 AM" },
+      { id: "MQ-9", name: "Zulhilmi", className: "6 Bijak", grade: 6, xp: 3100, stars: 2, accuracy: 70, timeStr: "11 minit 20 saat", date: "2026-10-11", timeOnly: "03:40 PM" }
     ];
 
     function getLeaderboardData() {
@@ -1607,33 +1824,59 @@
 
     function saveLeaderboardScore(record) {
       const currentList = getLeaderboardData();
-      // Tambah murid baharu ke senarai
       currentList.unshift(record);
-      // Susun mengikut mata XP tertinggi
       currentList.sort((a, b) => b.xp - a.xp);
       try {
         localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(currentList));
       } catch(e) {}
     }
 
-    let currentFilter = 'ALL';
-    let currentSearchQuery = '';
+    let filterGrade = 'ALL';
+    let filterDateMode = 'ALL'; // ALL, TODAY, YESTERDAY, or YYYY-MM-DD
+    let customDateVal = '';
+    let searchQuery = '';
+
+    function formatDateDisplay(isoDate) {
+      if (!isoDate) return "Tarikh Tidak Dinyatakan";
+      const parts = isoDate.split('-');
+      if (parts.length === 3) {
+        const months = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"];
+        const mIdx = parseInt(parts[1], 10) - 1;
+        return `${parseInt(parts[2], 10)} ${months[mIdx] || parts[1]} ${parts[0]}`;
+      }
+      return isoDate;
+    }
 
     function renderLeaderboard() {
-      const container = document.getElementById('leaderboard-list-container');
+      const scrollArea = document.getElementById('leaderboard-scroll-area');
       const allData = getLeaderboardData();
 
-      // Filter ikut gred
+      // Dapatkan tarikh rujukan hari ini & semalam
+      const today = new Date();
+      const todayIso = today.toISOString().slice(0, 10);
+      const yesterday = new Date(Date.now() - 86400000);
+      const yesterdayIso = yesterday.toISOString().slice(0, 10);
+
+      // 1. Tapis ikut gred
       let filtered = allData;
-      if (currentFilter === 'T5') {
+      if (filterGrade === 'T5') {
         filtered = filtered.filter(item => item.grade === 5);
-      } else if (currentFilter === 'T6') {
+      } else if (filterGrade === 'T6') {
         filtered = filtered.filter(item => item.grade === 6);
       }
 
-      // Filter ikut carian nama
-      if (currentSearchQuery.trim()) {
-        const q = currentSearchQuery.toLowerCase();
+      // 2. Tapis ikut kalendar / tarikh
+      if (filterDateMode === 'TODAY') {
+        filtered = filtered.filter(item => item.date === todayIso);
+      } else if (filterDateMode === 'YESTERDAY') {
+        filtered = filtered.filter(item => item.date === yesterdayIso);
+      } else if (filterDateMode === 'CUSTOM' && customDateVal) {
+        filtered = filtered.filter(item => item.date === customDateVal);
+      }
+
+      // 3. Tapis carian nama
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
         filtered = filtered.filter(item => 
           (item.name && item.name.toLowerCase().includes(q)) ||
           (item.className && item.className.toLowerCase().includes(q))
@@ -1641,51 +1884,105 @@
       }
 
       if (filtered.length === 0) {
-        container.innerHTML = `
-          <div style="text-align: center; padding: 24px 10px; color: var(--text-muted); font-size: 0.85rem;">
-            Tiada rekod murid dijumpai untuk carian ini.
+        scrollArea.innerHTML = `
+          <div style="text-align: center; padding: 28px 10px; color: var(--text-muted); font-size: 0.85rem;">
+            🔍 Tiada rekod murid dijumpai untuk pilihan kalendar atau carian ini.
           </div>
         `;
         return;
       }
 
+      // 4. Kumpulkan mengikut Tarikh (Date Grouping)
+      const groups = {};
+      filtered.forEach(item => {
+        const d = item.date || 'Lain-lain';
+        if (!groups[d]) groups[d] = [];
+        groups[d].push(item);
+      });
+
+      // Susun tarikh terkini di atas
+      const sortedDates = Object.keys(groups).sort().reverse();
+
       let html = '';
-      filtered.forEach((item, index) => {
-        const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
-        const rankMedal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-        const starsText = '⭐'.repeat(item.stars || 1);
+      sortedDates.forEach(dKey => {
+        const dateItems = groups[dKey];
+        const avgXp = Math.round(dateItems.reduce((acc, c) => acc + (c.xp || 0), 0) / dateItems.length);
+        const headerTitle = dKey === todayIso ? `HARI INI (${formatDateDisplay(dKey)})` : 
+                            dKey === yesterdayIso ? `SEMALAM (${formatDateDisplay(dKey)})` : 
+                            formatDateDisplay(dKey);
 
         html += `
-          <div class="leaderboard-item ${rankClass}">
-            <div class="rank-badge">${rankMedal}</div>
-            <div class="student-info">
-              <div class="student-name">${item.name}</div>
-              <div class="student-meta">
-                ${item.className || 'Murid'} • Tahun ${item.grade} • Ketepatan: ${item.accuracy || 100}%
+          <div class="date-group-block">
+            <div class="date-group-header">
+              <span>📅 SESI: ${headerTitle}</span>
+              <span style="font-size: 0.72rem; color: #6ee7b7; font-weight: 600;">${dateItems.length} Murid • Purata: ${avgXp.toLocaleString()} XP</span>
+            </div>
+            <div class="leaderboard-list">
+        `;
+
+        dateItems.forEach((item, index) => {
+          const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : '';
+          const rankMedal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+          const starsText = '⭐'.repeat(item.stars || 1);
+
+          html += `
+            <div class="leaderboard-item ${rankClass}">
+              <div class="rank-badge">${rankMedal}</div>
+              <div class="student-info">
+                <div class="student-name">${item.name}</div>
+                <div class="student-meta">
+                  ${item.className || 'Murid'} • Tahun ${item.grade} • ${item.timeOnly || ''} • Ketepatan: ${item.accuracy || 100}%
+                </div>
+              </div>
+              <div class="student-score">
+                <div class="score-xp">${Number(item.xp).toLocaleString()} XP</div>
+                <div class="score-stars">${starsText}</div>
               </div>
             </div>
-            <div class="student-score">
-              <div class="score-xp">${Number(item.xp).toLocaleString()} XP</div>
-              <div class="score-stars">${starsText}</div>
+          `;
+        });
+
+        html += `
             </div>
           </div>
         `;
       });
 
-      container.innerHTML = html;
+      scrollArea.innerHTML = html;
     }
 
-    function filterLeaderboard(filterType) {
-      currentFilter = filterType;
-      document.getElementById('tab-btn-all').classList.toggle('active', filterType === 'ALL');
-      document.getElementById('tab-btn-t5').classList.toggle('active', filterType === 'T5');
-      document.getElementById('tab-btn-t6').classList.toggle('active', filterType === 'T6');
+    function filterLeaderboardGrade(gradeType) {
+      filterGrade = gradeType;
+      document.getElementById('tab-btn-all').classList.toggle('active', gradeType === 'ALL');
+      document.getElementById('tab-btn-t5').classList.toggle('active', gradeType === 'T5');
+      document.getElementById('tab-btn-t6').classList.toggle('active', gradeType === 'T6');
       renderLeaderboard();
       sound.playTone(380, 'sine', 0.05, 0.1);
     }
 
+    function filterLeaderboardDate(mode) {
+      filterDateMode = mode;
+      document.getElementById('chip-date-all').classList.toggle('active', mode === 'ALL');
+      document.getElementById('chip-date-today').classList.toggle('active', mode === 'TODAY');
+      document.getElementById('chip-date-yesterday').classList.toggle('active', mode === 'YESTERDAY');
+      document.getElementById('calendar-custom-picker').value = '';
+      renderLeaderboard();
+      sound.playTone(420, 'sine', 0.05, 0.1);
+    }
+
+    function filterLeaderboardCustomDate(val) {
+      if (!val) return;
+      filterDateMode = 'CUSTOM';
+      customDateVal = val;
+      document.getElementById('chip-date-all').classList.remove('active');
+      document.getElementById('chip-date-today').classList.remove('active');
+      document.getElementById('chip-date-yesterday').classList.remove('active');
+      renderLeaderboard();
+      showToast(`Menapis rekod tarikh: ${formatDateDisplay(val)}`, '📅');
+    }
+
     function searchLeaderboard(query) {
-      currentSearchQuery = query;
+      searchQuery = query;
       renderLeaderboard();
     }
 
@@ -1700,37 +1997,35 @@
       document.getElementById('modal-leaderboard').classList.remove('active');
     }
 
-    // Fungsi Khas Cikgu: Muat Turun Fail CSV (Boleh dibuka dalam Microsoft Excel / Google Sheets)
     function exportScoresCsv() {
       const data = getLeaderboardData();
-      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan (%),Masa Diambil,Tarikh Selesai\n";
+      let csv = "Bil,Nama Murid,Kelas,Tahap,Skor XP,Bintang,Ketepatan (%),Masa Diambil,Tarikh,Masa Selesai\n";
       
       data.forEach((row, i) => {
-        csv += `"${i + 1}","${row.name}","${row.className || '-'}","Tahun ${row.grade}","${row.xp}","${row.stars}","${row.accuracy}%","${row.timeStr}","${row.date}"\n`;
+        csv += `"${i + 1}","${row.name}","${row.className || '-'}","Tahun ${row.grade}","${row.xp}","${row.stars}","${row.accuracy}%","${row.timeStr}","${row.date}","${row.timeOnly || '-'}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
-      link.setAttribute("download", `Rekod_Markah_Math_Quest_${new Date().toISOString().slice(0,10)}.csv`);
+      link.setAttribute("download", `Rekod_Markah_Kalendar_${new Date().toISOString().slice(0,10)}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast("Fail CSV berjaya dimuat turun untuk Cikgu!", "📥");
+      showToast("Fail CSV Kalendar dimuat turun!", "📥");
     }
 
-    // Fungsi Khas Cikgu: Salin Ringkasan Rekod untuk Buku Rekod Guru
     function copyTeacherMarkSummary() {
       const data = getLeaderboardData();
-      let text = `📊 *SENARAI REKOD MARKAH PDPR MATH QUEST* 📊\n`;
-      text += `Tarikh Cetakan: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
+      let text = `📊 *SENARAI REKOD MARKAH KALENDAR PDPR MATH QUEST* 📊\n`;
+      text += `SK Ranggu • Tarikh Semakan: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
       
       data.forEach((r, idx) => {
-        text += `${idx + 1}. ${r.name} (${r.className}) - Thn ${r.grade}: ${Number(r.xp).toLocaleString()} XP | ${r.stars}⭐ | ${r.accuracy}%\n`;
+        text += `${idx + 1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${Number(r.xp).toLocaleString()} XP | ${r.stars}⭐ | ${r.accuracy}%\n`;
       });
 
-      text += `\nJumlah Penyertaan: ${data.length} orang murid.`;
+      text += `\nJumlah Penyertaan Keseluruhan: ${data.length} murid.`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
@@ -1744,183 +2039,76 @@
     }
 
     /* ==============================================================
-       BANK SOALAN MATEMATIK KSSR SEMAKAN (TAHUN 5 & TAHUN 6)
+       BANK SOALAN YANG LUAS & BANYAK (RANDOMIZED POOLS)
        ============================================================== */
-    const QUESTION_BANK = {
+    const MASTER_QUESTION_POOL = {
       grade5: {
         escape: [
-          {
-            topic: "Nombor & Nilai Digit",
-            question: "Berapakah nilai tempat bagi digit 7 dalam nombor 472 819? (Masukkan 2 digit pertama nilainya, cth: 70)",
-            answer: "70",
-            hint: "Digit 7 berada pada nilai tempat puluh ribu (70 000)."
-          },
-          {
-            topic: "Operasi Asas",
-            question: "Kira kod keselamatan: 45 200 + 14 800 = ? (Ambil 3 digit pertama)",
-            answer: "600",
-            hint: "45 200 + 14 800 = 60 000. Tiga digit pertama ialah 600."
-          },
-          {
-            topic: "Pecahan Tak Wajar",
-            question: "Tukarkan nombor bercampur 2 ³/₄ kepada pecahan tak wajar. Masukkan nombor pengangka sahaja.",
-            answer: "11",
-            hint: "(2 × 4) + 3 = 11. Jadi pengangkanya ialah 11."
-          },
-          {
-            topic: "Nombor Perdana",
-            question: "Apakah nombor perdana yang terletak antara nombor 14 dan 18?",
-            answer: "17",
-            hint: "17 hanya boleh dibahagi dengan 1 dan dirinya sendiri."
-          }
+          { topic: "Nombor & Nilai Tempat", question: "Nilai tempat bagi digit 7 dalam nombor 472 819? (Masukkan 2 digit pertama nilainya, cth: 70)", answer: "70", hint: "7 berada di nilai tempat puluh ribu (70 000)." },
+          { topic: "Operasi Asas", question: "Kira kod keselamatan: 45 200 + 14 800 = ? (Ambil 3 digit pertama)", answer: "600", hint: "45 200 + 14 800 = 60 000." },
+          { topic: "Pecahan Tak Wajar", question: "Tukarkan 2 ³/₄ kepada pecahan tak wajar. Masukkan nombor pengangka sahaja.", answer: "11", hint: "(2 × 4) + 3 = 11." },
+          { topic: "Nombor Perdana", question: "Apakah nombor perdana yang terletak antara 14 dan 18?", answer: "17", hint: "17 hanya boleh dibahagi dengan 1 dan 17." },
+          { topic: "Cerakinan Nilai", question: "Kod rahsia: 500 000 + 30 000 + 400 + 5 = ? (Masukkan 3 digit pertama)", answer: "530", hint: "530 405. Tiga digit pertama ialah 530." },
+          { topic: "Pembundaran", question: "Bundarkan 384 560 kepada ratus ribu terdekat. Masukkan digit pertamanya.", answer: "4", hint: "384 560 dibundarkan menjadi 400 000." },
+          { topic: "Tolak Pantas", question: "Selesaikan kod pintu: 100 000 - 45 000 = ? (Ambil 2 digit pertama)", answer: "55", hint: "100 000 - 45 000 = 55 000." }
         ],
         boss: [
-          {
-            topic: "Wang & Diskaun",
-            question: "Sebuah basikal berharga RM400. Kedai memberikan diskaun 20%. Berapakah harga selepas diskaun?",
-            options: ["RM320", "RM340", "RM360", "RM380"],
-            correctIndex: 0
-          },
-          {
-            topic: "Masa & Waktu",
-            question: "Tukarkan 2 jam 45 minit kepada minit sepenuhnya.",
-            options: ["145 minit", "155 minit", "165 minit", "175 minit"],
-            correctIndex: 2
-          },
-          {
-            topic: "Perpuluhan",
-            question: "Hitung hasil darab: 14.5 × 6 =",
-            options: ["82.5", "84.0", "87.0", "89.5"],
-            correctIndex: 2
-          },
-          {
-            topic: "Peratus",
-            question: "Kira 15% daripada 400 orang murid.",
-            options: ["50 orang", "60 orang", "75 orang", "80 orang"],
-            correctIndex: 1
-          },
-          {
-            topic: "Operasi Bergabung Wang",
-            question: "RM8 400 dibahagi sama rata kepada 6 buah kelas. Berapa RM setiap kelas dapat?",
-            options: ["RM1 200", "RM1 350", "RM1 400", "RM1 500"],
-            correctIndex: 2
-          }
+          { topic: "Wang & Diskaun", question: "Basikal berharga RM400 diberi diskaun 20%. Berapakah harga selepas diskaun?", options: ["RM320", "RM340", "RM360", "RM380"], correctIndex: 0 },
+          { topic: "Masa & Waktu", question: "Tukarkan 2 jam 45 minit kepada minit sepenuhnya.", options: ["145 minit", "155 minit", "165 minit", "175 minit"], correctIndex: 2 },
+          { topic: "Perpuluhan", question: "Hitung hasil darab: 14.5 × 6 =", options: ["82.5", "84.0", "87.0", "89.5"], correctIndex: 2 },
+          { topic: "Peratus Kuantiti", question: "Kira 15% daripada 400 orang murid.", options: ["50 orang", "60 orang", "75 orang", "80 orang"], correctIndex: 1 },
+          { topic: "Operasi Wang", question: "RM8 400 dibahagi sama rata kepada 6 buah kelas. Berapa RM setiap kelas dapat?", options: ["RM1 200", "RM1 350", "RM1 400", "RM1 500"], correctIndex: 2 },
+          { topic: "Tempoh Masa", question: "Program mula jam 0830 dan tamat jam 1115. Berapakah tempoh masa program?", options: ["2 jam 15 minit", "2 jam 45 minit", "3 jam 15 minit", "3 jam 45 minit"], correctIndex: 1 },
+          { topic: "Bahagi Perpuluhan", question: "Hitung: 72.8 ÷ 8 =", options: ["8.1", "9.1", "9.4", "10.1"], correctIndex: 1 }
         ],
         race: [
-          {
-            topic: "Perimeter",
-            question: "Cari perimeter segi empat tepat dengan panjang 12 cm dan lebar 8 cm.",
-            lanes: ["36 cm", "40 cm", "44 cm"],
-            correctLane: 1
-          },
-          {
-            topic: "Luas Segi Tiga",
-            question: "Luas segi tiga dengan tapak 10 cm dan tinggi 8 cm ialah: (¹/₂ × tapak × tinggi)",
-            lanes: ["40 cm²", "80 cm²", "50 cm²"],
-            correctLane: 0
-          },
-          {
-            topic: "Isi Padu Kubus",
-            question: "Cari isi padu sebuah kubus yang bersisi 5 cm. (5 × 5 × 5)",
-            lanes: ["100 cm³", "120 cm³", "125 cm³"],
-            correctLane: 2
-          },
-          {
-            topic: "Penukaran Jisim",
-            question: "3.5 kg bersamaan dengan berapa gram?",
-            lanes: ["3 500 g", "350 g", "35 000 g"],
-            correctLane: 0
-          }
+          { topic: "Perimeter", question: "Perimeter segi empat tepat panjang 12 cm dan lebar 8 cm ialah:", lanes: ["36 cm", "40 cm", "44 cm"], correctLane: 1 },
+          { topic: "Luas Segi Tiga", question: "Luas segi tiga tapak 10 cm dan tinggi 8 cm ialah: (¹/₂ × tapak × tinggi)", lanes: ["40 cm²", "80 cm²", "50 cm²"], correctLane: 0 },
+          { topic: "Isi Padu Kubus", question: "Isi padu kubus bersisi 5 cm ialah: (5 × 5 × 5)", lanes: ["100 cm³", "120 cm³", "125 cm³"], correctLane: 2 },
+          { topic: "Penukaran Jisim", question: "3.5 kg bersamaan dengan berapa gram?", lanes: ["3 500 g", "350 g", "35 000 g"], correctLane: 0 },
+          { topic: "Isi Padu Cecair", question: "2.4 liter air bersamaan dengan berapa mililiter?", lanes: ["240 ml", "2 400 ml", "24 000 ml"], correctLane: 1 },
+          { topic: "Panjang", question: "4 m 25 cm bersamaan dengan berapa sentimeter?", lanes: ["425 cm", "4 250 cm", "450 cm"], correctLane: 0 }
         ]
       },
 
       grade6: {
         escape: [
-          {
-            topic: "Pecahan Juta",
-            question: "Tukarkan ³/₄ juta kepada nombor bulat. Masukkan 3 digit pertama nombor tersebut (Cth: 750)",
-            answer: "750",
-            hint: "³/₄ daripada 1 000 000 = 750 000. Tiga digit pertama ialah 750."
-          },
-          {
-            topic: "BODMAS Operasi Bergabung",
-            question: "Selesaikan kod: 40 + 20 × (15 - 5) = ?",
-            answer: "240",
-            hint: "Kurungan dahulu: (15 - 5) = 10. Kemudian darab: 20 × 10 = 200. Akhir sekali tambah: 40 + 200 = 240."
-          },
-          {
-            topic: "Nombor & Operasi",
-            question: "Hitung kod rahsia: (500 - 150) ÷ 7 + 30 = ?",
-            answer: "80",
-            hint: "(350) ÷ 7 = 50. Kemudian 50 + 30 = 80."
-          },
-          {
-            topic: "Perpuluhan Juta",
-            question: "0.5 juta bersamaan dengan 500 000. Apakah digit pertama nombor bulat bagi 0.08 juta?",
-            answer: "80",
-            hint: "0.08 × 1 000 000 = 80 000. Dua digit pertamanya ialah 80."
-          }
+          { topic: "Pecahan Juta", question: "Tukarkan ³/₄ juta kepada nombor bulat. Masukkan 3 digit pertama (Cth: 750)", answer: "750", hint: "³/₄ juta = 750 000." },
+          { topic: "BODMAS", question: "Selesaikan kod: 40 + 20 × (15 - 5) = ?", answer: "240", hint: "(15 - 5)=10, 20×10=200, 40+200=240." },
+          { topic: "Operasi Bergabung", question: "Hitung kod rahsia: (500 - 150) ÷ 7 + 30 = ?", answer: "80", hint: "350 ÷ 7 = 50, 50 + 30 = 80." },
+          { topic: "Perpuluhan Juta", question: "0.5 juta = 500 000. Apakah dua digit pertama bagi 0.08 juta?", answer: "80", hint: "0.08 × 1 000 000 = 80 000." },
+          { topic: "Nombor Perdana", question: "Berapakah bilangan nombor perdana antara 10 hingga 20? (11, 13, 17, 19)", answer: "4", hint: "Ada 4 nombor perdana." },
+          { topic: "Pecahan Juta Tambah", question: "¹/₅ juta + 300 000 = ? Masukkan digit pertamanya (dalam ratus ribu).", answer: "5", hint: "200 000 + 300 000 = 500 000." },
+          { topic: "BODMAS Tolak Darab", question: "Kira: 100 - 5 × 8 + 12 = ?", answer: "72", hint: "5×8=40, 100-40=60, 60+12=72." }
         ],
         boss: [
-          {
-            topic: "Untung & Rugi",
-            question: "Encik Amir membeli telefon pada harga RM2 000 dan menjualnya dengan keuntungan 25%. Berapakah harga jualannya?",
-            options: ["RM2 250", "RM2 400", "RM2 500", "RM2 600"],
-            correctIndex: 2
-          },
-          {
-            topic: "Nisbah & Kadaran",
-            question: "Nisbah murid lelaki kepada perempuan ialah 3 : 5. Jika ada 15 murid lelaki, berapa bilangan murid perempuan?",
-            options: ["20 orang", "25 orang", "30 orang", "35 orang"],
-            correctIndex: 1
-          },
-          {
-            topic: "Kadaran Harga",
-            question: "5 botol jus berharga RM35. Berapakah harga bagi 8 botol jus yang sama?",
-            options: ["RM48", "RM52", "RM56", "RM60"],
-            correctIndex: 2
-          },
-          {
-            topic: "Cukai Perkhidmatan",
-            question: "Bil makanan ialah RM150. Cukai perkhidmatan 6% dikenakan. Berapakah jumlah keseluruhan bayaran?",
-            options: ["RM156", "RM159", "RM162", "RM165"],
-            correctIndex: 1
-          },
-          {
-            topic: "Aset & Liabiliti",
-            question: "Aset: Simpanan RM12 000 + Kereta RM40 000. Liabiliti: Pinjaman RM15 000. Berapakah Aset Bersih?",
-            options: ["RM35 000", "RM37 000", "RM42 000", "RM52 000"],
-            correctIndex: 1
-          }
+          { topic: "Untung & Rugi", question: "Beli komputer RM2 000, jual dengan untung 25%. Berapakah harga jualan?", options: ["RM2 250", "RM2 400", "RM2 500", "RM2 600"], correctIndex: 2 },
+          { topic: "Nisbah", question: "Nisbah lelaki kepada perempuan ialah 3 : 5. Jika ada 15 lelaki, berapa bilangan perempuan?", options: ["20 orang", "25 orang", "30 orang", "35 orang"], correctIndex: 1 },
+          { topic: "Kadaran Harga", question: "5 botol jus berharga RM35. Berapakah harga bagi 8 botol jus yang sama?", options: ["RM48", "RM52", "RM56", "RM60"], correctIndex: 2 },
+          { topic: "Cukai Perkhidmatan", question: "Bil makanan RM150. Cukai perkhidmatan 6% dikenakan. Berapakah jumlah bayaran?", options: ["RM156", "RM159", "RM162", "RM165"], correctIndex: 1 },
+          { topic: "Aset & Liabiliti", question: "Aset: RM52 000. Liabiliti: Pinjaman RM15 000. Berapakah Aset Bersih?", options: ["RM35 000", "RM37 000", "RM42 000", "RM52 000"], correctIndex: 1 },
+          { topic: "Faedah Simpanan", question: "Simpan RM5 000 dengan faedah mudah 3% setahun. Berapakah faedah diterima setahun?", options: ["RM120", "RM150", "RM180", "RM200"], correctIndex: 1 },
+          { topic: "Diskaun KBAT", question: "Baju RM80 diskaun 15%. Berapakah jumlah penjimatan wang?", options: ["RM8", "RM10", "RM12", "RM14"], correctIndex: 2 }
         ],
         race: [
-          {
-            topic: "Isi Padu Bentuk Gabungan",
-            question: "Kubus A (4×4×4 = 64 cm³) dicantum dengan Kuboid B (5×4×3 = 60 cm³). Jumlah isi padu gabungan ialah:",
-            lanes: ["120 cm³", "124 cm³", "134 cm³"],
-            correctLane: 1
-          },
-          {
-            topic: "Luas Permukaan Kubus",
-            question: "Cari jumlah luas permukaan bagi sebuah kubus bersisi 3 cm. (Kubus ada 6 muka, 6 × 3 × 3)",
-            lanes: ["54 cm²", "36 cm²", "72 cm²"],
-            correctLane: 0
-          },
-          {
-            topic: "Sudut Poligon",
-            question: "Berapakah jumlah sudut pedalaman bagi sebuah segi tiga?",
-            lanes: ["90°", "360°", "180°"],
-            correctLane: 2
-          },
-          {
-            topic: "Isi Padu Cecair & Ruang",
-            question: "Bekas kuboid 20 cm × 10 cm × 15 cm diisi penuh air (3 000 cm³). Berapakah isi padu air dalam liter? (1 000 cm³ = 1 L)",
-            lanes: ["3 Liter", "30 Liter", "0.3 Liter"],
-            correctLane: 0
-          }
+          { topic: "Isi Padu Gabungan", question: "Kubus A (4³ = 64 cm³) dicantum Kuboid B (5×4×3 = 60 cm³). Jumlah isi padu:", lanes: ["120 cm³", "124 cm³", "134 cm³"], correctLane: 1 },
+          { topic: "Luas Permukaan", question: "Jumlah luas permukaan kubus bersisi 3 cm ialah: (6 × 3 × 3)", lanes: ["54 cm²", "36 cm²", "72 cm²"], correctLane: 0 },
+          { topic: "Sudut Poligon", question: "Berapakah jumlah sudut pedalaman bagi sebuah segi tiga?", lanes: ["90°", "360°", "180°"], correctLane: 2 },
+          { topic: "Isi Padu Cecair", question: "Bekas 20 cm × 10 cm × 15 cm diisi penuh air (3 000 cm³). Isi padu dalam liter:", lanes: ["3 Liter", "30 Liter", "0.3 Liter"], correctLane: 0 },
+          { topic: "Sudut Segi Empat", question: "Jumlah sudut pedalaman bagi sebuah segi empat selari ialah:", lanes: ["180°", "270°", "360°"], correctLane: 2 },
+          { topic: "Satah Cartes", question: "Jarak mengufuk dari titik (0,0) ke titik (7, 5) ialah berapa unit?", lanes: ["5 unit", "7 unit", "12 unit"], correctLane: 1 }
         ]
       }
     };
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
 
     /* ==============================================================
        GAME ENGINE & STATE MANAGEMENT
@@ -1931,6 +2119,7 @@
       grade: 5,
       hearts: 3,
       xp: 0,
+      combo: 0,
       totalSeconds: 15 * 60,
       timerInterval: null,
       startTime: null,
@@ -1939,24 +2128,25 @@
       correctAnswers: 0,
       totalQuestionsAnswered: 0,
 
-      // Misi 1
+      // Misi 1: Escape (5 Pintu)
       escapeQuestions: [],
       escapeIndex: 0,
       escapeCodeInput: "",
 
-      // Misi 2
+      // Misi 2: Boss (5 Pusingan & Enrage)
       bossQuestions: [],
       bossIndex: 0,
-      bossMaxHp: 400,
-      bossHp: 400,
+      bossMaxHp: 500,
+      bossHp: 500,
+      bossIsEnraged: false,
 
-      // Misi 3
+      // Misi 3: Race (5 Checkpoint)
       raceQuestions: [],
       raceIndex: 0,
-      currentLane: 1
+      currentLane: 1,
+      currentSpeed: 180
     };
 
-    // DOM Elements Cache
     const el = {
       hud: document.getElementById('game-hud'),
       hearts: document.getElementById('hud-hearts'),
@@ -1983,6 +2173,8 @@
       doorRight: document.getElementById('door-right'),
       doorLightLeft: document.getElementById('door-light-left'),
       doorLightRight: document.getElementById('door-light-right'),
+      alarmFlash: document.getElementById('alarm-flash'),
+      comboDisplayEscape: document.getElementById('combo-display-escape'),
 
       // Mission 2
       bossRoundIndicator: document.getElementById('boss-round-indicator'),
@@ -1994,6 +2186,10 @@
       bossSvg: document.getElementById('boss-svg-elem'),
       playerLaser: document.getElementById('player-laser'),
       damagePopup: document.getElementById('damage-popup'),
+      bossArenaBox: document.getElementById('boss-arena-box'),
+      bossModeBadge: document.getElementById('boss-mode-badge'),
+      bossShieldRing: document.getElementById('boss-shield-ring'),
+      comboDisplayBoss: document.getElementById('combo-display-boss'),
 
       // Mission 3
       raceStepIndicator: document.getElementById('race-step-indicator'),
@@ -2004,8 +2200,10 @@
       gate2: document.getElementById('gate-2'),
       playerRacer: document.getElementById('player-racer'),
       warpFlash: document.getElementById('warp-flash'),
+      speedText: document.getElementById('speed-text'),
+      comboDisplayRace: document.getElementById('combo-display-race'),
 
-      // Result Elements
+      // Result
       resPlayerName: document.getElementById('res-player-name'),
       resPlayerClass: document.getElementById('res-player-class'),
       resGradeLevel: document.getElementById('res-grade-level'),
@@ -2063,10 +2261,17 @@
       } else {
         document.getElementById('hud-timer').classList.remove('urgent');
       }
+
+      // Combo Pill display update
+      const comboHtml = state.combo > 1 ? `<span class="combo-pill">🔥 ${state.combo}x COMBO!</span>` : '';
+      el.comboDisplayEscape.innerHTML = comboHtml;
+      el.comboDisplayBoss.innerHTML = comboHtml;
+      el.comboDisplayRace.innerHTML = comboHtml;
     }
 
     function takeDamage() {
       state.hearts--;
+      state.combo = 0; // Reset combo streak
       sound.playWrong();
       document.body.classList.add('screen-shake');
       setTimeout(() => document.body.classList.remove('screen-shake'), 400);
@@ -2094,6 +2299,7 @@
       state.playerClass = inputClass || (state.grade === 5 ? '5 Cemerlang' : '6 Arif');
       state.hearts = 3;
       state.xp = 0;
+      state.combo = 0;
       state.correctAnswers = 0;
       state.totalQuestionsAnswered = 0;
       state.totalSeconds = 15 * 60;
@@ -2112,10 +2318,11 @@
         }
       }, 1000);
 
-      const bank = state.grade === 5 ? QUESTION_BANK.grade5 : QUESTION_BANK.grade6;
-      state.escapeQuestions = [...bank.escape];
-      state.bossQuestions = [...bank.boss];
-      state.raceQuestions = [...bank.race];
+      // Rawakkan soalan dari Master Pool (5 soalan setiap fasa)
+      const pool = state.grade === 5 ? MASTER_QUESTION_POOL.grade5 : MASTER_QUESTION_POOL.grade6;
+      state.escapeQuestions = shuffleArray(pool.escape).slice(0, 5);
+      state.bossQuestions = shuffleArray(pool.boss).slice(0, 5);
+      state.raceQuestions = shuffleArray(pool.race).slice(0, 5);
 
       state.escapeIndex = 0;
       state.bossIndex = 0;
@@ -2127,7 +2334,9 @@
       initEscapeRoom();
     }
 
-    /* Misi 1 */
+    /* ==============================================================
+       MISI 1: ESCAPE ROOM (5 PINTU KESELAMATAN)
+       ============================================================== */
     function initEscapeRoom() {
       switchScreen(el.screenEscape);
       state.escapeCodeInput = "";
@@ -2137,11 +2346,17 @@
       el.doorRight.classList.remove('open-right');
       el.doorLightLeft.classList.remove('unlocked');
       el.doorLightRight.classList.remove('unlocked');
+      el.alarmFlash.classList.remove('active');
 
       const q = state.escapeQuestions[state.escapeIndex];
       el.escapeStepIndicator.textContent = `PINTU ${state.escapeIndex + 1}/${state.escapeQuestions.length}`;
       el.escapeTopicTag.textContent = `Topik: ${q.topic}`;
       el.escapeQuestionText.textContent = q.question;
+
+      // Lampu amaran aktif pada pintu ke-4 dan ke-5
+      if (state.escapeIndex >= 3) {
+        el.alarmFlash.classList.add('active');
+      }
     }
 
     function pressKeypad(key) {
@@ -2167,9 +2382,11 @@
 
       if (state.escapeCodeInput === q.answer) {
         state.correctAnswers++;
-        state.xp += 250;
+        state.combo++;
+        const bonusCombo = state.combo * 50;
+        state.xp += (250 + bonusCombo);
         updateHud();
-        sound.playCorrect();
+        sound.playCorrect(state.combo);
         sound.playDoorOpen();
 
         el.doorLightLeft.classList.add('unlocked');
@@ -2177,17 +2394,17 @@
         el.doorLeft.classList.add('open-left');
         el.doorRight.classList.add('open-right');
 
-        showToast("KOD TEPAT! Pintu Dibuka! +250 XP", "🔓");
+        showToast(`KOD TEPAT! Pintu Dibuka! +${250 + bonusCombo} XP`, "🔓");
 
         setTimeout(() => {
           state.escapeIndex++;
           if (state.escapeIndex < state.escapeQuestions.length) {
             initEscapeRoom();
           } else {
-            showToast("MISI 1 SELESAI! Amaran Boss dikesan!", "⚠️");
+            showToast("MISI 1 SELESAI! Bersedia untuk pertarungan Boss!", "⚠️");
             setTimeout(initBossBattle, 1200);
           }
-        }, 1300);
+        }, 1200);
 
       } else {
         takeDamage();
@@ -2200,11 +2417,18 @@
       }
     }
 
-    /* Misi 2 */
+    /* ==============================================================
+       MISI 2: BOSS BATTLE (DENGAN 3 FASA & RAGE MODE)
+       ============================================================== */
     function initBossBattle() {
       switchScreen(el.screenBoss);
       state.bossMaxHp = state.bossQuestions.length * 100;
       state.bossHp = state.bossMaxHp;
+      state.bossIsEnraged = false;
+      el.bossArenaBox.classList.remove('enraged');
+      el.bossShieldRing.classList.add('active');
+      el.bossModeBadge.textContent = "FASA 1: SHIELD ACTIVE";
+      el.bossModeBadge.className = "boss-mode-badge";
       updateBossHp();
       loadBossQuestion();
       sound.playTone(220, 'sawtooth', 0.3, 0.25);
@@ -2214,6 +2438,25 @@
       const pct = Math.max(0, (state.bossHp / state.bossMaxHp) * 100);
       el.bossHpFill.style.width = `${pct}%`;
       el.bossHpText.textContent = `${state.bossHp} / ${state.bossMaxHp} HP`;
+
+      // Fasa 2: Kurang 60% HP
+      if (pct <= 60 && pct > 25) {
+        el.bossShieldRing.classList.remove('active');
+        el.bossModeBadge.textContent = "FASA 2: EXPOSED CORE";
+        el.bossModeBadge.style.borderColor = "#38bdf8";
+        el.bossModeBadge.style.color = "#38bdf8";
+      }
+
+      // Fasa 3: Kurang 25% HP -> ENRAGE MODE!
+      if (pct <= 25 && !state.bossIsEnraged && state.bossHp > 0) {
+        state.bossIsEnraged = true;
+        el.bossArenaBox.classList.add('enraged');
+        el.bossModeBadge.textContent = "🔥 ENRAGE / OVERDRIVE!";
+        el.bossModeBadge.className = "boss-mode-badge enrage";
+        document.getElementById('boss-name-label').textContent = "GLITCH-TITAN [BERSERK]";
+        showToast("AMARAN: BOSS MASUK MOD ENRAGE!", "⚡");
+        sound.playTone(180, 'sawtooth', 0.4, 0.35);
+      }
     }
 
     function loadBossQuestion() {
@@ -2243,7 +2486,9 @@
       if (selectedIndex === q.correctIndex) {
         btnElement.classList.add('correct');
         state.correctAnswers++;
-        state.xp += 300;
+        state.combo++;
+        const dmg = 100 + (state.combo * 20);
+        state.xp += (300 + (state.combo * 50));
         state.bossHp = Math.max(0, state.bossHp - 100);
         updateBossHp();
         updateHud();
@@ -2253,7 +2498,9 @@
         setTimeout(() => {
           el.playerLaser.classList.remove('firing');
           sound.playExplosion();
+          sound.playCorrect(state.combo);
           el.bossSvg.classList.add('damage-shake');
+          el.damagePopup.textContent = `-${dmg} CRITICAL!`;
           el.damagePopup.classList.add('show');
           setTimeout(() => {
             el.bossSvg.classList.remove('damage-shake');
@@ -2261,7 +2508,7 @@
           }, 600);
         }, 180);
 
-        showToast("CRITICAL HIT! Boss kerosakan! +300 XP", "💥");
+        showToast(`CRITICAL HIT! +${300 + (state.combo * 50)} XP`, "💥");
 
         setTimeout(() => {
           state.bossIndex++;
@@ -2291,13 +2538,21 @@
       }
     }
 
-    /* Misi 3 */
+    /* ==============================================================
+       MISI 3: ADVENTURE RACE (5 CHECKPOINTS & SPEED ACCELERATION)
+       ============================================================== */
     function initAdventureRace() {
       switchScreen(el.screenRace);
       state.raceIndex = 0;
       state.currentLane = 1;
+      state.currentSpeed = 180;
+      updateSpeedDisplay();
       updateRacerPosition();
       loadRaceQuestion();
+    }
+
+    function updateSpeedDisplay() {
+      el.speedText.textContent = `${state.currentSpeed} KM/J`;
     }
 
     function updateRacerPosition() {
@@ -2326,15 +2581,20 @@
 
       if (laneIndex === q.correctLane) {
         state.correctAnswers++;
-        state.xp += 350;
+        state.combo++;
+        state.currentSpeed = Math.min(999, state.currentSpeed + 160);
+        updateSpeedDisplay();
+        const bonusXp = 350 + (state.combo * 50);
+        state.xp += bonusXp;
         updateHud();
+
         sound.playWarpSpeed();
-        sound.playCorrect();
+        sound.playCorrect(state.combo);
 
         el.warpFlash.classList.add('active');
         setTimeout(() => el.warpFlash.classList.remove('active'), 250);
 
-        showToast("HYPER WARP! Lorong Tepat! +350 XP", "⚡");
+        showToast(`HYPER WARP SPEED! +${bonusXp} XP`, "⚡");
 
         setTimeout(() => {
           state.raceIndex++;
@@ -2346,8 +2606,10 @@
         }, 1000);
 
       } else {
+        state.currentSpeed = Math.max(120, state.currentSpeed - 100);
+        updateSpeedDisplay();
         takeDamage();
-        showToast("TERLANGGAR HALANGAN! Cuba lorong lain!", "🛑");
+        showToast("TERLANGGAR HALANGAN LORONG!", "🛑");
 
         if (state.hearts > 0) {
           setTimeout(() => {
@@ -2363,7 +2625,7 @@
     }
 
     /* ==============================================================
-       END GAME: REKOD MARKAH & PAPARAN HASIL
+       END GAME: REKOD MARKAH & SIJIL
        ============================================================== */
     function endGame(isVictory, message) {
       clearInterval(state.timerInterval);
@@ -2400,9 +2662,10 @@
       }
       el.resultStars.innerHTML = starsHtml;
 
-      // SIMPAN REKOD MARKAH SECARA AUTOMATIK KE PAPAN SKOR KELAS
+      // REKOD MARKAH IKUT KALENDAR HARI INI
       const now = new Date();
-      const dateFormatted = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      const isoToday = now.toISOString().slice(0, 10);
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
       
       const studentRecord = {
         id: "MQ-" + Date.now(),
@@ -2413,7 +2676,8 @@
         stars: starCount,
         accuracy: accuracyPct,
         timeStr: timeFormatted,
-        date: dateFormatted
+        date: isoToday,
+        timeOnly: timeStr
       };
 
       saveLeaderboardScore(studentRecord);
@@ -2422,7 +2686,7 @@
         sound.playVictory();
         el.resultStatusIcon.textContent = "🏆";
         el.resultTitle.textContent = "MISI SELESAI DENGAN CEMERLANG!";
-        el.resultSubtitle.textContent = `Tahniah ${state.playerName}, markah anda telah direkodkan ke Papan Skor!`;
+        el.resultSubtitle.textContent = `Tahniah ${state.playerName}, markah anda telah direkodkan ke Papan Skor Kalendar!`;
       } else {
         sound.playWrong();
         el.resultStatusIcon.textContent = "🛡️";
@@ -2446,12 +2710,12 @@
         `🎯 *Ketepatan:* ${state.correctAnswers}/${state.totalQuestionsAnswered} (${accuracyPct}%)\n` +
         `❤️ *Baki Nyawa:* ${state.hearts}/3\n` +
         `⏱️ *Masa Digunakan:* ${spentMin} minit ${spentSec} saat\n` +
+        `📅 *Tarikh:* ${new Date().toLocaleDateString('ms-MY')}\n` +
         `🌟 *Status:* ${state.hearts > 0 ? 'BERJAYA SELESAIKAN 3 MISI!' : 'Selesai Sesi Ujian'}\n` +
         `-----------------------------------------\n` +
         `Cikgu, saya telah selesai melaksanakan latihan gamifikasi Math Quest dan markah saya telah direkodkan dalam sistem. Terima kasih! 🚀`;
 
       const encoded = encodeURIComponent(reportText);
-      // Buka terus WhatsApp di telefon
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
@@ -2461,7 +2725,7 @@
       clearInterval(state.timerInterval);
     }
 
-    /* Scratchpad Modal */
+    /* Scratchpad Canvas Handlers */
     const modalScratchpad = document.getElementById('modal-scratchpad');
     const scratchCanvas = document.getElementById('scratchpad-canvas');
     const ctx = scratchCanvas.getContext('2d');
