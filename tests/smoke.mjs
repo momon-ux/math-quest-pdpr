@@ -248,5 +248,10 @@ assert.match(html, /function launchGameFromLobby/, 'permainan matematik mesti bo
 assert.match(html, /class="[^"]*btn-game-shooter/, 'butang pantas Math Shooter mesti wujud dalam zon lobi');
 assert.match(html, /class="[^"]*btn-game-wheel/, 'butang pantas Roda Sifir mesti wujud dalam zon lobi');
 assert.match(html, /class="[^"]*btn-game-arcade/, 'butang pantas Arked Blaster mesti wujud dalam zon lobi');
+assert.match(html, /#toast-msg\s*\{[^}]*position:\s*fixed;[^}]*top:\s*10px;/, 'notifikasi toast mesti diposisikan fixed di bahagian atas agar tidak menghalang soalan');
+assert.match(html, /function hideToast\(\)/, 'fungsi hideToast mesti wujud');
+assert.match(html, /function launchMathShooter\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Math Shooter mesti menutup sembang dan memadamkan toast');
+assert.match(html, /function launchMathWheel\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Roda Sifir mesti menutup sembang dan memadamkan toast');
+assert.match(html, /function launchArcadeGame\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Arked mesti menutup sembang dan memadamkan toast');
 
 console.log('Semua semakan smoke MathBina V32 lulus.');

@@ -1719,23 +1719,29 @@
       .live-chat-panel .safe-chat-feed { min-height:120px; }
     }
 
-    /* Toast */
+    /* Toast: diposisikan fixed di bahagian atas supaya tidak menghalang soalan matematik */
     #toast-msg {
-      position: absolute;
-      top: 60px;
+      position: fixed;
+      top: 10px;
       left: 50%;
-      transform: translateX(-50%) translateY(-30px);
-      background: #0f172a;
+      transform: translateX(-50%) translateY(-24px);
+      background: rgba(15, 23, 42, 0.94);
       color: #fff;
-      padding: 6px 18px;
+      padding: 5px 14px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 800;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 300;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      z-index: 9999;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+      max-width: min(92vw, 420px);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     #toast-msg.show {
       transform: translateX(-50%) translateY(0);
@@ -2204,7 +2210,7 @@
       <div class="bg-cloud bg-cloud-2"></div>
     </div>
 
-    <div id="toast-msg">Notification</div>
+    <div id="toast-msg" aria-live="polite"></div>
 
     <!-- ==============================================================
          SCREEN 1: LOBBY & PROFIL MURID
@@ -4313,6 +4319,8 @@ const COMBAT_BANK = {
     }
 
     function returnToLobby() {
+      closeSafeChat();
+      hideToast();
       if(V3.visitingEntry)exitFriendHouseVisit();
       saveCurrentStudentState();
       document.getElementById('view-sandbox').style.display = 'none';
@@ -4665,6 +4673,8 @@ const COMBAT_BANK = {
        MINIGAME 1: MATH SHOOTER (MERIAM BELON CARI XP)
        ============================================================== */
     function launchMathShooter() {
+      closeSafeChat();
+      hideToast();
       saveCurrentStudentState();
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-shooter').style.display = 'flex';
@@ -4672,7 +4682,6 @@ const COMBAT_BANK = {
 
       initShooterEngine();
       loadNextShooterQuestion();
-      showToast(currentLanguage === 'ms' ? '🎯 Zon Math Shooter: Tembak belon jawapan tepat untuk dapat XP!' : '🎯 Math Shooter: Shoot the balloon with the correct answer to earn XP!');
     }
 
     function openAllGamesModal() {
@@ -4720,6 +4729,8 @@ const COMBAT_BANK = {
     }
 
     function exitMinigameToSandbox() {
+      closeSafeChat();
+      hideToast();
       if (STATE.shooter.animId) cancelAnimationFrame(STATE.shooter.animId);
       stopArcadeTimers();
       document.getElementById('view-shooter').style.display = 'none';
@@ -4741,6 +4752,8 @@ const COMBAT_BANK = {
        MINIGAME 3: ARKED MATH BLASTER
        ============================================================== */
     function launchArcadeGame() {
+      closeSafeChat();
+      hideToast();
       saveCurrentStudentState();
       stopArcadeTimers();
       STATE.arcade.running = false;
@@ -4765,7 +4778,6 @@ const COMBAT_BANK = {
       initArcadeControls();
       updateArcadeHud();
       clearArcadeAnswers();
-      showToast(uiMessage('🚀 Gerakkan kapal dan tembak jawapan tepat!','🚀 Move your ship and shoot the correct answer!','🚀 移动飞船并射击正确答案！','🚀 விண்கலத்தை நகர்த்தி சரியான விடையைச் சுடுங்கள்!'));
     }
 
     function startArcadeRound() {
@@ -5761,12 +5773,12 @@ const COMBAT_BANK = {
 
             // Floating XP Text
             s.floatingTexts.push({
-              text: `+${earned} XP!`,
+              text: `+${earned} XP • +${coinReward} 🪙`,
               x: hitX,
               y: hitY - 14,
               color: '#facc15',
               scale: 1.35,
-              life: 1.0,
+              life: 1.1,
               vy: -1.8
             });
             if (s.combo >= 2) {
@@ -5782,7 +5794,6 @@ const COMBAT_BANK = {
             }
 
             document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP • ${STATE.coins.toLocaleString()} 🪙`;
-            showToast(currentLanguage === 'ms' ? `🎈 Betul! +${earned} XP dan +${coinReward} syiling!` : `🎈 Correct! +${earned} XP and +${coinReward} coins!`);
 
             setTimeout(() => {
               loadNextShooterQuestion();
@@ -5792,7 +5803,15 @@ const COMBAT_BANK = {
             audio.playBoing();
             s.combo = 1;
             s.screenShake = 4;
-            showToast(uiMessage('OOPS! Jawapan salah. Cuba lagi!','OOPS! Wrong answer. Try again!','答错了，再试一次！','தவறான பதில். மீண்டும் முயலுங்கள்!'));
+            s.floatingTexts.push({
+              text: uiMessage('❌ Salah! Cuba lagi','❌ Wrong! Try again','❌ 答错了，再试一次','❌ தவறான பதில்! மீண்டும் முயலுங்கள்'),
+              x: hitX,
+              y: hitY,
+              color: '#ef4444',
+              scale: 1.25,
+              life: 1.0,
+              vy: -1.6
+            });
           }
 
           s.cannonballs.splice(i, 1);
@@ -6120,13 +6139,14 @@ const COMBAT_BANK = {
     }
 
     function launchMathWheel() {
+      closeSafeChat();
+      hideToast();
       saveCurrentStudentState();
       STATE.wheel.slices = getWheelSlicesForGrade(STATE.grade);
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-wheel').style.display = 'flex';
 
       initWheelCanvas();
-      showToast(currentLanguage === 'ms' ? '🎡 Putar roda sifir untuk menangi bonus sehingga +300 XP!' : '🎡 Spin the Maths Wheel to win bonuses up to +300 XP!');
     }
 
     function initWheelCanvas() {
@@ -6289,7 +6309,6 @@ const COMBAT_BANK = {
       const sliceIdx = Math.floor(pointerAngle / sliceAngle) % numSlices;
       const sliceText = w.slices[sliceIdx];
 
-      showToast(currentLanguage === 'ms' ? `🎯 Roda Berhenti Pada: ${sliceText}!` : `🎯 The wheel stopped on: ${sliceText}!`);
       presentWheelMathQuestion(sliceText);
     }
 
@@ -8857,12 +8876,20 @@ const COMBAT_BANK = {
 
     function recordWrongMathAttempt(){STATE.mathStats.total++;saveCurrentStudentState();}
 
+    let toastHideTimer = null;
     function showToast(msg) {
       const b = document.getElementById('toast-msg');
       if (!b) return;
       b.textContent = msg;
       b.classList.add('show');
-      setTimeout(() => b.classList.remove('show'), 2200);
+      clearTimeout(toastHideTimer);
+      toastHideTimer = setTimeout(() => b.classList.remove('show'), 2200);
+    }
+
+    function hideToast() {
+      clearTimeout(toastHideTimer);
+      const b = document.getElementById('toast-msg');
+      if (b) b.classList.remove('show');
     }
 
     // Startup
