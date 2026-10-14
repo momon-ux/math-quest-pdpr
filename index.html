@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>MathBina — Misi Bina Rumah Impian Sekolah Rendah & Menengah</title>
+  <title>MathBina — Dream House Building Mission</title>
   <meta name="application-name" content="MathBina">
   <meta name="apple-mobile-web-app-title" content="MathBina">
   <link rel="manifest" href="manifest.webmanifest">
@@ -286,32 +286,29 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+    .age-picker-wrap { position:relative; width:100%; }
+    .age-picker-trigger {
+      width:100%; min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:9px 12px; border:2px solid rgba(255,255,255,.68); border-radius:12px;
+      background:rgba(255,255,255,.24); color:#0f4c6e; font-size:.86rem; font-weight:900;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 3px 10px rgba(2,132,199,.12);
+      -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); cursor:pointer;
+    }
+    .age-picker-trigger::after { content:'⌄'; font-size:1.15rem; transition:transform .18s ease; }
+    .age-picker-wrap.open .age-picker-trigger::after { transform:rotate(180deg); }
+    .age-picker-trigger.missing { border-color:#f59e0b; color:#92400e; box-shadow:0 0 0 3px rgba(245,158,11,.15); }
     .toggle-grade-box {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      padding: 3px 3px 7px;
-      touch-action: pan-x;
-      width: 100%;
-      max-width: 100%;
+      display:none; position:absolute; z-index:90; top:calc(100% + 6px); left:0; right:0;
+      max-height:238px; overflow-y:auto; overscroll-behavior:contain; padding:7px; gap:6px;
+      border:2px solid rgba(125,211,252,.85); border-radius:14px;
+      background:rgba(240,249,255,.96); box-shadow:0 14px 28px rgba(15,23,42,.28);
+      -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
     }
-    .toggle-grade-box::-webkit-scrollbar {
-      display: none;
-    }
-    .grade-scroll-hint {
-      font-size: 0.62rem;
-      font-weight: 800;
-      color: #64748b;
-      text-align: right;
-    }
+    .age-picker-wrap.open .toggle-grade-box { display:flex; flex-direction:column; }
     .grade-chip {
       flex: 0 0 auto;
-      min-width: 112px;
-      padding: 8px;
+      width:100%;
+      padding: 9px 11px;
       font-size: 0.88rem;
       font-weight: 900;
       border: 2px solid #cbd5e1;
@@ -320,7 +317,7 @@
       color: #475569;
       cursor: pointer;
       box-shadow: 0 3px 0 #94a3b8;
-      scroll-snap-align: start;
+      text-align:left;
     }
     .grade-chip.active {
       background: var(--gold-yellow);
@@ -1223,6 +1220,18 @@
     .safe-chat-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
     .safe-chat-choice { border:1.5px solid #38bdf8; border-radius:10px; padding:8px 6px; background:#fff; color:#075985; font-size:.66rem; font-weight:900; cursor:pointer; }
     .safe-chat-choice:active { transform:translateY(1px); background:#e0f2fe; }
+    .live-chat-panel { position:absolute; z-index:220; top:102px; right:10px; bottom:66px; width:min(390px,calc(100% - 20px)); display:none; align-items:stretch; pointer-events:none; }
+    .live-chat-panel .game-modal-box { width:100%; max-height:100%; margin:0; padding:11px; pointer-events:auto; border:3px solid #38bdf8; box-shadow:0 12px 32px rgba(15,23,42,.34),0 5px 0 #0369a1; background:rgba(255,255,255,.97); backdrop-filter:blur(12px); }
+    .live-chat-status { display:inline-flex; align-items:center; gap:5px; margin-top:3px; color:#047857; font-size:.58rem; font-weight:900; letter-spacing:.3px; }
+    .live-chat-dot { width:8px; height:8px; border-radius:50%; background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.18); animation:liveChatPulse 1.4s ease-in-out infinite; }
+    @keyframes liveChatPulse { 50% { transform:scale(.72); opacity:.62; } }
+    .live-chat-panel .safe-chat-feed { flex:1; min-height:160px; max-height:none; }
+    #btn-safe-chat.live { border-color:#22c55e !important; box-shadow:0 0 0 3px rgba(34,197,94,.2); }
+    @media (max-width:700px) {
+      .live-chat-panel { position:fixed; top:auto; right:6px; bottom:58px; left:6px; width:auto; height:min(68dvh,590px); }
+      .live-chat-panel .game-modal-box { border-radius:18px 18px 10px 10px; }
+      .live-chat-panel .safe-chat-feed { min-height:120px; }
+    }
 
     /* Toast */
     #toast-msg {
@@ -1271,8 +1280,8 @@
       .community-owner { font-size:.78rem; }
       .community-meta { font-size:.6rem; }
       .community-open-hint { display:none; }
-      .toggle-grade-box { gap:6px; margin-right:-10px; padding-right:18px; }
-      .grade-chip { min-width:96px; padding:8px 10px; font-size:.72rem; }
+      .toggle-grade-box { gap:6px; max-height:220px; }
+      .grade-chip { min-width:0; padding:8px 10px; font-size:.72rem; }
       .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
       .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
       .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
@@ -1376,7 +1385,7 @@
       .lobby-header { flex-direction: column; }
       .credit-badge { max-width: none; width: 100%; text-align: left; }
       .lobby-row-grid { gap: 7px; }
-      .grade-chip { min-width:92px; padding:7px 9px; font-size:0.72rem; }
+      .grade-chip { min-width:0; padding:7px 9px; font-size:0.72rem; }
       .custom-select { min-height: 42px; }
       .sandbox-action-ribbon { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .build-status-card { max-width: 82%; }
@@ -1399,8 +1408,8 @@
       .community-spotlight canvas { width:82px; height:50px; }
       .community-owner { font-size:.68rem; }
       .community-meta, .community-kicker, .community-open-hint { font-size:.5rem; }
-      .toggle-grade-box { gap:5px; }
-      .grade-chip { min-width:78px; padding:5px 7px; font-size:.6rem; }
+      .toggle-grade-box { gap:5px; max-height:176px; }
+      .grade-chip { min-width:0; padding:5px 7px; font-size:.6rem; }
       .name-entry-card { grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr); gap:6px; }
       .profile-preview-card { min-height:54px; padding:5px 8px; }
       .profile-preview-avatar { width:38px; height:38px; flex-basis:38px; font-size:1.2rem; }
@@ -1669,7 +1678,7 @@
       <div class="bg-cloud bg-cloud-2"></div>
     </div>
 
-    <div id="toast-msg">Notifikasi</div>
+    <div id="toast-msg">Notification</div>
 
     <!-- ==============================================================
          SCREEN 1: LOBBY & PROFIL MURID
@@ -1682,11 +1691,11 @@
             <img class="brand-app-icon" src="mathbina-icon-192.png" alt="Ikon MathBina">
             <div>
               <div class="game-title-logo">MATHBINA</div>
-              <div class="sub-badge">Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah</div>
+              <div class="sub-badge" data-i18n="brandSubtitle">Dream House Building Mission — Primary & Secondary Mathematics</div>
             </div>
           </div>
           <div class="credit-badge">
-            👨‍💻 Pembangun Sistem:<br>
+            <span data-i18n="developerLabel">👨‍💻 System Developer:</span><br>
             <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b>
           </div>
           <button class="language-trigger" id="btn-language-lobby" type="button" onclick="openLanguageModal()">🌐 Bahasa</button>
@@ -1695,32 +1704,33 @@
         <div class="community-spotlight" role="button" tabindex="0" onclick="openCommunityGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCommunityGallery();}" aria-label="Buka Galeri Rumah Kawan-Kawan">
           <canvas id="community-spotlight-canvas" width="480" height="260" aria-label="Pratonton rumah pilihan"></canvas>
           <div style="min-width:0;">
-            <div class="community-kicker">🏘️ Galeri Rumah Kawan-Kawan</div>
+            <div class="community-kicker" data-i18n="communityGallery">🏘️ Friends' House Gallery</div>
             <div class="community-owner" id="community-spotlight-owner">Rumah Contoh MathBina</div>
-            <div class="community-meta" id="community-spotlight-meta">Tambah rumah kawan menggunakan ID MathBina</div>
+            <div class="community-meta" id="community-spotlight-meta" data-i18n="communityAdd">Add a friend's house using a MathBina ID</div>
           </div>
-          <div class="community-open-hint">Lihat Galeri →</div>
+          <div class="community-open-hint" data-i18n="viewGallery">View Gallery →</div>
         </div>
 
         <div class="lobby-row-grid">
-          <!-- Umur adalah pilihan; murid boleh terus bermain tanpa memilih. -->
+          <!-- Umur wajib dipilih supaya semua permainan menggunakan aras soalan yang tepat. -->
           <div class="form-group">
-            <label class="form-label" data-i18n="ageLabel">1. UMUR (PILIHAN SAHAJA):</label>
-            <div class="toggle-grade-box" id="age-scroll-picker" role="listbox" aria-label="Pilih umur jika mahu">
-              <button class="grade-chip active" id="chip-age-none" onclick="selectLobbyAge(0)" data-i18n="skipAge">✨ TIDAK PILIH</button>
-              <button class="grade-chip" id="chip-age-7" onclick="selectLobbyAge(7)">7 TAHUN</button>
-              <button class="grade-chip" id="chip-age-8" onclick="selectLobbyAge(8)">8 TAHUN</button>
-              <button class="grade-chip" id="chip-age-9" onclick="selectLobbyAge(9)">9 TAHUN</button>
-              <button class="grade-chip" id="chip-age-10" onclick="selectLobbyAge(10)">10 TAHUN</button>
-              <button class="grade-chip" id="chip-age-11" onclick="selectLobbyAge(11)">11 TAHUN</button>
-              <button class="grade-chip" id="chip-age-12" onclick="selectLobbyAge(12)">12 TAHUN</button>
-              <button class="grade-chip" id="chip-age-13" onclick="selectLobbyAge(13)">13 TAHUN</button>
-              <button class="grade-chip" id="chip-age-14" onclick="selectLobbyAge(14)">14 TAHUN</button>
-              <button class="grade-chip" id="chip-age-15" onclick="selectLobbyAge(15)">15 TAHUN</button>
-              <button class="grade-chip" id="chip-age-16" onclick="selectLobbyAge(16)">16 TAHUN</button>
-              <button class="grade-chip" id="chip-age-17" onclick="selectLobbyAge(17)">17 TAHUN</button>
+            <label class="form-label" data-i18n="ageLabel">1. PILIH UMUR / TAHUN (WAJIB):</label>
+            <div class="age-picker-wrap" id="age-picker-wrap">
+              <button class="age-picker-trigger missing" id="age-picker-trigger" type="button" onclick="toggleAgePicker()" aria-haspopup="listbox" aria-expanded="false" data-i18n="chooseAge">🎓 Tekan untuk pilih umur / tahun</button>
+              <div class="toggle-grade-box" id="age-scroll-picker" role="listbox" aria-label="Pilih umur dan aras soalan">
+                <button class="grade-chip" id="chip-age-7" onclick="selectLobbyAge(7)">7 TAHUN • TAHUN 1</button>
+                <button class="grade-chip" id="chip-age-8" onclick="selectLobbyAge(8)">8 TAHUN • TAHUN 2</button>
+                <button class="grade-chip" id="chip-age-9" onclick="selectLobbyAge(9)">9 TAHUN • TAHUN 3</button>
+                <button class="grade-chip" id="chip-age-10" onclick="selectLobbyAge(10)">10 TAHUN • TAHUN 4</button>
+                <button class="grade-chip" id="chip-age-11" onclick="selectLobbyAge(11)">11 TAHUN • TAHUN 5</button>
+                <button class="grade-chip" id="chip-age-12" onclick="selectLobbyAge(12)">12 TAHUN • TAHUN 6</button>
+                <button class="grade-chip" id="chip-age-13" onclick="selectLobbyAge(13)">13 TAHUN • TINGKATAN 1</button>
+                <button class="grade-chip" id="chip-age-14" onclick="selectLobbyAge(14)">14 TAHUN • TINGKATAN 2</button>
+                <button class="grade-chip" id="chip-age-15" onclick="selectLobbyAge(15)">15 TAHUN • TINGKATAN 3</button>
+                <button class="grade-chip" id="chip-age-16" onclick="selectLobbyAge(16)">16 TAHUN • TINGKATAN 4</button>
+                <button class="grade-chip" id="chip-age-17" onclick="selectLobbyAge(17)">17 TAHUN • TINGKATAN 5</button>
+              </div>
             </div>
-            <div class="grade-scroll-hint" aria-hidden="true" data-i18n="ageHint">Tidak wajib • Leret jika mahu pilih umur →</div>
           </div>
 
           <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
@@ -1745,13 +1755,13 @@
             <div class="profile-preview-avatar" id="profile-preview-avatar">👷‍♂️</div>
             <div>
               <div class="profile-preview-kicker" data-i18n="playerProfile">Profil Pemain MathBina</div>
-              <div class="profile-preview-name" id="profile-preview-name">Nama anda akan muncul di sini</div>
+              <div class="profile-preview-name" id="profile-preview-name">Your name will appear here</div>
               <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • Aras umum</div>
               <div class="profile-id-row">
-                <span class="profile-id-code" id="profile-user-id">ID dijana selepas masuk</span>
-                <button class="mini-action-btn" type="button" onclick="copyUserId()">📋 Salin ID</button>
-                <button class="mini-action-btn" type="button" onclick="openDeviceAccounts()">👥 Akaun Peranti (<span id="device-account-count">0</span>)</button>
-                <button class="mini-action-btn" type="button" onclick="createNewDeviceAccount()">＋ Akaun Baharu</button>
+                <span class="profile-id-code" id="profile-user-id">ID created after entry</span>
+                <button class="mini-action-btn" type="button" onclick="copyUserId()" data-i18n="copyId">📋 Copy ID</button>
+                <button class="mini-action-btn" type="button" onclick="openDeviceAccounts()"><span data-i18n="deviceAccounts">👥 Device Accounts</span> (<span id="device-account-count">0</span>)</button>
+                <button class="mini-action-btn" type="button" onclick="createNewDeviceAccount()" data-i18n="newAccount">＋ New Account</button>
               </div>
             </div>
           </div>
@@ -1762,16 +1772,16 @@
           <label class="form-label" style="text-align: center;" data-i18n="avatarLabel">4. PILIH AVATAR ANDA:</label>
           <div class="avatar-picker-row">
             <div class="avatar-chip active" id="av-builder" onclick="pickAvatar('👷‍♂️', 'Arkitek Cilik')">
-              <span>👷‍♂️</span> <span>Arkitek Cilik</span>
+              <span>👷‍♂️</span> <span data-i18n="avatarBuilder">Junior Architect</span>
             </div>
             <div class="avatar-chip" id="av-designer" onclick="pickAvatar('🧕', 'Pereka Rumah')">
-              <span>🧕</span> <span>Pereka Rumah</span>
+              <span>🧕</span> <span data-i18n="avatarDesigner">Home Designer</span>
             </div>
             <div class="avatar-chip" id="av-agent" onclick="pickAvatar('🦸‍♂️', 'Ejen Kripto')">
-              <span>🦸‍♂️</span> <span>Ejen Kripto</span>
+              <span>🦸‍♂️</span> <span data-i18n="avatarAgent">Crypto Agent</span>
             </div>
             <div class="avatar-chip" id="av-robot" onclick="pickAvatar('🤖', 'Mecha Builder')">
-              <span>🤖</span> <span>Mecha Builder</span>
+              <span>🤖</span> <span data-i18n="avatarRobot">Mecha Builder</span>
             </div>
           </div>
         </div>
@@ -1782,9 +1792,9 @@
         </button>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; gap: 8px; flex-wrap: wrap;">
-          <button onclick="openLeaderboardModal()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">📅 Papan Skor Kalendar</button>
-          <button onclick="downloadRecordTemplateCSV()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #0369a1; cursor: pointer;">📄 Templat Semakan Rekod</button>
-          <button onclick="openAdminModal()" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">⚙️ Alat Guru</button>
+          <button onclick="openLeaderboardModal()" data-i18n="leaderboard" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">📅 Calendar Leaderboard</button>
+          <button onclick="downloadRecordTemplateCSV()" data-i18n="recordTemplate" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #0369a1; cursor: pointer;">📄 Record Review Template</button>
+          <button onclick="openAdminModal()" data-i18n="teacherTools" style="background: none; border: none; font-size: 0.78rem; font-weight: 800; color: #475569; cursor: pointer;">⚙️ Teacher Tools</button>
         </div>
       </div>
     </div>
@@ -1802,7 +1812,7 @@
             <span class="hud-class-tag" id="hud-sandbox-class">Tahun 1</span>
             <button class="mini-action-btn" id="hud-user-id" onclick="copyUserId()" title="Salin ID untuk dikongsi dengan kawan">ID MathBina</button>
           </div>
-          <button class="mini-action-btn" onclick="editPlayerProfile()" title="Ubah tahun atau tingkatan, sekolah dan kelas">✏️ Profil</button>
+          <button class="mini-action-btn" onclick="editPlayerProfile()" data-i18n="profile">✏️ Profile</button>
         </div>
 
         <div class="hud-stats-group" style="display: flex; gap: 8px; align-items: center;">
@@ -1842,17 +1852,17 @@
           <span>🛒</span> <span data-i18n="shop">KEDAI BLOK & LEGO</span>
         </button>
         <button class="ribbon-btn mobile-more-toggle" id="btn-mobile-more" type="button" onclick="toggleMobileTools()" aria-expanded="false">
-          <span>☰</span> <span>LAGI</span>
+          <span>☰</span> <span data-i18n="more">MORE</span>
         </button>
         <button class="ribbon-btn btn-eraser mobile-secondary" id="btn-eraser-mode" onclick="closeMobileTools(); toggleEraserTool()">
           <span>🧹</span> <span data-i18n="eraser">ALAT PADAM</span>
         </button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" title="Undur tindakan terakhir">↶ UNDO</button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" title="Buat semula tindakan">↷ REDO</button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); rotateSelectedBlock()" title="Putar pintu, tingkap, bumbung atau tangga">↻ PUTAR BLOK</button>
+        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" data-i18n="undo">↶ UNDO</button>
+        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" data-i18n="redo">↷ REDO</button>
+        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); rotateSelectedBlock()" data-i18n="rotate">↻ ROTATE BLOCK</button>
         <div class="level-control">
           <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
-          <span id="build-level-label">Aras 1</span>
+          <span id="build-level-label">Level 1</span>
           <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
         </div>
         <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()">
@@ -1865,17 +1875,17 @@
         <div class="voxel-stage" id="voxel-stage">
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
-          <div class="world-owner-label" id="world-owner-label">🏡 Rumah Anda<small>Ketuk pulau terapung untuk melawat rumah kawan</small></div>
+          <div class="world-owner-label" id="world-owner-label">🏡 Your House<small>Tap a floating island to visit a friend's house</small></div>
           <div class="friend-visit-banner" id="friend-visit-banner">
-            <div><strong id="friend-visit-name">👀 Melawat Rumah Kawan</strong><small>🔒 Mod Lihat Sahaja • Rumah ini tidak boleh diubah</small></div>
-            <button type="button" onclick="exitFriendHouseVisit()">↩ Rumah Saya</button>
+            <div><strong id="friend-visit-name">👀 Visiting a Friend's House</strong><small>🔒 View Only • This house cannot be changed</small></div>
+            <button type="button" onclick="exitFriendHouseVisit()">↩ My House</button>
           </div>
           <div class="build-status-card">
-            <div class="level-badge" id="house-level-text">Tahap 1 • Tapak & Asas</div>
-            <div style="font-size:.62rem;font-weight:800;color:#334155" id="house-progress-text">Kemajuan rumah: 0%</div>
+            <div class="level-badge" id="house-level-text">Level 1 • Site & Foundation</div>
+            <div style="font-size:.62rem;font-weight:800;color:#334155" id="house-progress-text">House progress: 0%</div>
             <div class="build-progress-track"><div class="build-progress-fill" id="house-progress-fill"></div></div>
           </div>
-          <div class="build-help">Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum</div>
+          <div class="build-help" data-i18n="buildHelp">Tap a tile to build • Drag to rotate • Pinch/scroll to zoom</div>
         </div>
       </div>
 
@@ -1889,7 +1899,7 @@
           + BELI LAGI BLOK
         </button>
       </div>
-      <div class="developer-credit-bar">👨‍💻 Pembangun Sistem: <b>Mohammad Fikrey bin Abdul Gapar</b></div>
+      <div class="developer-credit-bar"><span data-i18n="developerLabel">👨‍💻 System Developer:</span> <b>Mohammad Fikrey bin Abdul Gapar</b></div>
     </div>
 
     <!-- ==============================================================
@@ -1900,8 +1910,8 @@
         <div style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 1.2rem;">🎯</span>
           <div>
-            <div style="font-weight: 900; font-size: 0.85rem; color: #78350f;">ZON CARI XP: MATH SHOOTER</div>
-            <div style="font-size: 0.65rem; color: #64748b;">Tembak belon dengan jawapan tepat untuk kumpul XP!</div>
+            <div style="font-weight: 900; font-size: 0.85rem; color: #78350f;" data-i18n="shooterTitle">EARN XP: MATH SHOOTER</div>
+            <div style="font-size: 0.65rem; color: #64748b;" data-i18n="shooterSubtitle">Shoot the balloon with the correct answer to earn XP!</div>
           </div>
         </div>
 
@@ -1910,14 +1920,14 @@
             <span>🪙</span> <span id="hud-shooter-xp">150 XP</span>
           </div>
           <button onclick="exitMinigameToSandbox()" style="padding: 6px 14px; font-size: 0.8rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;">
-            🏡 KEMBALI KE RUMAH
+            <span data-i18n="backHome">🏡 BACK HOME</span>
           </button>
         </div>
       </div>
 
       <!-- Formula Banner -->
       <div class="shooter-question-banner" id="shooter-formula-box">
-        <span style="font-size: 0.65rem; font-weight: 900; color: #92400e; background: #fef3c7; padding: 1px 8px; border-radius: 6px;" id="shooter-tag-text">OPERASI MATEMATIK</span>
+        <span style="font-size: 0.65rem; font-weight: 900; color: #92400e; background: #fef3c7; padding: 1px 8px; border-radius: 6px;" id="shooter-tag-text" data-i18n="mathOperation">MATH OPERATION</span>
         <span style="font-size: clamp(1.4rem, 4vw, 2.3rem); font-weight: 900; color: #0f172a;" id="shooter-formula-text">2 + 3 = ?</span>
       </div>
 
@@ -1935,10 +1945,10 @@
       <div class="wheel-card-container">
         <div style="display: flex; justify-content: space-between; width: 100%; border-bottom: 2px dashed #cbd5e1; padding-bottom: 6px;">
           <div>
-            <div style="font-size: 1.15rem; font-weight: 900; color: #6b21a8;">🎡 RODA SIFIR & OPERASI KILAT</div>
-            <div style="font-size: 0.68rem; color: #475569;">Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!</div>
+            <div style="font-size: 1.15rem; font-weight: 900; color: #6b21a8;" data-i18n="wheelTitle">🎡 TIMES-TABLE & QUICK-MATH WHEEL</div>
+            <div style="font-size: 0.68rem; color: #475569;" data-i18n="wheelSubtitle">Spin the wheel and solve the challenge to earn a +150 XP bonus!</div>
           </div>
-          <button onclick="exitMinigameToSandbox()" style="padding: 6px 12px; font-size: 0.78rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;">🏡 KEMBALI KE RUMAH</button>
+          <button onclick="exitMinigameToSandbox()" style="padding: 6px 12px; font-size: 0.78rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;" data-i18n="backHome">🏡 BACK HOME</button>
         </div>
 
         <div class="wheel-spinner-row">
@@ -1951,11 +1961,11 @@
           <!-- Question & Spin Panel -->
           <div class="wheel-right-panel">
             <button class="btn-spin-wheel" id="btn-spin-action" onclick="spinWheelAction()">
-              🎲 PUTAR RODA SIFIR!
+              <span data-i18n="spinWheel">🎲 SPIN THE WHEEL!</span>
             </button>
 
             <div class="wheel-question-box" id="wheel-question-panel" style="display: none;">
-              <div style="font-size: 0.7rem; font-weight: 800; color: #7e22ce;" id="wheel-cat-badge">SOALAN KILAT</div>
+              <div style="font-size: 0.7rem; font-weight: 800; color: #7e22ce;" id="wheel-cat-badge" data-i18n="quickQuestion">QUICK QUESTION</div>
               <div style="font-size: 1.4rem; font-weight: 900; color: #0f172a; margin: 4px 0;" id="wheel-math-problem">7 × 8 = ?</div>
               <div class="wheel-options-group" id="wheel-answers-container"></div>
             </div>
@@ -1970,21 +1980,21 @@
     <div id="view-arcade">
       <div class="arcade-hud">
         <div>
-          <div class="arcade-title">🕹️ ARKED XP: TANGKAP BINTANG</div>
+          <div class="arcade-title" data-i18n="arcadeTitle">🕹️ XP ARCADE: CATCH THE STAR</div>
           <div class="arcade-stats">
             <span class="arcade-pill">⏱️ <span id="arcade-time">20</span>s</span>
-            <span class="arcade-pill">⭐ <span id="arcade-score">0</span> tangkapan</span>
+            <span class="arcade-pill">⭐ <span id="arcade-score">0</span> <span data-i18n="catches">catches</span></span>
             <span class="arcade-pill">🏆 <span id="arcade-earned">0</span> XP</span>
           </div>
         </div>
-        <button class="arcade-exit" onclick="exitMinigameToSandbox()">🏡 RUMAH</button>
+        <button class="arcade-exit" onclick="exitMinigameToSandbox()" data-i18n="home">🏡 HOME</button>
       </div>
       <div class="arcade-field" id="arcade-field" aria-label="Kawasan permainan Tangkap Bintang">
         <div class="arcade-start-card" id="arcade-start-card">
           <div style="font-size:2.4rem">🌟</div>
-          <div style="font-size:1.05rem;font-weight:900;color:#fde047">Ketuk bintang secepat mungkin!</div>
-          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe">Setiap bintang memberikan 10 XP dan 2 syiling. Masa permainan ialah 20 saat.</div>
-          <button type="button" onclick="startArcadeRound()">🚀 MULA BERMAIN</button>
+          <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Tap the stars as quickly as you can!</div>
+          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Each star gives 10 XP and 2 coins. The round lasts 20 seconds.</div>
+          <button type="button" onclick="startArcadeRound()" data-i18n="startPlaying">🚀 START PLAYING</button>
         </div>
       </div>
     </div>
@@ -2062,7 +2072,7 @@
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <div class="hud-wallet-pill">
-              <span>🪙 Baki:</span> <span id="shop-wallet-xp">150 XP</span>
+              <span data-i18n="balance">🪙 Balance:</span> <span id="shop-wallet-xp">150 XP</span>
             </div>
             <button class="modal-close-btn" onclick="closeShopModal()">✕</button>
           </div>
@@ -2080,18 +2090,19 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 6px;">
-          <span style="font-size: 0.7rem; color: #64748b;">Kurang XP? Main Math Shooter untuk tambah duit!</span>
-          <button onclick="closeShopModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;">⚡ Cari XP Sekarang</button>
+          <span style="font-size: 0.7rem; color: #64748b;" data-i18n="lowCoins">Need more coins? Play Math Shooter to earn more!</span>
+          <button onclick="closeShopModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;" data-i18n="earnXpNow">⚡ EARN XP NOW</button>
         </div>
       </div>
     </div>
 
-    <div class="game-modal-overlay" id="modal-safe-chat" style="display:none;">
+    <aside class="live-chat-panel" id="modal-safe-chat" style="display:none;" aria-label="Chat Live MathBina">
       <div class="game-modal-box" style="max-width:580px;">
         <div class="modal-head">
           <div>
-            <div class="modal-title" data-i18n="chatTitle">💬 Chat Ceria MathBina</div>
+            <div class="modal-title" data-i18n="chatTitle">💬 Chat Live MathBina</div>
             <div style="font-size:.63rem;font-weight:800;color:#64748b;margin-top:2px;" data-i18n="chatSubtitle">Berbual dengan rakan yang ditambah melalui ID MathBina menggunakan ayat dan emoji selamat.</div>
+            <div class="live-chat-status"><span class="live-chat-dot"></span><span id="safe-chat-live-status" data-i18n="chatConnecting">LIVE • Menyambung…</span></div>
           </div>
           <button class="modal-close-btn" onclick="closeSafeChat()">✕</button>
         </div>
@@ -2102,7 +2113,7 @@
         <div class="safe-chat-choices" id="safe-chat-choices"></div>
         <div style="font-size:.58rem;color:#64748b;line-height:1.35;" data-i18n="chatSafety">🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.</div>
       </div>
-    </div>
+    </aside>
 
     <div class="game-modal-overlay" id="modal-language" style="display:none;">
       <div class="game-modal-box" style="max-width:480px;">
@@ -2240,56 +2251,73 @@
   </div>
 
   <script>
-    const LANGUAGE_STORAGE_KEY = 'mathbina_language_v1';
+    const LANGUAGE_STORAGE_KEY = 'mathbina_language_v2';
     const I18N = Object.freeze({
       ms: {
         language:'Bahasa', chooseLanguage:'🌐 Pilih Bahasa', languageHint:'Pilihan bahasa akan disimpan pada peranti ini.', languageSaved:'Bahasa Malaysia dipilih.',
-        ageLabel:'1. UMUR (PILIHAN SAHAJA):', skipAge:'✨ TIDAK PILIH', ageHint:'Tidak wajib • Leret jika mahu pilih umur →', schoolClassLabel:'2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
+        ageLabel:'1. PILIH UMUR / TAHUN (WAJIB):', chooseAge:'🎓 Tekan untuk pilih umur / tahun', ageRequired:'⚠️ Sila pilih umur supaya soalan mengikut aras anda.', schoolClassLabel:'2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
+        brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan', nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.', progressFound:'✅ Kemajuan lama ditemui: {blocks} blok akan dibuka semula.', idStable:'🪪 ID {id} kekal walaupun tahun, sekolah atau kelas diubah.', idWillGenerate:'🪪 ID pengguna akan dijana automatik selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
-        chatTitle:'💬 Chat Ceria MathBina', chatSubtitle:'Berbual dengan rakan yang ditambah melalui ID MathBina menggunakan ayat dan emoji selamat.', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
+        shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: TANGKAP BINTANG', catches:'tangkapan', home:'🏡 RUMAH', arcadePrompt:'Ketuk bintang secepat mungkin!', arcadeRules:'Setiap bintang memberikan 10 XP dan 2 syiling. Masa permainan ialah 20 saat.', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
+        chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, chat menggunakan ayat dan emoji selamat tanpa ruangan menaip bebas.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
         hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
       },
       en: {
         language:'English', chooseLanguage:'🌐 Choose Language', languageHint:'Your language choice will be saved on this device.', languageSaved:'English selected.',
-        ageLabel:'1. AGE (OPTIONAL):', skipAge:'✨ SKIP', ageHint:'Optional • Swipe to choose an age →', schoolClassLabel:'2. SCHOOL & CLASS (EDIT LATER):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
+        ageLabel:'1. CHOOSE AGE / YEAR (REQUIRED):', chooseAge:'🎓 Tap to choose your age / year', ageRequired:'⚠️ Choose your age so questions match your level.', schoolClassLabel:'2. SCHOOL & CLASS (EDIT LATER):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
+        brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name first. MathBina will create a permanent player ID when you enter.', progressFound:'✅ Previous progress found: {blocks} blocks will be restored.', idStable:'🪪 ID {id} stays the same when you change year, school or class.', idWillGenerate:'🪪 A player ID will be created automatically when you enter.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
-        chatTitle:'💬 MathBina Happy Chat', chatSubtitle:'Chat with friends added by MathBina ID using safe phrases and emojis.', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, Happy Chat has no free-text box. Add a friend’s house ID in the Friends Gallery to see their messages.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
+        shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: CATCH THE STAR', catches:'catches', home:'🏡 HOME', arcadePrompt:'Tap the stars as quickly as you can!', arcadeRules:'Each star gives 10 XP and 2 coins. The round lasts 20 seconds.', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
+        chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, chat uses safe phrases and emojis without a free-text box.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
         hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
       },
       zh: {
         language:'中文', chooseLanguage:'🌐 选择语言', languageHint:'语言选择将保存在此设备上。', languageSaved:'已选择中文。',
-        ageLabel:'1. 年龄（可选）：', skipAge:'✨ 跳过', ageHint:'非必填 • 滑动选择年龄 →', schoolClassLabel:'2. 学校和班级（以后可修改）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
+        ageLabel:'1. 选择年龄 / 年级（必填）：', chooseAge:'🎓 点击选择年龄 / 年级', ageRequired:'⚠️ 请选择年龄，以获得适合程度的题目。', schoolClassLabel:'2. 学校和班级（以后可修改）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
+        brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'请先输入姓名。进入后，MathBina 会建立永久玩家 ID。', progressFound:'✅ 找到之前的进度：将恢复 {blocks} 个积木。', idStable:'🪪 更改年级、学校或班级后，ID {id} 保持不变。', idWillGenerate:'🪪 进入后会自动建立玩家 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
-        chatTitle:'💬 MathBina 欢乐聊天', chatSubtitle:'使用安全短语和表情，与通过 MathBina ID 添加的朋友聊天。', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，欢乐聊天不提供自由输入框。请在好友房屋画廊添加好友 ID 以查看消息。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
+        shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：接住星星', catches:'次接住', home:'🏡 家园', arcadePrompt:'尽快点击星星！', arcadeRules:'每颗星星可得 10 XP 和 2 金币。每局 20 秒。', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
+        chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，聊天只使用安全短语和表情，不提供自由输入框。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
         hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
       },
       ta: {
         language:'தமிழ்', chooseLanguage:'🌐 மொழியைத் தேர்ந்தெடுக்கவும்', languageHint:'மொழித் தேர்வு இந்தச் சாதனத்தில் சேமிக்கப்படும்.', languageSaved:'தமிழ் தேர்ந்தெடுக்கப்பட்டது.',
-        ageLabel:'1. வயது (விருப்பம்):', skipAge:'✨ தவிர்க்கவும்', ageHint:'கட்டாயமில்லை • வயதைத் தேர்வுசெய்ய நகர்த்தவும் →', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (பின்னர் மாற்றலாம்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
+        ageLabel:'1. வயது / ஆண்டைத் தேர்வுசெய்க (கட்டாயம்):', chooseAge:'🎓 வயது / ஆண்டைத் தேர்வு செய்ய தட்டவும்', ageRequired:'⚠️ உங்கள் நிலைக்கு ஏற்ற கேள்விகளுக்காக வயதைத் தேர்வுசெய்க.', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (பின்னர் மாற்றலாம்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
+        brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'முதலில் பெயரை உள்ளிடவும். நுழைந்ததும் நிரந்தர வீரர் ID உருவாகும்.', progressFound:'✅ முந்தைய முன்னேற்றம் கிடைத்தது: {blocks} கட்டைகள் மீட்கப்படும்.', idStable:'🪪 ஆண்டு, பள்ளி அல்லது வகுப்பை மாற்றினாலும் ID {id} மாறாது.', idWillGenerate:'🪪 நுழைந்ததும் வீரர் ID தானாக உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
-        chatTitle:'💬 MathBina மகிழ்ச்சி அரட்டை', chatSubtitle:'MathBina ID மூலம் சேர்த்த நண்பர்களுடன் பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களைப் பயன்படுத்திப் பேசுங்கள்.', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக சுதந்திரமாகத் தட்டச்சு செய்யும் பெட்டி இல்லை. நண்பர்களின் செய்திகளைப் பார்க்க அவர்களின் வீட்டு ID-ஐ நண்பர் காட்சியகத்தில் சேர்க்கவும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
+        shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: நட்சத்திரத்தைப் பிடி', catches:'பிடிப்புகள்', home:'🏡 வீடு', arcadePrompt:'நட்சத்திரங்களை விரைவாகத் தட்டுங்கள்!', arcadeRules:'ஒவ்வொரு நட்சத்திரமும் 10 XP மற்றும் 2 நாணயங்கள் தரும். ஆட்டம் 20 வினாடிகள்.', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
+        chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக அரட்டை பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களை மட்டும் பயன்படுத்தும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
         hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
       }
     });
-    let currentLanguage = 'ms';
+    let currentLanguage = 'en';
 
-    function t(key) { return I18N[currentLanguage]?.[key] || I18N.ms[key] || key; }
+    function t(key) { return I18N[currentLanguage]?.[key] || I18N.en[key] || key; }
+    function uiMessage(ms,en,zh=en,ta=en) { return ({ms,en,zh,ta})[currentLanguage] || en; }
+    function tf(key, values = {}) { return Object.entries(values).reduce((text,[name,value]) => text.replaceAll(`{${name}}`, String(value)), t(key)); }
     function getStoredLanguage() {
-      try { const value=localStorage.getItem(LANGUAGE_STORAGE_KEY); return I18N[value] ? value : 'ms'; } catch(e) { return 'ms'; }
+      try { const value=localStorage.getItem(LANGUAGE_STORAGE_KEY); return I18N[value] ? value : 'en'; } catch(e) { return 'en'; }
     }
     function applyLanguage(code, announce=false) {
-      currentLanguage=I18N[code]?code:'ms';
+      currentLanguage=I18N[code]?code:'en';
       try { localStorage.setItem(LANGUAGE_STORAGE_KEY,currentLanguage); } catch(e) {}
       document.documentElement.lang=({ms:'ms',en:'en',zh:'zh-CN',ta:'ta'})[currentLanguage];
       document.querySelectorAll('[data-i18n]').forEach(element=>{ const key=element.dataset.i18n; if(t(key))element.textContent=t(key); });
       document.querySelectorAll('[data-i18n-placeholder]').forEach(element=>{ element.placeholder=t(element.dataset.i18nPlaceholder); });
       document.querySelectorAll('.language-option').forEach(button=>{ const active=button.dataset.language===currentLanguage; button.classList.toggle('active',active); button.setAttribute('aria-pressed',String(active)); });
       const lobbyButton=document.getElementById('btn-language-lobby');if(lobbyButton)lobbyButton.textContent=`🌐 ${t('language')}`;
+      syncAgePickerUI();
+      updateProfilePreview();
+      updateStudentSaveStatus();
+      updateSandboxHud();
+      const buildLevel=document.getElementById('build-level-label');if(buildLevel)buildLevel.textContent=`${t('levelUnit')} ${STATE.buildLevel+1}`;
       const ribbon=document.querySelector('.sandbox-action-ribbon');if(ribbon)toggleMobileTools(ribbon.classList.contains('expanded'));
+      renderPaletteDock();
+      renderCommunitySpotlight();
       if(document.getElementById('modal-shop')?.style.display==='flex')renderShopCatalog();
       if(safeChatOpen){renderSafeChatChoices();refreshSafeChat();}
       if(announce)showToast(`🌐 ${t('languageSaved')}`);
@@ -2453,6 +2481,18 @@
       { id: 'pet_dino', name: 'Dinosaur Jinak', cat: 'vehicle', price: 250, icon: '🦖', color: '#16a34a' }
     ];
     const AIRBORNE_TYPES = new Set(['helicopter', 'rocket', 'rainbow_block', 'sky_cloud', 'sky_sun', 'sky_moon']);
+    const CATALOG_EN_NAMES = Object.freeze({
+      cobblestone:'Cobblestone', oak_log:'Oak Log', wood_wall:'Wood Wall', brick_wall:'Red Brick Wall', stone_wall:'Stone Wall', glass_wall:'Glass Wall',
+      gold_block:'Gold Ingots', diamond_block:'Diamond Gem', rainbow_block:'Rainbow', roof_wood:'Wooden Gable Roof', door_wood:'Wooden Door', door_glass:'Glass Door',
+      window_glass:'Glass Window', roof_red:'Red Roof', roof_blue:'Blue Roof', roof_flat:'Flat Roof', stairs_wood:'Wooden Stairs', chimney:'Chimney', parquet_floor:'Parquet Floor',
+      bush_leaf:'Green Bush', lantern:'Warm Lantern', fence_white:'White Fence', tree_shade:'Shade Tree', rose_flower:'Rose Plant', sunflower:'Sunflower', swimming_pool:'Blue Pool',
+      fountain:'Garden Fountain', garden_lamp:'Garden Lamp', bicycle:'Sports Bicycle', car_red:'Red Sports Car', helicopter:'Rescue Helicopter', rocket:'Space Rocket', sky_cloud:'Fluffy Cloud',
+      sky_sun:'Cheerful Sun', sky_moon:'Night Moon', pet_cat:'Cute Cat', pet_dino:'Friendly Dinosaur'
+    });
+
+    function catalogItemName(item) {
+      return currentLanguage === 'ms' ? item.name : (CATALOG_EN_NAMES[item.id] || item.name);
+    }
 
     function isAirborneType(type) {
       return AIRBORNE_TYPES.has(type);
@@ -2772,16 +2812,40 @@ const COMBAT_BANK = {
 
     function gradeLabel(value = STATE.grade) {
       const level = Math.max(1, Math.min(11, Number(value) || 1));
+      if (currentLanguage === 'en') return level <= 6 ? `Year ${level}` : `Form ${level - 6}`;
+      if (currentLanguage === 'zh') return level <= 6 ? `${level}年级` : `中${level - 6}`;
+      if (currentLanguage === 'ta') return level <= 6 ? `ஆண்டு ${level}` : `படிவம் ${level - 6}`;
       return level <= 6 ? `Tahun ${level}` : `Tingkatan ${level - 6}`;
     }
 
     function ageLabel(value = STATE.age) {
       const age = Number(value) || 0;
-      return age >= 7 && age <= 17 ? `${age} tahun` : 'Aras umum';
+      if (age < 7 || age > 17) return t('chooseAge');
+      if (currentLanguage === 'en') return `${age} years`;
+      if (currentLanguage === 'zh') return `${age}岁`;
+      if (currentLanguage === 'ta') return `${age} வயது`;
+      return `${age} tahun`;
     }
 
     function playerLevelLabel() {
       return ageLabel(STATE.age);
+    }
+
+    function localizedAvatarTitle() {
+      if (STATE.avatar === '🧕') return t('avatarDesigner');
+      if (STATE.avatar === '🦸‍♂️') return t('avatarAgent');
+      if (STATE.avatar === '🤖') return t('avatarRobot');
+      return t('avatarBuilder');
+    }
+
+    function localizedStageLabel(level) {
+      const labels = {
+        en:['Site & Foundation','Walls & Door','Windows & Roof','Complete House','Premium Starter House'],
+        ms:['Tapak & Asas','Dinding & Pintu','Tingkap & Bumbung','Rumah Lengkap','Rumah Starter Premium'],
+        zh:['场地与地基','墙壁与门','窗户与屋顶','完整房屋','高级起步屋'],
+        ta:['தளம் மற்றும் அடித்தளம்','சுவர்கள் மற்றும் கதவு','ஜன்னல்கள் மற்றும் கூரை','முழுமையான வீடு','பிரீமியம் தொடக்க வீடு']
+      };
+      return (labels[currentLanguage] || labels.en)[Math.max(0, Math.min(4, Number(level) - 1))];
     }
 
     function randomMathBinaCode(length = 8) {
@@ -2868,6 +2932,7 @@ const COMBAT_BANK = {
       STATE.studentName = cleanOptionalProfileText(profile.studentName, 80);
       STATE.grade = Math.max(1, Math.min(11, Number(profile.grade) || 1));
       STATE.age = Number(profile.age) >= 7 && Number(profile.age) <= 17 ? Number(profile.age) : 0;
+      if (STATE.age) STATE.grade = Math.max(1, Math.min(11, STATE.age - 6));
       STATE.schoolName = cleanOptionalProfileText(profile.schoolName, 80);
       STATE.classLabel = cleanOptionalProfileText(profile.classLabel, 40);
       STATE.avatar = profile.avatar || '👷‍♂️';
@@ -3014,11 +3079,14 @@ const COMBAT_BANK = {
         const chip = document.getElementById(`chip-age-${age}`);
         chip?.classList.toggle('active', age === STATE.age);
         chip?.setAttribute('aria-selected', String(age === STATE.age));
+        if (chip) chip.textContent = `${ageLabel(age)} • ${gradeLabel(age - 6)}`;
       }
-      const noneChip = document.getElementById('chip-age-none');
-      noneChip?.classList.toggle('active', !STATE.age);
-      noneChip?.setAttribute('aria-selected', String(!STATE.age));
-      requestAnimationFrame(() => scrollSelectedAgeIntoView(false));
+      const trigger = document.getElementById('age-picker-trigger');
+      if (trigger) {
+        trigger.textContent = STATE.age ? `🎓 ${ageLabel()} • ${gradeLabel()}` : t('chooseAge');
+        trigger.classList.toggle('missing', !STATE.age);
+      }
+      if (STATE.age) requestAnimationFrame(() => scrollSelectedAgeIntoView(false));
     }
 
     function initLobbyUI() {
@@ -3030,12 +3098,22 @@ const COMBAT_BANK = {
     }
 
     function scrollSelectedAgeIntoView(smooth = true) {
-      const id = STATE.age ? `chip-age-${STATE.age}` : 'chip-age-none';
-      document.getElementById(id)?.scrollIntoView({
+      if (!STATE.age) return;
+      document.getElementById(`chip-age-${STATE.age}`)?.scrollIntoView({
         behavior: smooth ? 'smooth' : 'auto',
         block: 'nearest',
         inline: 'center'
       });
+    }
+
+    function toggleAgePicker(forceOpen) {
+      const wrap = document.getElementById('age-picker-wrap');
+      const trigger = document.getElementById('age-picker-trigger');
+      if (!wrap || !trigger) return;
+      const open = typeof forceOpen === 'boolean' ? forceOpen : !wrap.classList.contains('open');
+      wrap.classList.toggle('open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open && STATE.age) requestAnimationFrame(() => scrollSelectedAgeIntoView(false));
     }
 
     function selectLobbyAge(value) {
@@ -3043,11 +3121,16 @@ const COMBAT_BANK = {
       STATE.age = age >= 7 && age <= 17 ? age : 0;
       STATE.grade = STATE.age ? Math.max(1, Math.min(11, STATE.age - 6)) : 1;
       syncAgePickerUI();
-      scrollSelectedAgeIntoView();
+      toggleAgePicker(false);
       updateSchoolClassInput();
       updateProfilePreview();
       audio.init(); audio.playPop();
     }
+
+    document.addEventListener('click', event => {
+      const wrap = document.getElementById('age-picker-wrap');
+      if (wrap?.classList.contains('open') && !wrap.contains(event.target)) toggleAgePicker(false);
+    });
 
     function renderDeviceAccounts() {
       const list = document.getElementById('device-account-list');
@@ -3171,10 +3254,10 @@ const COMBAT_BANK = {
       const name = document.getElementById('profile-preview-name');
       const meta = document.getElementById('profile-preview-meta');
       if (avatar) avatar.textContent = STATE.avatar;
-      if (name) name.textContent = STATE.studentName || 'Nama anda akan muncul di sini';
-      if (meta) meta.textContent = `${STATE.avatarTitle} • ${playerLevelLabel()}`;
+      if (name) name.textContent = STATE.studentName || t('namePreview');
+      if (meta) meta.textContent = `${localizedAvatarTitle()} • ${playerLevelLabel()}`;
       const id = document.getElementById('profile-user-id');
-      if (id) id.textContent = STATE.userId || 'ID dijana selepas masuk';
+      if (id) id.textContent = STATE.userId || t('idAfterEntry');
     }
 
     function updateStudentNameInput(value) {
@@ -3191,16 +3274,16 @@ const COMBAT_BANK = {
       const status = document.getElementById('student-name-status');
       if (!status) return;
       if (STATE.studentName.length < 3) {
-        status.textContent = 'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.';
+        status.textContent = t('fillName');
         return;
       }
       const match = findStudentSave(STATE.studentName, STATE.className);
       const blocks = match ? (match.saved?.voxels?.length ?? match.saved?.placedBlocks ?? 0) : 0;
       status.textContent = match
-        ? `✅ Kemajuan lama ditemui: ${blocks} blok akan dibuka semula.`
+        ? tf('progressFound',{blocks})
         : STATE.userId
-          ? `🪪 ID ${STATE.userId} kekal walaupun tahun, sekolah atau kelas diubah.`
-          : `🪪 ID pengguna akan dijana automatik selepas masuk.`;
+          ? tf('idStable',{id:STATE.userId})
+          : t('idWillGenerate');
     }
 
     function pickAvatar(emoji, title) {
@@ -3218,10 +3301,16 @@ const COMBAT_BANK = {
     function enterBuildingPlot() {
       audio.init();
       updateSchoolClassInput();
+      if (!STATE.age) {
+        showToast(t('ageRequired'));
+        document.getElementById('age-picker-trigger')?.focus();
+        setTimeout(() => toggleAgePicker(true), 0);
+        return;
+      }
       const nameInput = document.getElementById('input-student-name');
       updateStudentNameInput(nameInput ? nameInput.value : STATE.studentName);
       if (STATE.studentName.length < 3) {
-        showToast("⚠️ Sila isi nama penuh anda terlebih dahulu!");
+        showToast(t('nameRequired'));
         if (nameInput) nameInput.focus();
         return;
       }
@@ -3247,8 +3336,8 @@ const COMBAT_BANK = {
       restoreStudentFromCloud();
 
       showToast(restored
-        ? `✅ Selamat kembali ${STATE.studentName}! Menyemak simpanan awan…`
-        : `☁️ Menyemak rumah ${STATE.studentName} dalam simpanan awan…`);
+        ? tf('welcomeBack',{name:STATE.studentName})
+        : tf('checkingHouse',{name:STATE.studentName}));
     }
 
     function returnToLobby() {
@@ -3262,9 +3351,9 @@ const COMBAT_BANK = {
 
     function editPlayerProfile() {
       returnToLobby();
-      const schoolInput = document.getElementById('input-school-name');
-      if (schoolInput) schoolInput.focus();
-      showToast('✏️ Umur, sekolah dan kelas semuanya pilihan. ID anda kekal sama.');
+      const ageTrigger = document.getElementById('age-picker-trigger');
+      if (ageTrigger) ageTrigger.focus();
+      showToast(uiMessage('✏️ Umur wajib dipilih. Sekolah dan kelas boleh diedit; ID anda kekal sama.','✏️ Age is required. School and class can be edited later; your ID stays the same.','✏️ 年龄为必填项。学校和班级可稍后修改；你的 ID 保持不变。','✏️ வயது கட்டாயம். பள்ளி மற்றும் வகுப்பை பின்னர் மாற்றலாம்; உங்கள் ID மாறாது.'));
     }
 
     async function copyUserId() {
@@ -3472,6 +3561,7 @@ const COMBAT_BANK = {
 
       ownedKeys.forEach(k => {
         const meta = BLOCK_CATALOG.find(b => b.id === k) || { name: k, icon: '🧱' };
+        const displayName = catalogItemName(meta);
         const qty = STATE.inventory[k];
         const isActive = (STATE.activeBlockId === k && !STATE.eraserActive);
 
@@ -3484,13 +3574,13 @@ const COMBAT_BANK = {
           renderPaletteDock();
           audio.init(); audio.playPop();
           showToast(isAirborneType(k)
-            ? `✈️ ${meta.name}: pilih aras, kemudian ketuk petak untuk letak bebas.`
-            : `Alatan Aktif: ${meta.name}`);
+            ? `✈️ ${displayName}`
+            : displayName);
         };
         slot.innerHTML = `
           <div class="slot-qty">${qty}</div>
           <div class="slot-icon">${meta.icon}</div>
-          <div class="slot-name">${meta.name}</div>
+          <div class="slot-name">${displayName}</div>
         `;
         dock.appendChild(slot);
       });
@@ -3602,7 +3692,7 @@ const COMBAT_BANK = {
 
       initShooterEngine();
       loadNextShooterQuestion();
-      showToast("🎯 Zon Math Shooter: Tembak belon jawapan tepat untuk dapat XP!");
+      showToast(currentLanguage === 'ms' ? '🎯 Zon Math Shooter: Tembak belon jawapan tepat untuk dapat XP!' : '🎯 Math Shooter: Shoot the balloon with the correct answer to earn XP!');
     }
 
     function exitMinigameToSandbox() {
@@ -3633,7 +3723,7 @@ const COMBAT_BANK = {
       document.getElementById('arcade-start-card').style.display = 'block';
       updateArcadeHud();
       clearArcadeTarget();
-      showToast('🕹️ Ketuk bintang untuk kumpul XP!');
+      showToast(currentLanguage === 'ms' ? '🕹️ Ketuk bintang untuk kumpul XP!' : '🕹️ Tap the stars to earn XP!');
     }
 
     function startArcadeRound() {
@@ -3717,14 +3807,16 @@ const COMBAT_BANK = {
       stopArcadeTimers();
       saveCurrentStudentState();
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Hebat! ${caught} bintang ditangkap</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">Anda mendapat ${earned} XP dan ${caught * 2} syiling.</div><button type="button" onclick="resetArcadeCardAndStart()">🔁 MAIN LAGI</button>`;
+      card.innerHTML = currentLanguage === 'ms'
+        ? `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Hebat! ${caught} bintang ditangkap</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">Anda mendapat ${earned} XP dan ${caught * 2} syiling.</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`
+        : `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Great! You caught ${caught} stars</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">You earned ${earned} XP and ${caught * 2} coins.</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`;
       card.style.display = 'block';
-      showToast(`🏆 Arked tamat! +${earned} XP.`);
+      showToast(currentLanguage === 'ms' ? `🏆 Arked tamat! +${earned} XP.` : `🏆 Arcade complete! +${earned} XP.`);
     }
 
     function resetArcadeCardAndStart() {
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = '<div style="font-size:2.4rem">🌟</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Ketuk bintang secepat mungkin!</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">Setiap bintang memberikan 10 XP dan 2 syiling. Masa permainan ialah 20 saat.</div><button type="button" onclick="startArcadeRound()">🚀 MULA BERMAIN</button>';
+      card.innerHTML = `<div style="font-size:2.4rem">🌟</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
       startArcadeRound();
     }
 
@@ -3765,7 +3857,7 @@ const COMBAT_BANK = {
 
       STATE.shooter.currentQ = q;
 
-      document.getElementById('shooter-tag-text').textContent = q.tag || "OPERASI MATEMATIK";
+      document.getElementById('shooter-tag-text').textContent = currentLanguage === 'ms' && q.tag ? q.tag : t('mathOperation');
       document.getElementById('shooter-formula-text').textContent = q.q;
 
       // Spawn balloons
@@ -3909,7 +4001,7 @@ const COMBAT_BANK = {
             s.combo++;
             audio.playPop();
             document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP • ${STATE.coins.toLocaleString()} 🪙`;
-            showToast(`🎈 Betul! +${earned} XP dan +${coinReward} syiling!`);
+            showToast(currentLanguage === 'ms' ? `🎈 Betul! +${earned} XP dan +${coinReward} syiling!` : `🎈 Correct! +${earned} XP and +${coinReward} coins!`);
 
             setTimeout(() => {
               loadNextShooterQuestion();
@@ -3918,7 +4010,7 @@ const COMBAT_BANK = {
             recordWrongMathAttempt();
             audio.playBoing();
             s.combo = 1;
-            showToast("OOPS! Jawapan salah. Cuba lagi!");
+            showToast(uiMessage('OOPS! Jawapan salah. Cuba lagi!','OOPS! Wrong answer. Try again!','答错了，再试一次！','தவறான பதில். மீண்டும் முயலுங்கள்!'));
           }
           s.cannonballs.splice(i, 1);
           continue;
@@ -3971,7 +4063,7 @@ const COMBAT_BANK = {
        MINIGAME 2: RODA SIFIR & OPERASI (SPINNING WHEEL CARI XP)
        ============================================================== */
     function getWheelSlicesForGrade(grade) {
-      const slices = {
+      const slicesMs = {
         1: ['Tambah', 'Tolak', 'Sambung Nombor', 'Banding Nombor', 'Wang Mudah', 'Masa Mudah', 'Bentuk', '🌟 JACKPOT'],
         2: ['Tambah', 'Tolak', 'Sifir 2', 'Sifir 5', 'Sifir 10', 'Wang', 'Masa', '🌟 JACKPOT'],
         3: ['Sifir 2', 'Sifir 3', 'Sifir 4', 'Sifir 5', 'Bahagi', 'Pecahan', 'Masa', '🌟 JACKPOT'],
@@ -3984,7 +4076,21 @@ const COMBAT_BANK = {
         10: ['Kuadratik', 'Trigonometri', 'Set', 'Min', 'Graf', 'Kebarangkalian', 'Kewangan', '🌟 JACKPOT'],
         11: ['Fungsi', 'Kebarangkalian', 'Statistik', 'Faedah', 'Matriks', 'Graf', 'Nombor Indeks', '🌟 JACKPOT']
       };
-      return slices[Math.max(1, Math.min(11, Number(grade) || 1))];
+      const slicesEn = {
+        1: ['Addition', 'Subtraction', 'Number Sequence', 'Compare Numbers', 'Simple Money', 'Simple Time', 'Shapes', '🌟 JACKPOT'],
+        2: ['Addition', 'Subtraction', 'Table 2', 'Table 5', 'Table 10', 'Money', 'Time', '🌟 JACKPOT'],
+        3: ['Table 2', 'Table 3', 'Table 4', 'Table 5', 'Division', 'Fractions', 'Time', '🌟 JACKPOT'],
+        4: ['Table 6', 'Table 7', 'Table 8', 'Table 9', 'Division', 'Fractions', 'Measurement', '🌟 JACKPOT'],
+        5: ['Table 6', 'Table 7', 'Table 8', 'Table 9', 'Fractions', 'Percentage', 'Money', '🌟 JACKPOT'],
+        6: ['Mixed Operations', 'Millions', 'Fractions', 'Percentage', 'Ratio', 'Money', 'Measurement', '🌟 JACKPOT'],
+        7: ['Integers', 'Basic Algebra', 'Squares', 'Fractions', 'Ratio', 'Perimeter', 'Data', '🌟 JACKPOT'],
+        8: ['Linear Equations', 'Indices', 'Percentage', 'Coordinates', 'Ratio', 'Shapes', 'Data', '🌟 JACKPOT'],
+        9: ['Pythagoras', 'Straight Lines', 'Circles', 'Angles', 'Transformations', 'Data', 'Probability', '🌟 JACKPOT'],
+        10: ['Quadratics', 'Trigonometry', 'Sets', 'Mean', 'Graphs', 'Probability', 'Finance', '🌟 JACKPOT'],
+        11: ['Functions', 'Probability', 'Statistics', 'Interest', 'Matrices', 'Graphs', 'Index Numbers', '🌟 JACKPOT']
+      };
+      const level = Math.max(1, Math.min(11, Number(grade) || 1));
+      return (currentLanguage === 'ms' ? slicesMs : slicesEn)[level];
     }
 
     function launchMathWheel() {
@@ -3994,7 +4100,7 @@ const COMBAT_BANK = {
       document.getElementById('view-wheel').style.display = 'flex';
 
       initWheelCanvas();
-      showToast("🎡 Putar roda sifir untuk menangi bonus sehingga +300 XP!");
+      showToast(currentLanguage === 'ms' ? '🎡 Putar roda sifir untuk menangi bonus sehingga +300 XP!' : '🎡 Spin the Maths Wheel to win bonuses up to +300 XP!');
     }
 
     function initWheelCanvas() {
@@ -4107,7 +4213,7 @@ const COMBAT_BANK = {
       const sliceIdx = Math.floor(pointerAngle / sliceAngle) % numSlices;
       const sliceText = w.slices[sliceIdx];
 
-      showToast(`🎯 Roda Berhenti Pada: ${sliceText}!`);
+      showToast(currentLanguage === 'ms' ? `🎯 Roda Berhenti Pada: ${sliceText}!` : `🎯 The wheel stopped on: ${sliceText}!`);
       presentWheelMathQuestion(sliceText);
     }
 
@@ -4120,7 +4226,7 @@ const COMBAT_BANK = {
       let correctAns = 0;
       let opts = [];
 
-      if (topic.includes("Sifir")) {
+      if (topic.includes("Sifir") || topic.includes("Table")) {
         const num = parseInt(topic.replace(/\D/g, '')) || 7;
         const mult = Math.floor(Math.random() * 8) + 2;
         correctAns = num * mult;
@@ -4154,11 +4260,11 @@ const COMBAT_BANK = {
             const reward = topic.includes("JACKPOT") ? 300 : 150;
             const coinReward = Math.max(20, Math.round(reward / 5));
             awardMathReward(reward, coinReward);
-            showToast(`🎉 Betul! +${reward} XP dan +${coinReward} syiling!`);
+            showToast(currentLanguage === 'ms' ? `🎉 Betul! +${reward} XP dan +${coinReward} syiling!` : `🎉 Correct! +${reward} XP and +${coinReward} coins!`);
           } else {
             recordWrongMathAttempt();
             audio.playBoing();
-            showToast("OOPS! Jawapan salah. Boleh putar lagi!");
+            showToast(uiMessage('OOPS! Jawapan salah. Boleh putar lagi!','OOPS! Wrong answer. You can spin again!','答错了，你可以再转一次！','தவறான பதில். மீண்டும் சுழற்றலாம்!'));
           }
           qBox.style.display = 'none';
         };
@@ -4407,17 +4513,17 @@ const COMBAT_BANK = {
     }
 
     function undoBuild() {
-      if (!STATE.undoStack.length) return showToast('Tiada tindakan untuk diundur.');
+      if (!STATE.undoStack.length) return showToast(uiMessage('Tiada tindakan untuk diundur.','Nothing to undo.','没有可撤销的操作。','செயல்தவிர்க்க எதுவும் இல்லை.'));
       STATE.redoStack.push(cloneBuildState());
       restoreBuildState(STATE.undoStack.pop());
-      showToast('↶ Tindakan terakhir diundur.');
+      showToast(uiMessage('↶ Tindakan terakhir diundur.','↶ Last action undone.','↶ 已撤销上一个操作。','↶ கடைசிச் செயல் தவிர்க்கப்பட்டது.'));
     }
 
     function redoBuild() {
-      if (!STATE.redoStack.length) return showToast('Tiada tindakan untuk dibuat semula.');
+      if (!STATE.redoStack.length) return showToast(uiMessage('Tiada tindakan untuk dibuat semula.','Nothing to redo.','没有可重做的操作。','மீண்டும் செய்ய எதுவும் இல்லை.'));
       STATE.undoStack.push(cloneBuildState());
       restoreBuildState(STATE.redoStack.pop());
-      showToast('↷ Tindakan dibuat semula.');
+      showToast(uiMessage('↷ Tindakan dibuat semula.','↷ Action redone.','↷ 已重做操作。','↷ செயல் மீண்டும் செய்யப்பட்டது.'));
     }
 
     function rotateSelectedBlock() {
@@ -4429,9 +4535,9 @@ const COMBAT_BANK = {
     function changeBuildLevel(delta) {
       STATE.buildLevel = Math.max(0, Math.min(MAX_BUILD_LEVEL, STATE.buildLevel + delta));
       const label = document.getElementById('build-level-label');
-      if (label) label.textContent = `Aras ${STATE.buildLevel + 1}`;
+      if (label) label.textContent = `${t('levelUnit')} ${STATE.buildLevel + 1}`;
       updateBuildPlane();
-      showToast(`Membina pada aras ${STATE.buildLevel + 1}`);
+      showToast(currentLanguage === 'en' ? `Building on level ${STATE.buildLevel + 1}` : `${t('levelUnit')} ${STATE.buildLevel + 1}`);
     }
 
     function migrateLegacyGrid(grid) {
@@ -4515,6 +4621,13 @@ const COMBAT_BANK = {
     let safeChatPollTimer=null;
     let safeChatLastSentAt=0;
 
+    function updateSafeChatLiveStatus(key='chatConnected') {
+      const status=document.getElementById('safe-chat-live-status');
+      if(status)status.textContent=t(key);
+      const button=document.getElementById('btn-safe-chat');
+      if(button)button.classList.toggle('live',key==='chatConnected');
+    }
+
     function renderSafeChatChoices() {
       const choices=document.getElementById('safe-chat-choices');if(!choices)return;
       choices.innerHTML='';
@@ -4547,6 +4660,7 @@ const COMBAT_BANK = {
     async function refreshSafeChat() {
       if(!safeChatOpen)return;
       clearTimeout(safeChatPollTimer);
+      updateSafeChatLiveStatus('chatConnecting');
       try {
         const own=Array.isArray(STATE.chatMessages)?STATE.chatMessages:[];
         const friendIds=getFriendUserIds().slice(0,12);
@@ -4559,23 +4673,26 @@ const COMBAT_BANK = {
           const feed=document.getElementById('safe-chat-feed');
           if(feed)feed.innerHTML='<div class="safe-chat-empty">Tambah ID rakan di Galeri Rumah Kawan-Kawan untuk melihat mesej mereka. Anda juga boleh menghantar sapaan pertama! 👋</div>';
         }
+        updateSafeChatLiveStatus('chatConnected');
       } catch(error) {
         const feed=document.getElementById('safe-chat-feed');
         if(feed)feed.innerHTML='<div class="safe-chat-empty">⚠️ Mesej rakan belum dapat dimuatkan. Cuba lagi sebentar.</div>';
+        updateSafeChatLiveStatus('chatReconnecting');
       } finally {
-        if(safeChatOpen)safeChatPollTimer=setTimeout(refreshSafeChat,8000);
+        if(safeChatOpen)safeChatPollTimer=setTimeout(refreshSafeChat,1500);
       }
     }
 
     function openSafeChat() {
       if(!STATE.userId||!STATE.studentName)return showToast('Isi profil dan masuk ke rumah dahulu untuk menggunakan chat.');
       const modal=document.getElementById('modal-safe-chat');if(modal)modal.style.display='flex';
-      safeChatOpen=true;renderSafeChatChoices();refreshSafeChat();audio.init();audio.playPop();
+      safeChatOpen=true;renderSafeChatChoices();updateSafeChatLiveStatus('chatConnecting');refreshSafeChat();audio.init();audio.playPop();
     }
 
     function closeSafeChat() {
       safeChatOpen=false;clearTimeout(safeChatPollTimer);
       const modal=document.getElementById('modal-safe-chat');if(modal)modal.style.display='none';
+      document.getElementById('btn-safe-chat')?.classList.remove('live');
     }
 
     async function sendSafeChatMessage(messageId) {
@@ -4810,7 +4927,7 @@ const COMBAT_BANK = {
 
     function setupVoxelMaterials() {
       if (V3.materials.wood_wall) return;
-      const mat = (color, opts = {}) => new THREE.MeshLambertMaterial({ color, ...opts });
+      const mat = (color, opts = {}) => new THREE.MeshStandardMaterial({ color, roughness:.72, metalness:0, ...opts });
       V3.materials = {
         wood_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#b97932','#754216') }),
         brick_wall: new THREE.MeshLambertMaterial({ map: makePatternTexture('brick','#c74b3c','#f2b6a8') }),
@@ -4818,7 +4935,7 @@ const COMBAT_BANK = {
         cobblestone: new THREE.MeshLambertMaterial({ map: makePatternTexture('cobblestone','#6e6e6e','#3a3a3a') }),
         oak_log: new THREE.MeshLambertMaterial({ map: makePatternTexture('oak_log','#6b4929','#3b2612') }),
         roof_wood: new THREE.MeshLambertMaterial({ map: makePatternTexture('wood','#995a20','#5e330e') }),
-        bush_leaf: new THREE.MeshLambertMaterial({ map: makePatternTexture('leaves','#1e7328','#0f4a17') }),
+        bush_leaf: new THREE.MeshStandardMaterial({ map: makePatternTexture('leaves','#23983c','#0f5c28'), roughness:.86 }),
         lantern: new THREE.MeshBasicMaterial({ color: 0xffd166 }),
         rose_flower: new THREE.MeshLambertMaterial({ color: 0xef4444 }),
         sunflower: new THREE.MeshLambertMaterial({ color: 0xfbbf24 }),
@@ -4847,7 +4964,11 @@ const COMBAT_BANK = {
         diamond_glint: new THREE.MeshBasicMaterial({ color:0xecfeff }),
         rainbow_red: mat(0xef4444), rainbow_orange: mat(0xf97316), rainbow_yellow: mat(0xfacc15),
         rainbow_green: mat(0x22c55e), rainbow_blue: mat(0x3b82f6), rainbow_purple: mat(0x8b5cf6),
-        cloud_white: mat(0xf8fafc),
+        cloud_white: mat(0xf8fafc, { roughness:.95 }),
+        rock_grey: mat(0x748091, { roughness:.96, flatShading:true }),
+        rock_light: mat(0xaab3bf, { roughness:.94, flatShading:true }),
+        bark_oak: mat(0x7a4625, { roughness:.92 }),
+        leaf_bright: mat(0x4ade80, { roughness:.88 }),
         default: mat(0x9a6a35), preview: mat(0x4ade80, { transparent:true, opacity:.42 })
       };
     }
@@ -4913,37 +5034,74 @@ const COMBAT_BANK = {
           add(new THREE.SphereGeometry(.11,10,7),cloud,x+(x<0?.10:-.10),-.40,.01);
         });
       } else if (type === 'roof_red' || type === 'roof_blue' || type === 'roof_wood') {
-        add(createWedgeGeometry());
-      } else if (type === 'cobblestone' || type === 'oak_log' || type === 'bush_leaf') {
-        add(new THREE.BoxGeometry(.96,.96,.96), material);
+        const roof=add(createWedgeGeometry());
+        roof.scale.set(.98,.92,.98);
+        for(let i=-2;i<=2;i++) add(new THREE.BoxGeometry(.025,.03,.96),preview?material:V3.materials.roof_flat,i*.19,-.47,0);
+      } else if (type === 'cobblestone') {
+        const rock = preview ? material : V3.materials.rock_grey;
+        const rockLight = preview ? material : V3.materials.rock_light;
+        const stones = [
+          [-.27,-.27,-.24,.30,.23,.27], [.18,-.28,-.25,.34,.22,.25],
+          [-.30,-.27,.20,.27,.24,.31], [.22,-.26,.22,.33,.25,.29],
+          [-.16,.03,-.19,.32,.27,.28], [.24,.02,-.10,.26,.25,.30],
+          [-.24,.05,.25,.28,.25,.24], [.18,.08,.25,.34,.28,.25],
+          [0,.31,.02,.38,.23,.34]
+        ];
+        stones.forEach(([x,y,z,sx,sy,sz],i)=>{
+          const stone=add(new THREE.DodecahedronGeometry(.5,0),i%3===0?rockLight:rock,x,y,z);
+          stone.scale.set(sx,sy,sz);stone.rotation.set(i*.37,i*.61,i*.23);
+        });
+      } else if (type === 'oak_log') {
+        const bark=preview?material:V3.materials.bark_oak;
+        const log=add(new THREE.CylinderGeometry(.34,.37,.94,10),bark,0,0,0);log.rotation.z=Math.PI/2;
+        [-.48,.48].forEach(x=>{const cut=add(new THREE.CircleGeometry(.31,10),preview?material:V3.materials.parquet_floor,x,0,0);cut.rotation.y=Math.PI/2;});
+        for(let x=-.28;x<=.28;x+=.28){const ridge=add(new THREE.TorusGeometry(.35,.018,5,10),preview?material:V3.materials.oak_log,x,0,0);ridge.rotation.y=Math.PI/2;}
+      } else if (type === 'bush_leaf') {
+        const leaf=preview?material:V3.materials.bush_leaf;
+        const bright=preview?material:V3.materials.leaf_bright;
+        [[0,-.18,0,.34],[-.27,-.20,.02,.27],[.27,-.20,-.02,.28],[-.13,.08,.05,.29],[.15,.11,-.04,.31]].forEach(([x,y,z,s],i)=>{
+          const puff=add(new THREE.DodecahedronGeometry(s,0),i===3?bright:leaf,x,y,z);puff.rotation.set(i*.31,i*.53,0);
+        });
+      } else if (type === 'wood_wall') {
+        add(new THREE.BoxGeometry(.94,.94,.72),material);
+        for(let y=-.36;y<=.36;y+=.24)add(new THREE.BoxGeometry(.96,.025,.75),V3.materials.roof_wood,0,y,0);
+      } else if (type === 'brick_wall') {
+        add(new THREE.BoxGeometry(.94,.94,.72),material);
+        for(let y=-.35;y<=.35;y+=.23)add(new THREE.BoxGeometry(.96,.025,.74),V3.materials.stone_light,0,y,0);
+      } else if (type === 'stone_wall') {
+        const mortar=preview?material:V3.materials.stone_light;
+        add(new THREE.BoxGeometry(.94,.94,.68),mortar);
+        const rock=preview?material:V3.materials.rock_grey;
+        for(let row=0;row<3;row++)for(let col=0;col<3;col++){
+          const x=-.31+col*.31+(row%2?.07:0),y=-.31+row*.31;
+          const face=add(new THREE.DodecahedronGeometry(.20,0),rock,x,y,.36);
+          face.scale.set(1.05,.72,.34);face.rotation.z=(row+col)*.13;
+        }
+      } else if (type === 'glass_wall') {
+        const frame=preview?material:V3.materials.metal;
+        add(new THREE.BoxGeometry(.94,.08,.12),frame,0,-.43,0);add(new THREE.BoxGeometry(.94,.08,.12),frame,0,.43,0);
+        add(new THREE.BoxGeometry(.08,.94,.12),frame,-.43,0,0);add(new THREE.BoxGeometry(.08,.94,.12),frame,.43,0,0);
+        add(new THREE.BoxGeometry(.78,.78,.055),material,0,0,0);
+        add(new THREE.BoxGeometry(.045,.78,.08),frame,0,0,.02);add(new THREE.BoxGeometry(.78,.045,.08),frame,0,0,.02);
       } else if (type === 'parquet_floor') {
-        add(new THREE.BoxGeometry(.96,.96,.96), material);
-      } else if (type === 'roof_flat' || type === 'swimming_pool') {
+        add(new THREE.BoxGeometry(.96,.16,.96), material,0,-.40,0);
+        for(let z=-.36;z<=.36;z+=.24)add(new THREE.BoxGeometry(.92,.018,.022),V3.materials.roof_wood,0,-.31,z);
+      } else if (type === 'roof_flat') {
         add(new THREE.BoxGeometry(.96,.18,.96), material, 0,-.4,0);
+      } else if (type === 'swimming_pool') {
+        const rim=preview?material:V3.materials.stone_light;
+        add(new THREE.BoxGeometry(.96,.12,.96),rim,0,-.43,0);
+        add(new THREE.BoxGeometry(.76,.035,.76),preview?material:V3.materials.water_blue,0,-.35,0);
+        [[0,-.42], [0,.42],[-.42,0],[.42,0]].forEach(([x,z],i)=>add(new THREE.BoxGeometry(i<2?.78:.12,i<2?.07:.07,i<2?.12:.78),rim,x,-.31,z));
       } else if (type === 'stairs_wood') {
         for (let i=0;i<4;i++) add(new THREE.BoxGeometry(.96,(i+1)/4*.9,.24), material,0,-.5+(i+1)/8,-.36+i*.24);
-      } else if (type === 'chimney') {
-        add(new THREE.BoxGeometry(.94,.96,.94), material);
-        add(new THREE.BoxGeometry(.4,.2,.4), V3.materials.roof_flat, 0,.45,0);
-      } else if (type === 'lantern' || type === 'garden_lamp') {
-        add(new THREE.CylinderGeometry(.02,.02,.3,6), V3.materials.stone_wall, 0,.35,0);
-        add(new THREE.BoxGeometry(.34,.42,.34), V3.materials.stone_wall, 0,.05,0);
-        add(new THREE.BoxGeometry(.26,.34,.26), preview ? material : V3.materials.lantern, 0,.05,0);
-      } else if (type === 'rose_flower') {
-        add(new THREE.CylinderGeometry(.03,.03,.4,6), V3.materials.tree_leaf_dark, 0,-.25,0);
-        add(new THREE.DodecahedronGeometry(.18,0), preview ? material : V3.materials.rose_flower, 0,.05,0);
-      } else if (type === 'sunflower') {
-        add(new THREE.CylinderGeometry(.03,.03,.55,6), V3.materials.tree_leaf_dark, 0,-.2,0);
-        add(new THREE.CylinderGeometry(.22,.22,.05,8), preview ? material : V3.materials.sunflower, 0,.15,0);
-        add(new THREE.CylinderGeometry(.10,.10,.07,8), preview ? material : V3.materials.tree_trunk, 0,.16,0);
-      } else if (type === 'car_red') {
-        add(new THREE.BoxGeometry(.84,.24,1.2), preview ? material : V3.materials.roof_red, 0,-.18,0);
-        add(new THREE.BoxGeometry(.68,.28,.62), preview ? material : V3.materials.window_glass, 0,.06,-.05);
-        const wMat = preview ? material : V3.materials.stone_wall;
-        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, -.44,-.28,-.35);
-        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, .44,-.28,-.35);
-        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, -.44,-.28,.35);
-        add(new THREE.CylinderGeometry(.12,.12,.12,10), wMat, .44,-.28,.35);
+      } else if (type === 'lantern') {
+        const dark=preview?material:V3.materials.lamp_dark;
+        add(new THREE.CylinderGeometry(.05,.06,.48,8),dark,0,-.19,0);
+        add(new THREE.CylinderGeometry(.20,.16,.08,8),dark,0,.07,0);
+        add(new THREE.CylinderGeometry(.15,.15,.28,8),preview?material:V3.materials.lantern,0,.24,0);
+        add(new THREE.ConeGeometry(.23,.18,8),dark,0,.45,0);
+        const handle=add(new THREE.TorusGeometry(.18,.025,6,14,Math.PI),dark,0,.49,0);handle.rotation.z=Math.PI;
       } else if (type.startsWith('door_') || type === 'window_glass') {
         // Bingkai sedalam blok dinding menjadikan pintu/tingkap benar-benar
         // bersambung dengan rumah, bukan terapung di tengah petak.
@@ -5131,6 +5289,12 @@ const COMBAT_BANK = {
         new THREE.MeshStandardMaterial({color:0x64748b,roughness:1,flatShading:true})
       );
       cliff.scale.z=.53;cliff.rotation.z=Math.PI;cliff.position.y=-2.27;cliff.castShadow=true;V3.scene.add(cliff);
+      // Batu-batu kecil pada tebing memecahkan siluet kon lama dan menjadikan
+      // pulau terasa semula jadi tanpa membebankan GPU telefon.
+      const cliffRockMat=new THREE.MeshStandardMaterial({color:0x768496,roughness:1,flatShading:true});
+      [[-4.8,-1.18,-2.1,.8],[4.6,-1.32,-1.8,.7],[-5.6,-1.58,1.4,.62],[5.2,-1.72,1.7,.74],[0,-2.85,0,.88]].forEach(([x,y,z,s],i)=>{
+        const rock=new THREE.Mesh(new THREE.DodecahedronGeometry(s,0),cliffRockMat);rock.position.set(x,y,z);rock.rotation.set(i*.34,i*.57,i*.19);rock.castShadow=true;V3.scene.add(rock);
+      });
       const pts = [];
       for (let x=0;x<=GRID_COLS;x++) pts.push(x-GRID_COLS/2,.01,-GRID_ROWS/2, x-GRID_COLS/2,.01,GRID_ROWS/2);
       for (let z=0;z<=GRID_ROWS;z++) pts.push(-GRID_COLS/2,.01,z-GRID_ROWS/2, GRID_COLS/2,.01,z-GRID_ROWS/2);
@@ -5173,6 +5337,12 @@ const COMBAT_BANK = {
 
       const sunDisc=new THREE.Mesh(new THREE.SphereGeometry(1.15,18,12),new THREE.MeshBasicMaterial({color:0xfff19c,fog:false}));
       sunDisc.position.set(-15,15,-24);environment.add(sunDisc);
+      const sunGlow=new THREE.Mesh(new THREE.SphereGeometry(1.85,18,12),new THREE.MeshBasicMaterial({color:0xfff6bd,transparent:true,opacity:.20,fog:false,depthWrite:false}));
+      sunGlow.position.copy(sunDisc.position);environment.add(sunGlow);
+      const horizonMat=new THREE.MeshStandardMaterial({color:0x7aa6b5,roughness:1,flatShading:true});
+      [[-19,-3.1,-22,4.7],[18,-3.0,-25,5.6],[-27,-3.3,-8,3.8],[27,-3.4,-10,4.2]].forEach(([x,y,z,s],i)=>{
+        const mountain=new THREE.Mesh(new THREE.ConeGeometry(s,s*1.55,7),horizonMat);mountain.position.set(x,y,z);mountain.rotation.y=i*.73;environment.add(mountain);
+      });
       V3.environment=environment;V3.scene.add(environment);
     }
 
@@ -5287,15 +5457,16 @@ const COMBAT_BANK = {
       V3.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 700 ? 1.5 : 2));
       V3.renderer.outputColorSpace = THREE.SRGBColorSpace;
       V3.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      V3.renderer.toneMappingExposure = 1.08;
+      V3.renderer.toneMappingExposure = 1.16;
       V3.renderer.shadowMap.enabled = true;
       V3.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       V3.raycaster = new THREE.Raycaster();
       V3.world = new THREE.Group(); V3.scene.add(V3.world);
       setupVoxelMaterials(); createSkyEnvironment(); createGroundGrid();
-      V3.scene.add(new THREE.HemisphereLight(0xeaf8ff,0x355d32,1.8));
-      const sun = new THREE.DirectionalLight(0xfff5d6,2.45); sun.position.set(-8,15,10); sun.castShadow=true;
+      V3.scene.add(new THREE.HemisphereLight(0xeaf8ff,0x31562f,1.95));
+      const sun = new THREE.DirectionalLight(0xfff3d2,2.7); sun.position.set(-8,15,10); sun.castShadow=true;
       sun.shadow.mapSize.set(1024,1024); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; V3.scene.add(sun);
+      const fill=new THREE.DirectionalLight(0x8ed7ff,.52);fill.position.set(10,7,-12);V3.scene.add(fill);
       V3.buildPlane = new THREE.Mesh(new THREE.PlaneGeometry(GRID_COLS,GRID_ROWS),new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
       V3.buildPlane.rotation.x = -Math.PI/2; V3.scene.add(V3.buildPlane);
       bindVoxelInput(canvas); resizeVoxelRenderer(); rebuildVoxelWorld(); refreshNeighborhoodIslands(); updateBuildPlane(); updateCamera();
@@ -5406,18 +5577,18 @@ const COMBAT_BANK = {
 
     function handleVoxelCellClicked(cell) {
       audio.init();
-      if(V3.visitingEntry)return showToast('🔒 Mod Lihat Sahaja: rumah kawan tidak boleh diubah.');
+      if(V3.visitingEntry)return showToast(uiMessage('🔒 Mod Lihat Sahaja: rumah kawan tidak boleh diubah.','🔒 View-only mode: a friend’s house cannot be changed.','🔒 仅查看模式：无法修改好友的房屋。','🔒 பார்வை மட்டும்: நண்பரின் வீட்டை மாற்ற முடியாது.'));
       const existing=findVoxel(cell.x,cell.y,cell.z);
       if(STATE.eraserActive){
         if(!existing)return;
         rememberBuildAction(); STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;
         STATE.voxels=STATE.voxels.filter(v=>v!==existing); audio.playPop();
-        rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();return showToast('Blok dipadam dan dipulangkan.');
+        rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();return showToast(uiMessage('Blok dipadam dan dipulangkan.','Block removed and returned to inventory.','积木已移除并归还库存。','கட்டை அகற்றப்பட்டு இருப்புக்குத் திருப்பப்பட்டது.'));
       }
       const type=STATE.activeBlockId;
-      if(!type)return showToast('Pilih blok dari alatan dahulu.');
-      if((STATE.inventory[type]||0)<=0)return showToast('Blok ini telah habis. Beli lagi di kedai.');
-      if(cell.y>0&&!isAirborneType(type)&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.');
+      if(!type)return showToast(uiMessage('Pilih blok dari alatan dahulu.','Choose a block from the tools first.','请先从工具中选择积木。','முதலில் கருவிகளில் இருந்து ஒரு கட்டையைத் தேர்வுசெய்க.'));
+      if((STATE.inventory[type]||0)<=0)return showToast(uiMessage('Blok ini telah habis. Beli lagi di kedai.','You have no more of this block. Buy more in the shop.','这种积木已用完。请到商店购买。','இந்தக் கட்டை தீர்ந்துவிட்டது. கடையில் மேலும் வாங்குங்கள்.'));
+      if(cell.y>0&&!isAirborneType(type)&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast(uiMessage('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.','⚠️ This block needs support underneath. Go down a level and build there first.','⚠️ 积木下方需要支撑。请先到下一层建造。','⚠️ கட்டைக்கு கீழே ஆதரவு தேவை. ஒரு நிலை கீழே முதலில் கட்டுங்கள்.'));
       let placementRotation=STATE.blockRotation;
       if(type.startsWith('door_')||type==='window_glass'){
         const attachment=getOpeningAttachment(cell,existing);
@@ -5473,13 +5644,13 @@ const COMBAT_BANK = {
     function updateSandboxHud() {
       const count=(STATE.voxels||[]).length, p=calculateHouseProgress();
       const xp=document.getElementById('hud-sandbox-xp'),coins=document.getElementById('hud-sandbox-coins');
-      if(xp)xp.textContent=`${STATE.xp.toLocaleString()} XP`;if(coins)coins.textContent=`${STATE.coins.toLocaleString()} Syiling`;
-      const blocks=document.getElementById('hud-sandbox-blocks');if(blocks)blocks.textContent=`${count} Blok`;
-      const level=document.getElementById('house-level-text');if(level)level.textContent=`Tahap ${p.level} • ${p.label}`;
-      const progress=document.getElementById('house-progress-text');if(progress)progress.textContent=`Kemajuan rumah: ${p.percent}%`;
+      if(xp)xp.textContent=`${STATE.xp.toLocaleString()} XP`;if(coins)coins.textContent=`${STATE.coins.toLocaleString()} ${t('coinsUnit')}`;
+      const blocks=document.getElementById('hud-sandbox-blocks');if(blocks)blocks.textContent=`${count} ${t('blocksUnit')}`;
+      const level=document.getElementById('house-level-text');if(level)level.textContent=`${t('stageUnit')} ${p.level} • ${localizedStageLabel(p.level)}`;
+      const progress=document.getElementById('house-progress-text');if(progress)progress.textContent=`${t('houseProgress')}: ${p.percent}%`;
       const fill=document.getElementById('house-progress-fill');if(fill)fill.style.width=`${p.percent}%`;
       const owner=document.getElementById('world-owner-label');
-      if(owner&&!V3.visitingEntry)owner.innerHTML=`🏡 Rumah ${escapeHtml(STATE.studentName||'Anda')}<small>Ketuk pulau terapung untuk melawat rumah kawan</small>`;
+      if(owner&&!V3.visitingEntry)owner.innerHTML=`🏡 ${t('yourHouse')} ${escapeHtml(STATE.studentName||'Player')}<small>${t('visitHint')}</small>`;
     }
 
     function toggleMobileTools(forceExpanded) {
@@ -5500,19 +5671,21 @@ const COMBAT_BANK = {
       STATE.eraserActive=!STATE.eraserActive;
       const btn=document.getElementById('btn-eraser-mode');if(btn)btn.classList.toggle('active',STATE.eraserActive);
       renderPaletteDock();updatePreviewMesh();audio.init();audio.playPop();
-      showToast(STATE.eraserActive?'🧹 Alat padam aktif. Ketuk blok pada aras dipilih.':'Alat binaan aktif.');
+      showToast(STATE.eraserActive
+        ? uiMessage('🧹 Alat padam aktif. Ketuk blok pada aras dipilih.','🧹 Eraser active. Tap a block on the selected level.','🧹 橡皮工具已启用。点击所选层的积木。','🧹 அழிப்பான் செயலில் உள்ளது. தேர்ந்த நிலையில் உள்ள கட்டையைத் தட்டவும்.')
+        : uiMessage('Alat binaan aktif.','Build tool active.','建造工具已启用。','கட்டும் கருவி செயலில் உள்ளது.'));
     }
 
     function takeHousePhoto() {
       audio.init();audio.playFanfare();if(!V3.renderer)return;
       V3.renderer.render(V3.scene,V3.camera);
       const a=document.createElement('a');a.href=V3.renderer.domElement.toDataURL('image/png');a.download=`Rumah_3D_${STATE.studentName.replace(/ /g,'_')}.png`;
-      document.body.appendChild(a);a.click();a.remove();showToast('📸 Gambar rumah 3D berjaya dimuat turun!');
+      document.body.appendChild(a);a.click();a.remove();showToast(uiMessage('📸 Gambar rumah 3D berjaya dimuat turun!','📸 Your 3D house image was downloaded!','📸 3D 房屋图片已下载！','📸 உங்கள் 3D வீட்டு படம் பதிவிறக்கப்பட்டது!'));
     }
 
     function openShopModal() {
       document.getElementById('modal-shop').style.display='flex';
-      const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} Syiling`;
+      const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} ${t('coinsUnit')}`;
       renderShopCatalog();audio.init();audio.playPop();
     }
 
@@ -5522,7 +5695,7 @@ const COMBAT_BANK = {
         const owned=STATE.inventory[item.id]||0;
         const resale=Math.max(1,Math.floor(item.price*.5));
         return `
-        <div class="shop-item-card"><div class="shop-item-icon">${item.icon}</div><div class="shop-item-name">${item.name}</div>
+        <div class="shop-item-card"><div class="shop-item-icon">${item.icon}</div><div class="shop-item-name">${catalogItemName(item)}</div>
         <div class="shop-item-price">🪙 ${item.price} ${t('coins')}</div><div class="shop-item-owned">${t('owned')}: ${owned} • ${t('sellValue')}: ${resale} 🪙</div>
         <div class="shop-item-actions"><button class="btn-buy-item" onclick="buyBlockItem('${item.id}')">${t('buy')}</button>
         <button class="btn-sell-item" onclick="sellBlockItem('${item.id}',event)" ${owned<=0?'disabled':''}>${t('sell')}</button></div></div>`;
@@ -5533,30 +5706,30 @@ const COMBAT_BANK = {
     function buyBlockItem(blockId) {
       if(purchaseLocked)return;purchaseLocked=true;setTimeout(()=>purchaseLocked=false,180);
       const item=BLOCK_CATALOG.find(b=>b.id===blockId);if(!item)return;
-      audio.init();if(STATE.coins<item.price){audio.playBoing();return showToast(`❌ Syiling tidak cukup (${STATE.coins}/${item.price}). Main cabaran Matematik!`);}
+      audio.init();if(STATE.coins<item.price){audio.playBoing();return showToast(currentLanguage === 'ms' ? `❌ Syiling tidak cukup (${STATE.coins}/${item.price}). Main cabaran Matematik!` : `❌ Not enough coins (${STATE.coins}/${item.price}). Play a Maths challenge!`);}
       STATE.coins-=item.price;STATE.inventory[blockId]=(STATE.inventory[blockId]||0)+1;STATE.activeBlockId=blockId;STATE.eraserActive=false;
-      audio.playChing();const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} Syiling`;
-      updateSandboxHud();renderPaletteDock();updatePreviewMesh();saveCurrentStudentState();showToast(`✅ ${item.name} dibeli (-${item.price} syiling).`);
+      audio.playChing();const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} ${t('coinsUnit')}`;
+      updateSandboxHud();renderPaletteDock();updatePreviewMesh();saveCurrentStudentState();showToast(currentLanguage === 'ms' ? `✅ ${item.name} dibeli (-${item.price} syiling).` : `✅ ${catalogItemName(item)} purchased (-${item.price} coins).`);
     }
 
     let pendingSellBlockId='';
     let pendingSellTimer=null;
     function sellBlockItem(blockId,event) {
       const item=BLOCK_CATALOG.find(b=>b.id===blockId);if(!item)return;
-      const owned=STATE.inventory[blockId]||0;if(owned<=0)return showToast('Item ini tiada dalam inventori.');
+      const owned=STATE.inventory[blockId]||0;if(owned<=0)return showToast(currentLanguage === 'ms' ? 'Item ini tiada dalam inventori.' : 'This item is not in your inventory.');
       if(pendingSellBlockId!==blockId){
         pendingSellBlockId=blockId;clearTimeout(pendingSellTimer);
         const button=event?.currentTarget;if(button){button.textContent=t('confirmSell');button.classList.add('confirming');}
         pendingSellTimer=setTimeout(()=>{pendingSellBlockId='';renderShopCatalog();},2800);
-        return showToast(`Tekan sekali lagi untuk jual ${item.name}.`);
+        return showToast(currentLanguage === 'ms' ? `Tekan sekali lagi untuk jual ${item.name}.` : `Tap again to sell ${catalogItemName(item)}.`);
       }
       clearTimeout(pendingSellTimer);pendingSellBlockId='';
       const resale=Math.max(1,Math.floor(item.price*.5));
       STATE.inventory[blockId]=owned-1;STATE.coins+=resale;
       audio.init();audio.playChing();
-      const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} Syiling`;
+      const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} ${t('coinsUnit')}`;
       renderShopCatalog();renderPaletteDock();updateSandboxHud();updatePreviewMesh();saveCurrentStudentState();
-      showToast(`♻️ ${item.name} dijual (+${resale} syiling).`);
+      showToast(currentLanguage === 'ms' ? `♻️ ${item.name} dijual (+${resale} syiling).` : `♻️ ${catalogItemName(item)} sold (+${resale} coins).`);
     }
 
     function awardMathReward(xp, coins) {
@@ -5580,10 +5753,26 @@ const COMBAT_BANK = {
     let communityGalleryIndex = 0;
     let communityGalleryTimer = null;
 
+    function galleryTerm(key) {
+      const words = {
+        en:{house:'House of',architect:'MathBina Architect',device:'This device',sample:'Sample house'},
+        ms:{house:'Rumah',architect:'Arkitek MathBina',device:'Peranti ini',sample:'Rumah contoh'},
+        zh:{house:'房屋',architect:'MathBina 建筑师',device:'此设备',sample:'示例房屋'},
+        ta:{house:'வீடு',architect:'MathBina கட்டிடக் கலைஞர்',device:'இந்தச் சாதனம்',sample:'மாதிரி வீடு'}
+      };
+      return (words[currentLanguage] || words.en)[key];
+    }
+
     function galleryDisplayName(value) {
       const parts = String(value || '').trim().split(/\s+/).filter(Boolean);
-      if (!parts.length) return 'Arkitek MathBina';
+      if (!parts.length) return galleryTerm('architect');
       return parts.length > 1 ? `${parts[0]} ${parts[1].charAt(0).toUpperCase()}.` : parts[0];
+    }
+
+    function galleryMetaText(entry) {
+      const level = entry.localOnly || entry.friendHouse ? (entry.yearLabel || 'MathBina') : 'MathBina';
+      const source = entry.localOnly ? galleryTerm('device') : entry.friendHouse ? `ID ${entry.userId}` : galleryTerm('sample');
+      return `${level} • ${source}`;
     }
 
     function galleryColorForType(type) {
@@ -5713,7 +5902,7 @@ const COMBAT_BANK = {
       } catch (error) {}
       try { friends = (await Promise.all(getFriendUserIds().map(fetchFriendHouse))).filter(Boolean); } catch(e) {}
       COMMUNITY_GALLERY = [...friends, ...shared];
-      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Cikgu Mohammad Fikrey bin Abdul Gapar', yearLabel:'Rumah Contoh Rasmi', avatar:'👨‍🏫', approved:true, voxels:[] }];
+      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Mohammad Fikrey bin Abdul Gapar', yearLabel:'MathBina', avatar:'👨‍🏫', approved:true, voxels:[] }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
       refreshNeighborhoodIslands();
@@ -5732,8 +5921,8 @@ const COMBAT_BANK = {
       drawGalleryHouse(canvas, entry);
       const owner = document.getElementById('community-spotlight-owner');
       const meta = document.getElementById('community-spotlight-meta');
-      if (owner) owner.textContent = `${entry.avatar || '🏡'} Rumah ${entry.displayName || 'Arkitek MathBina'}`;
-      if (meta) meta.textContent = `${entry.yearLabel || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : entry.friendHouse ? `ID ${entry.userId}` : 'Rumah contoh'}`;
+      if (owner) owner.textContent = `${entry.avatar || '🏡'} ${galleryTerm('house')} ${entry.displayName || galleryTerm('architect')}`;
+      if (meta) meta.textContent = galleryMetaText(entry);
       const backdrop = document.getElementById('community-backdrop');
       if (backdrop && canvas) {
         backdrop.style.backgroundImage = `url(${canvas.toDataURL('image/jpeg',.78)})`;
@@ -5753,8 +5942,8 @@ const COMBAT_BANK = {
         const info=document.createElement('div');info.className='community-card-info';
         const avatar=document.createElement('div');avatar.className='community-card-avatar';avatar.textContent=entry.avatar||'🏡';
         const labels=document.createElement('div');
-        const name=document.createElement('div');name.className='community-card-name';name.textContent=`Rumah ${entry.displayName||'Arkitek MathBina'}`;
-        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.yearLabel||'MathBina'} • ${entry.localOnly?'Peranti ini':entry.friendHouse?`ID ${entry.userId}`:'Rumah contoh'}`;
+        const name=document.createElement('div');name.className='community-card-name';name.textContent=`${galleryTerm('house')} ${entry.displayName||galleryTerm('architect')}`;
+        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=galleryMetaText(entry);
         labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
       });
       modal.style.display='flex';

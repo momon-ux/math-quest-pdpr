@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v22-four-languages';
+const CACHE_NAME = 'mathbina-v26-english-default';
 const APP_SHELL = [
   './',
   './index.html',

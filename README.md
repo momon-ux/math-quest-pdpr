@@ -4,6 +4,35 @@
 
 ---
 
+## 🎓 Versi V25 — Pemilih Umur Ringkas dan Wajib
+
+- Semua pilihan umur disembunyikan dalam satu butang lutsinar yang kemas.
+- Senarai umur 7 hingga 17 tahun dibuka hanya apabila butang ditekan.
+- Umur wajib dipilih sebelum pemain boleh memasuki dunia binaan.
+- Umur terus dipetakan kepada Tahun 1–6 atau Tingkatan 1–5 untuk menentukan aras Math Shooter dan Roda Matematik.
+- Pilihan sedia ada dalam profil lama dikekalkan; rumah dan kemajuan tidak berubah.
+
+---
+
+## 🎨 Versi V24 — Grafik 3D Diperkemas
+
+- Batu cobblestone kini terdiri daripada gugusan batu bersegi dan bukan kubus biasa.
+- Kayu balak mempunyai bentuk silinder, urat kulit dan potongan hujung kayu.
+- Semak menggunakan gugusan daun berlapis; lantai parket, kolam dan dinding turut mempunyai model khusus.
+- Kod lama yang menyebabkan kereta, bunga, lampu taman dan cerobong kelihatan terlalu ringkas telah dibuang.
+- Pencahayaan, bayang, warna, tebing pulau, cahaya matahari dan latar gunung ditambah baik tanpa menjejaskan rumah tersimpan.
+
+---
+
+## 💬 Versi V23 — Chat Live Semasa Membina
+
+- Chat Ceria kini muncul sebagai panel terapung supaya pemain boleh berbual sambil terus melihat rumah.
+- Mesej rakan disegerakkan hampir secara langsung dan status sambungan **LIVE** dipaparkan.
+- Panel chat memenuhi bahagian bawah skrin pada telefon tanpa menutup kawalan utama secara kekal.
+- Ayat dan emoji selamat dikekalkan bagi melindungi pengguna murid.
+
+---
+
 ## 🌐 Versi V22 — Pilihan Empat Bahasa
 
 - Pemain boleh memilih **Bahasa Malaysia, English, 中文 atau தமிழ்** dari lobi atau semasa bermain.
@@ -53,9 +82,9 @@
 - Profil satu-akaun versi lama dipindahkan secara automatik supaya binaan sedia ada kekal selamat.
 - Paparan pengurusan akaun direka supaya mudah digunakan pada telefon.
 
-## 🕹️ Versi V16 — Umur Pilihan & Arked XP
+## 🕹️ Versi V16 — Arked XP (pemilih umur telah diganti oleh V25)
 
-Pemilihan aras tidak lagi diwajibkan. Murid boleh terus bermain menggunakan **Aras umum**, atau meleret pilihan umur 7 hingga 17 tahun jika mahu soalan Matematik disesuaikan dengan umur mereka.
+Versi V16 memperkenalkan pemilih umur asal. Mulai V25, umur 7 hingga 17 tahun wajib dipilih melalui satu butang ringkas supaya soalan Matematik sentiasa sepadan dengan aras pemain.
 
 Permainan baharu **Arked XP: Tangkap Bintang** memberi 10 XP dan 2 syiling bagi setiap bintang yang berjaya diketuk dalam tempoh 20 saat. Permainan direka dengan sasaran sentuhan besar untuk telefon.
 
@@ -164,6 +193,13 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 ---
 
 ## 🌐 Pautan Rasmi & Deployment
+
+### V26 — English Default & Language Sync
+
+- English kini menjadi bahasa asal untuk pengguna baharu dan pengguna yang menaik taraf.
+- Pengguna masih boleh bertukar kepada Bahasa Malaysia, 中文 atau தமிழ் melalui satu butang bahasa.
+- Label umur/tahun, profil, HUD, kedai, galeri, Math Shooter, Roda Matematik dan Arked XP diselaraskan apabila bahasa ditukar.
+- Pilihan bahasa disimpan pada peranti selepas pengguna menukarnya.
 
 - **Pautan Langsung:** [https://momon-ux.github.io/math-quest-pdpr/](https://momon-ux.github.io/math-quest-pdpr/)
 - **Repositori GitHub:** [https://github.com/momon-ux/math-quest-pdpr](https://github.com/momon-ux/math-quest-pdpr)
