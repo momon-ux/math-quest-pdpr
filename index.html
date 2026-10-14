@@ -1007,83 +1007,290 @@
       align-items: center;
       justify-content: center;
       z-index: 30;
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.95) 0%, rgba(88, 28, 135, 0.98) 100%);
+      background: radial-gradient(circle at center, rgba(147, 51, 234, 0.98) 0%, rgba(76, 29, 149, 1) 100%);
       padding: 12px;
+      overflow-y: auto;
     }
     .wheel-card-container {
       width: 100%;
-      max-width: 720px;
-      background: #fff;
+      max-width: 880px;
+      background: #ffffff;
       border: 4px solid var(--gold-yellow);
-      border-radius: 20px;
-      box-shadow: 0 8px 0 var(--gold-border), 0 20px 30px rgba(0,0,0,0.4);
+      border-radius: 24px;
+      box-shadow: 0 10px 0 var(--gold-border), 0 24px 44px rgba(0,0,0,0.45);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px;
-      gap: 12px;
+      padding: 18px 24px;
+      gap: 14px;
     }
     .wheel-spinner-row {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 26px;
       flex-wrap: wrap;
       justify-content: center;
+      width: 100%;
+    }
+    .wheel-canvas-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
     }
     #wheel-canvas {
-      width: 240px;
-      height: 240px;
+      width: 320px;
+      height: 320px;
+      max-width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.28));
+    }
+    .wheel-pointer {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.6rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.55));
+      z-index: 10;
+      pointer-events: none;
+      animation: pointerBob 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes pointerBob {
+      from { transform: translateX(-50%) translateY(0); }
+      to { transform: translateX(-50%) translateY(-5px); }
     }
     .wheel-right-panel {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      min-width: 260px;
+      gap: 12px;
+      flex: 1;
+      min-width: 280px;
     }
     .wheel-question-box {
-      background: #f8fafc;
-      border: 2px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 12px 18px;
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 3px solid #cbd5e1;
+      border-radius: 18px;
+      padding: 16px 22px;
       text-align: center;
       width: 100%;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+    .wheel-cat-badge {
+      display: inline-block;
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: #fff;
+      background: linear-gradient(135deg, #9333ea, #7e22ce);
+      padding: 4px 14px;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(126,34,206,0.3);
+      letter-spacing: 0.5px;
+    }
+    .wheel-math-problem {
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
+      font-weight: 1000;
+      color: #0f172a;
+      margin: 10px 0;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.06);
     }
     .wheel-options-group {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
     }
     .wheel-opt-btn {
       flex: 1;
-      padding: 8px;
-      font-size: 1rem;
-      font-weight: 900;
-      background: #fff;
-      border: 2px solid #a855f7;
-      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: clamp(1.3rem, 4vw, 1.75rem);
+      font-weight: 1000;
+      background: #ffffff;
+      border: 3px solid #9333ea;
+      border-radius: 16px;
       color: #6b21a8;
       cursor: pointer;
-      box-shadow: 0 3px 0 #7e22ce;
+      box-shadow: 0 5px 0 #7e22ce, 0 8px 16px rgba(126,34,206,0.18);
+      min-height: 56px;
+      transition: all 0.1s ease;
+      touch-action: manipulation;
+    }
+    .wheel-opt-btn:hover {
+      background: #faf5ff;
+      border-color: #7e22ce;
     }
     .wheel-opt-btn:active {
-      transform: translateY(2px);
-      box-shadow: none;
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #7e22ce;
     }
     .btn-spin-wheel {
-      padding: 12px 28px;
-      font-size: 1.15rem;
-      font-weight: 900;
-      background: linear-gradient(180deg, #facc15 0%, #eab308 100%);
-      border: 2px solid #a16207;
+      padding: 16px 38px;
+      font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+      font-weight: 1000;
+      background: linear-gradient(180deg, #fde047 0%, #eab308 50%, #ca8a04 100%);
+      border: 3px solid #854d0e;
       color: #78350f;
-      border-radius: 14px;
+      border-radius: 18px;
       cursor: pointer;
-      box-shadow: 0 4px 0 #a16207;
+      box-shadow: 0 6px 0 #854d0e, 0 10px 22px rgba(234,179,8,0.45);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      touch-action: manipulation;
+      letter-spacing: 0.5px;
+    }
+    .btn-spin-wheel:hover {
+      filter: brightness(1.05);
     }
     .btn-spin-wheel:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #854d0e;
+    }
+    .btn-spin-wheel:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-sifir-chart-toggle {
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #fff;
+      border: 2px solid #1e40af;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 0 #1e3a8a;
+      touch-action: manipulation;
+    }
+    .btn-sifir-chart-toggle:active {
       transform: translateY(2px);
       box-shadow: none;
+    }
+
+    /* Times Table Modal & Big Chart Styles */
+    .times-table-modal-box {
+      max-width: min(940px, 96vw) !important;
+      max-height: calc(100dvh - 14px);
+      padding: 14px 18px;
+      gap: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .times-table-selector-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 4px 2px;
+      scrollbar-width: thin;
+      flex-wrap: wrap;
+    }
+    .sifir-num-chip {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 999px;
+      color: #334155;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+    .sifir-num-chip:hover {
+      background: #e2e8f0;
+    }
+    .sifir-num-chip.active {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      border-color: #5b21b6;
+      color: #ffffff;
+      box-shadow: 0 3px 8px rgba(109,40,217,0.35);
+    }
+    .sifir-num-chip.all-btn {
+      background: #fef08a;
+      border-color: #eab308;
+      color: #854d0e;
+    }
+    .sifir-num-chip.all-btn.active {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: #b45309;
+      color: #fff;
+    }
+    .times-table-content-area {
+      overflow-y: auto;
+      max-height: calc(82dvh - 110px);
+      padding: 6px 2px;
+    }
+    .sifir-single-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+    }
+    .sifir-equation-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 2.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease;
+      touch-action: manipulation;
+    }
+    .sifir-equation-card:hover, .sifir-equation-card:active {
+      transform: scale(1.03);
+      border-color: #8b5cf6;
+      background: #faf5ff;
+    }
+    .sifir-eq-formula {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #334155;
+    }
+    .sifir-eq-product {
+      font-size: 1.75rem;
+      font-weight: 1000;
+      color: #7c3aed;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.08);
+    }
+    .sifir-all-tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .sifir-table-box {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .sifir-table-title {
+      font-size: 0.98rem;
+      font-weight: 1000;
+      color: #7c3aed;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .sifir-mini-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #334155;
+      padding: 3px 6px;
+      border-radius: 6px;
+    }
+    .sifir-mini-row:nth-child(even) {
+      background: rgba(241,245,249,0.7);
     }
 
     /* ==============================================================
@@ -1521,12 +1728,16 @@
       .leader-record-score { min-width: 86px; }
 
       #view-wheel { justify-content: flex-start; overflow-y: auto; padding: max(6px, env(safe-area-inset-top)) 6px max(8px, env(safe-area-inset-bottom)); }
-      .wheel-card-container { max-height: none; padding: 10px; gap: 8px; border-width: 3px; }
-      .wheel-spinner-row { gap: 8px; flex-direction: column; flex-wrap: nowrap; }
-      #wheel-canvas { width: min(190px, 55vw); height: min(190px, 55vw); }
-      .wheel-right-panel { min-width: 0; width: 100%; }
-      .wheel-options-group { flex-wrap: wrap; }
-      .wheel-opt-btn { min-width: 30%; }
+      .wheel-card-container { max-height: none; width: 96vw; max-width: 96vw; padding: 14px 12px; gap: 10px; border-width: 3px; }
+      .wheel-spinner-row { gap: 12px; flex-direction: column; flex-wrap: nowrap; align-items: center; }
+      #wheel-canvas { width: min(80vw, 320px); height: min(80vw, 320px); }
+      .wheel-pointer { font-size: 2.2rem; top: -14px; }
+      .wheel-right-panel { min-width: 0; width: 100%; gap: 10px; }
+      .wheel-question-box { padding: 12px 14px; }
+      .wheel-math-problem { font-size: 2.2rem; }
+      .wheel-options-group { flex-wrap: wrap; gap: 8px; }
+      .wheel-opt-btn { min-width: 28%; font-size: 1.35rem; min-height: 52px; }
+      .btn-spin-wheel { width: 100%; padding: 14px 20px; font-size: 1.25rem; }
 
       .shooter-top-hud { height: auto; min-height: 44px; padding: max(4px, env(safe-area-inset-top)) 6px 4px; }
       .shooter-question-banner { top: 54px; min-width: 0; width: calc(100% - 20px); padding: 6px 10px; }
@@ -1630,14 +1841,18 @@
       .safe-chat-choices { grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; }
       .safe-chat-choice { padding:5px 4px; font-size:.54rem; }
 
-      #view-wheel { justify-content:flex-start; overflow-y:auto; padding:max(4px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left)); }
-      .wheel-card-container { max-width:900px; min-height:0; padding:7px 10px; gap:5px; border-width:3px; border-radius:13px; }
-      .wheel-spinner-row { flex-direction:row; flex-wrap:nowrap; gap:12px; width:100%; }
-      #wheel-canvas { width:min(38dvh,180px); height:min(38dvh,180px); flex:0 0 auto; }
-      .wheel-right-panel { min-width:0; flex:1; gap:5px; }
-      .wheel-question-box { padding:6px 9px; }
-      .wheel-opt-btn { padding:5px; font-size:.75rem; }
-      .btn-spin-wheel { padding:7px 16px; font-size:.8rem; }
+      #view-wheel { justify-content:flex-start; overflow-y:auto; padding:max(4px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left)); }
+      .wheel-card-container { width:98vw; max-width:98vw; min-height:0; padding:8px 14px; gap:8px; border-width:3px; border-radius:16px; }
+      .wheel-spinner-row { flex-direction:row; flex-wrap:nowrap; gap:16px; width:100%; align-items:center; justify-content:center; }
+      #wheel-canvas { width:min(66dvh,270px); height:min(66dvh,270px); flex:0 0 auto; }
+      .wheel-pointer { font-size:2rem; top:-14px; }
+      .wheel-right-panel { min-width:0; flex:1; gap:6px; }
+      .wheel-question-box { padding:8px 12px; border-radius:14px; }
+      .wheel-cat-badge { font-size:.75rem; padding:2px 10px; }
+      .wheel-math-problem { font-size:1.85rem; margin:4px 0; }
+      .wheel-options-group { gap:6px; }
+      .wheel-opt-btn { padding:8px 12px; font-size:1.2rem; min-height:44px; border-radius:12px; }
+      .btn-spin-wheel { padding:10px 22px; font-size:1.05rem; border-radius:12px; }
 
       .shooter-top-hud { height:39px; min-height:39px; padding:2px max(8px,env(safe-area-inset-right)) 2px max(8px,env(safe-area-inset-left)); }
       .shooter-question-banner { top:45px; width:auto; min-width:220px; max-width:52%; padding:4px 12px; border-width:2px; border-radius:11px; }
@@ -2031,6 +2246,9 @@
         <button class="ribbon-btn btn-xp-wheel mobile-secondary" onclick="closeMobileTools(); launchMathWheel()">
           <span>🎡</span> <span data-i18n="mathWheel">CARI XP: RODA SIFIR</span>
         </button>
+        <button class="ribbon-btn btn-sifir-chart mobile-secondary" onclick="closeMobileTools(); openTimesTableModal()" title="Lihat Carta & Jadual Sifir 1 hingga 12">
+          <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR</span>
+        </button>
         <button class="ribbon-btn btn-xp-arcade mobile-secondary" onclick="closeMobileTools(); launchArcadeGame()">
           <span>🕹️</span> <span data-i18n="arcade">ARKED XP</span>
         </button>
@@ -2158,19 +2376,24 @@
          ============================================================== -->
     <div id="view-wheel">
       <div class="wheel-card-container">
-        <div style="display: flex; justify-content: space-between; width: 100%; border-bottom: 2px dashed #cbd5e1; padding-bottom: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px; flex-wrap: wrap; gap: 8px;">
           <div>
-            <div style="font-size: 1.15rem; font-weight: 900; color: #6b21a8;" data-i18n="wheelTitle">🎡 TIMES-TABLE & QUICK-MATH WHEEL</div>
-            <div style="font-size: 0.68rem; color: #475569;" data-i18n="wheelSubtitle">Spin the wheel and solve the challenge to earn a +150 XP bonus!</div>
+            <div style="font-size: 1.25rem; font-weight: 900; color: #6b21a8;" data-i18n="wheelTitle">🎡 TIMES-TABLE & QUICK-MATH WHEEL</div>
+            <div style="font-size: 0.72rem; color: #475569;" data-i18n="wheelSubtitle">Spin the wheel and solve the challenge to earn a +150 XP bonus!</div>
           </div>
-          <button onclick="exitMinigameToSandbox()" style="padding: 6px 12px; font-size: 0.78rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #15803d; border-radius: 8px; cursor: pointer;" data-i18n="backHome">🏡 BACK HOME</button>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button type="button" class="btn-sifir-chart-toggle" onclick="openTimesTableModal()">
+              <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR 1-12</span>
+            </button>
+            <button onclick="exitMinigameToSandbox()" style="padding: 8px 14px; font-size: 0.82rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;" data-i18n="backHome">🏡 BACK HOME</button>
+          </div>
         </div>
 
         <div class="wheel-spinner-row">
           <!-- Canvas Wheel -->
-          <div style="position: relative;">
-            <canvas id="wheel-canvas" width="240" height="240"></canvas>
-            <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 1.4rem;">🔻</div>
+          <div class="wheel-canvas-wrapper">
+            <canvas id="wheel-canvas" width="480" height="480"></canvas>
+            <div class="wheel-pointer">🔻</div>
           </div>
 
           <!-- Question & Spin Panel -->
@@ -2180,11 +2403,32 @@
             </button>
 
             <div class="wheel-question-box" id="wheel-question-panel" style="display: none;">
-              <div style="font-size: 0.7rem; font-weight: 800; color: #7e22ce;" id="wheel-cat-badge" data-i18n="quickQuestion">QUICK QUESTION</div>
-              <div style="font-size: 1.4rem; font-weight: 900; color: #0f172a; margin: 4px 0;" id="wheel-math-problem">7 × 8 = ?</div>
+              <div class="wheel-cat-badge" id="wheel-cat-badge" data-i18n="quickQuestion">QUICK QUESTION</div>
+              <div class="wheel-math-problem" id="wheel-math-problem">7 × 8 = ?</div>
               <div class="wheel-options-group" id="wheel-answers-container"></div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL: CARTA & JADUAL SIFIR 1 - 12 (MESRA PERANTI)
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-times-table" style="display: none;" onclick="if(event.target === this) closeTimesTableModal()">
+      <div class="game-modal-box times-table-modal-box" role="dialog" aria-modal="true" aria-labelledby="times-table-modal-title">
+        <div class="modal-head" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+          <div>
+            <div id="times-table-modal-title" style="font-size: 1.25rem; font-weight: 900; color: #6d28d9;" data-i18n="timesTableTitle">📖 JADUAL SIFIR MATEMATIK 1 HINGGA 12</div>
+            <div style="font-size: 0.72rem; color: #64748b;" data-i18n="timesTableSubtitle">Rujukan sifir lengkap bersaiz besar untuk murid Sekolah Rendah & Menengah</div>
+          </div>
+          <button onclick="closeTimesTableModal()" style="background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; font-weight: 900; font-size: 1.1rem; width: 36px; height: 36px; cursor: pointer; color: #475569;" aria-label="Tutup">✕</button>
+        </div>
+        <div class="times-table-selector-row" id="times-table-chips">
+          <!-- 1 to 12 chips + All Tables button generated via JS -->
+        </div>
+        <div class="times-table-content-area" id="times-table-content">
+          <!-- Equations rendered via JS -->
         </div>
       </div>
     </div>
@@ -2493,6 +2737,7 @@
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', megaItems:'👑 Item Mega', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
         shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: MATH BLASTER', catches:'musuh', home:'🏡 RUMAH', arcadePrompt:'Gerakkan kapal dan tembak musuh yang membawa jawapan betul!', arcadeRules:'Gerak kiri atau kanan, sejajarkan kapal dan tekan TEMBAK. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
+        timesTableChart:'JADUAL SIFIR 1-12', timesTableTitle:'📖 JADUAL SIFIR MATEMATIK 1 HINGGA 12', timesTableSubtitle:'Rujukan sifir lengkap bersaiz besar untuk murid Sekolah Rendah & Menengah', tableWord:'Sifir', allTables:'Semua Sifir 1-12',
         chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, chat menggunakan ayat dan emoji selamat tanpa ruangan menaip bebas.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
         hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
       },
@@ -2503,6 +2748,7 @@
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', megaItems:'👑 Mega Items', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
         shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH BLASTER', catches:'targets', home:'🏡 HOME', arcadePrompt:'Move your ship and shoot the enemy carrying the correct answer!', arcadeRules:'Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
+        timesTableChart:'TIMES TABLE 1-12', timesTableTitle:'📖 MULTIPLICATION TIMES TABLE 1 TO 12', timesTableSubtitle:'Large, device-friendly multiplication reference chart for students', tableWord:'Table', allTables:'All Tables 1-12',
         chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, chat uses safe phrases and emojis without a free-text box.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
         hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
       },
@@ -2513,6 +2759,7 @@
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', megaItems:'👑 大型珍藏', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
         shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学战机', catches:'目标', home:'🏡 家园', arcadePrompt:'移动飞船，射击带有正确答案的敌机！', arcadeRules:'左右移动，对准目标后按“开火”。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
+        timesTableChart:'乘法表 1-12', timesTableTitle:'📖 乘法口诀表 1 至 12', timesTableSubtitle:'大字体高清设备乘法口诀表', tableWord:'乘法表', allTables:'全部乘法表 1-12',
         chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，聊天只使用安全短语和表情，不提供自由输入框。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
         hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
       },
@@ -2523,6 +2770,7 @@
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', megaItems:'👑 மெகா பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
         shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித விண்கலம்', catches:'இலக்குகள்', home:'🏡 வீடு', arcadePrompt:'விண்கலத்தை நகர்த்தி சரியான விடையுள்ள எதிரியைச் சுடுங்கள்!', arcadeRules:'இடது அல்லது வலது நகர்ந்து இலக்கைச் சீரமைத்து FIRE அழுத்தவும். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
+        timesTableChart:'பெருக்கல் வாய்ப்பாடு 1-12', timesTableTitle:'📖 பெருக்கல் வாய்ப்பாடு 1 முதல் 12 வரை', timesTableSubtitle:'பெரிய எழுத்துக்களில் பெருக்கல் வாய்ப்பாடு', tableWord:'வாய்ப்பாடு', allTables:'அனைத்து வாய்ப்பாடுகளும் 1-12',
         chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக அரட்டை பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களை மட்டும் பயன்படுத்தும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
         hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
       }
@@ -2552,6 +2800,10 @@
       renderPaletteDock();
       renderCommunitySpotlight();
       if(document.getElementById('modal-shop')?.style.display==='flex')renderShopCatalog();
+      if(document.getElementById('modal-times-table')?.style.display==='flex'){
+        renderTimesTableTabs(selectedTimesTable);
+        renderTimesTableContent(selectedTimesTable);
+      }
       if(safeChatOpen){renderSafeChatChoices();refreshSafeChat();}
       if(announce)showToast(`🌐 ${t('languageSaved')}`);
     }
@@ -4600,7 +4852,8 @@ const COMBAT_BANK = {
       const h = canvas.height;
       const cx = w / 2;
       const cy = h / 2;
-      const radius = w / 2 - 10;
+      const rimWidth = 18;
+      const radius = w / 2 - rimWidth - 2;
       const slices = STATE.wheel.slices;
       const sliceAngle = (Math.PI * 2) / slices.length;
       const colors = ['#f87171', '#fb923c', '#facc15', '#4ade80', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc'];
@@ -4622,30 +4875,79 @@ const COMBAT_BANK = {
         ctx.closePath();
         ctx.fill();
 
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3.5;
         ctx.stroke();
 
         // Text label
         ctx.save();
         ctx.rotate(start + sliceAngle / 2);
         ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
         ctx.fillStyle = '#0f172a';
-        ctx.font = "900 11px 'Fredoka', sans-serif";
-        ctx.fillText(slices[i], radius - 14, 4);
+        ctx.font = "900 19px 'Fredoka', 'Nunito', sans-serif";
+        ctx.shadowColor = 'rgba(255,255,255,0.8)';
+        ctx.shadowBlur = 4;
+        ctx.fillText(slices[i], radius - 20, 0);
         ctx.restore();
       }
 
-      // Center Wheel Cap
-      ctx.fillStyle = '#0f172a';
+      // Outer gold rim
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = rimWidth;
       ctx.beginPath();
-      ctx.arc(0, 0, 18, 0, Math.PI * 2);
+      ctx.arc(0, 0, radius + rimWidth / 2, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Outer rim edge borders
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius + rimWidth, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Rim light bulbs (studs)
+      const numBulbs = slices.length * 3;
+      for (let b = 0; b < numBulbs; b++) {
+        const bAngle = (b / numBulbs) * Math.PI * 2;
+        const bx = Math.cos(bAngle) * (radius + rimWidth / 2);
+        const by = Math.sin(bAngle) * (radius + rimWidth / 2);
+        ctx.fillStyle = b % 2 === 0 ? '#fef08a' : '#ffffff';
+        ctx.beginPath();
+        ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Center Wheel Cap (layered with gold star)
+      ctx.shadowColor = 'rgba(0,0,0,0.3)';
+      ctx.shadowBlur = 8;
+      ctx.fillStyle = '#1e1b4b';
+      ctx.beginPath();
+      ctx.arc(0, 0, 36, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = '#facc15';
       ctx.beginPath();
-      ctx.arc(0, 0, 10, 0, Math.PI * 2);
+      ctx.arc(0, 0, 26, 0, Math.PI * 2);
       ctx.fill();
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(0, 0, 16, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = "900 20px 'Fredoka', sans-serif";
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('⭐', 0, 0);
 
       ctx.restore();
     }
@@ -4755,6 +5057,118 @@ const COMBAT_BANK = {
         };
         btnGroup.appendChild(btn);
       });
+    }
+
+    /* ==============================================================
+       CARTA JADUAL SIFIR 1 - 12 (INTERACTIVE TIMES TABLE)
+       ============================================================== */
+    let selectedTimesTable = 7;
+
+    function openTimesTableModal(defaultNum) {
+      if (typeof defaultNum === 'number' || defaultNum === 'ALL') {
+        selectedTimesTable = defaultNum;
+      } else {
+        const gradeNum = Number(STATE.grade) || 5;
+        if (gradeNum >= 2 && gradeNum <= 12) {
+          selectedTimesTable = gradeNum;
+        } else if (!selectedTimesTable) {
+          selectedTimesTable = 7;
+        }
+      }
+      const modal = document.getElementById('modal-times-table');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      renderTimesTableTabs(selectedTimesTable);
+      renderTimesTableContent(selectedTimesTable);
+      audio.init();
+      audio.playPop();
+    }
+
+    function closeTimesTableModal() {
+      const modal = document.getElementById('modal-times-table');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function selectTimesTableNumber(num) {
+      selectedTimesTable = num;
+      renderTimesTableTabs(selectedTimesTable);
+      renderTimesTableContent(selectedTimesTable);
+      audio.init();
+      audio.playPop();
+    }
+
+    function renderTimesTableTabs(activeNum) {
+      const container = document.getElementById('times-table-chips');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const tableLabel = t('tableWord') || 'Sifir';
+
+      for (let n = 1; n <= 12; n++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `sifir-num-chip ${activeNum === n ? 'active' : ''}`;
+        btn.textContent = `${tableLabel} ${n}`;
+        btn.onclick = () => selectTimesTableNumber(n);
+        container.appendChild(btn);
+      }
+
+      const allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = `sifir-num-chip all-btn ${activeNum === 'ALL' ? 'active' : ''}`;
+      allBtn.textContent = `🌟 ${t('allTables') || 'Semua Sifir (1-12)'}`;
+      allBtn.onclick = () => selectTimesTableNumber('ALL');
+      container.appendChild(allBtn);
+    }
+
+    function renderTimesTableContent(activeNum) {
+      const area = document.getElementById('times-table-content');
+      if (!area) return;
+      area.innerHTML = '';
+
+      const tableLabel = t('tableWord') || 'Sifir';
+
+      if (activeNum === 'ALL') {
+        const allGrid = document.createElement('div');
+        allGrid.className = 'sifir-all-tables-grid';
+
+        for (let n = 1; n <= 12; n++) {
+          const tableBox = document.createElement('div');
+          tableBox.className = 'sifir-table-box';
+          tableBox.innerHTML = `<div class="sifir-table-title">${tableLabel} ${n}</div>`;
+
+          for (let m = 1; m <= 12; m++) {
+            const row = document.createElement('div');
+            row.className = 'sifir-mini-row';
+            row.innerHTML = `<span>${n} × ${m}</span><span style="font-weight:900;color:#6d28d9;">= ${n * m}</span>`;
+            tableBox.appendChild(row);
+          }
+          allGrid.appendChild(tableBox);
+        }
+        area.appendChild(allGrid);
+      } else {
+        const n = Number(activeNum) || 7;
+        const singleGrid = document.createElement('div');
+        singleGrid.className = 'sifir-single-grid';
+
+        for (let m = 1; m <= 12; m++) {
+          const product = n * m;
+          const card = document.createElement('div');
+          card.className = 'sifir-equation-card';
+          card.title = `${n} darab ${m} bersamaan ${product}`;
+          card.innerHTML = `
+            <div class="sifir-eq-formula">${n} × ${m} =</div>
+            <div class="sifir-eq-product">${product}</div>
+          `;
+          card.onclick = () => {
+            audio.init();
+            audio.playChing();
+            showToast(`⭐ ${n} × ${m} = ${product}`);
+          };
+          singleGrid.appendChild(card);
+        }
+        area.appendChild(singleGrid);
+      }
     }
 
     /* ==============================================================

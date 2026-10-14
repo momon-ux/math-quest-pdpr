@@ -209,4 +209,11 @@ assert.match(html, /target\.addEventListener\('pointerdown'/, 'sasaran jawapan a
 assert.match(html, /closeBlueprintModal\(\);\s*launchArcadeGame\(\);/, 'pelan rumah mesti menyediakan pautan pantas ke Arked XP');
 assert.match(html, /closeShopModal\(\);\s*launchArcadeGame\(\);/, 'kedai mesti menyediakan pautan pantas ke Arked XP');
 
+assert.match(html, /<canvas id="wheel-canvas" width="480" height="480"><\/canvas>/, 'kanvas roda sifir mesti menggunakan resolusi tinggi 480x480');
+assert.match(html, /ctx\.font\s*=\s*"900 19px 'Fredoka'/, 'teks hirisan roda sifir mesti berhuruf tebal dan bersaiz besar');
+assert.match(html, /id="modal-times-table"/, 'modal carta jadual sifir mesra peranti mesti wujud');
+assert.match(html, /function openTimesTableModal/, 'fungsi membuka jadual sifir mesti wujud');
+assert.match(html, /function renderTimesTableContent/, 'fungsi memaparkan sifir 1-12 mesti wujud');
+assert.match(html, /class="[^"]*btn-sifir-chart/, 'butang pantas jadual sifir mesti tersedia dalam ribbon');
+
 console.log('Semua semakan smoke MathBina V32 lulus.');
