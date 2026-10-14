@@ -201,4 +201,12 @@ assert.match(html, /function drawGoldSeal/, 'cop mohor emas cemerlang mesti dilu
 
 assert.match(html, /function toggleGraphicsQuality/, 'suis kualiti grafik mesti disediakan');
 assert.match(html, /function copyHouseShareLink/, 'pautan kongsi rumah kawan mesti disediakan');
+
+assert.match(html, /\.arcade-answer-zone[\s\S]*?pointer-events:none;/, 'zon musuh arked tidak boleh menghalang klik butang mula');
+assert.match(html, /\.arcade-start-card[\s\S]*?z-index:\s*25;/, 'kad mula arked mesti berada di atas lapisan padang permainan');
+assert.match(html, /id="btn-start-arcade"/, 'butang mula pusingan arked mesti mempunyai ID jelas dan boleh diklik');
+assert.match(html, /target\.addEventListener\('pointerdown'/, 'sasaran jawapan arked mesti bertindak balas pantas pada skrin sentuh');
+assert.match(html, /closeBlueprintModal\(\);\s*launchArcadeGame\(\);/, 'pelan rumah mesti menyediakan pautan pantas ke Arked XP');
+assert.match(html, /closeShopModal\(\);\s*launchArcadeGame\(\);/, 'kedai mesti menyediakan pautan pantas ke Arked XP');
+
 console.log('Semua semakan smoke MathBina V32 lulus.');

@@ -1140,6 +1140,7 @@
     .arcade-problem { margin-top:3px; font-size:clamp(1.25rem,6vw,2.2rem); line-height:1.05; font-weight:1000; text-shadow:0 3px 0 rgba(0,0,0,.24); }
     .arcade-answer-zone {
       position:absolute; z-index:3; inset:25% 4% 36%;
+      pointer-events:none;
     }
     .arcade-answer-target {
       position:absolute; left:var(--enemy-x,50%); top:var(--enemy-y,10%); width:clamp(76px,21vw,132px);
@@ -1150,6 +1151,7 @@
       text-shadow:0 2px 0 rgba(0,0,0,.28); transform:translateX(-50%);
       animation:enemyPatrol var(--patrol-speed,1.35s) ease-in-out infinite alternate;
       animation-delay:var(--float-delay,0s); touch-action:manipulation;
+      pointer-events:auto; -webkit-tap-highlight-color:transparent;
     }
     .arcade-answer-target::before { content:'👾'; position:absolute; top:-19px; left:50%; transform:translateX(-50%); font-size:2.45rem; filter:drop-shadow(0 0 7px #fff); }
     .arcade-answer-target::after { content:''; position:absolute; left:17%; right:17%; bottom:-8px; height:9px; border-radius:50%; background:linear-gradient(90deg,#22d3ee,#fff,#22d3ee); box-shadow:0 0 13px #67e8f9; }
@@ -1185,16 +1187,37 @@
     @keyframes comboGlow { to { transform:scale(1.06); } }
     .arcade-start-card {
       position:absolute;
+      z-index:25;
       left:50%; top:50%; transform:translate(-50%,-50%);
       width:min(88%,390px);
       padding:18px;
       border:3px solid #facc15;
       border-radius:18px;
-      background:rgba(15,23,42,.94);
+      background:rgba(15,23,42,.96);
       text-align:center;
-      box-shadow:0 10px 30px rgba(0,0,0,.45);
+      box-shadow:0 10px 30px rgba(0,0,0,.65);
+      pointer-events:auto;
     }
-    .arcade-start-card button { margin-top:10px; border:0; border-radius:12px; padding:11px 18px; background:#facc15; color:#78350f; font-weight:900; cursor:pointer; }
+    .arcade-start-card button {
+      position:relative;
+      z-index:26;
+      margin-top:10px;
+      border:0;
+      border-radius:12px;
+      padding:11px 20px;
+      background:linear-gradient(180deg,#fde047 0%,#eab308 100%);
+      color:#78350f;
+      font-weight:900;
+      font-size:1rem;
+      cursor:pointer;
+      pointer-events:auto;
+      touch-action:manipulation;
+      box-shadow:0 4px 12px rgba(234,179,8,.4);
+    }
+    .arcade-start-card button:active {
+      transform:scale(0.96);
+      filter:brightness(1.1);
+    }
     @media (max-width:700px) {
       .arcade-field { min-height:240px; }
       .arcade-question-card { top:2%; padding:7px 10px; }
@@ -2192,14 +2215,14 @@
         <div class="arcade-move-hint" id="arcade-move-hint">↔ Move your ship • Line up • Press FIRE</div>
         <div class="arcade-controls" id="arcade-controls" style="display:none">
           <button type="button" class="arcade-control" aria-label="Move left" onpointerdown="beginArcadeMove(-1,event)" onpointerup="endArcadeMove()" onpointercancel="endArcadeMove()" onpointerleave="endArcadeMove()">◀</button>
-          <button type="button" class="arcade-control fire" aria-label="Fire laser" onclick="fireArcadeLaser()">🔥 FIRE</button>
+          <button type="button" class="arcade-control fire" aria-label="Fire laser" onclick="fireArcadeLaser()" onpointerdown="fireArcadeLaser()">🔥 FIRE</button>
           <button type="button" class="arcade-control" aria-label="Move right" onpointerdown="beginArcadeMove(1,event)" onpointerup="endArcadeMove()" onpointercancel="endArcadeMove()" onpointerleave="endArcadeMove()">▶</button>
         </div>
         <div class="arcade-start-card" id="arcade-start-card">
           <div style="font-size:2.4rem">🚀🔫👾</div>
           <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Move your ship and shoot the enemy carrying the correct answer!</div>
           <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!</div>
-          <button type="button" onclick="startArcadeRound()" data-i18n="startPlaying">🚀 START PLAYING</button>
+          <button type="button" id="btn-start-arcade" onclick="startArcadeRound()" onpointerdown="startArcadeRound()" data-i18n="startPlaying">🚀 START PLAYING</button>
         </div>
       </div>
     </div>
@@ -2257,9 +2280,10 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 8px; flex-wrap: wrap; gap: 6px;">
           <span style="font-size: 0.72rem; color: #64748b; font-weight: 700;">Kurang Syiling? Selesaikan cabaran matematik untuk kumpul XP & Syiling!</span>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
             <button onclick="closeBlueprintModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #22c55e; color: #fff; border: 1px solid #16a34a; border-radius: 8px; cursor: pointer;">🎯 Math Shooter (+100 XP)</button>
             <button onclick="closeBlueprintModal(); launchMathWheel();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;">🎡 Roda Sifir (+150-300 XP)</button>
+            <button onclick="closeBlueprintModal(); launchArcadeGame();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #06b6d4; color: #fff; border: 1px solid #0e7490; border-radius: 8px; cursor: pointer;">🕹️ Arked XP (+XP & Syiling)</button>
           </div>
         </div>
       </div>
@@ -2295,9 +2319,12 @@
           <!-- Populated from BLOCK_CATALOG -->
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 6px; flex-wrap: wrap; gap: 6px;">
           <span style="font-size: 0.7rem; color: #64748b;" data-i18n="lowCoins">Need more coins? Play Math Shooter to earn more!</span>
-          <button onclick="closeShopModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;" data-i18n="earnXpNow">⚡ EARN XP NOW</button>
+          <div style="display: flex; gap: 6px;">
+            <button onclick="closeShopModal(); launchMathShooter();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #f97316; color: #fff; border: 1px solid #c2410c; border-radius: 8px; cursor: pointer;" data-i18n="earnXpNow">⚡ EARN XP NOW</button>
+            <button onclick="closeShopModal(); launchArcadeGame();" style="padding: 6px 12px; font-size: 0.75rem; font-weight: 900; background: #06b6d4; color: #fff; border: 1px solid #0e7490; border-radius: 8px; cursor: pointer;">🕹️ Arked XP</button>
+          </div>
         </div>
       </div>
     </div>
@@ -4061,6 +4088,15 @@ const COMBAT_BANK = {
         target.style.setProperty('--patrol-speed',`${1.05 + index * .24}s`);
         target.style.setProperty('--float-delay',`${index * -.31}s`);
         target.dataset.answerIndex = index;
+        const triggerAim = (e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          aimAndFireAtEnemy(index,target);
+        };
+        target.addEventListener('pointerdown', triggerAim);
+        target.addEventListener('click', triggerAim);
         target.onclick = () => aimAndFireAtEnemy(index,target);
         zone.appendChild(target);
       });
@@ -4070,6 +4106,7 @@ const COMBAT_BANK = {
       if (STATE.arcade.controlsBound) return;
       STATE.arcade.controlsBound = true;
       const field = document.getElementById('arcade-field');
+      if (!field) return;
       field.addEventListener('pointermove', event => {
         if (!STATE.arcade.running || !(event.buttons & 1) || event.target.closest('button')) return;
         const rect = field.getBoundingClientRect();
@@ -4113,18 +4150,25 @@ const COMBAT_BANK = {
 
     function aimAndFireAtEnemy(answerIndex,target) {
       if (!STATE.arcade.running || STATE.arcade.locked || STATE.arcade.shotInFlight) return;
-      const fieldRect = document.getElementById('arcade-field').getBoundingClientRect();
+      STATE.arcade.shotInFlight = true;
+      const field = document.getElementById('arcade-field');
+      const fieldRect = field ? field.getBoundingClientRect() : { left: 0, width: window.innerWidth };
       const targetRect = target.getBoundingClientRect();
-      setArcadeShipPosition(((targetRect.left + targetRect.width / 2 - fieldRect.left) / fieldRect.width) * 100);
-      setTimeout(() => fireArcadeLaser(answerIndex,target),75);
+      const targetPercent = ((targetRect.left + targetRect.width / 2 - fieldRect.left) / fieldRect.width) * 100;
+      setArcadeShipPosition(targetPercent);
+      setTimeout(() => fireArcadeLaser(answerIndex,target), 50);
     }
 
     function fireArcadeLaser(forcedIndex=null,forcedTarget=null) {
-      if (!STATE.arcade.running || STATE.arcade.locked || STATE.arcade.shotInFlight) return;
+      if (!STATE.arcade.running || STATE.arcade.locked) return;
+      if (!forcedTarget && STATE.arcade.shotInFlight) return;
       const field = document.getElementById('arcade-field');
       const ship = document.getElementById('arcade-player');
       const enemies = [...document.querySelectorAll('.arcade-answer-target')];
-      if (!field || !ship || !enemies.length) return;
+      if (!field || !ship || !enemies.length) {
+        STATE.arcade.shotInFlight = false;
+        return;
+      }
       const fieldRect = field.getBoundingClientRect();
       const shipRect = ship.getBoundingClientRect();
       const shipCenter = shipRect.left + shipRect.width / 2;
@@ -4136,13 +4180,17 @@ const COMBAT_BANK = {
           const distance = Math.abs(rect.left + rect.width / 2 - shipCenter);
           return !nearest || distance < nearest.distance ? { enemy, distance } : nearest;
         },null);
-        if (!target || target.distance > Math.max(46,fieldRect.width * .1)) {
+        const maxDist = Math.max(90, fieldRect.width * 0.22);
+        if (!target || target.distance > maxDist) {
+          STATE.arcade.shotInFlight = false;
           showArcadeFeedback(uiMessage('💫 Tersasar! Sejajarkan kapal.','💫 Miss! Line up your ship.','💫 未命中！请对准目标。','💫 தவறிவிட்டது! விண்கலத்தைச் சீரமைக்கவும்.'));
           audio.playPop();
           return;
         }
         target = target.enemy;
         answerIndex = Number(target.dataset.answerIndex);
+        const targetRect = target.getBoundingClientRect();
+        setArcadeShipPosition(((targetRect.left + targetRect.width / 2 - fieldRect.left) / fieldRect.width) * 100);
       }
       STATE.arcade.shotInFlight = true;
       const targetRect = target.getBoundingClientRect();
@@ -4246,14 +4294,14 @@ const COMBAT_BANK = {
       const card = document.getElementById('arcade-start-card');
       const resultTitle = uiMessage(`Hebat! ${correct} jawapan betul`,`Great! ${correct} correct answers`,`太棒了！答对 ${correct} 题`,`அருமை! ${correct} சரியான பதில்கள்`);
       const resultDetail = uiMessage(`Anda mendapat ${earned} XP, ${coins} syiling • Kombo terbaik ×${bestCombo}.`,`You earned ${earned} XP, ${coins} coins • Best combo ×${bestCombo}.`,`你获得 ${earned} XP、${coins} 金币 • 最佳连击 ×${bestCombo}。`,`நீங்கள் ${earned} XP, ${coins} நாணயங்கள் பெற்றீர்கள் • சிறந்த தொடர் ×${bestCombo}.`);
-      card.innerHTML = `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${resultTitle}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${resultDetail}</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`;
+      card.innerHTML = `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${resultTitle}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${resultDetail}</div><button type="button" id="btn-restart-arcade" onclick="resetArcadeCardAndStart()" onpointerdown="resetArcadeCardAndStart()">${t('playAgain')}</button>`;
       card.style.display = 'block';
       showToast(currentLanguage === 'ms' ? `🏆 Arked tamat! +${earned} XP.` : `🏆 Arcade complete! +${earned} XP.`);
     }
 
     function resetArcadeCardAndStart() {
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = `<div style="font-size:2.4rem">🚀🔫👾</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
+      card.innerHTML = `<div style="font-size:2.4rem">🚀🔫👾</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" id="btn-start-arcade" onclick="startArcadeRound()" onpointerdown="startArcadeRound()">${t('startPlaying')}</button>`;
       startArcadeRound();
     }
 
