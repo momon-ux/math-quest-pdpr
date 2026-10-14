@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const gallery = JSON.parse(fs.readFileSync(new URL('../gallery.json', import.meta.url), 'utf8'));
 const inlineScripts = [...html.matchAll(/<script(?: [^>]*)?>([\s\S]*?)<\/script>/g)]
   .map((match) => match[1])
   .filter(Boolean)
@@ -43,5 +44,11 @@ assert.match(html, /type === 'rocket'/, 'roket mesti mempunyai model 3D tersendi
 assert.match(html, /type === 'rose_flower' \|\| type === 'sunflower'/, 'bunga mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'fountain'/, 'air pancut mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'garden_lamp'/, 'lampu taman mesti mempunyai model 3D tersendiri');
+assert.match(html, /id="community-backdrop"/, 'latar lobi mesti menyediakan paparan rumah komuniti');
+assert.match(html, /function loadCommunityGallery/, 'galeri rumah bersama mesti dimuatkan pada pembukaan permainan');
+assert.match(html, /function drawGalleryHouse/, 'pratonton rumah galeri mesti dijana secara visual');
+assert.match(html, /Rumah diluluskan guru/, 'galeri mesti menerangkan proses kelulusan guru');
+assert.ok(Array.isArray(gallery.entries) && gallery.entries.length > 0, 'galeri pusat mesti mempunyai sekurang-kurangnya satu rumah rasmi');
+assert.ok(gallery.entries.every(entry => entry.approved !== false), 'rumah galeri pusat mesti diluluskan');
 
-console.log('Semua semakan smoke Math Craft V4 lulus.');
+console.log('Semua semakan smoke MathBina V6 lulus.');

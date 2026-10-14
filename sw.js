@@ -1,8 +1,9 @@
-const CACHE_NAME = 'mathbina-v5-model-objek';
+const CACHE_NAME = 'mathbina-v6-galeri-rumah';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './gallery.json',
   './mathbina-icon-192.png',
   './mathbina-icon-512.png',
   './mathbina-apple-touch-icon.png'
@@ -23,6 +24,19 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
+
+  if (new URL(event.request.url).pathname.endsWith('/gallery.json')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('./gallery.json', copy));
+          return response;
+        })
+        .catch(() => caches.match('./gallery.json'))
+    );
+    return;
+  }
 
   if (event.request.mode === 'navigate') {
     event.respondWith(

@@ -136,11 +136,35 @@
       background: radial-gradient(circle at center, rgba(56, 189, 248, 0.95) 0%, rgba(2, 132, 199, 0.98) 100%);
       overflow-y: auto;
     }
+    .community-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity .55s ease, background-image .55s ease;
+      pointer-events: none;
+    }
+    .community-backdrop.ready { opacity: .42; }
+    #view-lobby::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(2,132,199,.28), rgba(3,105,161,.72));
+    }
     .lobby-box {
       width: 100%;
       max-width: 820px;
       max-height: 94vh;
-      background: var(--card-bg);
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,.95);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       border: 4px solid var(--gold-yellow);
       border-radius: 20px;
       padding: 14px 20px;
@@ -150,6 +174,47 @@
       gap: 10px;
       overflow-y: auto;
     }
+    .community-spotlight {
+      display: grid;
+      grid-template-columns: 150px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 104px;
+      padding: 8px;
+      border: 2px solid #38bdf8;
+      border-radius: 14px;
+      background: linear-gradient(135deg,#eff6ff,#ecfeff);
+      color: #0f172a;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #0369a1;
+    }
+    .community-spotlight:focus-visible { outline: 4px solid #facc15; outline-offset: 2px; }
+    .community-spotlight canvas {
+      display: block;
+      width: 150px;
+      height: 88px;
+      border-radius: 10px;
+      background: #7dd3fc;
+      border: 1px solid #0284c7;
+    }
+    .community-kicker { font-size:.62rem; font-weight:900; color:#0369a1; letter-spacing:.7px; text-transform:uppercase; }
+    .community-owner { margin-top:2px; font-size:1rem; font-weight:900; color:#78350f; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .community-meta { margin-top:2px; font-size:.7rem; font-weight:800; color:#475569; }
+    .community-open-hint { padding:7px 10px; border-radius:999px; background:#0284c7; color:#fff; font-size:.68rem; font-weight:900; white-space:nowrap; }
+    .community-gallery-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+      gap:10px;
+      max-height:62vh;
+      overflow:auto;
+      padding:2px;
+    }
+    .community-card { overflow:hidden; border:2px solid #bae6fd; border-radius:13px; background:#fff; box-shadow:0 3px 0 #0284c7; }
+    .community-card canvas { width:100%; height:130px; display:block; background:#7dd3fc; }
+    .community-card-info { display:flex; align-items:center; gap:8px; padding:8px 10px; }
+    .community-card-avatar { font-size:1.35rem; }
+    .community-card-name { font-size:.78rem; font-weight:900; color:#78350f; }
+    .community-card-meta { font-size:.62rem; font-weight:800; color:#64748b; }
     .lobby-header {
       display: flex;
       justify-content: space-between;
@@ -1019,6 +1084,11 @@
         border-radius: 14px;
       }
       .lobby-header { align-items: flex-start; gap: 8px; }
+      .community-spotlight { grid-template-columns:96px minmax(0,1fr); min-height:78px; gap:8px; padding:6px; }
+      .community-spotlight canvas { width:96px; height:64px; }
+      .community-owner { font-size:.78rem; }
+      .community-meta { font-size:.6rem; }
+      .community-open-hint { display:none; }
       .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
       .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
       .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
@@ -1311,6 +1381,7 @@
          SCREEN 1: LOBBY & PROFIL MURID
          ============================================================== -->
     <div id="view-lobby">
+      <div class="community-backdrop" id="community-backdrop" aria-hidden="true"></div>
       <div class="lobby-box">
         <div class="lobby-header">
           <div class="brand-title-lockup">
@@ -1324,6 +1395,16 @@
             👨‍💻 Pembangun Sistem:<br>
             <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b>
           </div>
+        </div>
+
+        <div class="community-spotlight" role="button" tabindex="0" onclick="openCommunityGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCommunityGallery();}" aria-label="Buka Galeri Rumah Kawan-Kawan">
+          <canvas id="community-spotlight-canvas" width="480" height="260" aria-label="Pratonton rumah pilihan"></canvas>
+          <div style="min-width:0;">
+            <div class="community-kicker">🏘️ Galeri Rumah Kawan-Kawan</div>
+            <div class="community-owner" id="community-spotlight-owner">Rumah Contoh MathBina</div>
+            <div class="community-meta" id="community-spotlight-meta">Diluluskan guru • Paparan semua peranti</div>
+          </div>
+          <div class="community-open-hint">Lihat Galeri →</div>
         </div>
 
         <div class="lobby-row-grid">
@@ -1685,6 +1766,22 @@
     <!-- ==============================================================
          MODAL: PENGURUSAN GURU (ADMIN KOD: TS.FIKREY37)
          ============================================================== -->
+    <div class="game-modal-overlay" id="modal-community-gallery" style="display:none;">
+      <div class="game-modal-box" style="max-width:820px;">
+        <div class="modal-head">
+          <div>
+            <div class="modal-title">🏘️ Galeri Rumah Kawan-Kawan</div>
+            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;">Nama ringkas, kelas dan avatar sahaja • Rumah diluluskan guru</div>
+          </div>
+          <button class="modal-close-btn" onclick="closeCommunityGallery()">✕</button>
+        </div>
+        <div style="background:#ecfeff;border:1.5px solid #22d3ee;border-radius:10px;padding:8px 10px;font-size:.7rem;color:#155e75;line-height:1.45;">
+          Rumah dalam senarai pusat boleh dilihat oleh semua murid. Rumah yang tersimpan pada telefon ini ditandakan <b>Peranti ini</b> dan tidak dihantar secara automatik.
+        </div>
+        <div class="community-gallery-grid" id="community-gallery-grid"></div>
+      </div>
+    </div>
+
     <div class="game-modal-overlay" id="modal-admin-auth">
       <div class="game-modal-box" style="max-width: 360px;">
         <div class="modal-head">
@@ -2322,6 +2419,7 @@ const COMBAT_BANK = {
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-lobby').style.display = 'flex';
       updateProfilePreview();
+      loadCommunityGallery();
     }
 
     /* ==============================================================
@@ -3965,7 +4063,152 @@ const COMBAT_BANK = {
     }
 
     // Startup
-    window.addEventListener('DOMContentLoaded', initLobbyUI);
+    const COMMUNITY_GALLERY_URL = 'gallery.json';
+    let COMMUNITY_GALLERY = [];
+    let communityGalleryIndex = 0;
+    let communityGalleryTimer = null;
+
+    function galleryDisplayName(value) {
+      const parts = String(value || '').trim().split(/\s+/).filter(Boolean);
+      if (!parts.length) return 'Arkitek MathBina';
+      return parts.length > 1 ? `${parts[0]} ${parts[1].charAt(0).toUpperCase()}.` : parts[0];
+    }
+
+    function galleryColorForType(type) {
+      const id = String(type || 'wood_wall');
+      if (id.includes('roof') || id.includes('brick')) return { top:'#ef4444', left:'#b91c1c', right:'#dc2626' };
+      if (id.includes('glass') || id.includes('window') || id.includes('pool')) return { top:'#67e8f9', left:'#0891b2', right:'#22d3ee' };
+      if (id.includes('tree') || id.includes('leaf') || id.includes('flower') || id.includes('bush')) return { top:'#4ade80', left:'#15803d', right:'#22c55e' };
+      if (id.includes('stone') || id.includes('cobble') || id.includes('concrete')) return { top:'#cbd5e1', left:'#64748b', right:'#94a3b8' };
+      if (id.includes('gold')) return { top:'#fde047', left:'#ca8a04', right:'#eab308' };
+      if (id.includes('diamond')) return { top:'#5eead4', left:'#0f766e', right:'#14b8a6' };
+      if (id.includes('door')) return { top:'#b45309', left:'#78350f', right:'#92400e' };
+      if (id.includes('fence')) return { top:'#fff', left:'#cbd5e1', right:'#e2e8f0' };
+      if (id.includes('car') || id.includes('rocket')) return { top:'#fb7185', left:'#be123c', right:'#e11d48' };
+      if (id.includes('cat')) return { top:'#fb923c', left:'#c2410c', right:'#ea580c' };
+      if (id.includes('dino')) return { top:'#86efac', left:'#15803d', right:'#22c55e' };
+      return { top:'#fbbf24', left:'#92400e', right:'#b45309' };
+    }
+
+    function drawGalleryHouse(canvas, entry) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      const sky = ctx.createLinearGradient(0,0,0,h);
+      sky.addColorStop(0,'#38bdf8'); sky.addColorStop(1,'#dbeafe');
+      ctx.fillStyle = sky; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle = 'rgba(255,255,255,.82)';
+      ctx.beginPath(); ctx.arc(w*.82,h*.18,h*.10,0,Math.PI*2); ctx.arc(w*.88,h*.18,h*.08,0,Math.PI*2); ctx.fill();
+
+      const voxels = Array.isArray(entry?.voxels) ? entry.voxels.slice() : [];
+      const tileW = Math.max(15, Math.min(28, w / 18));
+      const tileH = tileW * .50;
+      const blockH = tileW * .70;
+      const cx = w * .50, baseY = h * .26;
+      const ground = [[cx,baseY],[cx+7*tileW,baseY+7*tileH],[cx,baseY+14*tileH],[cx-7*tileW,baseY+7*tileH]];
+      ctx.fillStyle='#86efac';ctx.strokeStyle='#16a34a';ctx.lineWidth=2;
+      ctx.beginPath();ground.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fill();ctx.stroke();
+
+      const sample = voxels.length ? voxels : [
+        ...Array.from({length:6},(_,x)=>({x:x+4,y:0,z:3,type:'parquet_floor'})),
+        ...Array.from({length:6},(_,x)=>({x:x+4,y:0,z:6,type:'parquet_floor'})),
+        ...Array.from({length:3},(_,y)=>({x:4,y:y+1,z:3,type:'wood_wall'})),
+        ...Array.from({length:3},(_,y)=>({x:9,y:y+1,z:3,type:'wood_wall'})),
+        ...Array.from({length:6},(_,x)=>({x:x+4,y:1,z:3,type:x===2?'window_glass':'wood_wall'})),
+        ...Array.from({length:6},(_,x)=>({x:x+4,y:2,z:3,type:'wood_wall'})),
+        ...Array.from({length:6},(_,x)=>({x:x+4,y:3,z:3,type:'roof_red'})),
+        {x:6,y:1,z:6,type:'door_wood'},{x:7,y:1,z:6,type:'window_glass'},
+        {x:3,y:0,z:5,type:'tree_shade'},{x:10,y:0,z:5,type:'rose_flower'}
+      ];
+      sample.sort((a,b)=>(a.x+a.z+a.y*.08)-(b.x+b.z+b.y*.08));
+      sample.slice(0,220).forEach(v=>{
+        const x = cx + (Number(v.x)-Number(v.z))*tileW/2;
+        const y = baseY + (Number(v.x)+Number(v.z))*tileH/2 - Number(v.y||0)*blockH;
+        const c = galleryColorForType(v.type);
+        ctx.fillStyle=c.top;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+tileW/2,y+tileH/2);ctx.lineTo(x,y+tileH);ctx.lineTo(x-tileW/2,y+tileH/2);ctx.closePath();ctx.fill();
+        ctx.fillStyle=c.left;ctx.beginPath();ctx.moveTo(x-tileW/2,y+tileH/2);ctx.lineTo(x,y+tileH);ctx.lineTo(x,y+tileH+blockH);ctx.lineTo(x-tileW/2,y+tileH/2+blockH);ctx.closePath();ctx.fill();
+        ctx.fillStyle=c.right;ctx.beginPath();ctx.moveTo(x+tileW/2,y+tileH/2);ctx.lineTo(x,y+tileH);ctx.lineTo(x,y+tileH+blockH);ctx.lineTo(x+tileW/2,y+tileH/2+blockH);ctx.closePath();ctx.fill();
+      });
+    }
+
+    function getLocalGalleryEntries() {
+      return Object.entries(getAllSaves()).map(([key,saved])=>({
+        id:`local-${key}`,
+        displayName:galleryDisplayName(saved?.studentName),
+        className:saved?.className || 'MathBina',
+        avatar:saved?.avatar || '👷‍♂️',
+        voxels:Array.isArray(saved?.voxels) ? saved.voxels : migrateLegacyGrid(saved?.grid),
+        localOnly:true,
+        approved:true
+      })).filter(entry=>entry.voxels.length).slice(0,12);
+    }
+
+    async function loadCommunityGallery() {
+      let shared = [];
+      try {
+        const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=6`, { cache:'no-store' });
+        if (response.ok) {
+          const data = await response.json();
+          shared = (Array.isArray(data) ? data : data.entries || []).filter(item=>item && item.approved !== false);
+        }
+      } catch (error) {}
+      COMMUNITY_GALLERY = [...shared, ...getLocalGalleryEntries()];
+      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Pasukan MathBina', className:'Rumah Contoh', avatar:'🏡', approved:true, voxels:[] }];
+      communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
+      renderCommunitySpotlight();
+      clearInterval(communityGalleryTimer);
+      if (COMMUNITY_GALLERY.length > 1) communityGalleryTimer = setInterval(()=>{
+        if (document.getElementById('view-lobby')?.style.display === 'none') return;
+        communityGalleryIndex = (communityGalleryIndex + 1) % COMMUNITY_GALLERY.length;
+        renderCommunitySpotlight();
+      }, 6500);
+    }
+
+    function renderCommunitySpotlight() {
+      const entry = COMMUNITY_GALLERY[communityGalleryIndex];
+      if (!entry) return;
+      const canvas = document.getElementById('community-spotlight-canvas');
+      drawGalleryHouse(canvas, entry);
+      const owner = document.getElementById('community-spotlight-owner');
+      const meta = document.getElementById('community-spotlight-meta');
+      if (owner) owner.textContent = `${entry.avatar || '🏡'} Rumah ${entry.displayName || 'Arkitek MathBina'}`;
+      if (meta) meta.textContent = `${entry.className || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : 'Diluluskan guru'}`;
+      const backdrop = document.getElementById('community-backdrop');
+      if (backdrop && canvas) {
+        backdrop.style.backgroundImage = `url(${canvas.toDataURL('image/jpeg',.78)})`;
+        backdrop.classList.add('ready');
+      }
+    }
+
+    function openCommunityGallery() {
+      const modal = document.getElementById('modal-community-gallery');
+      const grid = document.getElementById('community-gallery-grid');
+      if (!modal || !grid) return;
+      grid.innerHTML = '';
+      COMMUNITY_GALLERY.forEach(entry=>{
+        const card=document.createElement('article');card.className='community-card';
+        const canvas=document.createElement('canvas');canvas.width=420;canvas.height=240;drawGalleryHouse(canvas,entry);card.appendChild(canvas);
+        const info=document.createElement('div');info.className='community-card-info';
+        const avatar=document.createElement('div');avatar.className='community-card-avatar';avatar.textContent=entry.avatar||'🏡';
+        const labels=document.createElement('div');
+        const name=document.createElement('div');name.className='community-card-name';name.textContent=`Rumah ${entry.displayName||'Arkitek MathBina'}`;
+        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.className||'MathBina'} • ${entry.localOnly?'Peranti ini':'Diluluskan guru'}`;
+        labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
+      });
+      modal.style.display='flex';
+    }
+
+    function closeCommunityGallery() {
+      const modal=document.getElementById('modal-community-gallery');
+      if(modal)modal.style.display='none';
+    }
+
+    function initMathBinaLobby() {
+      initLobbyUI();
+      loadCommunityGallery();
+    }
+
+    window.addEventListener('DOMContentLoaded', initMathBinaLobby);
     setTimeout(initLobbyUI, 100);
     window.addEventListener('pagehide', saveCurrentStudentState);
     document.addEventListener('visibilitychange', () => {
