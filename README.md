@@ -4,6 +4,15 @@
 
 ---
 
+## 🌐 Versi V22 — Pilihan Empat Bahasa
+
+- Pemain boleh memilih **Bahasa Malaysia, English, 中文 atau தமிழ்** dari lobi atau semasa bermain.
+- Pilihan bahasa disimpan pada peranti dan digunakan semula apabila MathBina dibuka.
+- Bahagian utama lobi, kawalan permainan, kedai dan Chat Ceria diterjemahkan.
+- Mesej selamat Chat Ceria dipaparkan mengikut bahasa pilihan setiap penerima.
+
+---
+
 ## 🧰 Versi V21 — Kawalan Telefon Lebih Kemas
 
 - Telefon hanya memaparkan empat kawalan utama: Math Shooter, Kedai, Lagi dan pemilih aras.

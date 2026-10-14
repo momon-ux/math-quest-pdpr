@@ -229,6 +229,12 @@
     .device-account-switch { border:0; border-radius:9px; padding:8px 10px; background:#0284c7; color:#fff; font-size:.68rem; font-weight:900; cursor:pointer; }
     .device-account-card.active .device-account-switch { background:#16a34a; }
     .device-account-create { width:100%; border:0; border-radius:10px; padding:11px; background:#facc15; color:#78350f; font-size:.78rem; font-weight:900; cursor:pointer; box-shadow:0 3px 0 #ca8a04; }
+    .language-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .language-option { display:flex; align-items:center; gap:10px; min-height:58px; padding:10px 12px; border:2px solid #cbd5e1; border-radius:14px; background:#f8fafc; color:#0f172a; font:900 .78rem/1.2 'Nunito',sans-serif; cursor:pointer; text-align:left; }
+    .language-option span:first-child { font-size:1.45rem; }
+    .language-option.active { border-color:#0284c7; background:#e0f2fe; box-shadow:0 3px 0 #0369a1; }
+    .language-trigger { min-width:42px; min-height:34px; padding:5px 9px; border:1.5px solid #38bdf8; border-radius:10px; background:#fff; color:#075985; font-size:.72rem; font-weight:900; cursor:pointer; }
+    @media (max-width:520px) { .language-grid { grid-template-columns:1fr; } }
     .gallery-add-panel { display:grid; grid-template-columns:1fr auto; gap:7px; margin:10px 0; padding:10px; border:1.5px solid #22d3ee; border-radius:11px; background:#ecfeff; }
     .gallery-add-panel input { min-width:0; border:1.5px solid #0891b2; border-radius:8px; padding:9px 10px; font-size:.78rem; font-weight:800; text-transform:uppercase; }
     .gallery-add-panel button { border:0; border-radius:8px; padding:8px 12px; background:#0284c7; color:#fff; font-size:.7rem; font-weight:900; cursor:pointer; }
@@ -1683,6 +1689,7 @@
             👨‍💻 Pembangun Sistem:<br>
             <b>MOHAMMAD FIKREY BIN ABDUL GAPAR</b>
           </div>
+          <button class="language-trigger" id="btn-language-lobby" type="button" onclick="openLanguageModal()">🌐 Bahasa</button>
         </div>
 
         <div class="community-spotlight" role="button" tabindex="0" onclick="openCommunityGallery()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCommunityGallery();}" aria-label="Buka Galeri Rumah Kawan-Kawan">
@@ -1698,9 +1705,9 @@
         <div class="lobby-row-grid">
           <!-- Umur adalah pilihan; murid boleh terus bermain tanpa memilih. -->
           <div class="form-group">
-            <label class="form-label">1. UMUR (PILIHAN SAHAJA):</label>
+            <label class="form-label" data-i18n="ageLabel">1. UMUR (PILIHAN SAHAJA):</label>
             <div class="toggle-grade-box" id="age-scroll-picker" role="listbox" aria-label="Pilih umur jika mahu">
-              <button class="grade-chip active" id="chip-age-none" onclick="selectLobbyAge(0)">✨ TIDAK PILIH</button>
+              <button class="grade-chip active" id="chip-age-none" onclick="selectLobbyAge(0)" data-i18n="skipAge">✨ TIDAK PILIH</button>
               <button class="grade-chip" id="chip-age-7" onclick="selectLobbyAge(7)">7 TAHUN</button>
               <button class="grade-chip" id="chip-age-8" onclick="selectLobbyAge(8)">8 TAHUN</button>
               <button class="grade-chip" id="chip-age-9" onclick="selectLobbyAge(9)">9 TAHUN</button>
@@ -1713,15 +1720,15 @@
               <button class="grade-chip" id="chip-age-16" onclick="selectLobbyAge(16)">16 TAHUN</button>
               <button class="grade-chip" id="chip-age-17" onclick="selectLobbyAge(17)">17 TAHUN</button>
             </div>
-            <div class="grade-scroll-hint" aria-hidden="true">Tidak wajib • Leret jika mahu pilih umur →</div>
+            <div class="grade-scroll-hint" aria-hidden="true" data-i18n="ageHint">Tidak wajib • Leret jika mahu pilih umur →</div>
           </div>
 
           <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
           <div class="form-group">
-            <label class="form-label">2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):</label>
+            <label class="form-label" data-i18n="schoolClassLabel">2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-              <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" oninput="updateSchoolClassInput()">
-              <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" oninput="updateSchoolClassInput()">
+              <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()">
+              <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()">
             </div>
           </div>
         </div>
@@ -1729,15 +1736,15 @@
         <!-- Murid mengisi nama sendiri; tiada senarai nama dipaparkan atau ditanam dalam kod. -->
         <div class="name-entry-card">
           <div class="form-group">
-            <label class="form-label" for="input-student-name">3. ISI NAMA PENUH ANDA:</label>
-            <input type="text" id="input-student-name" class="student-name-input" maxlength="80" autocomplete="name" inputmode="text" placeholder="Taip nama penuh anda" oninput="updateStudentNameInput(this.value)" onkeydown="if(event.key==='Enter') enterBuildingPlot()">
+            <label class="form-label" for="input-student-name" data-i18n="nameLabel">3. ISI NAMA PENUH ANDA:</label>
+            <input type="text" id="input-student-name" class="student-name-input" maxlength="80" autocomplete="name" inputmode="text" placeholder="Taip nama penuh anda" data-i18n-placeholder="namePlaceholder" oninput="updateStudentNameInput(this.value)" onkeydown="if(event.key==='Enter') enterBuildingPlot()">
           </div>
           <div style="font-size: 1.8rem; align-self: center;" aria-hidden="true">✍️</div>
           <div class="name-entry-status" id="student-name-status">Isi nama, sekolah dan kelas yang sama untuk membuka rumah pada peranti lain.</div>
           <div class="profile-preview-card" aria-live="polite">
             <div class="profile-preview-avatar" id="profile-preview-avatar">👷‍♂️</div>
             <div>
-              <div class="profile-preview-kicker">Profil Pemain MathBina</div>
+              <div class="profile-preview-kicker" data-i18n="playerProfile">Profil Pemain MathBina</div>
               <div class="profile-preview-name" id="profile-preview-name">Nama anda akan muncul di sini</div>
               <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • Aras umum</div>
               <div class="profile-id-row">
@@ -1752,7 +1759,7 @@
 
         <!-- Pilih Avatar -->
         <div class="form-group">
-          <label class="form-label" style="text-align: center;">4. PILIH AVATAR ANDA:</label>
+          <label class="form-label" style="text-align: center;" data-i18n="avatarLabel">4. PILIH AVATAR ANDA:</label>
           <div class="avatar-picker-row">
             <div class="avatar-chip active" id="av-builder" onclick="pickAvatar('👷‍♂️', 'Arkitek Cilik')">
               <span>👷‍♂️</span> <span>Arkitek Cilik</span>
@@ -1770,7 +1777,7 @@
         </div>
 
         <!-- Enter World Button -->
-        <button class="btn-enter-world" onclick="enterBuildingPlot()">
+        <button class="btn-enter-world" onclick="enterBuildingPlot()" data-i18n="enterWorld">
           🚀 MASUK KE PADANG RUMAH IMPIAN!
         </button>
 
@@ -1811,6 +1818,7 @@
         </div>
 
         <div class="hud-actions-group" style="display: flex; gap: 6px;">
+          <button class="language-trigger" id="btn-language-sandbox" type="button" onclick="openLanguageModal()" title="Language">🌐</button>
           <button onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
           <button onclick="openSafeChat()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-safe-chat" title="Chat Ceria MathBina">💬</button>
           <button onclick="openLeaderboardModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;">📅</button>
@@ -1822,22 +1830,22 @@
       <!-- Action Ribbon -->
       <div class="sandbox-action-ribbon">
         <button class="ribbon-btn btn-xp-shooter" onclick="closeMobileTools(); launchMathShooter()">
-          <span>🎯</span> <span>CARI XP: MATH SHOOTER</span>
+          <span>🎯</span> <span data-i18n="mathShooter">CARI XP: MATH SHOOTER</span>
         </button>
         <button class="ribbon-btn btn-xp-wheel mobile-secondary" onclick="closeMobileTools(); launchMathWheel()">
-          <span>🎡</span> <span>CARI XP: RODA SIFIR</span>
+          <span>🎡</span> <span data-i18n="mathWheel">CARI XP: RODA SIFIR</span>
         </button>
         <button class="ribbon-btn btn-xp-arcade mobile-secondary" onclick="closeMobileTools(); launchArcadeGame()">
-          <span>🕹️</span> <span>ARKED XP</span>
+          <span>🕹️</span> <span data-i18n="arcade">ARKED XP</span>
         </button>
         <button class="ribbon-btn btn-shop" onclick="closeMobileTools(); openShopModal()">
-          <span>🛒</span> <span>KEDAI BLOK & LEGO</span>
+          <span>🛒</span> <span data-i18n="shop">KEDAI BLOK & LEGO</span>
         </button>
         <button class="ribbon-btn mobile-more-toggle" id="btn-mobile-more" type="button" onclick="toggleMobileTools()" aria-expanded="false">
           <span>☰</span> <span>LAGI</span>
         </button>
         <button class="ribbon-btn btn-eraser mobile-secondary" id="btn-eraser-mode" onclick="closeMobileTools(); toggleEraserTool()">
-          <span>🧹</span> <span>ALAT PADAM</span>
+          <span>🧹</span> <span data-i18n="eraser">ALAT PADAM</span>
         </button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" title="Undur tindakan terakhir">↶ UNDO</button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" title="Buat semula tindakan">↷ REDO</button>
@@ -1848,7 +1856,7 @@
           <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
         </div>
         <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()">
-          <span>📸</span> <span>TANGKAP GAMBAR RUMAH</span>
+          <span>📸</span> <span data-i18n="photo">TANGKAP GAMBAR RUMAH</span>
         </button>
       </div>
 
@@ -1873,11 +1881,11 @@
 
       <!-- Bottom Palette Dock (Inventory) -->
       <div class="sandbox-bottom-dock">
-        <span class="dock-title-label">Alatan:</span>
+        <span class="dock-title-label" data-i18n="tools">Alatan:</span>
         <div id="palette-slots-container" style="display: flex; gap: 6px; align-items: center;">
           <!-- Active owned blocks -->
         </div>
-        <button onclick="openShopModal()" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 900; background: #fef08a; border: 1.5px dashed #ca8a04; border-radius: 10px; cursor: pointer; white-space: nowrap;">
+        <button onclick="openShopModal()" data-i18n="buyMore" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 900; background: #fef08a; border: 1.5px dashed #ca8a04; border-radius: 10px; cursor: pointer; white-space: nowrap;">
           + BELI LAGI BLOK
         </button>
       </div>
@@ -2050,7 +2058,7 @@
         <div class="modal-head">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 1.3rem;">🛒</span>
-            <div class="modal-title">KEDAI BLOK & HIASAN RUMAH</div>
+            <div class="modal-title" data-i18n="shopTitle">KEDAI BLOK & HIASAN RUMAH</div>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <div class="hud-wallet-pill">
@@ -2061,10 +2069,10 @@
         </div>
 
         <div class="shop-tabs-row">
-          <button class="shop-tab-chip active" id="tab-cat-structure" onclick="switchShopCategory('structure')">🧱 Struktur Asas</button>
-          <button class="shop-tab-chip" id="tab-cat-house" onclick="switchShopCategory('house')">🏠 Rumah & Pintu</button>
-          <button class="shop-tab-chip" id="tab-cat-nature" onclick="switchShopCategory('nature')">🌳 Taman & Alam</button>
-          <button class="shop-tab-chip" id="tab-cat-vehicle" onclick="switchShopCategory('vehicle')">🚗 Kenderaan & Khas</button>
+          <button class="shop-tab-chip active" id="tab-cat-structure" onclick="switchShopCategory('structure')" data-i18n="structure">🧱 Struktur Asas</button>
+          <button class="shop-tab-chip" id="tab-cat-house" onclick="switchShopCategory('house')" data-i18n="house">🏠 Rumah & Pintu</button>
+          <button class="shop-tab-chip" id="tab-cat-nature" onclick="switchShopCategory('nature')" data-i18n="nature">🌳 Taman & Alam</button>
+          <button class="shop-tab-chip" id="tab-cat-vehicle" onclick="switchShopCategory('vehicle')" data-i18n="vehicles">🚗 Kenderaan & Khas</button>
         </div>
 
         <div class="shop-catalog-grid" id="shop-items-display">
@@ -2082,17 +2090,35 @@
       <div class="game-modal-box" style="max-width:580px;">
         <div class="modal-head">
           <div>
-            <div class="modal-title">💬 Chat Ceria MathBina</div>
-            <div style="font-size:.63rem;font-weight:800;color:#64748b;margin-top:2px;">Berbual dengan rakan yang ditambah melalui ID MathBina menggunakan ayat dan emoji selamat.</div>
+            <div class="modal-title" data-i18n="chatTitle">💬 Chat Ceria MathBina</div>
+            <div style="font-size:.63rem;font-weight:800;color:#64748b;margin-top:2px;" data-i18n="chatSubtitle">Berbual dengan rakan yang ditambah melalui ID MathBina menggunakan ayat dan emoji selamat.</div>
           </div>
           <button class="modal-close-btn" onclick="closeSafeChat()">✕</button>
         </div>
         <div class="safe-chat-feed" id="safe-chat-feed" aria-live="polite">
           <div class="safe-chat-empty">Memuatkan mesej pemain…</div>
         </div>
-        <div style="font-size:.64rem;font-weight:900;color:#475569;">Pilih mesej untuk dihantar:</div>
+        <div style="font-size:.64rem;font-weight:900;color:#475569;" data-i18n="chooseMessage">Pilih mesej untuk dihantar:</div>
         <div class="safe-chat-choices" id="safe-chat-choices"></div>
-        <div style="font-size:.58rem;color:#64748b;line-height:1.35;">🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.</div>
+        <div style="font-size:.58rem;color:#64748b;line-height:1.35;" data-i18n="chatSafety">🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.</div>
+      </div>
+    </div>
+
+    <div class="game-modal-overlay" id="modal-language" style="display:none;">
+      <div class="game-modal-box" style="max-width:480px;">
+        <div class="modal-head">
+          <div>
+            <div class="modal-title" data-i18n="chooseLanguage">🌐 Pilih Bahasa</div>
+            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;" data-i18n="languageHint">Pilihan bahasa akan disimpan pada peranti ini.</div>
+          </div>
+          <button class="modal-close-btn" onclick="closeLanguageModal()">✕</button>
+        </div>
+        <div class="language-grid">
+          <button class="language-option" type="button" data-language="ms" onclick="setLanguage('ms')"><span>🇲🇾</span><span>Bahasa Malaysia</span></button>
+          <button class="language-option" type="button" data-language="en" onclick="setLanguage('en')"><span>🇬🇧</span><span>English</span></button>
+          <button class="language-option" type="button" data-language="zh" onclick="setLanguage('zh')"><span>🇨🇳</span><span>中文</span></button>
+          <button class="language-option" type="button" data-language="ta" onclick="setLanguage('ta')"><span>🇮🇳</span><span>தமிழ்</span></button>
+        </div>
       </div>
     </div>
 
@@ -2214,6 +2240,64 @@
   </div>
 
   <script>
+    const LANGUAGE_STORAGE_KEY = 'mathbina_language_v1';
+    const I18N = Object.freeze({
+      ms: {
+        language:'Bahasa', chooseLanguage:'🌐 Pilih Bahasa', languageHint:'Pilihan bahasa akan disimpan pada peranti ini.', languageSaved:'Bahasa Malaysia dipilih.',
+        ageLabel:'1. UMUR (PILIHAN SAHAJA):', skipAge:'✨ TIDAK PILIH', ageHint:'Tidak wajib • Leret jika mahu pilih umur →', schoolClassLabel:'2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
+        mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
+        shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
+        chatTitle:'💬 Chat Ceria MathBina', chatSubtitle:'Berbual dengan rakan yang ditambah melalui ID MathBina menggunakan ayat dan emoji selamat.', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
+        hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
+      },
+      en: {
+        language:'English', chooseLanguage:'🌐 Choose Language', languageHint:'Your language choice will be saved on this device.', languageSaved:'English selected.',
+        ageLabel:'1. AGE (OPTIONAL):', skipAge:'✨ SKIP', ageHint:'Optional • Swipe to choose an age →', schoolClassLabel:'2. SCHOOL & CLASS (EDIT LATER):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
+        mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
+        shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
+        chatTitle:'💬 MathBina Happy Chat', chatSubtitle:'Chat with friends added by MathBina ID using safe phrases and emojis.', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, Happy Chat has no free-text box. Add a friend’s house ID in the Friends Gallery to see their messages.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
+        hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
+      },
+      zh: {
+        language:'中文', chooseLanguage:'🌐 选择语言', languageHint:'语言选择将保存在此设备上。', languageSaved:'已选择中文。',
+        ageLabel:'1. 年龄（可选）：', skipAge:'✨ 跳过', ageHint:'非必填 • 滑动选择年龄 →', schoolClassLabel:'2. 学校和班级（以后可修改）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
+        mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
+        shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
+        chatTitle:'💬 MathBina 欢乐聊天', chatSubtitle:'使用安全短语和表情，与通过 MathBina ID 添加的朋友聊天。', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，欢乐聊天不提供自由输入框。请在好友房屋画廊添加好友 ID 以查看消息。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
+        hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
+      },
+      ta: {
+        language:'தமிழ்', chooseLanguage:'🌐 மொழியைத் தேர்ந்தெடுக்கவும்', languageHint:'மொழித் தேர்வு இந்தச் சாதனத்தில் சேமிக்கப்படும்.', languageSaved:'தமிழ் தேர்ந்தெடுக்கப்பட்டது.',
+        ageLabel:'1. வயது (விருப்பம்):', skipAge:'✨ தவிர்க்கவும்', ageHint:'கட்டாயமில்லை • வயதைத் தேர்வுசெய்ய நகர்த்தவும் →', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (பின்னர் மாற்றலாம்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
+        mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
+        shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
+        chatTitle:'💬 MathBina மகிழ்ச்சி அரட்டை', chatSubtitle:'MathBina ID மூலம் சேர்த்த நண்பர்களுடன் பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களைப் பயன்படுத்திப் பேசுங்கள்.', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக சுதந்திரமாகத் தட்டச்சு செய்யும் பெட்டி இல்லை. நண்பர்களின் செய்திகளைப் பார்க்க அவர்களின் வீட்டு ID-ஐ நண்பர் காட்சியகத்தில் சேர்க்கவும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
+        hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
+      }
+    });
+    let currentLanguage = 'ms';
+
+    function t(key) { return I18N[currentLanguage]?.[key] || I18N.ms[key] || key; }
+    function getStoredLanguage() {
+      try { const value=localStorage.getItem(LANGUAGE_STORAGE_KEY); return I18N[value] ? value : 'ms'; } catch(e) { return 'ms'; }
+    }
+    function applyLanguage(code, announce=false) {
+      currentLanguage=I18N[code]?code:'ms';
+      try { localStorage.setItem(LANGUAGE_STORAGE_KEY,currentLanguage); } catch(e) {}
+      document.documentElement.lang=({ms:'ms',en:'en',zh:'zh-CN',ta:'ta'})[currentLanguage];
+      document.querySelectorAll('[data-i18n]').forEach(element=>{ const key=element.dataset.i18n; if(t(key))element.textContent=t(key); });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(element=>{ element.placeholder=t(element.dataset.i18nPlaceholder); });
+      document.querySelectorAll('.language-option').forEach(button=>{ const active=button.dataset.language===currentLanguage; button.classList.toggle('active',active); button.setAttribute('aria-pressed',String(active)); });
+      const lobbyButton=document.getElementById('btn-language-lobby');if(lobbyButton)lobbyButton.textContent=`🌐 ${t('language')}`;
+      const ribbon=document.querySelector('.sandbox-action-ribbon');if(ribbon)toggleMobileTools(ribbon.classList.contains('expanded'));
+      if(document.getElementById('modal-shop')?.style.display==='flex')renderShopCatalog();
+      if(safeChatOpen){renderSafeChatChoices();refreshSafeChat();}
+      if(announce)showToast(`🌐 ${t('languageSaved')}`);
+    }
+    function setLanguage(code) { applyLanguage(code,true); closeLanguageModal(); }
+    function openLanguageModal() { const modal=document.getElementById('modal-language');if(modal)modal.style.display='flex'; }
+    function closeLanguageModal() { const modal=document.getElementById('modal-language');if(modal)modal.style.display='none'; }
+
     /* ==============================================================
        AUDIO SYSTEM (WEB AUDIO API)
        ============================================================== */
@@ -4424,14 +4508,8 @@ const COMBAT_BANK = {
     }
 
     const SAFE_CHAT_MESSAGES = Object.freeze([
-      {id:'hello',text:'Hai semua! 👋'},
-      {id:'nice_house',text:'Rumah kamu cantik! 🏡✨'},
-      {id:'great_build',text:'Binaan yang hebat! 🧱👏'},
-      {id:'lets_math',text:'Jom main Matematik! 🎯'},
-      {id:'good_luck',text:'Semoga berjaya! ⭐'},
-      {id:'thank_you',text:'Terima kasih! 😊'},
-      {id:'wow',text:'Wah, kreatifnya! 🌈'},
-      {id:'keep_going',text:'Teruskan membina! 💪'}
+      {id:'hello'},{id:'nice_house'},{id:'great_build'},{id:'lets_math'},
+      {id:'good_luck'},{id:'thank_you'},{id:'wow'},{id:'keep_going'}
     ]);
     let safeChatOpen=false;
     let safeChatPollTimer=null;
@@ -4442,18 +4520,18 @@ const COMBAT_BANK = {
       choices.innerHTML='';
       SAFE_CHAT_MESSAGES.forEach(message=>{
         const button=document.createElement('button');button.type='button';button.className='safe-chat-choice';
-        button.textContent=message.text;button.addEventListener('click',()=>sendSafeChatMessage(message.id));choices.appendChild(button);
+        button.textContent=t(message.id);button.addEventListener('click',()=>sendSafeChatMessage(message.id));choices.appendChild(button);
       });
     }
 
     function renderSafeChatMessages(payload) {
       const feed=document.getElementById('safe-chat-feed');if(!feed)return;
-      const allowed=new Map(SAFE_CHAT_MESSAGES.map(message=>[message.id,message.text]));
+      const allowed=new Map(SAFE_CHAT_MESSAGES.map(message=>[message.id,t(message.id)]));
       const records=(Array.isArray(payload)?payload:Object.values(payload||{})).filter(item=>item&&allowed.has(item.messageId))
         .sort((a,b)=>Number(a.createdAt||0)-Number(b.createdAt||0)).slice(-30);
       feed.innerHTML='';
       if(!records.length){
-        const empty=document.createElement('div');empty.className='safe-chat-empty';empty.textContent='Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋';feed.appendChild(empty);return;
+        const empty=document.createElement('div');empty.className='safe-chat-empty';empty.textContent=t('chatEmpty');feed.appendChild(empty);return;
       }
       records.forEach(record=>{
         const row=document.createElement('div');row.className=`safe-chat-message${normalizeUserId(record.senderId)===STATE.userId?' mine':''}`;
@@ -5412,7 +5490,7 @@ const COMBAT_BANK = {
       ribbon.classList.toggle('expanded',expanded);
       button.classList.toggle('active',expanded);
       button.setAttribute('aria-expanded',String(expanded));
-      button.innerHTML=expanded?'<span>✕</span><span>TUTUP</span>':'<span>☰</span><span>LAGI</span>';
+      button.innerHTML=expanded?`<span>✕</span><span>${t('close')}</span>`:`<span>☰</span><span>${t('more')}</span>`;
       setTimeout(resizeVoxelRenderer,80);
     }
 
@@ -5445,9 +5523,9 @@ const COMBAT_BANK = {
         const resale=Math.max(1,Math.floor(item.price*.5));
         return `
         <div class="shop-item-card"><div class="shop-item-icon">${item.icon}</div><div class="shop-item-name">${item.name}</div>
-        <div class="shop-item-price">🪙 ${item.price} Syiling</div><div class="shop-item-owned">Milik: ${owned} • Jual: ${resale} 🪙</div>
-        <div class="shop-item-actions"><button class="btn-buy-item" onclick="buyBlockItem('${item.id}')">Beli +1</button>
-        <button class="btn-sell-item" onclick="sellBlockItem('${item.id}',event)" ${owned<=0?'disabled':''}>Jual −1</button></div></div>`;
+        <div class="shop-item-price">🪙 ${item.price} ${t('coins')}</div><div class="shop-item-owned">${t('owned')}: ${owned} • ${t('sellValue')}: ${resale} 🪙</div>
+        <div class="shop-item-actions"><button class="btn-buy-item" onclick="buyBlockItem('${item.id}')">${t('buy')}</button>
+        <button class="btn-sell-item" onclick="sellBlockItem('${item.id}',event)" ${owned<=0?'disabled':''}>${t('sell')}</button></div></div>`;
       }).join('');
     }
 
@@ -5468,7 +5546,7 @@ const COMBAT_BANK = {
       const owned=STATE.inventory[blockId]||0;if(owned<=0)return showToast('Item ini tiada dalam inventori.');
       if(pendingSellBlockId!==blockId){
         pendingSellBlockId=blockId;clearTimeout(pendingSellTimer);
-        const button=event?.currentTarget;if(button){button.textContent='Sahkan jual';button.classList.add('confirming');}
+        const button=event?.currentTarget;if(button){button.textContent=t('confirmSell');button.classList.add('confirming');}
         pendingSellTimer=setTimeout(()=>{pendingSellBlockId='';renderShopCatalog();},2800);
         return showToast(`Tekan sekali lagi untuk jual ${item.name}.`);
       }
@@ -5694,6 +5772,7 @@ const COMBAT_BANK = {
     }
 
     function initMathBinaLobby() {
+      applyLanguage(getStoredLanguage());
       initLobbyUI();
       loadCommunityGallery();
     }

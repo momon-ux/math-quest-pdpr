@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v21-compact-controls';
+const CACHE_NAME = 'mathbina-v22-four-languages';
 const APP_SHELL = [
   './',
   './index.html',
