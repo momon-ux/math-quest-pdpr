@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v28-math-rush';
+const CACHE_NAME = 'mathbina-v31-easy-block-edit';
 const APP_SHELL = [
   './',
   './index.html',

@@ -4,6 +4,27 @@
 
 ---
 
+## 🎛️ Versi V31 — Laras Blok Dengan Mudah
+
+- Ketuk blok yang sudah dipasang untuk memilihnya semula tanpa memadam.
+- Blok terpilih ditandakan dengan garisan kuning supaya mudah dikenal pasti.
+- Panel lutsinar menyediakan putaran kiri dan kanan, empat arah gerakan serta kawalan naik atau turun aras.
+- Kedudukan dan putaran baharu diperiksa supaya tidak bertindih atau terkeluar daripada tapak.
+- Semua pelarasan boleh dipulihkan menggunakan **Undo** dan disimpan bersama rumah pemain.
+
+---
+
+## 🚀 Versi V30 — Math Blaster Bergerak
+
+- Arked XP kini permainan kapal angkasa menembak dengan sasaran musuh yang sentiasa bergerak.
+- Murid menggerakkan kapal ke kiri atau kanan, menyelaraskan bidikan dan menekan butang **FIRE**.
+- Setiap musuh membawa satu jawapan Matematik mengikut umur dan aras pemain.
+- Kawalan sentuh, seret, papan kekunci dan butang besar disediakan untuk telefon potret serta landskap.
+- Tembakan tepat membina kombo XP dan syiling; jawapan salah masih memotong dua saat.
+- Grafik angkasa, cahaya laser, enjin kapal dan letupan jawapan menjadikan arked lebih aktif tanpa menggunakan imej luar.
+
+---
+
 ## 🎓 Versi V25 — Pemilih Umur Ringkas dan Wajib
 
 - Semua pilihan umur disembunyikan dalam satu butang lutsinar yang kemas.
@@ -193,6 +214,14 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 ---
 
 ## 🌐 Pautan Rasmi & Deployment
+
+### V29 — Item Mega Pelbagai Petak & Aras
+
+- Kedai mempunyai kategori baharu **Item Mega** untuk hadiah sasaran bernilai tinggi.
+- Air Pancut Diraja, Kolam Resort, Rumah Pokok Impian, Robot Penjaga Gergasi dan Istana Mini MathBina berharga 750 hingga 2,500 syiling.
+- Setiap Item Mega menggunakan tapak sebenar antara 2×2 hingga 4×3 petak dan boleh mencapai empat aras.
+- Sistem menghalang item besar daripada bertindih, terkeluar daripada pulau atau dibina tanpa sokongan.
+- Saiz tapak dan ketinggian dipaparkan sebelum pembelian supaya murid boleh merancang ruang.
 
 ### V28 — Arked XP Math Rush
 

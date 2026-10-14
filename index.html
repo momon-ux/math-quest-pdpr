@@ -704,18 +704,28 @@
     #sandbox-grid-canvas { display: none; }
     .rotation-indicator {
       display:none; position:absolute; right:12px; bottom:38px; z-index:9;
-      width:70px; height:70px; padding:6px; border:1.5px solid rgba(255,255,255,.72);
-      border-radius:50%; background:rgba(15,23,42,.25); color:#fff;
-      -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-      box-shadow:0 6px 18px rgba(15,23,42,.18), inset 0 0 16px rgba(255,255,255,.12);
-      cursor:pointer; align-items:center; justify-content:center; flex-direction:column;
-      touch-action:manipulation; transition:transform .14s ease, background .14s ease, opacity .14s ease;
+      width:154px; padding:7px; border:1.5px solid rgba(255,255,255,.78);
+      border-radius:16px; background:rgba(15,23,42,.34); color:#fff;
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      box-shadow:0 7px 20px rgba(15,23,42,.22), inset 0 0 18px rgba(255,255,255,.10);
+      touch-action:manipulation;
     }
-    .rotation-indicator.visible { display:flex; }
-    .rotation-indicator:active { transform:scale(.92); background:rgba(2,132,199,.48); }
-    .rotation-indicator-icon { position:absolute; top:5px; left:8px; font-size:.8rem; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
-    .rotation-direction { display:block; font-size:1.45rem; line-height:1; transform:rotate(var(--rotation-angle,0deg)); transition:transform .18s ease; text-shadow:0 2px 5px rgba(0,0,0,.38); }
-    .rotation-indicator-angle { margin-top:2px; font:900 .6rem/1 'Nunito',sans-serif; letter-spacing:.4px; text-shadow:0 1px 3px rgba(0,0,0,.45); }
+    .rotation-indicator.visible { display:block; }
+    .block-editor-head { display:flex; align-items:center; gap:5px; min-height:25px; }
+    .rotation-indicator-icon { font-size:.92rem; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+    .block-editor-title { min-width:0; flex:1; font-size:.54rem; font-weight:1000; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .block-editor-close { display:none; width:24px; height:24px; padding:0; border:1px solid rgba(255,255,255,.65); border-radius:8px; background:rgba(255,255,255,.16); color:#fff; font-weight:1000; cursor:pointer; }
+    .rotation-indicator.editing .block-editor-close { display:block; }
+    .block-rotate-row { display:grid; grid-template-columns:1fr 44px 1fr; gap:5px; margin-top:5px; }
+    .block-editor-btn { min-height:34px; padding:0; border:1px solid rgba(255,255,255,.68); border-radius:10px; background:rgba(2,132,199,.48); color:#fff; font:1000 .86rem/1 'Nunito',sans-serif; cursor:pointer; touch-action:manipulation; box-shadow:inset 0 0 10px rgba(255,255,255,.08); }
+    .block-editor-btn:active { transform:scale(.93); background:rgba(14,165,233,.72); }
+    .rotation-indicator-angle { display:flex; align-items:center; justify-content:center; border-radius:10px; background:rgba(255,255,255,.16); font:1000 .55rem/1 'Nunito',sans-serif; letter-spacing:.3px; }
+    .block-position-controls { display:none; grid-template-columns:repeat(3,1fr); gap:4px; margin-top:5px; }
+    .rotation-indicator.editing .block-position-controls { display:grid; }
+    .block-move-label { display:flex; align-items:center; justify-content:center; color:#dbeafe; font-size:.44rem; font-weight:1000; text-align:center; }
+    .block-level-row { display:none; grid-template-columns:1fr 1fr; gap:4px; margin-top:4px; }
+    .rotation-indicator.editing .block-level-row { display:grid; }
+    .block-level-row .block-editor-btn { min-height:29px; font-size:.48rem; }
     .world-owner-label {
       position:absolute; top:8px; left:50%; z-index:5; transform:translateX(-50%);
       max-width:min(58%,420px); padding:6px 12px; border:2px solid rgba(255,255,255,.95);
@@ -1017,7 +1027,7 @@
     }
 
     /* ==============================================================
-       SCREEN 5: ARKED MATH RUSH
+       SCREEN 5: ARKED MATH BLASTER
        ============================================================== */
     #view-arcade {
       position: absolute;
@@ -1060,33 +1070,50 @@
         linear-gradient(180deg,rgba(30,64,175,.48),rgba(15,23,42,.72));
     }
     .arcade-question-card {
-      position:absolute; z-index:4; left:50%; top:8%; transform:translateX(-50%);
-      width:min(90%,520px); padding:12px 16px; border:2px solid rgba(255,255,255,.7);
+      position:absolute; z-index:4; left:50%; top:3%; transform:translateX(-50%);
+      width:min(88%,520px); padding:9px 14px; border:2px solid rgba(255,255,255,.7);
       border-radius:18px; background:linear-gradient(135deg,rgba(30,64,175,.92),rgba(109,40,217,.92));
       text-align:center; box-shadow:0 9px 24px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.25);
       backdrop-filter:blur(8px);
     }
     .arcade-level-badge { display:inline-block; padding:3px 9px; border-radius:999px; background:#facc15; color:#713f12; font-size:.63rem; font-weight:1000; }
-    .arcade-problem { margin-top:5px; font-size:clamp(1.45rem,7vw,2.45rem); line-height:1.05; font-weight:1000; text-shadow:0 3px 0 rgba(0,0,0,.24); }
+    .arcade-problem { margin-top:3px; font-size:clamp(1.25rem,6vw,2.2rem); line-height:1.05; font-weight:1000; text-shadow:0 3px 0 rgba(0,0,0,.24); }
     .arcade-answer-zone {
-      position:absolute; inset:36% 5% 6%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
-      align-items:center; gap:clamp(9px,3vw,28px);
+      position:absolute; z-index:3; inset:25% 4% 36%;
     }
     .arcade-answer-target {
-      position:relative; min-width:0; min-height:92px; border:3px solid rgba(255,255,255,.78);
-      border-radius:28px 42px 30px 46px; background:linear-gradient(145deg,var(--orb-light,#67e8f9),var(--orb-dark,#0891b2));
-      color:#fff; font-size:clamp(1.15rem,5vw,1.85rem); font-weight:1000; cursor:pointer;
-      box-shadow:0 10px 0 color-mix(in srgb,var(--orb-dark,#0891b2) 72%,#020617),0 0 28px rgba(103,232,249,.28);
-      text-shadow:0 2px 0 rgba(0,0,0,.24); animation:arcadeFloat 1.25s ease-in-out infinite alternate;
+      position:absolute; left:var(--enemy-x,50%); top:var(--enemy-y,10%); width:clamp(76px,21vw,132px);
+      min-height:70px; padding:30px 7px 6px; border:2px solid rgba(255,255,255,.84);
+      border-radius:50% 50% 38% 38%; background:linear-gradient(145deg,var(--orb-light,#67e8f9),var(--orb-dark,#0891b2));
+      color:#fff; font-size:clamp(.9rem,4vw,1.35rem); font-weight:1000; cursor:crosshair;
+      box-shadow:0 0 0 3px rgba(34,211,238,.14),0 0 26px var(--orb-light,#67e8f9),inset 0 -8px 0 rgba(2,6,23,.22);
+      text-shadow:0 2px 0 rgba(0,0,0,.28); transform:translateX(-50%);
+      animation:enemyPatrol var(--patrol-speed,1.35s) ease-in-out infinite alternate;
       animation-delay:var(--float-delay,0s); touch-action:manipulation;
     }
-    .arcade-answer-target::before { content:'✦'; position:absolute; top:8px; left:12px; opacity:.65; font-size:.75rem; }
-    .arcade-answer-target:active { transform:translateY(7px) scale(.96); box-shadow:0 3px 0 var(--orb-dark,#0891b2); }
+    .arcade-answer-target::before { content:'👾'; position:absolute; top:-19px; left:50%; transform:translateX(-50%); font-size:2.45rem; filter:drop-shadow(0 0 7px #fff); }
+    .arcade-answer-target::after { content:''; position:absolute; left:17%; right:17%; bottom:-8px; height:9px; border-radius:50%; background:linear-gradient(90deg,#22d3ee,#fff,#22d3ee); box-shadow:0 0 13px #67e8f9; }
+    .arcade-answer-target:active { filter:brightness(1.2); }
     .arcade-answer-target.is-correct { background:linear-gradient(145deg,#86efac,#16a34a); animation:arcadeCorrect .34s ease both; }
     .arcade-answer-target.is-wrong { background:linear-gradient(145deg,#fca5a5,#dc2626); animation:arcadeWrong .32s ease both; }
-    @keyframes arcadeFloat { from { transform:translateY(7px) rotate(-2deg); } to { transform:translateY(-9px) rotate(2deg); } }
-    @keyframes arcadeCorrect { 55% { transform:scale(1.18) rotate(5deg); } to { transform:scale(0); opacity:0; } }
-    @keyframes arcadeWrong { 25%,75% { transform:translateX(-8px); } 50% { transform:translateX(8px); } }
+    @keyframes enemyPatrol { from { transform:translateX(calc(-50% - var(--drift,14px))) translateY(-5px) rotate(-3deg); } to { transform:translateX(calc(-50% + var(--drift,14px))) translateY(12px) rotate(3deg); } }
+    @keyframes arcadeCorrect { 45% { transform:translateX(-50%) scale(1.28); filter:brightness(1.8); } to { transform:translateX(-50%) scale(0); opacity:0; } }
+    @keyframes arcadeWrong { 25%,75% { transform:translateX(calc(-50% - 9px)); } 50% { transform:translateX(calc(-50% + 9px)); } }
+    .arcade-player {
+      position:absolute; z-index:5; left:50%; bottom:66px; width:66px; height:66px;
+      transform:translateX(-50%); transition:left .09s linear; pointer-events:none;
+      filter:drop-shadow(0 0 13px rgba(56,189,248,.95));
+    }
+    .arcade-player-ship { position:absolute; inset:0; display:grid; place-items:center; font-size:3.55rem; transform:rotate(-45deg); }
+    .arcade-player::after { content:''; position:absolute; left:25px; top:52px; width:16px; height:30px; border-radius:50%; background:linear-gradient(#fff,#22d3ee,#22c55e,transparent); filter:blur(1px); animation:shipThruster .2s ease-in-out infinite alternate; }
+    @keyframes shipThruster { to { height:39px; opacity:.68; } }
+    .arcade-laser { position:absolute; z-index:4; width:7px; border-radius:999px; background:linear-gradient(#fff,#67e8f9,#22c55e); box-shadow:0 0 8px #fff,0 0 18px #22d3ee,0 0 28px #22c55e; pointer-events:none; transform-origin:bottom; animation:laserShot .2s ease-out both; }
+    @keyframes laserShot { from { transform:scaleY(.05); opacity:.45; } 45% { opacity:1; } to { transform:scaleY(1); opacity:0; } }
+    .arcade-controls { position:absolute; z-index:7; left:50%; bottom:9px; transform:translateX(-50%); display:grid; grid-template-columns:64px minmax(112px,150px) 64px; gap:8px; width:min(94%,310px); }
+    .arcade-control { min-height:48px; border:2px solid rgba(255,255,255,.78); border-radius:14px; background:linear-gradient(#1e3a8a,#1e40af); color:#fff; font-size:1.1rem; font-weight:1000; box-shadow:0 5px 0 #172554; touch-action:none; cursor:pointer; }
+    .arcade-control.fire { background:linear-gradient(#facc15,#f97316); color:#7c2d12; box-shadow:0 5px 0 #9a3412,0 0 18px rgba(250,204,21,.5); }
+    .arcade-control:active { transform:translateY(4px); box-shadow:0 1px 0 #172554; }
+    .arcade-move-hint { position:absolute; z-index:2; left:50%; bottom:123px; transform:translateX(-50%); width:94%; text-align:center; color:#bae6fd; font-size:.62rem; font-weight:800; pointer-events:none; }
     .arcade-feedback {
       position:absolute; z-index:8; left:50%; top:52%; transform:translate(-50%,-50%);
       padding:9px 16px; border-radius:999px; background:rgba(15,23,42,.9); color:#fff;
@@ -1110,9 +1137,11 @@
     .arcade-start-card button { margin-top:10px; border:0; border-radius:12px; padding:11px 18px; background:#facc15; color:#78350f; font-weight:900; cursor:pointer; }
     @media (max-width:700px) {
       .arcade-field { min-height:240px; }
-      .arcade-question-card { top:5%; padding:9px 12px; }
-      .arcade-answer-zone { inset:39% 4% 5%; gap:8px; }
-      .arcade-answer-target { min-height:78px; border-radius:22px 30px 24px 32px; }
+      .arcade-question-card { top:2%; padding:7px 10px; }
+      .arcade-answer-zone { inset:24% 2% 40%; }
+      .arcade-answer-target { width:clamp(72px,25vw,104px); min-height:61px; padding-top:25px; }
+      .arcade-answer-target::before { top:-17px; font-size:2.1rem; }
+      .arcade-player { bottom:65px; transform:translateX(-50%) scale(.9); }
     }
 
     /* ==============================================================
@@ -1392,9 +1421,9 @@
       #build-level-label { min-width: 43px; font-size: 0.55rem; }
       .sandbox-canvas-wrapper { padding: 2px 3px; }
       .voxel-stage { min-height: 150px; border-width: 2px; }
-      .rotation-indicator { right:7px; bottom:30px; width:58px; height:58px; padding:4px; }
-      .rotation-direction { font-size:1.15rem; }
-      .rotation-indicator-angle { font-size:.52rem; }
+      .rotation-indicator { right:7px; bottom:30px; width:142px; padding:6px; }
+      .block-editor-btn { min-height:32px; }
+      .rotation-indicator-angle { font-size:.5rem; }
       .build-status-card { max-width: 70%; font-size: 0.62rem; }
       .sandbox-bottom-dock { height: 58px; gap: 5px; padding: 0 5px; }
       .dock-title-label { display: none; }
@@ -1488,9 +1517,9 @@
       #build-level-label { min-width:40px; font-size:.5rem; }
       .sandbox-canvas-wrapper { padding:2px max(3px, env(safe-area-inset-right)) 2px max(3px, env(safe-area-inset-left)); }
       .voxel-stage { min-height:90px; border-width:2px; border-radius:9px; }
-      .rotation-indicator { right:6px; bottom:20px; width:52px; height:52px; }
-      .rotation-direction { font-size:1rem; }
-      .rotation-indicator-angle { font-size:.48rem; }
+      .rotation-indicator { right:6px; bottom:20px; width:138px; padding:5px; }
+      .block-editor-btn { min-height:28px; }
+      .rotation-indicator-angle { font-size:.46rem; }
       .build-status-card { top:4px; left:4px; padding:3px 5px; max-width:38%; }
       .level-badge, .build-status-card #house-progress-text { font-size:.48rem !important; }
       .build-progress-track { height:4px; margin-top:2px; }
@@ -1537,10 +1566,15 @@
       .arcade-title { font-size:.8rem; }
       .arcade-stats { font-size:.55rem; }
       .arcade-field { min-height:0; margin-top:5px; border-radius:12px; }
-      .arcade-question-card { top:3%; padding:6px 10px; }
+      .arcade-question-card { top:2%; width:min(66%,520px); padding:5px 10px; }
       .arcade-problem { margin-top:2px; font-size:1.25rem; }
-      .arcade-answer-zone { inset:38% 4% 4%; }
-      .arcade-answer-target { min-height:50px; font-size:.95rem; border-radius:16px 22px 18px 24px; }
+      .arcade-answer-zone { inset:28% 7% 42%; }
+      .arcade-answer-target { width:92px; min-height:48px; padding:20px 5px 4px; font-size:.82rem; }
+      .arcade-answer-target::before { top:-15px; font-size:1.8rem; }
+      .arcade-player { bottom:48px; transform:translateX(-50%) scale(.7); }
+      .arcade-controls { bottom:4px; grid-template-columns:54px 110px 54px; }
+      .arcade-control { min-height:38px; font-size:.84rem; }
+      .arcade-move-hint { display:none !important; }
       .arcade-start-card { width:min(70%,390px); padding:10px; }
     }
 
@@ -1921,11 +1955,27 @@
         <div class="voxel-stage" id="voxel-stage">
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
-          <button class="rotation-indicator" id="rotation-indicator" type="button" onclick="rotateSelectedBlock()" aria-label="Rotate block">
-            <span class="rotation-indicator-icon" id="rotation-indicator-icon">🧱</span>
-            <span class="rotation-direction">➤</span>
-            <span class="rotation-indicator-angle" id="rotation-indicator-angle">0°</span>
-          </button>
+          <div class="rotation-indicator" id="rotation-indicator" role="group" aria-label="Block controls">
+            <div class="block-editor-head">
+              <span class="rotation-indicator-icon" id="rotation-indicator-icon">🧱</span>
+              <span class="block-editor-title" id="block-editor-title">New block</span>
+              <button class="block-editor-close" type="button" onclick="deselectPlacedVoxel()" aria-label="Close block controls">×</button>
+            </div>
+            <div class="block-rotate-row">
+              <button class="block-editor-btn" type="button" onclick="rotateSelectedBlock(-1)" aria-label="Rotate left">↶</button>
+              <span class="rotation-indicator-angle" id="rotation-indicator-angle">0°</span>
+              <button class="block-editor-btn" type="button" onclick="rotateSelectedBlock(1)" aria-label="Rotate right">↷</button>
+            </div>
+            <div class="block-position-controls" id="block-position-controls">
+              <span></span><button class="block-editor-btn" type="button" onclick="movePlacedVoxel(0,-1,0)" aria-label="Move away">▲</button><span></span>
+              <button class="block-editor-btn" type="button" onclick="movePlacedVoxel(-1,0,0)" aria-label="Move left">◀</button><span class="block-move-label" id="block-move-label">MOVE</span><button class="block-editor-btn" type="button" onclick="movePlacedVoxel(1,0,0)" aria-label="Move right">▶</button>
+              <span></span><button class="block-editor-btn" type="button" onclick="movePlacedVoxel(0,1,0)" aria-label="Move closer">▼</button><span></span>
+            </div>
+            <div class="block-level-row" id="block-level-controls">
+              <button class="block-editor-btn" type="button" onclick="movePlacedVoxel(0,0,-1)" aria-label="Move down one level">− LEVEL</button>
+              <button class="block-editor-btn" type="button" onclick="movePlacedVoxel(0,0,1)" aria-label="Move up one level">+ LEVEL</button>
+            </div>
+          </div>
           <div class="world-owner-label" id="world-owner-label">🏡 Your House<small>Tap a floating island to visit a friend's house</small></div>
           <div class="friend-visit-banner" id="friend-visit-banner">
             <div><strong id="friend-visit-name">👀 Visiting a Friend's House</strong><small>🔒 View Only • This house cannot be changed</small></div>
@@ -2026,12 +2076,12 @@
     </div>
 
     <!-- ==============================================================
-         SCREEN 5: ARKED MATH RUSH
+         SCREEN 5: ARKED MATH BLASTER
          ============================================================== -->
     <div id="view-arcade">
       <div class="arcade-hud">
         <div>
-          <div class="arcade-title" data-i18n="arcadeTitle">🕹️ XP ARCADE: MATH RUSH</div>
+          <div class="arcade-title" data-i18n="arcadeTitle">🕹️ XP ARCADE: MATH BLASTER</div>
           <div class="arcade-stats">
             <span class="arcade-pill">⏱️ <span id="arcade-time">30</span>s</span>
             <span class="arcade-pill">✅ <span id="arcade-score">0</span> <span data-i18n="catches">correct</span></span>
@@ -2041,16 +2091,23 @@
         </div>
         <button class="arcade-exit" onclick="exitMinigameToSandbox()" data-i18n="home">🏡 HOME</button>
       </div>
-      <div class="arcade-field" id="arcade-field" aria-label="Math Rush arcade game">
+      <div class="arcade-field" id="arcade-field" aria-label="Math Blaster shooting arcade game">
         <div class="arcade-question-card" id="arcade-question-card" style="display:none">
-          <span class="arcade-level-badge" id="arcade-level-badge">MATH RUSH</span>
+          <span class="arcade-level-badge" id="arcade-level-badge">MATH BLASTER</span>
           <div class="arcade-problem" id="arcade-problem">7 + 8 = ?</div>
         </div>
         <div class="arcade-answer-zone" id="arcade-answer-zone"></div>
+        <div class="arcade-player" id="arcade-player" aria-hidden="true"><div class="arcade-player-ship">🚀</div></div>
+        <div class="arcade-move-hint" id="arcade-move-hint">↔ Move your ship • Line up • Press FIRE</div>
+        <div class="arcade-controls" id="arcade-controls" style="display:none">
+          <button type="button" class="arcade-control" aria-label="Move left" onpointerdown="beginArcadeMove(-1,event)" onpointerup="endArcadeMove()" onpointercancel="endArcadeMove()" onpointerleave="endArcadeMove()">◀</button>
+          <button type="button" class="arcade-control fire" aria-label="Fire laser" onclick="fireArcadeLaser()">🔥 FIRE</button>
+          <button type="button" class="arcade-control" aria-label="Move right" onpointerdown="beginArcadeMove(1,event)" onpointerup="endArcadeMove()" onpointercancel="endArcadeMove()" onpointerleave="endArcadeMove()">▶</button>
+        </div>
         <div class="arcade-start-card" id="arcade-start-card">
-          <div style="font-size:2.4rem">🚀➕</div>
-          <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Catch the moving correct answer!</div>
-          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Build a combo for more XP. Wrong answers cost 2 seconds. You have 30 seconds!</div>
+          <div style="font-size:2.4rem">🚀🔫👾</div>
+          <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Move your ship and shoot the enemy carrying the correct answer!</div>
+          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!</div>
           <button type="button" onclick="startArcadeRound()" data-i18n="startPlaying">🚀 START PLAYING</button>
         </div>
       </div>
@@ -2140,6 +2197,7 @@
           <button class="shop-tab-chip" id="tab-cat-house" onclick="switchShopCategory('house')" data-i18n="house">🏠 Rumah & Pintu</button>
           <button class="shop-tab-chip" id="tab-cat-nature" onclick="switchShopCategory('nature')" data-i18n="nature">🌳 Taman & Alam</button>
           <button class="shop-tab-chip" id="tab-cat-vehicle" onclick="switchShopCategory('vehicle')" data-i18n="vehicles">🚗 Kenderaan & Khas</button>
+          <button class="shop-tab-chip" id="tab-cat-mega" onclick="switchShopCategory('mega')" data-i18n="megaItems">👑 Item Mega</button>
         </div>
 
         <div class="shop-catalog-grid" id="shop-items-display">
@@ -2315,8 +2373,8 @@
         ageLabel:'1. PILIH UMUR / TAHUN (WAJIB):', chooseAge:'🎓 Tekan untuk pilih umur / tahun', ageRequired:'⚠️ Sila pilih umur supaya soalan mengikut aras anda.', schoolClassLabel:'2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
         brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan', nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.', progressFound:'✅ Kemajuan lama ditemui: {blocks} blok akan dibuka semula.', idStable:'🪪 ID {id} kekal walaupun tahun, sekolah atau kelas diubah.', idWillGenerate:'🪪 ID pengguna akan dijana automatik selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
-        shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
-        shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: SERBUAN MATEMATIK', catches:'betul', home:'🏡 RUMAH', arcadePrompt:'Tangkap jawapan betul yang sedang bergerak!', arcadeRules:'Bina kombo untuk lebih XP. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
+        shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', megaItems:'👑 Item Mega', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
+        shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: MATH BLASTER', catches:'musuh', home:'🏡 RUMAH', arcadePrompt:'Gerakkan kapal dan tembak musuh yang membawa jawapan betul!', arcadeRules:'Gerak kiri atau kanan, sejajarkan kapal dan tekan TEMBAK. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
         chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, chat menggunakan ayat dan emoji selamat tanpa ruangan menaip bebas.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
         hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
       },
@@ -2325,8 +2383,8 @@
         ageLabel:'1. CHOOSE AGE / YEAR (REQUIRED):', chooseAge:'🎓 Tap to choose your age / year', ageRequired:'⚠️ Choose your age so questions match your level.', schoolClassLabel:'2. SCHOOL & CLASS (EDIT LATER):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
         brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name first. MathBina will create a permanent player ID when you enter.', progressFound:'✅ Previous progress found: {blocks} blocks will be restored.', idStable:'🪪 ID {id} stays the same when you change year, school or class.', idWillGenerate:'🪪 A player ID will be created automatically when you enter.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
-        shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
-        shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH RUSH', catches:'correct', home:'🏡 HOME', arcadePrompt:'Catch the moving correct answer!', arcadeRules:'Build a combo for more XP. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
+        shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', megaItems:'👑 Mega Items', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
+        shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH BLASTER', catches:'targets', home:'🏡 HOME', arcadePrompt:'Move your ship and shoot the enemy carrying the correct answer!', arcadeRules:'Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
         chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, chat uses safe phrases and emojis without a free-text box.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
         hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
       },
@@ -2335,8 +2393,8 @@
         ageLabel:'1. 选择年龄 / 年级（必填）：', chooseAge:'🎓 点击选择年龄 / 年级', ageRequired:'⚠️ 请选择年龄，以获得适合程度的题目。', schoolClassLabel:'2. 学校和班级（以后可修改）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
         brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'请先输入姓名。进入后，MathBina 会建立永久玩家 ID。', progressFound:'✅ 找到之前的进度：将恢复 {blocks} 个积木。', idStable:'🪪 更改年级、学校或班级后，ID {id} 保持不变。', idWillGenerate:'🪪 进入后会自动建立玩家 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
-        shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
-        shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学冲刺', catches:'题正确', home:'🏡 家园', arcadePrompt:'点击正在移动的正确答案！', arcadeRules:'连续答对可获得更多 XP。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
+        shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', megaItems:'👑 大型珍藏', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
+        shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学战机', catches:'目标', home:'🏡 家园', arcadePrompt:'移动飞船，射击带有正确答案的敌机！', arcadeRules:'左右移动，对准目标后按“开火”。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
         chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，聊天只使用安全短语和表情，不提供自由输入框。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
         hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
       },
@@ -2345,8 +2403,8 @@
         ageLabel:'1. வயது / ஆண்டைத் தேர்வுசெய்க (கட்டாயம்):', chooseAge:'🎓 வயது / ஆண்டைத் தேர்வு செய்ய தட்டவும்', ageRequired:'⚠️ உங்கள் நிலைக்கு ஏற்ற கேள்விகளுக்காக வயதைத் தேர்வுசெய்க.', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (பின்னர் மாற்றலாம்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
         brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'முதலில் பெயரை உள்ளிடவும். நுழைந்ததும் நிரந்தர வீரர் ID உருவாகும்.', progressFound:'✅ முந்தைய முன்னேற்றம் கிடைத்தது: {blocks} கட்டைகள் மீட்கப்படும்.', idStable:'🪪 ஆண்டு, பள்ளி அல்லது வகுப்பை மாற்றினாலும் ID {id} மாறாது.', idWillGenerate:'🪪 நுழைந்ததும் வீரர் ID தானாக உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
-        shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
-        shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித வேகம்', catches:'சரி', home:'🏡 வீடு', arcadePrompt:'நகரும் சரியான விடையைத் தட்டுங்கள்!', arcadeRules:'தொடர்ந்து சரியாக விடையளித்து அதிக XP பெறுங்கள். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
+        shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', megaItems:'👑 மெகா பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
+        shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித விண்கலம்', catches:'இலக்குகள்', home:'🏡 வீடு', arcadePrompt:'விண்கலத்தை நகர்த்தி சரியான விடையுள்ள எதிரியைச் சுடுங்கள்!', arcadeRules:'இடது அல்லது வலது நகர்ந்து இலக்கைச் சீரமைத்து FIRE அழுத்தவும். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
         chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக அரட்டை பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களை மட்டும் பயன்படுத்தும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
         hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
       }
@@ -2535,7 +2593,14 @@
       { id: 'sky_sun', name: 'Matahari Ceria', cat: 'vehicle', price: 180, icon: '☀️', color: '#facc15' },
       { id: 'sky_moon', name: 'Bulan Malam', cat: 'vehicle', price: 180, icon: '🌙', color: '#cbd5e1' },
       { id: 'pet_cat', name: 'Kucing Comel', cat: 'vehicle', price: 100, icon: '🐱', color: '#f97316' },
-      { id: 'pet_dino', name: 'Dinosaur Jinak', cat: 'vehicle', price: 250, icon: '🦖', color: '#16a34a' }
+      { id: 'pet_dino', name: 'Dinosaur Jinak', cat: 'vehicle', price: 250, icon: '🦖', color: '#16a34a' },
+
+      // 5. Item Mega — satu pembelian menggunakan beberapa petak/aras
+      { id: 'mega_fountain', name: 'Air Pancut Diraja', cat: 'mega', price: 750, icon: '⛲', color: '#38bdf8', footprint: [2,2,2] },
+      { id: 'mega_pool', name: 'Kolam Resort', cat: 'mega', price: 900, icon: '🏊', color: '#0ea5e9', footprint: [3,2,1] },
+      { id: 'mega_treehouse', name: 'Rumah Pokok Impian', cat: 'mega', price: 1200, icon: '🌳', color: '#15803d', footprint: [3,3,4] },
+      { id: 'mega_robot', name: 'Robot Penjaga Gergasi', cat: 'mega', price: 1800, icon: '🤖', color: '#6366f1', footprint: [2,2,4] },
+      { id: 'mini_castle', name: 'Istana Mini MathBina', cat: 'mega', price: 2500, icon: '🏰', color: '#a855f7', footprint: [4,3,4] }
     ];
     const AIRBORNE_TYPES = new Set(['helicopter', 'rocket', 'rainbow_block', 'sky_cloud', 'sky_sun', 'sky_moon']);
     const CATALOG_EN_NAMES = Object.freeze({
@@ -2544,7 +2609,8 @@
       window_glass:'Glass Window', roof_red:'Red Roof', roof_blue:'Blue Roof', roof_flat:'Flat Roof', stairs_wood:'Wooden Stairs', chimney:'Chimney', parquet_floor:'Parquet Floor',
       bush_leaf:'Green Bush', lantern:'Warm Lantern', fence_white:'White Fence', tree_shade:'Shade Tree', rose_flower:'Rose Plant', sunflower:'Sunflower', swimming_pool:'Blue Pool',
       fountain:'Garden Fountain', garden_lamp:'Garden Lamp', bicycle:'Sports Bicycle', car_red:'Red Sports Car', helicopter:'Rescue Helicopter', rocket:'Space Rocket', sky_cloud:'Fluffy Cloud',
-      sky_sun:'Cheerful Sun', sky_moon:'Night Moon', pet_cat:'Cute Cat', pet_dino:'Friendly Dinosaur'
+      sky_sun:'Cheerful Sun', sky_moon:'Night Moon', pet_cat:'Cute Cat', pet_dino:'Friendly Dinosaur',
+      mega_fountain:'Royal Fountain', mega_pool:'Resort Pool', mega_treehouse:'Dream Treehouse', mega_robot:'Giant Guardian Robot', mini_castle:'MathBina Mini Castle'
     });
 
     function catalogItemName(item) {
@@ -2553,6 +2619,33 @@
 
     function isAirborneType(type) {
       return AIRBORNE_TYPES.has(type);
+    }
+
+    function itemFootprint(type) {
+      return BLOCK_CATALOG.find(item => item.id === type)?.footprint || [1,1,1];
+    }
+
+    function occupiedCellsForVoxel(voxel) {
+      const [width,depth,height] = itemFootprint(voxel.type);
+      const rotation = ((Number(voxel.rotation) || 0) % 4 + 4) % 4;
+      const cells = [];
+      for (let y=0;y<height;y++) for (let u=0;u<width;u++) for (let v=0;v<depth;v++) {
+        let dx=u,dz=v;
+        if (rotation===1) { dx=v; dz=-u; }
+        else if (rotation===2) { dx=-u; dz=-v; }
+        else if (rotation===3) { dx=-v; dz=u; }
+        cells.push({x:voxel.x+dx,y:voxel.y+y,z:voxel.z+dz});
+      }
+      return cells;
+    }
+
+    function megaSizeLabel(item) {
+      if (!item?.footprint) return '';
+      const [width,depth,height] = item.footprint;
+      if (currentLanguage==='ms') return `${width}×${depth} petak • ${height} aras`;
+      if (currentLanguage==='zh') return `${width}×${depth} 格 • ${height} 层`;
+      if (currentLanguage==='ta') return `${width}×${depth} கட்டங்கள் • ${height} நிலைகள்`;
+      return `${width}×${depth} tiles • ${height} levels`;
     }
 
     /* ==============================================================
@@ -2838,6 +2931,10 @@ const COMBAT_BANK = {
         bestCombo: 0,
         currentQ: null,
         locked: false,
+        shotInFlight: false,
+        shipX: 50,
+        moveTimer: null,
+        controlsBound: false,
         timerId: null,
         spawnId: null
       }
@@ -3631,6 +3728,7 @@ const COMBAT_BANK = {
         const slot = document.createElement('div');
         slot.className = `palette-item-slot ${isActive ? 'active' : ''}`;
         slot.onclick = () => {
+          V3.selectedVoxel = null;
           STATE.activeBlockId = k;
           STATE.eraserActive = false;
           document.getElementById('btn-eraser-mode').classList.remove('active');
@@ -3696,6 +3794,7 @@ const COMBAT_BANK = {
       document.getElementById('tab-cat-house').classList.toggle('active', cat === 'house');
       document.getElementById('tab-cat-nature').classList.toggle('active', cat === 'nature');
       document.getElementById('tab-cat-vehicle').classList.toggle('active', cat === 'vehicle');
+      document.getElementById('tab-cat-mega').classList.toggle('active', cat === 'mega');
       renderShopCatalog();
     }
 
@@ -3773,7 +3872,7 @@ const COMBAT_BANK = {
     }
 
     /* ==============================================================
-       MINIGAME 3: ARKED MATH RUSH
+       MINIGAME 3: ARKED MATH BLASTER
        ============================================================== */
     function launchArcadeGame() {
       saveCurrentStudentState();
@@ -3787,13 +3886,20 @@ const COMBAT_BANK = {
       STATE.arcade.bestCombo = 0;
       STATE.arcade.currentQ = null;
       STATE.arcade.locked = false;
+      STATE.arcade.shotInFlight = false;
+      STATE.arcade.shipX = 50;
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-arcade').style.display = 'flex';
       document.getElementById('arcade-start-card').style.display = 'block';
       document.getElementById('arcade-question-card').style.display = 'none';
+      document.getElementById('arcade-controls').style.display = 'none';
+      document.getElementById('arcade-player').style.display = 'none';
+      document.getElementById('arcade-move-hint').style.display = 'none';
+      setArcadeShipPosition(50);
+      initArcadeControls();
       updateArcadeHud();
       clearArcadeAnswers();
-      showToast(uiMessage('🕹️ Jawab pantas dan bina kombo XP!','🕹️ Answer fast and build an XP combo!','🕹️ 快速答题，累积 XP 连击！','🕹️ விரைவாகப் பதிலளித்து XP தொடர் பெறுங்கள்!'));
+      showToast(uiMessage('🚀 Gerakkan kapal dan tembak jawapan tepat!','🚀 Move your ship and shoot the correct answer!','🚀 移动飞船并射击正确答案！','🚀 விண்கலத்தை நகர்த்தி சரியான விடையைச் சுடுங்கள்!'));
     }
 
     function startArcadeRound() {
@@ -3807,8 +3913,14 @@ const COMBAT_BANK = {
       STATE.arcade.combo = 0;
       STATE.arcade.bestCombo = 0;
       STATE.arcade.locked = false;
+      STATE.arcade.shotInFlight = false;
+      STATE.arcade.shipX = 50;
       document.getElementById('arcade-start-card').style.display = 'none';
       document.getElementById('arcade-question-card').style.display = 'block';
+      document.getElementById('arcade-controls').style.display = 'grid';
+      document.getElementById('arcade-player').style.display = 'block';
+      document.getElementById('arcade-move-hint').style.display = 'block';
+      setArcadeShipPosition(50);
       updateArcadeHud();
       nextArcadeQuestion();
       STATE.arcade.timerId = setInterval(() => {
@@ -3831,6 +3943,7 @@ const COMBAT_BANK = {
       clearTimeout(STATE.arcade.spawnId);
       clearArcadeAnswers();
       STATE.arcade.locked = false;
+      STATE.arcade.shotInFlight = false;
       const question = generateDynamicQuestion(STATE.grade);
       STATE.arcade.currentQ = question;
       document.getElementById('arcade-level-badge').textContent = `${question.tag} • ${getArcadeLevelLabel(STATE.grade)}`;
@@ -3841,6 +3954,8 @@ const COMBAT_BANK = {
         ['#c4b5fd','#7c3aed'],
         ['#fda4af','#e11d48']
       ];
+      const enemyX = [18,50,82];
+      const enemyY = [8,34,8];
       question.opts.forEach((answer,index) => {
         const target = document.createElement('button');
         target.type = 'button';
@@ -3849,10 +3964,108 @@ const COMBAT_BANK = {
         target.setAttribute('aria-label', `${uiMessage('Jawapan','Answer','答案','பதில்')} ${answer}`);
         target.style.setProperty('--orb-light',palette[index % palette.length][0]);
         target.style.setProperty('--orb-dark',palette[index % palette.length][1]);
+        target.style.setProperty('--enemy-x',`${enemyX[index]}%`);
+        target.style.setProperty('--enemy-y',`${enemyY[index]}%`);
+        target.style.setProperty('--drift',`${14 + index * 4}px`);
+        target.style.setProperty('--patrol-speed',`${1.05 + index * .24}s`);
         target.style.setProperty('--float-delay',`${index * -.31}s`);
-        target.onclick = () => chooseArcadeAnswer(index,target);
+        target.dataset.answerIndex = index;
+        target.onclick = () => aimAndFireAtEnemy(index,target);
         zone.appendChild(target);
       });
+    }
+
+    function initArcadeControls() {
+      if (STATE.arcade.controlsBound) return;
+      STATE.arcade.controlsBound = true;
+      const field = document.getElementById('arcade-field');
+      field.addEventListener('pointermove', event => {
+        if (!STATE.arcade.running || !(event.buttons & 1) || event.target.closest('button')) return;
+        const rect = field.getBoundingClientRect();
+        setArcadeShipPosition(((event.clientX - rect.left) / rect.width) * 100);
+      });
+      field.addEventListener('pointerdown', event => {
+        if (!STATE.arcade.running || event.target.closest('button')) return;
+        const rect = field.getBoundingClientRect();
+        setArcadeShipPosition(((event.clientX - rect.left) / rect.width) * 100);
+      });
+      window.addEventListener('keydown', event => {
+        if (!STATE.arcade.running) return;
+        if (event.key === 'ArrowLeft') { event.preventDefault(); moveArcadeShip(-1); }
+        if (event.key === 'ArrowRight') { event.preventDefault(); moveArcadeShip(1); }
+        if (event.code === 'Space') { event.preventDefault(); fireArcadeLaser(); }
+      });
+    }
+
+    function setArcadeShipPosition(percent) {
+      STATE.arcade.shipX = Math.max(8,Math.min(92,Number(percent) || 50));
+      const ship = document.getElementById('arcade-player');
+      if (ship) ship.style.left = `${STATE.arcade.shipX}%`;
+    }
+
+    function moveArcadeShip(direction) {
+      if (!STATE.arcade.running) return;
+      setArcadeShipPosition(STATE.arcade.shipX + direction * 6);
+    }
+
+    function beginArcadeMove(direction,event) {
+      event?.preventDefault();
+      endArcadeMove();
+      moveArcadeShip(direction);
+      STATE.arcade.moveTimer = setInterval(() => moveArcadeShip(direction),55);
+    }
+
+    function endArcadeMove() {
+      clearInterval(STATE.arcade.moveTimer);
+      STATE.arcade.moveTimer = null;
+    }
+
+    function aimAndFireAtEnemy(answerIndex,target) {
+      if (!STATE.arcade.running || STATE.arcade.locked || STATE.arcade.shotInFlight) return;
+      const fieldRect = document.getElementById('arcade-field').getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      setArcadeShipPosition(((targetRect.left + targetRect.width / 2 - fieldRect.left) / fieldRect.width) * 100);
+      setTimeout(() => fireArcadeLaser(answerIndex,target),75);
+    }
+
+    function fireArcadeLaser(forcedIndex=null,forcedTarget=null) {
+      if (!STATE.arcade.running || STATE.arcade.locked || STATE.arcade.shotInFlight) return;
+      const field = document.getElementById('arcade-field');
+      const ship = document.getElementById('arcade-player');
+      const enemies = [...document.querySelectorAll('.arcade-answer-target')];
+      if (!field || !ship || !enemies.length) return;
+      const fieldRect = field.getBoundingClientRect();
+      const shipRect = ship.getBoundingClientRect();
+      const shipCenter = shipRect.left + shipRect.width / 2;
+      let target = forcedTarget;
+      let answerIndex = forcedIndex;
+      if (!target) {
+        target = enemies.reduce((nearest,enemy) => {
+          const rect = enemy.getBoundingClientRect();
+          const distance = Math.abs(rect.left + rect.width / 2 - shipCenter);
+          return !nearest || distance < nearest.distance ? { enemy, distance } : nearest;
+        },null);
+        if (!target || target.distance > Math.max(46,fieldRect.width * .1)) {
+          showArcadeFeedback(uiMessage('💫 Tersasar! Sejajarkan kapal.','💫 Miss! Line up your ship.','💫 未命中！请对准目标。','💫 தவறிவிட்டது! விண்கலத்தைச் சீரமைக்கவும்.'));
+          audio.playPop();
+          return;
+        }
+        target = target.enemy;
+        answerIndex = Number(target.dataset.answerIndex);
+      }
+      STATE.arcade.shotInFlight = true;
+      const targetRect = target.getBoundingClientRect();
+      const laser = document.createElement('div');
+      laser.className = 'arcade-laser';
+      laser.style.left = `${shipCenter - fieldRect.left - 3}px`;
+      laser.style.bottom = `${fieldRect.bottom - shipRect.top - 6}px`;
+      laser.style.height = `${Math.max(40,shipRect.top - (targetRect.top + targetRect.height / 2))}px`;
+      field.appendChild(laser);
+      audio.playPop();
+      setTimeout(() => {
+        laser.remove();
+        chooseArcadeAnswer(answerIndex,target);
+      },190);
     }
 
     function chooseArcadeAnswer(answerIndex, target) {
@@ -3911,15 +4124,18 @@ const COMBAT_BANK = {
     function clearArcadeAnswers() {
       document.getElementById('arcade-answer-zone')?.replaceChildren();
       document.querySelector('#arcade-field .arcade-feedback')?.remove();
+      document.querySelectorAll('#arcade-field .arcade-laser').forEach(laser => laser.remove());
     }
 
     function stopArcadeTimers() {
       clearInterval(STATE.arcade?.timerId);
       clearTimeout(STATE.arcade?.spawnId);
+      endArcadeMove();
       if (STATE.arcade) {
         STATE.arcade.timerId = null;
         STATE.arcade.spawnId = null;
         STATE.arcade.running = false;
+        STATE.arcade.shotInFlight = false;
       }
       clearArcadeAnswers();
     }
@@ -3933,6 +4149,9 @@ const COMBAT_BANK = {
       stopArcadeTimers();
       saveCurrentStudentState();
       document.getElementById('arcade-question-card').style.display = 'none';
+      document.getElementById('arcade-controls').style.display = 'none';
+      document.getElementById('arcade-player').style.display = 'none';
+      document.getElementById('arcade-move-hint').style.display = 'none';
       const card = document.getElementById('arcade-start-card');
       const resultTitle = uiMessage(`Hebat! ${correct} jawapan betul`,`Great! ${correct} correct answers`,`太棒了！答对 ${correct} 题`,`அருமை! ${correct} சரியான பதில்கள்`);
       const resultDetail = uiMessage(`Anda mendapat ${earned} XP, ${coins} syiling • Kombo terbaik ×${bestCombo}.`,`You earned ${earned} XP, ${coins} coins • Best combo ×${bestCombo}.`,`你获得 ${earned} XP、${coins} 金币 • 最佳连击 ×${bestCombo}。`,`நீங்கள் ${earned} XP, ${coins} நாணயங்கள் பெற்றீர்கள் • சிறந்த தொடர் ×${bestCombo}.`);
@@ -3943,7 +4162,7 @@ const COMBAT_BANK = {
 
     function resetArcadeCardAndStart() {
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = `<div style="font-size:2.4rem">🚀➕</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
+      card.innerHTML = `<div style="font-size:2.4rem">🚀🔫👾</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
       startArcadeRound();
     }
 
@@ -4603,7 +4822,7 @@ const COMBAT_BANK = {
       yaw: Math.PI / 4, pitch: 0.68, distance: 18,
       dragging: false, moved: false, pointerId: null, lastX: 0, lastY: 0,
       pinchDistance: 0, pointers: new Map(), targetCell: null,
-      materials: {}, resizeBound: false, inputBound: false
+      materials: {}, resizeBound: false, inputBound: false, selectedVoxel: null
     };
 
     Object.assign(STATE, {
@@ -4627,6 +4846,7 @@ const COMBAT_BANK = {
     function restoreBuildState(snapshot) {
       STATE.voxels = JSON.parse(JSON.stringify(snapshot.voxels || []));
       STATE.inventory = JSON.parse(JSON.stringify(snapshot.inventory || {}));
+      V3.selectedVoxel = null;
       rebuildVoxelWorld();
       renderPaletteDock();
       updateSandboxHud();
@@ -4653,8 +4873,22 @@ const COMBAT_BANK = {
       showToast(uiMessage('↷ Tindakan dibuat semula.','↷ Action redone.','↷ 已重做操作。','↷ செயல் மீண்டும் செய்யப்பட்டது.'));
     }
 
-    function rotateSelectedBlock() {
-      STATE.blockRotation = (STATE.blockRotation + 1) % 4;
+    function rotateSelectedBlock(direction = 1) {
+      if (V3.selectedVoxel && (STATE.voxels || []).includes(V3.selectedVoxel)) {
+        const selected = V3.selectedVoxel;
+        const candidate = {...selected, rotation: ((Number(selected.rotation) || 0) + direction + 4) % 4};
+        const placementError = validateVoxelPlacement(candidate, selected);
+        if (placementError) return showToast(placementError);
+        rememberBuildAction();
+        selected.rotation = candidate.rotation;
+        STATE.blockRotation = selected.rotation;
+        rebuildVoxelWorld();
+        updateRotationIndicator();
+        updateSandboxHud();
+        saveCurrentStudentState();
+        return showToast(uiMessage(`↻ Blok diputar ke ${selected.rotation * 90}°`,`↻ Block rotated to ${selected.rotation * 90}°`,`↻ 积木已旋转至 ${selected.rotation * 90}°`,`↻ கட்டை ${selected.rotation * 90}° சுழற்றப்பட்டது`));
+      }
+      STATE.blockRotation = (STATE.blockRotation + direction + 4) % 4;
       updatePreviewMesh();
       updateRotationIndicator();
       showToast(uiMessage(
@@ -4669,15 +4903,59 @@ const COMBAT_BANK = {
       const indicator = document.getElementById('rotation-indicator');
       if (!indicator) return;
       const item = BLOCK_CATALOG.find(block => block.id === STATE.activeBlockId);
+      const selected = V3.selectedVoxel && (STATE.voxels || []).includes(V3.selectedVoxel) ? V3.selectedVoxel : null;
+      if (V3.selectedVoxel && !selected) V3.selectedVoxel = null;
+      const selectedItem = selected ? BLOCK_CATALOG.find(block => block.id === selected.type) : null;
       const hasSelectedBlock = Boolean(item && (STATE.inventory?.[STATE.activeBlockId] || 0) > 0);
-      const visible = hasSelectedBlock && !STATE.eraserActive && !V3.visitingEntry;
+      const visible = Boolean((selected || hasSelectedBlock) && !STATE.eraserActive && !V3.visitingEntry);
+      const rotation = selected ? (Number(selected.rotation) || 0) : STATE.blockRotation;
+      const shownItem = selectedItem || item;
       indicator.classList.toggle('visible', visible);
-      indicator.style.setProperty('--rotation-angle', `${STATE.blockRotation * 90}deg`);
-      indicator.setAttribute('aria-label', `${t('rotate')} • ${item ? catalogItemName(item) : ''} • ${STATE.blockRotation * 90}°`);
+      indicator.classList.toggle('editing', Boolean(selected));
+      indicator.setAttribute('aria-label', `${selected ? uiMessage('Laraskan blok dipasang','Adjust placed block','调整已放置积木','வைக்கப்பட்ட கட்டையை சரிசெய்') : t('rotate')} • ${shownItem ? catalogItemName(shownItem) : ''} • ${rotation * 90}°`);
       const icon = document.getElementById('rotation-indicator-icon');
       const angle = document.getElementById('rotation-indicator-angle');
-      if (icon) icon.textContent = item?.icon || '🧱';
-      if (angle) angle.textContent = `${STATE.blockRotation * 90}°`;
+      const title = document.getElementById('block-editor-title');
+      const moveLabel = document.getElementById('block-move-label');
+      if (icon) icon.textContent = shownItem?.icon || '🧱';
+      if (angle) angle.textContent = `${rotation * 90}°`;
+      if (title) title.textContent = selected ? uiMessage(`Laras ${catalogItemName(shownItem)}`,`Adjust ${catalogItemName(shownItem)}`,`调整 ${catalogItemName(shownItem)}`,`சரி செய் ${catalogItemName(shownItem)}`) : uiMessage('Arah blok baharu','New block direction','新积木方向','புதிய கட்டை திசை');
+      if (moveLabel) moveLabel.textContent = uiMessage('GERAK','MOVE','移动','நகர்த்து');
+    }
+
+    function selectPlacedVoxel(voxel) {
+      if (!voxel || V3.visitingEntry || STATE.eraserActive) return;
+      V3.selectedVoxel = voxel;
+      STATE.blockRotation = Number(voxel.rotation) || 0;
+      rebuildVoxelWorld();
+      updateRotationIndicator();
+      const item = BLOCK_CATALOG.find(block => block.id === voxel.type);
+      showToast(uiMessage(`✋ ${catalogItemName(item)} dipilih. Guna anak panah untuk laras.`,`✋ ${catalogItemName(item)} selected. Use the arrows to adjust it.`,`✋ 已选择 ${catalogItemName(item)}。使用箭头调整。`,`✋ ${catalogItemName(item)} தேர்ந்தெடுக்கப்பட்டது. அம்புகளைப் பயன்படுத்தி சரிசெய்க.`));
+    }
+
+    function deselectPlacedVoxel() {
+      V3.selectedVoxel = null;
+      rebuildVoxelWorld();
+      updateRotationIndicator();
+    }
+
+    function movePlacedVoxel(deltaX, deltaZ, deltaY = 0) {
+      const selected = V3.selectedVoxel;
+      if (!selected || !(STATE.voxels || []).includes(selected)) return deselectPlacedVoxel();
+      const candidate = {...selected, x: selected.x + deltaX, z: selected.z + deltaZ, y: selected.y + deltaY};
+      const placementError = validateVoxelPlacement(candidate, selected);
+      if (placementError) return showToast(placementError);
+      rememberBuildAction();
+      Object.assign(selected, candidate);
+      STATE.buildLevel = Math.max(0, Math.min(MAX_BUILD_LEVEL, selected.y));
+      const label = document.getElementById('build-level-label');
+      if (label) label.textContent = `${t('levelUnit')} ${STATE.buildLevel + 1}`;
+      updateBuildPlane();
+      rebuildVoxelWorld();
+      updateRotationIndicator();
+      updateSandboxHud();
+      saveCurrentStudentState();
+      showToast(uiMessage('↔️ Kedudukan blok dilaras.','↔️ Block position adjusted.','↔️ 积木位置已调整。','↔️ கட்டையின் நிலை சரிசெய்யப்பட்டது.'));
     }
 
     function changeBuildLevel(delta) {
@@ -5410,6 +5688,78 @@ const COMBAT_BANK = {
         add(new THREE.SphereGeometry(.025,8,6),dark,.39,.35,.16);
         [-.19,.17].forEach(x=>{add(new THREE.CylinderGeometry(.065,.075,.28,8),green,x,-.38,.02);});
         for(let i=0;i<4;i++) add(new THREE.ConeGeometry(.07,.16,4),light,-.25+i*.13,.17,0).rotation.z=Math.PI;
+      } else if (type === 'mega_fountain') {
+        const stone=preview?material:V3.materials.stone_light;
+        const water=preview?material:V3.materials.water_blue;
+        add(new THREE.CylinderGeometry(.95,1.04,.24,20),stone,.5,-.34,.5);
+        add(new THREE.CylinderGeometry(.79,.84,.06,20),water,.5,-.18,.5);
+        add(new THREE.CylinderGeometry(.16,.22,1.18,14),stone,.5,.42,.5);
+        add(new THREE.CylinderGeometry(.52,.20,.16,16),stone,.5,.94,.5);
+        add(new THREE.CylinderGeometry(.40,.04,.70,16),water,.5,1.30,.5);
+        for(let i=0;i<8;i++){
+          const angle=i*Math.PI/4;
+          const jet=add(new THREE.CylinderGeometry(.025,.04,.62,7),water,.5+Math.cos(angle)*.48,.56,.5+Math.sin(angle)*.48);
+          jet.rotation.z=Math.cos(angle)*.45;jet.rotation.x=Math.sin(angle)*.45;
+        }
+      } else if (type === 'mega_pool') {
+        const rim=preview?material:V3.materials.stone_light;
+        const water=preview?material:V3.materials.water_blue;
+        add(new THREE.BoxGeometry(2.92,.18,1.92),rim,1,-.39,.5);
+        add(new THREE.BoxGeometry(2.58,.055,1.58),water,1,-.26,.5);
+        [-.88,1.88].forEach(x=>add(new THREE.BoxGeometry(.16,.18,1.70),rim,x,-.20,.5));
+        [-.28,1.28].forEach(z=>add(new THREE.BoxGeometry(2.60,.18,.16),rim,1,-.20,z));
+        for(let x=.05;x<2;x+=.48)add(new THREE.BoxGeometry(.08,.02,1.48),preview?material:V3.materials.window_glass,x,-.22,.5);
+        const ladder=preview?material:V3.materials.metal;
+        [.16,.48].forEach(x=>add(new THREE.CylinderGeometry(.035,.035,.72,8),ladder,x,.03,-.05));
+        for(let y=-.17;y<.33;y+=.16)add(new THREE.BoxGeometry(.38,.035,.05),ladder,.32,y,-.05);
+      } else if (type === 'mega_treehouse') {
+        const trunk=preview?material:V3.materials.tree_trunk;
+        const leaf=preview?material:V3.materials.tree_shade;
+        const wood=preview?material:V3.materials.wood_wall;
+        const roof=preview?material:V3.materials.roof_red;
+        add(new THREE.CylinderGeometry(.48,.68,2.70,12),trunk,1,.86,1);
+        [[.48,.92],[1.52,.94],[1,.42],[1,1.54]].forEach(([x,z],i)=>{
+          const branch=add(new THREE.CylinderGeometry(.16,.24,1.22,9),trunk,x,1.48,z);branch.rotation.z=(i<2?-.65:.65);
+        });
+        add(new THREE.BoxGeometry(2.58,.22,2.30),wood,1,1.72,1);
+        add(new THREE.BoxGeometry(1.78,1.16,1.55),wood,1,2.34,1);
+        add(new THREE.BoxGeometry(.50,.72,.08),preview?material:V3.materials.window_glass,1,2.38,1.79);
+        const canopy=add(createWedgeGeometry(),roof,1,3.10,1);canopy.scale.set(2.18,1.12,1.90);
+        [[.12,2.20,.18],[1.85,2.18,.15],[.05,2.38,1.78],[1.94,2.40,1.82],[1,3.40,.22]].forEach(([x,y,z])=>add(new THREE.DodecahedronGeometry(.62,0),leaf,x,y,z));
+        for(let y=-.12;y<1.7;y+=.30)add(new THREE.BoxGeometry(.72,.08,.10),wood,.08,y,.60);
+      } else if (type === 'mega_robot') {
+        const body=preview?material:V3.materials.rocket_blue;
+        const metal=preview?material:V3.materials.metal;
+        const glow=preview?material:V3.materials.lamp_glow;
+        [.28,1.28].forEach(x=>{
+          add(new THREE.BoxGeometry(.48,1.25,.62),metal,x,.15,.5);
+          add(new THREE.BoxGeometry(.68,.28,.85),body,x,-.43,.5);
+        });
+        add(new THREE.BoxGeometry(1.34,1.34,.82),body,.78,1.20,.5);
+        add(new THREE.BoxGeometry(1.04,.52,.12),glow,.78,1.28,.93);
+        add(new THREE.CylinderGeometry(.42,.48,.72,10),metal,.78,2.24,.5);
+        add(new THREE.BoxGeometry(.82,.62,.72),body,.78,2.64,.5);
+        [-.25,.25].forEach(dx=>add(new THREE.SphereGeometry(.10,10,8),glow,.78+dx,2.72,.87));
+        [-.18,1.74].forEach(x=>{
+          add(new THREE.BoxGeometry(.36,1.45,.42),metal,x,1.18,.5);
+          add(new THREE.SphereGeometry(.28,10,8),body,x,1.92,.5);
+        });
+        add(new THREE.ConeGeometry(.22,.70,8),preview?material:V3.materials.rocket_red,.78,3.30,.5);
+      } else if (type === 'mini_castle') {
+        const wall=preview?material:V3.materials.stone_light;
+        const roof=preview?material:V3.materials.roof_red;
+        const gold=preview?material:V3.materials.gold_main;
+        add(new THREE.BoxGeometry(3.72,1.55,2.70),wall,1.5,.35,1);
+        [[0,0],[3,0],[0,2],[3,2]].forEach(([x,z])=>{
+          add(new THREE.CylinderGeometry(.52,.58,2.75,10),wall,x,1.02,z);
+          add(new THREE.ConeGeometry(.68,.92,10),roof,x,2.78,z);
+          for(let i=0;i<6;i++){const a=i*Math.PI/3;add(new THREE.BoxGeometry(.18,.35,.18),wall,x+Math.cos(a)*.45,2.44,z+Math.sin(a)*.45);}
+        });
+        add(new THREE.BoxGeometry(.76,1.18,.16),preview?material:V3.materials.wood_wall,1.5,.16,2.41);
+        add(new THREE.TorusGeometry(.38,.08,8,18,Math.PI),wall,1.5,.72,2.44).rotation.z=Math.PI;
+        add(new THREE.BoxGeometry(.95,.76,.12),preview?material:V3.materials.window_glass,1.5,1.02,-.38);
+        const flagPole=add(new THREE.CylinderGeometry(.035,.035,1.20,8),gold,1.5,3.02,1);
+        add(new THREE.BoxGeometry(.70,.36,.05),preview?material:V3.materials.rainbow_red,1.84,3.32,1);
       } else {
         add(new THREE.BoxGeometry(.96,.96,.96));
       }
@@ -5709,7 +6059,29 @@ const COMBAT_BANK = {
       V3.preview=createVoxelObject({...V3.targetCell,type:STATE.activeBlockId,rotation:STATE.blockRotation},true);V3.scene.add(V3.preview);
     }
 
-    function findVoxel(x,y,z){return (STATE.voxels||[]).find(v=>v.x===x&&v.y===y&&v.z===z);}
+    function findVoxel(x,y,z){
+      return (STATE.voxels||[]).find(voxel=>occupiedCellsForVoxel(voxel).some(cell=>cell.x===x&&cell.y===y&&cell.z===z));
+    }
+
+    function validateVoxelPlacement(voxel, replacing = null) {
+      const cells=occupiedCellsForVoxel(voxel);
+      if(cells.some(cell=>cell.x<0||cell.x>=GRID_COLS||cell.z<0||cell.z>=GRID_ROWS||cell.y<0||cell.y>MAX_BUILD_LEVEL)){
+        return uiMessage('⚠️ Item besar ini terkeluar daripada tapak atau melebihi aras maksimum. Putar atau alihkan item.','⚠️ This large item goes beyond the site or maximum level. Rotate or move it.','⚠️ 此大型物品超出场地或最高楼层。请旋转或移动。','⚠️ இந்த பெரிய பொருள் தளம் அல்லது அதிகபட்ச நிலையை மீறுகிறது. சுழற்றவும் அல்லது நகர்த்தவும்.');
+      }
+      const collision=cells.map(cell=>findVoxel(cell.x,cell.y,cell.z)).find(found=>found&&found!==replacing);
+      if(collision){
+        return uiMessage('⚠️ Ruang item besar tidak kosong. Padam atau alihkan binaan yang menghalang.','⚠️ The large-item space is not clear. Remove or move the blocking build.','⚠️ 大型物品空间被占用。请移除或移动障碍。','⚠️ பெரிய பொருளுக்கான இடம் காலியாக இல்லை. தடையை அகற்றவும்.');
+      }
+      if(voxel.y>0&&!isAirborneType(voxel.type)){
+        const [width,depth]=itemFootprint(voxel.type);
+        const baseCells=cells.filter(cell=>cell.y===voxel.y);
+        const supported=baseCells.every(cell=>findVoxel(cell.x,cell.y-1,cell.z));
+        if(!supported || baseCells.length!==width*depth){
+          return uiMessage('⚠️ Blok perlu sokongan di bawah; semua petak Item Mega mesti disokong.','⚠️ This block needs support underneath; every Mega Item tile must be supported.','⚠️ 积木下方需要支撑；大型物品的每个格子都必须有支撑。','⚠️ கட்டைக்கு கீழே ஆதரவு தேவை; மெகா பொருளின் ஒவ்வொரு கட்டமும் ஆதரிக்கப்பட வேண்டும்.');
+        }
+      }
+      return '';
+    }
 
     function isWallBlock(type) {
       return ['wood_wall','brick_wall','stone_wall','glass_wall'].includes(type);
@@ -5731,30 +6103,46 @@ const COMBAT_BANK = {
       const existing=findVoxel(cell.x,cell.y,cell.z);
       if(STATE.eraserActive){
         if(!existing)return;
+        if(V3.selectedVoxel===existing)V3.selectedVoxel=null;
         rememberBuildAction(); STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;
         STATE.voxels=STATE.voxels.filter(v=>v!==existing); audio.playPop();
         rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();return showToast(uiMessage('Blok dipadam dan dipulangkan.','Block removed and returned to inventory.','积木已移除并归还库存。','கட்டை அகற்றப்பட்டு இருப்புக்குத் திருப்பப்பட்டது.'));
       }
       const type=STATE.activeBlockId;
+      const replacingWithOpening=Boolean(existing&&(type?.startsWith('door_')||type==='window_glass')&&isWallBlock(existing.type));
+      if(existing&&!replacingWithOpening)return selectPlacedVoxel(existing);
       if(!type)return showToast(uiMessage('Pilih blok dari alatan dahulu.','Choose a block from the tools first.','请先从工具中选择积木。','முதலில் கருவிகளில் இருந்து ஒரு கட்டையைத் தேர்வுசெய்க.'));
       if((STATE.inventory[type]||0)<=0)return showToast(uiMessage('Blok ini telah habis. Beli lagi di kedai.','You have no more of this block. Buy more in the shop.','这种积木已用完。请到商店购买。','இந்தக் கட்டை தீர்ந்துவிட்டது. கடையில் மேலும் வாங்குங்கள்.'));
-      if(cell.y>0&&!isAirborneType(type)&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast(uiMessage('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.','⚠️ This block needs support underneath. Go down a level and build there first.','⚠️ 积木下方需要支撑。请先到下一层建造。','⚠️ கட்டைக்கு கீழே ஆதரவு தேவை. ஒரு நிலை கீழே முதலில் கட்டுங்கள்.'));
       let placementRotation=STATE.blockRotation;
       if(type.startsWith('door_')||type==='window_glass'){
         const attachment=getOpeningAttachment(cell,existing);
         if(!attachment.attached)return showToast('⚠️ Bina dinding dahulu. Letakkan pintu atau tingkap pada blok/barisan dinding supaya melekap.');
         placementRotation=attachment.rotation;
       }
+      const item=BLOCK_CATALOG.find(block=>block.id===type);
+      if(existing&&itemFootprint(existing.type).some(size=>size>1))return showToast(uiMessage('⚠️ Padam Item Mega dahulu sebelum membina di ruang ini.','⚠️ Remove the Mega Item before building in this space.','⚠️ 请先移除大型物品，再在此处建造。','⚠️ இந்த இடத்தில் கட்டும் முன் மெகா பொருளை அகற்றவும்.'));
+      const candidate={...cell,type,rotation:placementRotation};
+      const placementError=validateVoxelPlacement(candidate,item?.footprint?null:existing);
+      if(placementError)return showToast(placementError);
       rememberBuildAction();
       if(existing){STATE.inventory[existing.type]=(STATE.inventory[existing.type]||0)+1;STATE.voxels=STATE.voxels.filter(v=>v!==existing);}
-      STATE.voxels.push({...cell,type,rotation:placementRotation});STATE.inventory[type]--;audio.playPlace();
+      STATE.voxels.push(candidate);STATE.inventory[type]--;audio.playPlace();
       rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();
     }
 
     function renderVoxelSet(voxels) {
       if(!V3.world)return;
       while(V3.world.children.length)V3.world.remove(V3.world.children[0]);
-      (voxels||[]).forEach(v=>V3.world.add(createVoxelObject(v)));
+      (voxels||[]).forEach(v=>{
+        const object=createVoxelObject(v);
+        V3.world.add(object);
+        if(v===V3.selectedVoxel){
+          const outline=new THREE.BoxHelper(object,0xfacc15);
+          outline.material.transparent=true; outline.material.opacity=.95;
+          outline.userData.selectionOutline=true;
+          V3.world.add(outline);
+        }
+      });
     }
 
     function rebuildVoxelWorld() {
@@ -5820,6 +6208,8 @@ const COMBAT_BANK = {
 
     function toggleEraserTool() {
       STATE.eraserActive=!STATE.eraserActive;
+      V3.selectedVoxel=null;
+      rebuildVoxelWorld();
       const btn=document.getElementById('btn-eraser-mode');if(btn)btn.classList.toggle('active',STATE.eraserActive);
       renderPaletteDock();updatePreviewMesh();audio.init();audio.playPop();
       showToast(STATE.eraserActive
@@ -5847,6 +6237,7 @@ const COMBAT_BANK = {
         const resale=Math.max(1,Math.floor(item.price*.5));
         return `
         <div class="shop-item-card"><div class="shop-item-icon">${item.icon}</div><div class="shop-item-name">${catalogItemName(item)}</div>
+        ${item.footprint?`<div class="shop-item-owned" style="color:#7c3aed;font-weight:1000">📐 ${megaSizeLabel(item)}</div>`:''}
         <div class="shop-item-price">🪙 ${item.price} ${t('coins')}</div><div class="shop-item-owned">${t('owned')}: ${owned} • ${t('sellValue')}: ${resale} 🪙</div>
         <div class="shop-item-actions"><button class="btn-buy-item" onclick="buyBlockItem('${item.id}')">${t('buy')}</button>
         <button class="btn-sell-item" onclick="sellBlockItem('${item.id}',event)" ${owned<=0?'disabled':''}>${t('sell')}</button></div></div>`;
@@ -5858,7 +6249,7 @@ const COMBAT_BANK = {
       if(purchaseLocked)return;purchaseLocked=true;setTimeout(()=>purchaseLocked=false,180);
       const item=BLOCK_CATALOG.find(b=>b.id===blockId);if(!item)return;
       audio.init();if(STATE.coins<item.price){audio.playBoing();return showToast(currentLanguage === 'ms' ? `❌ Syiling tidak cukup (${STATE.coins}/${item.price}). Main cabaran Matematik!` : `❌ Not enough coins (${STATE.coins}/${item.price}). Play a Maths challenge!`);}
-      STATE.coins-=item.price;STATE.inventory[blockId]=(STATE.inventory[blockId]||0)+1;STATE.activeBlockId=blockId;STATE.eraserActive=false;
+      STATE.coins-=item.price;STATE.inventory[blockId]=(STATE.inventory[blockId]||0)+1;STATE.activeBlockId=blockId;STATE.eraserActive=false;V3.selectedVoxel=null;
       audio.playChing();const wallet=document.getElementById('shop-wallet-xp');if(wallet)wallet.textContent=`${STATE.coins.toLocaleString()} ${t('coinsUnit')}`;
       updateSandboxHud();renderPaletteDock();updatePreviewMesh();saveCurrentStudentState();showToast(currentLanguage === 'ms' ? `✅ ${item.name} dibeli (-${item.price} syiling).` : `✅ ${catalogItemName(item)} purchased (-${item.price} coins).`);
     }
