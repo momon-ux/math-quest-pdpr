@@ -3695,6 +3695,13 @@ const COMBAT_BANK = {
         rescue_orange: mat(0xea580c), rocket_blue: mat(0x6366f1), rocket_red: mat(0xef4444),
         cat_orange: mat(0xf97316), cat_cream: mat(0xffedd5), cat_dark: mat(0x7c2d12),
         dino_green: mat(0x16a34a), dino_light: mat(0x86efac), dino_dark: mat(0x14532d),
+        gold_main: new THREE.MeshStandardMaterial({ color:0xfacc15, metalness:.88, roughness:.20 }),
+        gold_side: new THREE.MeshStandardMaterial({ color:0xd99a06, metalness:.82, roughness:.28 }),
+        diamond_gem: new THREE.MeshPhysicalMaterial({ color:0x22d3ee, emissive:0x083344, emissiveIntensity:.35, metalness:.12, roughness:.06, transparent:true, opacity:.90 }),
+        diamond_glint: new THREE.MeshBasicMaterial({ color:0xecfeff }),
+        rainbow_red: mat(0xef4444), rainbow_orange: mat(0xf97316), rainbow_yellow: mat(0xfacc15),
+        rainbow_green: mat(0x22c55e), rainbow_blue: mat(0x3b82f6), rainbow_purple: mat(0x8b5cf6),
+        cloud_white: mat(0xf8fafc),
         default: mat(0x9a6a35), preview: mat(0x4ade80, { transparent:true, opacity:.42 })
       };
     }
@@ -3709,6 +3716,22 @@ const COMBAT_BANK = {
       return g;
     }
 
+    function createGoldIngotGeometry() {
+      const vertices = new Float32Array([
+        -.34,-.10,-.20,  .34,-.10,-.20,  .34,-.10,.20,  -.34,-.10,.20,
+        -.25,.10,-.13,   .25,.10,-.13,   .25,.10,.13,   -.25,.10,.13
+      ]);
+      const indices = [
+        0,2,1, 0,3,2, 4,5,6, 4,6,7,
+        0,1,5, 0,5,4, 1,2,6, 1,6,5,
+        2,3,7, 2,7,6, 3,0,4, 3,4,7
+      ];
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(vertices,3));
+      geometry.setIndex(indices); geometry.computeVertexNormals();
+      return geometry;
+    }
+
     function createVoxelObject(voxel, preview = false) {
       const group = new THREE.Group();
       const type = voxel.type || 'wood_wall';
@@ -3716,7 +3739,34 @@ const COMBAT_BANK = {
       const add = (geo, mat = material, px = 0, py = 0, pz = 0) => {
         const mesh = new THREE.Mesh(geo, mat); mesh.position.set(px,py,pz); mesh.castShadow = !preview; mesh.receiveShadow = true; group.add(mesh); return mesh;
       };
-      if (type === 'roof_red' || type === 'roof_blue' || type === 'roof_wood') {
+      if (type === 'gold_block') {
+        const gold = preview ? material : V3.materials.gold_main;
+        const ingot = createGoldIngotGeometry();
+        [[-.22,-.28,-.12],[.22,-.28,-.12],[-.22,-.28,.18],[.22,-.28,.18],[0,-.06,.03]].forEach(([x,y,z],index)=>{
+          const bar=add(ingot,gold,x,y,z);bar.rotation.y=index===4?Math.PI/2:0;
+        });
+      } else if (type === 'diamond_block') {
+        const gem = preview ? material : V3.materials.diamond_gem;
+        const diamond=add(new THREE.OctahedronGeometry(.43,0),gem,0,-.02,0);
+        diamond.scale.set(.82,1.16,.82);diamond.rotation.y=Math.PI/4;
+        add(new THREE.TetrahedronGeometry(.075,0),preview?material:V3.materials.diamond_glint,.33,.34,.18).rotation.z=.45;
+        add(new THREE.TetrahedronGeometry(.045,0),preview?material:V3.materials.diamond_glint,-.30,.20,.20).rotation.z=-.35;
+      } else if (type === 'rainbow_block') {
+        const rainbow = [
+          [.43,V3.materials.rainbow_red],[.36,V3.materials.rainbow_orange],[.29,V3.materials.rainbow_yellow],
+          [.22,V3.materials.rainbow_green],[.15,V3.materials.rainbow_blue],[.08,V3.materials.rainbow_purple]
+        ];
+        rainbow.forEach(([radius,rainbowMaterial])=>{
+          const arc=add(new THREE.TorusGeometry(radius,.052,8,28,Math.PI),preview?material:rainbowMaterial,0,-.38,0);
+          arc.scale.y=1.82;
+        });
+        const cloud = preview ? material : V3.materials.cloud_white;
+        [-.43,.43].forEach(x=>{
+          add(new THREE.SphereGeometry(.15,10,7),cloud,x,-.37,.01);
+          add(new THREE.SphereGeometry(.12,10,7),cloud,x+(x<0?-.10:.10),-.39,.01);
+          add(new THREE.SphereGeometry(.11,10,7),cloud,x+(x<0?.10:-.10),-.40,.01);
+        });
+      } else if (type === 'roof_red' || type === 'roof_blue' || type === 'roof_wood') {
         add(createWedgeGeometry());
       } else if (type === 'cobblestone' || type === 'oak_log' || type === 'bush_leaf') {
         add(new THREE.BoxGeometry(.96,.96,.96), material);

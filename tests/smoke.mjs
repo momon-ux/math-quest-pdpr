@@ -41,6 +41,12 @@ assert.match(html, /type === 'bicycle'/, 'basikal mesti mempunyai model 3D terse
 assert.match(html, /type === 'car_red'/, 'kereta mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'helicopter'/, 'helikopter mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'rocket'/, 'roket mesti mempunyai model 3D tersendiri');
+assert.match(html, /type === 'gold_block'/, 'emas mesti mempunyai model jongkong 3D tersendiri');
+assert.match(html, /createGoldIngotGeometry/, 'emas mesti menggunakan geometri jongkong dan bukan kubus biasa');
+assert.match(html, /type === 'diamond_block'/, 'diamond mesti mempunyai model batu permata 3D tersendiri');
+assert.match(html, /OctahedronGeometry\(\.43/, 'diamond mesti menggunakan geometri permata bersegi');
+assert.match(html, /type === 'rainbow_block'/, 'rainbow mesti mempunyai model lengkungan 3D tersendiri');
+assert.match(html, /TorusGeometry\(radius,\.052/, 'rainbow mesti menggunakan lengkungan berwarna dan bukan kubus biasa');
 assert.match(html, /type === 'rose_flower' \|\| type === 'sunflower'/, 'bunga mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'fountain'/, 'air pancut mesti mempunyai model 3D tersendiri');
 assert.match(html, /type === 'garden_lamp'/, 'lampu taman mesti mempunyai model 3D tersendiri');
@@ -60,4 +66,4 @@ assert.match(html, /function getWheelSlicesForGrade/, 'Roda Sifir mesti berubah 
 assert.match(html, /grade === 1[\s\S]*TAMBAH CERIA/, 'soalan Tahun 1 mesti menggunakan operasi asas');
 assert.match(html, /COMBAT_BANK\[`grade\$\{STATE\.grade\}`\]/, 'Math Shooter mesti memilih bank soalan mengikut tahun');
 
-console.log('Semua semakan smoke MathBina V7 lulus.');
+console.log('Semua semakan smoke MathBina V8 lulus.');

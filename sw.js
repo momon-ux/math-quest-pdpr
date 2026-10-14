@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v7-semua-tahun';
+const CACHE_NAME = 'mathbina-v8-hiasan-khas';
 const APP_SHELL = [
   './',
   './index.html',
