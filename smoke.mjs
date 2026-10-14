@@ -211,6 +211,8 @@ assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti
 assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
 assert.match(html, /class="[^"]*btn-blueprint/, 'butang pelan rumah starter mesti tersedia dalam bar alatan');
+assert.match(html, /minXp:\s*900/, 'fasa pelan rumah mesti mempunyai syarat kelayakan XP');
+assert.match(html, /STATE\.coins\s*=\s*Math\.max\(0,\s*\(STATE\.coins\s*\|\|\s*0\)\s*-\s*totalCost\)/, 'bina rumah lengkap mesti menolak jumlah syiling sebenar');
 assert.match(html, /class="camera-quick-controls"/, 'kawalan pantas kamera 3D mesti wujud pada kanvas');
 assert.match(html, /function quickSelectSKRanggu/, 'pilihan pantas kelas SK Ranggu mesti disediakan');
 assert.match(html, /function downloadArchitectCertificate/, 'penjana sijil arkitek digital mesti disediakan');

@@ -2750,7 +2750,7 @@
             </div>
             <div style="display: flex; gap: 6px; align-items: center;">
               <button class="btn-blueprint-action btn-auto-build-all" onclick="buildEntireStarterHouse()">
-                ⚡ BINA RUMAH LENGKAP SEKARANG
+                ⚡ BINA BAKI FASA (Perlu Syiling & 900 XP)
               </button>
               <button class="btn-blueprint-action btn-clear-plot" onclick="clearHousePlot()">
                 🧹 Kosongkan Tapak
@@ -9120,6 +9120,7 @@ const COMBAT_BANK = {
         phase: 1,
         name: "Fasa 1: Tapak Cobblestone & Tiang Balak Oak",
         price: 100,
+        minXp: 50,
         icon: "🪵",
         desc: "Asas batu cobblestone kukuh & 4 tiang kayu balak sudut",
         voxels: [
@@ -9159,6 +9160,7 @@ const COMBAT_BANK = {
         phase: 2,
         name: "Fasa 2: Lantai Kayu & Dinding Papan Oak",
         price: 120,
+        minXp: 120,
         icon: "🪵",
         desc: "Lantai parket dalaman & dinding kayu oak sekeliling",
         voxels: [
@@ -9208,6 +9210,7 @@ const COMBAT_BANK = {
         phase: 3,
         name: "Fasa 3: Anjung Depan, Tangga & Pintu Rumah",
         price: 100,
+        minXp: 200,
         icon: "🚪",
         desc: "Anjung berkayu, tangga masuk & pintu depan oak",
         voxels: [
@@ -9233,6 +9236,7 @@ const COMBAT_BANK = {
         phase: 4,
         name: "Fasa 4: Tingkap Kaca & Pelita Tanglung",
         price: 100,
+        minXp: 300,
         icon: "🪟",
         desc: "Tingkap kaca pencahayaan & tanglung bercahaya",
         voxels: [
@@ -9254,6 +9258,7 @@ const COMBAT_BANK = {
         phase: 5,
         name: "Fasa 5: Bumbung Berpuncak Kayu Segitiga (Gable Roof)",
         price: 180,
+        minXp: 450,
         icon: "🛖",
         desc: "Bumbung A-frame bersusun cerun kayu oak ala Minecraft",
         voxels: [
@@ -9313,6 +9318,7 @@ const COMBAT_BANK = {
         phase: 6,
         name: "Fasa 6: Dedaun Rimbun & Taman Bunga",
         price: 80,
+        minXp: 600,
         icon: "🌿",
         desc: "Semak dedaun hijau rimbun & bunga mawar di kaki rumah",
         voxels: [
@@ -9339,6 +9345,7 @@ const COMBAT_BANK = {
         phase: 7,
         name: "Fasa 7: Corong Asap Batu (Chimney) & Hearth",
         price: 120,
+        minXp: 750,
         icon: "🧱",
         desc: "Cerobong asap batu cobblestone di sisi rumah",
         voxels: [
@@ -9357,6 +9364,7 @@ const COMBAT_BANK = {
         phase: 8,
         name: "Fasa 8: Pagar Halaman & Kereta Sukan Kartun",
         price: 150,
+        minXp: 900,
         icon: "🚗",
         desc: "Pagar keliling laman & kereta sukan merah",
         voxels: [
@@ -9407,10 +9415,32 @@ const COMBAT_BANK = {
       const container = document.getElementById('blueprint-phases-list');
       if (!container) return;
       let completedCount = 0;
+      let totalRemainingCost = 0;
 
       container.innerHTML = MINECRAFT_STARTER_HOUSE_BLUEPRINT.map((phase, idx) => {
         const built = isPhaseBuilt(phase);
-        if (built) completedCount++;
+        if (built) {
+          completedCount++;
+        } else {
+          totalRemainingCost += (phase.price || 0);
+        }
+
+        const prevPhaseBuilt = idx === 0 || isPhaseBuilt(MINECRAFT_STARTER_HOUSE_BLUEPRINT[idx - 1]);
+        const hasCoins = (STATE.coins || 0) >= (phase.price || 0);
+        const hasXp = (STATE.xp || 0) >= (phase.minXp || 0);
+
+        let buttonHtml = '';
+        if (built) {
+          buttonHtml = '<button class="btn-build-phase completed" disabled>✅ Telah Dibina</button>';
+        } else if (!prevPhaseBuilt) {
+          buttonHtml = `<button class="btn-build-phase" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; cursor:pointer;" onclick="showToast('⚠️ Sila selesaikan Fasa ${idx} dahulu sebelum membina fasa ini!')">🔒 Kunci (Fasa ${idx})</button>`;
+        } else if (!hasXp) {
+          buttonHtml = `<button class="btn-build-phase" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; cursor:pointer;" onclick="showToast('⚡ XP belum cukup! Anda ada ${(STATE.xp || 0).toLocaleString()} XP, perlukan ${(phase.minXp || 0).toLocaleString()} XP. Main cabaran matematik!')">⚡ Perlu ${phase.minXp} XP</button>`;
+        } else if (!hasCoins) {
+          buttonHtml = `<button class="btn-build-phase" style="background:#fef2f2; color:#b91c1c; border-color:#fca5a5; cursor:pointer;" onclick="showToast('🪙 Syiling tidak cukup! Anda ada ${(STATE.coins || 0).toLocaleString()} Syiling, perlukan ${phase.price} Syiling. Main Math Shooter!')">🪙 Kurang Syiling</button>`;
+        } else {
+          buttonHtml = `<button class="btn-build-phase" onclick="buildBlueprintPhase(${idx})">🔨 Bina Fasa Ini</button>`;
+        }
 
         return `
           <div class="blueprint-phase-card ${built ? 'completed' : ''}">
@@ -9422,11 +9452,11 @@ const COMBAT_BANK = {
               ${built ? '<span style="font-size:0.7rem; font-weight:900; color:#15803d; background:#dcfce7; padding:2px 8px; border-radius:6px; border:1px solid #bbf7d0;">✅ Siap</span>' : ''}
             </div>
             <div class="phase-footer-row">
-              <span class="phase-cost-pill">🪙 ${phase.price} Syiling</span>
-              ${built 
-                ? '<button class="btn-build-phase completed" disabled>✅ Telah Dibina</button>'
-                : `<button class="btn-build-phase" onclick="buildBlueprintPhase(${idx})">🔨 Bina Fasa Ini</button>`
-              }
+              <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <span class="phase-cost-pill">🪙 ${phase.price} Syiling</span>
+                <span style="font-size:0.65rem; font-weight:800; color:${hasXp ? '#059669' : '#d97706'}; background:${hasXp ? '#ecfdf5' : '#fffbeb'}; padding:2px 6px; border-radius:6px; border:1px solid ${hasXp ? '#a7f3d0' : '#fde68a'};">⚡ Min ${phase.minXp || 0} XP</span>
+              </div>
+              ${buttonHtml}
             </div>
           </div>
         `;
@@ -9440,6 +9470,22 @@ const COMBAT_BANK = {
       if (pctEl) pctEl.textContent = `${pct}%`;
       const fillEl = document.getElementById('blueprint-progress-fill');
       if (fillEl) fillEl.style.width = `${pct}%`;
+
+      const autoBuildBtn = document.querySelector('.btn-auto-build-all');
+      if (autoBuildBtn) {
+        if (completedCount >= total) {
+          autoBuildBtn.textContent = '✅ SEMUA 8 FASA SIAP';
+          autoBuildBtn.disabled = true;
+          autoBuildBtn.style.opacity = '0.75';
+          autoBuildBtn.style.cursor = 'default';
+        } else {
+          autoBuildBtn.disabled = false;
+          autoBuildBtn.style.opacity = '1';
+          autoBuildBtn.style.cursor = 'pointer';
+          autoBuildBtn.textContent = `⚡ BINA BAKI FASA (${totalRemainingCost} 🪙 & 900 XP)`;
+          autoBuildBtn.title = `Bina semua baki fasa dengan menolak ${totalRemainingCost} syiling dan memerlukan sekurang-kurangnya 900 XP`;
+        }
+      }
     }
 
     function buildBlueprintPhase(phaseIdx) {
@@ -9448,17 +9494,31 @@ const COMBAT_BANK = {
       audio.init();
 
       if (isPhaseBuilt(phase)) {
-        showToast(`Fasa ini telahpun dibina di atas tapak!`);
+        showToast('Fasa ini telahpun dibina di atas tapak!');
         return;
       }
 
-      if (STATE.coins < phase.price) {
-        showToast(`🪙 Syiling tidak mencukupi! Anda perlukan ${phase.price} syiling.`);
+      if (phaseIdx > 0 && !isPhaseBuilt(MINECRAFT_STARTER_HOUSE_BLUEPRINT[phaseIdx - 1])) {
+        audio.playBoing();
+        showToast(`⚠️ Sila bina Fasa ${phaseIdx} dahulu mengikut turutan seni bina!`);
+        return;
+      }
+
+      if ((STATE.xp || 0) < (phase.minXp || 0)) {
+        audio.playBoing();
+        showToast(`⚡ XP belum mencukupi! Anda ada ${(STATE.xp || 0).toLocaleString()} XP, perlukan ${(phase.minXp || 0).toLocaleString()} XP. Selesaikan cabaran matematik!`);
+        return;
+      }
+
+      if ((STATE.coins || 0) < phase.price) {
+        audio.playBoing();
+        showToast(`🪙 Syiling tidak mencukupi! Anda perlukan ${phase.price} syiling (Baki: ${(STATE.coins || 0).toLocaleString()}). Main Math Shooter untuk kumpul syiling!`);
         return;
       }
 
       rememberBuildAction();
-      STATE.coins = Math.max(0, STATE.coins - phase.price);
+      STATE.coins = Math.max(0, (STATE.coins || 0) - phase.price);
+      STATE.xp = (STATE.xp || 0) + 20;
 
       // Add phase voxels
       const existingMap = new Map();
@@ -9483,16 +9543,40 @@ const COMBAT_BANK = {
       const wallet = document.getElementById('blueprint-wallet-coins');
       if (wallet) wallet.textContent = `${STATE.coins.toLocaleString()} Syiling`;
 
-      showToast(`🎉 ${phase.name} berjaya dibina!`);
+      showToast(`🎉 ${phase.name} berjaya dibina! (-${phase.price} 🪙, +20 XP)`);
     }
 
     function buildEntireStarterHouse() {
       audio.init();
+      const unbuilt = MINECRAFT_STARTER_HOUSE_BLUEPRINT.filter(p => !isPhaseBuilt(p));
+      if (!unbuilt.length) {
+        showToast('✅ Semua fasa rumah telah siap dibina!');
+        return;
+      }
+
+      const totalCost = unbuilt.reduce((sum, p) => sum + (p.price || 0), 0);
+      const requiredXp = 900;
+
+      if ((STATE.xp || 0) < requiredXp) {
+        audio.playBoing();
+        showToast(`⚡ XP belum cukup untuk bina serentak! Anda perlukan sekurang-kurangnya ${requiredXp} XP (Semasa: ${(STATE.xp || 0).toLocaleString()} XP). Selesaikan kuiz matematik untuk kumpul XP!`);
+        return;
+      }
+
+      if ((STATE.coins || 0) < totalCost) {
+        audio.playBoing();
+        showToast(`🪙 Syiling tidak mencukupi! Anda perlukan ${totalCost.toLocaleString()} Syiling untuk baki fasa (Baki: ${(STATE.coins || 0).toLocaleString()}). Main Math Shooter untuk tambah syiling!`);
+        return;
+      }
+
       rememberBuildAction();
+      STATE.coins = Math.max(0, (STATE.coins || 0) - totalCost);
+      STATE.xp = (STATE.xp || 0) + 100;
+
       const existingMap = new Map();
       (STATE.voxels || []).forEach((v, i) => existingMap.set(`${v.x},${v.y},${v.z}`, i));
 
-      MINECRAFT_STARTER_HOUSE_BLUEPRINT.forEach(phase => {
+      unbuilt.forEach(phase => {
         phase.voxels.forEach(nv => {
           const k = `${nv.x},${nv.y},${nv.z}`;
           if (existingMap.has(k)) {
@@ -9511,10 +9595,13 @@ const COMBAT_BANK = {
       renderBlueprintPhases();
       closeBlueprintModal();
 
+      const wallet = document.getElementById('blueprint-wallet-coins');
+      if (wallet) wallet.textContent = `${STATE.coins.toLocaleString()} Syiling`;
+
       setCameraView('iso');
       toggleAutoRotateCamera(true);
 
-      showToast('🎉 Rumah Starter Minecraft (Reddit) siap dibina sepenuhnya! Kagumi hasil binaan 3D anda.');
+      showToast(`🎉 Rumah Starter Minecraft siap sepenuhnya! (-${totalCost} 🪙, +100 XP). Syabas arkitek cilik!`);
     }
 
     function clearHousePlot() {
