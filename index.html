@@ -99,7 +99,67 @@
       100% { transform: translateX(calc(100vw + 250px)); }
     }
 
-    /* Global Title Logo */
+        /* Quick Class Chips & Camera Controls V32 */
+    .quick-class-chip {
+      background: #e0f2fe;
+      border: 1px solid #7dd3fc;
+      border-radius: 6px;
+      padding: 4px 2px;
+      font-size: 0.64rem;
+      font-weight: 900;
+      color: #0369a1;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .quick-class-chip:hover {
+      background: #0284c7;
+      color: #fff;
+      border-color: #0369a1;
+    }
+    .camera-quick-controls {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      gap: 5px;
+      z-index: 10;
+      flex-wrap: wrap;
+    }
+    .cam-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #1e293b;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+      backdrop-filter: blur(4px);
+      transition: all 0.15s ease;
+    }
+    .cam-btn:hover, .cam-btn.active {
+      background: #0284c7;
+      color: #fff;
+      border-color: #0369a1;
+    }
+    .btn-blueprint {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+      color: #fff !important;
+      border: 2px solid #047857 !important;
+      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.35) !important;
+      font-weight: 900 !important;
+    }
+    .btn-certificate {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+      color: #fff !important;
+      border: 2px solid #b45309 !important;
+      box-shadow: 0 3px 8px rgba(245, 158, 11, 0.35) !important;
+      font-weight: 900 !important;
+    }
+
+/* Global Title Logo */
     .game-title-logo {
       font-size: clamp(1.4rem, 3.8vw, 2.2rem);
       font-weight: 900;
@@ -1821,6 +1881,22 @@
               <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()">
               <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()">
             </div>
+            <div class="quick-classes-wrapper" style="margin-top: 6px; padding: 6px 8px; background: rgba(255,255,255,0.78); border-radius: 10px; border: 1.5px dashed #38bdf8;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                <span style="font-size: 0.66rem; font-weight: 900; color: #0369a1;">🏫 Pilihan Pantas SK Ranggu Tawau:</span>
+                <span style="font-size: 0.58rem; color: #64748b; font-weight: 800;">Klik untuk isi</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Khoir', 11)">5 Khoir</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Mumtaz', 11)">5 Mumtaz</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Jayyid', 11)">5 Jayyid</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Iltizam', 11)">5 Iltizam</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Khoir', 12)">6 Khoir</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Mumtaz', 12)">6 Mumtaz</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Jayyid', 12)">6 Jayyid</button>
+                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Iltizam', 12)">6 Iltizam</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1843,6 +1919,8 @@
                 <button class="mini-action-btn" type="button" onclick="copyUserId()" data-i18n="copyId">📋 Copy ID</button>
                 <button class="mini-action-btn" type="button" onclick="openDeviceAccounts()"><span data-i18n="deviceAccounts">👥 Device Accounts</span> (<span id="device-account-count">0</span>)</button>
                 <button class="mini-action-btn" type="button" onclick="createNewDeviceAccount()" data-i18n="newAccount">＋ New Account</button>
+                <button class="mini-action-btn" type="button" onclick="copyHouseShareLink()" title="Salin pautan untuk kawan melawat">🔗 Kongsi Pautan Rumah</button>
+                
               </div>
             </div>
           </div>
@@ -1909,6 +1987,7 @@
         </div>
 
         <div class="hud-actions-group" style="display: flex; gap: 6px;">
+          <button onclick="toggleGraphicsQuality()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-gfx-quality" title="Kualiti Grafik: Lancar / Cantik">⚡</button>
           <button class="language-trigger" id="btn-language-sandbox" type="button" onclick="openLanguageModal()" title="Language">🌐</button>
           <button onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
           <button onclick="openSafeChat()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-safe-chat" title="Chat Ceria MathBina">💬</button>
@@ -1920,6 +1999,9 @@
 
       <!-- Action Ribbon -->
       <div class="sandbox-action-ribbon">
+        <button class="ribbon-btn btn-blueprint mobile-secondary" onclick="closeMobileTools(); openBlueprintModal()" title="Bina rumah starter Minecraft mengikut pelan rujukan Reddit">
+          <span>🏡</span> <span data-i18n="blueprint">PELAN RUMAH</span>
+        </button>
         <button class="ribbon-btn btn-xp-shooter" onclick="closeMobileTools(); launchMathShooter()">
           <span>🎯</span> <span data-i18n="mathShooter">CARI XP: MATH SHOOTER</span>
         </button>
@@ -1945,6 +2027,9 @@
           <span id="build-level-label">Level 1</span>
           <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
         </div>
+        <button class="ribbon-btn btn-certificate mobile-secondary" onclick="closeMobileTools(); downloadArchitectCertificate()" title="Jana & Muat Turun Sijil Digital">
+          <span>📜</span> <span data-i18n="certificate">SIJIL ARKITEK</span>
+        </button>
         <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()">
           <span>📸</span> <span data-i18n="photo">TANGKAP GAMBAR RUMAH</span>
         </button>
@@ -1953,6 +2038,12 @@
       <!-- Sandbox Canvas Area -->
       <div class="sandbox-canvas-wrapper">
         <div class="voxel-stage" id="voxel-stage">
+          <div class="camera-quick-controls" role="group" aria-label="Kawalan kamera 3D">
+            <button class="cam-btn" type="button" onclick="setCameraView('front')" title="Pandangan Hadapan">👁️ <span data-i18n="camFront">Depan</span></button>
+            <button class="cam-btn" type="button" onclick="setCameraView('iso')" title="Pandangan Isometrik">📐 <span data-i18n="camIso">Isometrik</span></button>
+            <button class="cam-btn" type="button" onclick="setCameraView('top')" title="Pandangan Atas">🔝 <span data-i18n="camTop">Atas</span></button>
+            <button class="cam-btn" id="btn-cam-autorotate" type="button" onclick="toggleAutoRotateCamera()" title="Putar 360° Automatik">🔄 <span data-i18n="camRotate">360°</span></button>
+          </div>
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
           <div class="rotation-indicator" id="rotation-indicator" role="group" aria-label="Block controls">
@@ -6971,6 +7062,217 @@ const COMBAT_BANK = {
     }
     window.addEventListener('orientationchange', refreshResponsiveGameLayout);
     if (window.visualViewport) window.visualViewport.addEventListener('resize', refreshResponsiveGameLayout);
+
+  
+    /* ==============================================================
+       V32 ENHANCEMENTS: QUICK SELECT, GRAPHICS QUALITY, CERTIFICATE
+       ============================================================== */
+    function quickSelectSKRanggu(cls, age) {
+      const schoolInput = document.getElementById('input-school-name');
+      const classInput = document.getElementById('input-class-name');
+      if (schoolInput) schoolInput.value = 'SK Ranggu Tawau';
+      if (classInput) classInput.value = cls;
+      selectLobbyAge(age);
+      updateSchoolClassInput();
+      audio.init(); audio.playPop();
+      showToast(`🏫 Kelas ${cls} (SK Ranggu Tawau) dipilih!`);
+    }
+
+    let currentGraphicsQuality = localStorage.getItem('MATHBINA_GRAPHICS_QUALITY') || 'high';
+
+    function applyGraphicsQuality(quality) {
+      currentGraphicsQuality = quality;
+      try { localStorage.setItem('MATHBINA_GRAPHICS_QUALITY', quality); } catch(e){}
+      const btn = document.getElementById('btn-gfx-quality');
+      if (btn) btn.textContent = quality === 'low' ? '⚡' : '✨';
+      
+      if (V3.renderer) {
+        if (quality === 'low') {
+          V3.renderer.shadowMap.enabled = false;
+          V3.renderer.setPixelRatio(1);
+        } else {
+          V3.renderer.shadowMap.enabled = true;
+          V3.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        }
+        if (V3.scene) {
+          V3.scene.traverse(obj => {
+            if (obj && obj.isMesh) {
+              obj.castShadow = (quality === 'high');
+              obj.receiveShadow = (quality === 'high');
+            }
+          });
+        }
+        resizeVoxelRenderer();
+      }
+    }
+
+    function toggleGraphicsQuality() {
+      audio.init(); audio.playPop();
+      const next = currentGraphicsQuality === 'low' ? 'high' : 'low';
+      applyGraphicsQuality(next);
+      showToast(next === 'low' ? '⚡ Mod Lancar (60 FPS)' : '✨ Mod Cantik (Bayang Penuh)');
+    }
+
+    function copyHouseShareLink() {
+      const url = `${window.location.origin}${window.location.pathname}?visit=${encodeURIComponent(STATE.userId)}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('🔗 Pautan rumah anda telah disalin! Kongsi kepada kawan di WhatsApp.');
+        }).catch(() => {
+          prompt('Salin pautan rumah anda:', url);
+        });
+      } else {
+        prompt('Salin pautan rumah anda:', url);
+      }
+    }
+
+    function checkUrlVisitParam() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const visitId = params.get('visit');
+        if (visitId) {
+          setTimeout(() => {
+            if (typeof searchAndVisitFriendHouse === 'function') {
+              searchAndVisitFriendHouse(visitId);
+            }
+          }, 900);
+        }
+      } catch(e){}
+    }
+
+    function downloadArchitectCertificate() {
+      audio.init(); audio.playFanfare();
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200;
+      canvas.height = 840;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return showToast('Ralat menjana sijil.');
+
+      // Background Parchment & Border
+      ctx.fillStyle = '#fefcf6';
+      ctx.fillRect(0, 0, 1200, 840);
+
+      // Gradient Outer Border
+      const gradBorder = ctx.createLinearGradient(0, 0, 1200, 840);
+      gradBorder.addColorStop(0, '#d97706');
+      gradBorder.addColorStop(0.5, '#f59e0b');
+      gradBorder.addColorStop(1, '#b45309');
+      ctx.strokeStyle = gradBorder;
+      ctx.lineWidth = 14;
+      ctx.strokeRect(16, 16, 1168, 808);
+
+      // Inner Fine Border
+      ctx.strokeStyle = '#ca8a04';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(32, 32, 1136, 776);
+
+      // Corner Ornaments
+      const drawCorner = (cx, cy) => {
+        ctx.fillStyle = '#b45309';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+        ctx.fill();
+      };
+      drawCorner(44, 44); drawCorner(1156, 44); drawCorner(44, 796); drawCorner(1156, 796);
+
+      // Header Banner
+      ctx.fillStyle = '#0284c7';
+      ctx.fillRect(150, 48, 900, 42);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 20px "Nunito", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('KEMENTERIAN PENDIDIKAN MALAYSIA • SK RANGGU TAWAU, SABAH', 600, 76);
+
+      // Main Title
+      ctx.fillStyle = '#78350f';
+      ctx.font = '900 38px "Nunito", sans-serif';
+      ctx.fillText('SIJIL PENGHARGAAN ARKITEK CILIK MATEMATIK', 600, 140);
+
+      ctx.fillStyle = '#0369a1';
+      ctx.font = '800 18px "Nunito", sans-serif';
+      ctx.fillText('PROGRAM PEMBELAJARAN MATEMATIK KSSR & MISI BINA RUMAH 3D (MATHBINA)', 600, 172);
+
+      // Divider Ribbon
+      ctx.strokeStyle = '#eab308';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(350, 192);
+      ctx.lineTo(850, 192);
+      ctx.stroke();
+
+      // Certificate Body Text
+      ctx.fillStyle = '#334155';
+      ctx.font = '600 20px "Nunito", sans-serif';
+      ctx.fillText('Dengan ini diperakui bahawa', 600, 235);
+
+      // Student Name (Prominent & Golden)
+      const studentName = (STATE.studentName || 'Arkitek Cilik').toUpperCase();
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 42px "Nunito", sans-serif';
+      ctx.fillText(studentName, 600, 290);
+
+      // Student Class & School
+      const classInfo = STATE.className ? `${STATE.className} • ${STATE.schoolName || 'SK Ranggu Tawau'}` : 'SK Ranggu Tawau';
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '800 22px "Nunito", sans-serif';
+      ctx.fillText(classInfo, 600, 330);
+
+      // Achievement Details
+      const p = calculateHouseProgress();
+      ctx.fillStyle = '#475569';
+      ctx.font = '600 19px "Nunito", sans-serif';
+      ctx.fillText(`Telah menunjukkan kecemerlangan daya cipta dan kemahiran berfikir aras tinggi`, 600, 380);
+      ctx.fillText(`dalam menyelesaikan cabaran matematik dengan mengumpul sebanyak ${STATE.xp.toLocaleString()} XP`, 600, 412);
+      ctx.fillText(`serta berjaya mendirikan Rumah Impian 3D dengan kemajuan ${p.percent}% (Tahap ${p.level} • ${p.label}).`, 600, 444);
+
+      // House 3D Preview Image on certificate (if available)
+      if (V3.renderer) {
+        try {
+          V3.renderer.render(V3.scene, V3.camera);
+          const houseImg = new Image();
+          houseImg.onload = () => {
+            // Draw thumbnail card
+            ctx.fillStyle = '#e0f2fe';
+            ctx.fillRect(450, 480, 300, 180);
+            ctx.strokeStyle = '#0284c7';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(450, 480, 300, 180);
+            ctx.drawImage(houseImg, 452, 482, 296, 176);
+            finalizeCertificateDownload(canvas, studentName);
+          };
+          houseImg.src = V3.renderer.domElement.toDataURL('image/png');
+          return;
+        } catch(e){}
+      }
+
+      finalizeCertificateDownload(canvas, studentName);
+    }
+
+    function finalizeCertificateDownload(canvas, studentName) {
+      const ctx = canvas.getContext('2d');
+      // Signatures
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '700 16px "Nunito", sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Tarikh: ' + new Date().toLocaleDateString('ms-MY', { year:'numeric', month:'long', day:'numeric' }), 120, 720);
+      ctx.fillText('Status: DISAHKAN SELESAI', 120, 745);
+
+      ctx.textAlign = 'right';
+      ctx.font = '900 18px "Nunito", sans-serif';
+      ctx.fillText('MOHAMMAD FIKREY BIN ABDUL GAPAR', 1080, 720);
+      ctx.font = '600 15px "Nunito", sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Pembangun Sistem & Guru Matematik', 1080, 742);
+      ctx.fillText('SK Ranggu Tawau, Sabah', 1080, 764);
+
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = `Sijil_Arkitek_${studentName.replace(/\s+/g, '_')}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('📜 Sijil Penghargaan Arkitek berjaya dimuat turun!');
+    }
 
   </script>
 </body>

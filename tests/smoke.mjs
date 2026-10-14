@@ -191,4 +191,10 @@ assert.equal((html.match(/type === 'garden_lamp'/g) || []).length, 1, 'lampu tam
 assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti digunakan untuk grafik yang lebih jelas');
 assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
-console.log('Semua semakan smoke MathBina V31 lulus.');
+assert.match(html, /class="[^"]*btn-blueprint/, 'butang pelan rumah starter mesti tersedia dalam bar alatan');
+assert.match(html, /class="camera-quick-controls"/, 'kawalan pantas kamera 3D mesti wujud pada kanvas');
+assert.match(html, /function quickSelectSKRanggu/, 'pilihan pantas kelas SK Ranggu mesti disediakan');
+assert.match(html, /function downloadArchitectCertificate/, 'penjana sijil arkitek digital mesti disediakan');
+assert.match(html, /function toggleGraphicsQuality/, 'suis kualiti grafik mesti disediakan');
+assert.match(html, /function copyHouseShareLink/, 'pautan kongsi rumah kawan mesti disediakan');
+console.log('Semua semakan smoke MathBina V32 lulus.');

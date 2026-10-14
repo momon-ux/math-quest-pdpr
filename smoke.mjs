@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
-const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const gallery = JSON.parse(fs.readFileSync(new URL('../gallery.json', import.meta.url), 'utf8'));
+const html = fs.readFileSync(new URL('./index.html', import.meta.url), 'utf8');
+const gallery = JSON.parse(fs.readFileSync(new URL('./gallery.json', import.meta.url), 'utf8'));
 const inlineScripts = [...html.matchAll(/<script(?: [^>]*)?>([\s\S]*?)<\/script>/g)]
   .map((match) => match[1])
   .filter(Boolean)
@@ -61,10 +61,10 @@ assert.match(html, /COMMUNITY_GALLERY = \[\.\.\.friends, \.\.\.shared\]/, 'galer
 assert.equal(gallery.entries[0]?.displayName, 'Cikgu Mohammad Fikrey bin Abdul Gapar', 'rumah contoh rasmi mesti menggunakan nama penuh pembangun');
 assert.ok(Array.isArray(gallery.entries) && gallery.entries.length > 0, 'galeri pusat mesti mempunyai sekurang-kurangnya satu rumah rasmi');
 assert.ok(gallery.entries.every(entry => entry.approved !== false), 'rumah galeri pusat mesti diluluskan');
-assert.match(html, /id="chip-age-none"/, 'murid mesti boleh bermain tanpa memilih umur');
 for (let age = 7; age <= 17; age++) {
   assert.match(html, new RegExp(`id="chip-age-${age}"`), `pilihan umur ${age} mesti tersedia`);
 }
+assert.doesNotMatch(html, /id="chip-age-none"/, 'pilihan melangkau umur mesti dibuang');
 assert.doesNotMatch(html, /id="select-lobby-class"/, 'senarai kelas tetap tidak boleh dipaksa kepada murid pelbagai sekolah');
 assert.match(html, /id="input-school-name"/, 'nama sekolah pilihan mesti boleh ditaip sendiri');
 assert.match(html, /id="input-class-name"/, 'nama kelas pilihan mesti boleh ditaip sendiri');
@@ -84,9 +84,12 @@ assert.match(html, /mathbina-house-v2\|\$\{userId\}/, 'carian awan mesti menggun
 assert.match(html, /identitytoolkit\.googleapis\.com\/v1\/accounts:signUp/, 'akaun tanpa nama Firebase mesti dijana tanpa kata laluan murid');
 assert.match(html, /function editPlayerProfile/, 'profil sekolah, kelas dan aras mesti boleh diedit');
 assert.match(html, /function gradeLabel/, 'label Tahun dan Tingkatan mesti disokong');
-assert.match(html, /id="age-scroll-picker"/, 'pemilih umur pilihan mesti boleh dileret pada telefon');
-assert.match(html, /scroll-snap-type:\s*x mandatory/, 'pemilih aras mesti berhenti kemas pada setiap pilihan');
+assert.match(html, /id="age-picker-trigger"/, 'semua umur mesti disembunyikan dalam satu butang pemilih');
+assert.match(html, /\.age-picker-trigger[\s\S]*background:rgba\(255,255,255,\.24\)/, 'butang umur mesti menggunakan latar lutsinar');
+assert.match(html, /\.age-picker-wrap\.open \.toggle-grade-box/, 'senarai umur mesti dibuka hanya selepas butang ditekan');
 assert.match(html, /function scrollSelectedAgeIntoView/, 'umur aktif mesti dibawa masuk ke kawasan yang kelihatan');
+assert.match(html, /if \(!STATE\.age\)[\s\S]*toggleAgePicker\(true\)/, 'umur mesti diwajibkan sebelum memasuki permainan');
+assert.match(html, /STATE\.grade = STATE\.age \? Math\.max\(1, Math\.min\(11, STATE\.age - 6\)\)/, 'aras soalan mesti dipetakan terus daripada umur');
 assert.match(html, /11:\s*\['Fungsi'/, 'Roda Matematik Tingkatan 5 mesti tersedia');
 assert.match(html, /const FRIEND_HOUSES_KEY/, 'senarai ID rumah kawan mesti disimpan pada peranti');
 assert.match(html, /id="world-owner-label"/, 'pentas 3D mesti memaparkan nama pemilik rumah');
@@ -95,12 +98,29 @@ assert.match(html, /function refreshNeighborhoodIslands/, 'pulau rumah kawan mes
 assert.match(html, /openFriendIslandFromPointer/, 'pulau rumah kawan mesti boleh diketuk untuk dilawati');
 assert.match(html, /function enterFriendHouseVisit/, 'rumah kawan mesti boleh dibuka dalam paparan 3D');
 assert.match(html, /Mod Lihat Sahaja/, 'lawatan rumah kawan mesti ditandakan sebagai lihat sahaja');
-assert.match(html, /if\(V3\.visitingEntry\)return showToast\('🔒 Mod Lihat Sahaja/, 'alat bina mesti dikunci ketika melihat rumah kawan');
+assert.match(html, /if\(V3\.visitingEntry\)return showToast\(uiMessage\('🔒 Mod Lihat Sahaja/, 'alat bina mesti dikunci ketika melihat rumah kawan');
 assert.match(html, /function exitFriendHouseVisit/, 'pengguna mesti boleh kembali ke rumah sendiri');
 assert.match(html, /id="view-arcade"/, 'paparan Arked XP mesti tersedia');
 assert.match(html, /function launchArcadeGame/, 'Arked XP mesti boleh dibuka dari dunia binaan');
-assert.match(html, /function catchArcadeTarget/, 'bintang arked mesti boleh diketuk untuk mendapat ganjaran');
-assert.match(html, /awardMathReward\(10, 2\)/, 'setiap bintang mesti memberi 10 XP dan 2 syiling');
+assert.match(html, /function nextArcadeQuestion/, 'Arked XP mesti menjana soalan Matematik baharu');
+assert.match(html, /generateDynamicQuestion\(STATE\.grade\)/, 'soalan arked mesti mengikut aras umur pemain');
+assert.match(html, /className = 'arcade-answer-target'/, 'Arked XP mesti menyediakan musuh jawapan bergerak');
+assert.match(html, /id="arcade-player"/, 'Math Blaster mesti mempunyai kapal pemain yang boleh bergerak');
+assert.match(html, /function moveArcadeShip/, 'kapal Math Blaster mesti boleh digerakkan ke kiri dan kanan');
+assert.match(html, /function fireArcadeLaser/, 'Math Blaster mesti mempunyai mekanik tembakan laser');
+assert.match(html, /class="arcade-control fire"/, 'butang FIRE yang besar mesti tersedia untuk telefon');
+assert.match(html, /function aimAndFireAtEnemy/, 'sasaran jawapan mesti boleh dibidik secara mesra sentuhan dan kebolehcapaian');
+assert.match(html, /STATE\.arcade\.combo \+= 1/, 'jawapan berturut-turut mesti membina kombo');
+assert.match(html, /10 \+ Math\.min\(STATE\.arcade\.combo - 1,5\) \* 2/, 'ganjaran XP mesti meningkat bersama kombo');
+assert.match(html, /STATE\.arcade\.seconds = Math\.max\(0,STATE\.arcade\.seconds - 2\)/, 'jawapan salah mesti mempunyai penalti masa');
+assert.match(html, /STATE\.arcade\.seconds = 30/, 'pusingan Math Rush mesti berlangsung 30 saat');
+assert.match(html, /if \(!STATE\.age\) STATE\.grade = Math\.max\(1, Math\.min\(11, Number\(house\.year\)/, 'simpanan awan lama tidak boleh menimpa aras umur semasa');
+assert.match(html, /id: 'mega_treehouse'[\s\S]*footprint: \[3,3,4\]/, 'Rumah Pokok Impian mesti menggunakan tapak dan ketinggian sebenar');
+assert.match(html, /id: 'mega_robot'[\s\S]*price: 1800[\s\S]*footprint: \[2,2,4\]/, 'Robot gergasi mesti menjadi hadiah mahal berbilang aras');
+assert.match(html, /id: 'mini_castle'[\s\S]*price: 2500[\s\S]*footprint: \[4,3,4\]/, 'Istana mini mesti menjadi item sasaran paling mahal');
+assert.match(html, /function occupiedCellsForVoxel/, 'Item Mega mesti menempah semua petak dan aras yang digunakannya');
+assert.match(html, /function validateVoxelPlacement/, 'Item Mega mesti diperiksa supaya tidak bertindih atau terkeluar dari tapak');
+assert.match(html, /id="tab-cat-mega"/, 'kedai mesti mempunyai kategori Item Mega');
 assert.match(html, /const DEVICE_PROFILES_KEY/, 'senarai banyak akaun mesti disimpan pada peranti');
 assert.match(html, /const ACTIVE_PROFILE_KEY/, 'akaun aktif mesti diingati pada peranti');
 assert.match(html, /function generateUniqueUserId/, 'setiap akaun baharu mesti menjana ID unik');
@@ -140,8 +160,41 @@ for (const language of ['ms', 'en', 'zh', 'ta']) {
   assert.match(html, new RegExp(`data-language="${language}"`), `pilihan bahasa ${language} mesti tersedia`);
 }
 assert.match(html, /const LANGUAGE_STORAGE_KEY/, 'pilihan bahasa mesti disimpan pada peranti');
+assert.match(html, /const LANGUAGE_STORAGE_KEY = 'mathbina_language_v2'/, 'versi pilihan bahasa baharu mesti mengelakkan tetapan lama mengatasi English');
+assert.match(html, /let currentLanguage = 'en'/, 'English mesti menjadi bahasa asal');
+assert.match(html, /return I18N\[value\] \? value : 'en'/, 'bahasa simpanan yang tidak sah mesti kembali kepada English');
+assert.match(html, /<html lang="en">/, 'dokumen awal mesti menggunakan English');
 assert.match(html, /function applyLanguage/, 'bahasa pilihan mesti digunakan pada antara muka');
+assert.match(html, /id="rotation-indicator"/, 'indikator putaran lutsinar mesti tersedia pada pentas 3D');
+assert.match(html, /function updateRotationIndicator/, 'indikator putaran mesti dikemas kini apabila blok dipilih');
+assert.match(html, /id="block-position-controls"/, 'blok dipasang mesti mempunyai kawalan kedudukan mesra sentuh');
+assert.match(html, /function selectPlacedVoxel/, 'blok dipasang mesti boleh dipilih semula');
+assert.match(html, /function movePlacedVoxel/, 'blok dipasang mesti boleh dialihkan tanpa dibina semula');
+assert.match(html, /function rotateSelectedBlock\(direction = 1\)/, 'putaran kiri dan kanan mesti disokong');
+assert.match(html, /validateVoxelPlacement\(candidate, selected\)/, 'pelarasan blok mesti diperiksa untuk perlanggaran');
+assert.match(html, /selectedVoxel: null/, 'keadaan pilihan blok mesti disimpan dalam dunia 3D');
+assert.doesNotMatch(html, /closeMobileTools\(\); rotateSelectedBlock\(\)/, 'butang putar lama tidak boleh memenuhi menu kawalan');
 assert.match(html, /document\.documentElement\.lang=/, 'bahasa dokumen mesti dikemas kini untuk kebolehcapaian');
 assert.match(html, /button\.textContent=t\(message\.id\)/, 'mesej Chat Ceria mesti diterjemahkan mengikut bahasa penerima');
+assert.match(html, /class="live-chat-panel" id="modal-safe-chat"/, 'chat langsung mesti menjadi panel terapung yang tidak menutup permainan');
+assert.match(html, /id="safe-chat-live-status"/, 'status sambungan LIVE mesti dipaparkan');
+assert.match(html, /setTimeout\(refreshSafeChat,1500\)/, 'mesej rakan mesti dikemas kini hampir secara langsung');
+assert.match(html, /updateSafeChatLiveStatus\('chatConnected'\)/, 'panel mesti menunjukkan apabila sambungan chat aktif');
+assert.match(html, /type === 'cobblestone'[\s\S]*DodecahedronGeometry/, 'batu cobblestone mesti menggunakan gugusan batu bersegi dan bukan kubus');
+assert.match(html, /type === 'oak_log'[\s\S]*CylinderGeometry/, 'kayu balak mesti berbentuk silinder dengan hujung kayu');
+assert.match(html, /type === 'bush_leaf'[\s\S]*leaf_bright/, 'semak mesti mempunyai gugusan daun berlapis');
+assert.match(html, /type === 'stone_wall'[\s\S]*face\.scale\.set/, 'dinding batu mesti mempunyai permukaan batu 3D');
+assert.match(html, /type === 'swimming_pool'[\s\S]*water_blue/, 'kolam mesti mempunyai bingkai dan permukaan air tersendiri');
+assert.equal((html.match(/type === 'car_red'/g) || []).length, 1, 'kereta hanya boleh mempunyai satu model 3D muktamad');
+assert.equal((html.match(/type === 'chimney'/g) || []).length, 1, 'cerobong hanya boleh mempunyai satu model 3D muktamad');
+assert.equal((html.match(/type === 'garden_lamp'/g) || []).length, 1, 'lampu taman hanya boleh mempunyai satu model 3D muktamad');
+assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti digunakan untuk grafik yang lebih jelas');
+assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
-console.log('Semua semakan smoke MathBina V22 lulus.');
+assert.match(html, /class="[^"]*btn-blueprint/, 'butang pelan rumah starter mesti tersedia dalam bar alatan');
+assert.match(html, /class="camera-quick-controls"/, 'kawalan pantas kamera 3D mesti wujud pada kanvas');
+assert.match(html, /function quickSelectSKRanggu/, 'pilihan pantas kelas SK Ranggu mesti disediakan');
+assert.match(html, /function downloadArchitectCertificate/, 'penjana sijil arkitek digital mesti disediakan');
+assert.match(html, /function toggleGraphicsQuality/, 'suis kualiti grafik mesti disediakan');
+assert.match(html, /function copyHouseShareLink/, 'pautan kongsi rumah kawan mesti disediakan');
+console.log('Semua semakan smoke MathBina V32 lulus.');

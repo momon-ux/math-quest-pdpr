@@ -4,6 +4,17 @@
 
 ---
 
+## 🏆 Versi V32 — Butang Pelan Rumah Starter, Kawalan Kamera 3D, Pilihan Pantas SK Ranggu & Sijil Arkitek
+
+- **Butang Pelan Rumah Starter:** Butang `🏡 PELAN RUMAH` kini tersedia pada bar tindakan untuk membina 8 fasa rumah Reddit starter house menggunakan syiling/XP atau auto-build.
+- **Kawalan Pantas Kamera 3D:** Butang `👁️ Depan`, `📐 Isometrik`, `🔝 Atas`, dan `🔄 360°` ditambah pada kanvas untuk menukar sudut pandangan atau memutar 360° secara automatik.
+- **Pilihan Pantas Kelas SK Ranggu Tawau:** Butang cip pantas disediakan di lobi untuk kelas `5 Khoir`, `5 Mumtaz`, `5 Jayyid`, `5 Iltizam`, `6 Khoir`, `6 Mumtaz`, `6 Jayyid`, dan `6 Iltizam`.
+- **Suis Kualiti Grafik (Bateri & Kelancaran):** Suis `⚡ Mod Lancar (60 FPS)` vs `✨ Mod Cantik (Bayang Penuh)` membolehkan telefon bajet bermain dengan lancar tanpa lag atau pemanasan bateri.
+- **Penjana Sijil Penghargaan Digital:** Murid boleh menjana dan memuat turun imej sijil penghargaan rasmi yang memaparkan nama murid, kelas, gambar 3D rumah mereka, dan tandatangan Cikgu Mohammad Fikrey bin Abdul Gapar.
+- **Pautan Terus Lawatan Rumah Kawan:** Butang `🔗 Kongsi Pautan Rumah` membolehkan kawan membuka pulau rumah secara terus melalui pautan `?visit=ID`.
+
+---
+
 ## 🎛️ Versi V31 — Laras Blok Dengan Mudah
 
 - Ketuk blok yang sudah dipasang untuk memilihnya semula tanpa memadam.
