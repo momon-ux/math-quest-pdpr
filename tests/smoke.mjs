@@ -260,5 +260,22 @@ assert.match(html, /class="[^"]*ribbon-icon/, 'ribbon alatan mesti mempunyai iko
 assert.match(html, /class="[^"]*btn-dock-buy-more/, 'butang beli lagi blok mesti mempunyai penggayaan mesra sentuhan');
 assert.match(html, /\.cam-btn \.cam-label[\s\S]*?display:\s*none\s*!important;/, 'label teks kamera mesti disembunyikan pada telefon');
 assert.match(html, /\.ribbon-btn \.ribbon-label[\s\S]*?display:\s*none\s*!important;/, 'label teks alatan mesti disembunyikan pada telefon untuk paparan ikon bersih');
+assert.match(html, /function recordWrongMathAttempt\([\s\S]*?STATE\.xp\s*=\s*Math\.max\(0,\s*\(STATE\.xp\s*\|\|\s*0\)\s*-\s*penalty\)/, 'jawapan salah mesti menolak 5 XP dan tidak negatif');
+assert.match(html, /❌ Salah • −5 XP • −2 saat/, 'maklum balas arked mesti menunjukkan penolakan 5 XP');
+assert.match(html, /❌ Salah! −5 XP/, 'teks terapung Math Shooter mesti memaparkan -5 XP apabila salah');
+assert.match(html, /❌ Jawapan salah! −5 XP/, 'toast Roda Sifir mesti memaparkan -5 XP apabila salah');
+
+const mockState = { xp: 12, coins: 50, mathStats: { total: 0, correct: 0 } };
+const fakeDeduct = (penalty = 5) => {
+  mockState.mathStats.total++;
+  mockState.xp = Math.max(0, (mockState.xp || 0) - penalty);
+  return mockState.xp;
+};
+assert.equal(fakeDeduct(5), 7, '12 XP tolak 5 XP mesti tinggal 7 XP');
+assert.equal(fakeDeduct(5), 2, '7 XP tolak 5 XP mesti tinggal 2 XP');
+assert.equal(fakeDeduct(5), 0, '2 XP tolak 5 XP mesti clamped pada 0 XP (tidak negatif)');
+assert.equal(fakeDeduct(5), 0, '0 XP tolak 5 XP mesti kekal 0 XP');
+assert.equal(mockState.mathStats.total, 4, 'jumlah soalan salah mesti bertambah');
 
 console.log('Semua semakan smoke MathBina V32 lulus.');
+
