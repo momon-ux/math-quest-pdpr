@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v14-floating-neighborhood';
+const CACHE_NAME = 'mathbina-v21-compact-controls';
 const APP_SHELL = [
   './',
   './index.html',

@@ -4,6 +4,58 @@
 
 ---
 
+## 🧰 Versi V21 — Kawalan Telefon Lebih Kemas
+
+- Telefon hanya memaparkan empat kawalan utama: Math Shooter, Kedai, Lagi dan pemilih aras.
+- Roda Sifir, Arked XP, Padam, Undo, Redo, Putar dan Kamera disimpan dalam menu **Lagi**.
+- Menu tambahan boleh dibuka dan ditutup dengan satu ketukan; semua fungsi asal kekal tersedia.
+- Selepas alat tambahan digunakan, menu ditutup semula secara automatik supaya ruang rumah kembali luas.
+- Paparan komputer kekal memaparkan semua kawalan seperti biasa.
+
+## 📱 Versi V20 — Telefon Potret & Landskap
+
+- Semua paparan utama boleh dimainkan apabila telefon dipegang secara potret atau landskap.
+- HUD, bar alat, kanvas rumah 3D dan inventori mengecil secara terkawal pada skrin landskap yang rendah.
+- Kedai, Chat Ceria dan tetingkap lain menggunakan susunan lebih lebar supaya kandungan tidak terpotong.
+- Math Shooter, Roda Matematik dan Arked XP mempunyai ukuran khas bagi kedua-dua orientasi.
+- Kanvas permainan dilaraskan semula secara automatik apabila telefon diputar tanpa perlu memuat semula halaman.
+
+## 💬 Versi V19 — Chat Ceria & Jual Semula Item
+
+- Pemain boleh berbalas sapaan dengan rakan yang ditambah melalui ID MathBina.
+- Chat menggunakan ayat dan emoji selamat yang telah disediakan; tiada ruangan menaip bebas atau perkongsian maklumat peribadi.
+- Mesej terkini disimpan bersama rumah pemilik dan hanya dipaparkan kepada rakan yang menambah ID rumahnya.
+- Item inventori boleh dijual semula pada nilai 50% daripada harga asal.
+- Jualan memerlukan dua ketukan pengesahan untuk mengelakkan item terjual secara tidak sengaja.
+
+## ✨ Versi V18 — Grafik Dunia 3D Dipertingkat
+
+- Langit gradien 3D, cahaya matahari dan awan bergerak menjadikan dunia lebih hidup.
+- Tapak binaan kini sebuah pulau terapung lengkap dengan lapisan tanah, batu dan air di bawahnya.
+- Pencahayaan, bayang-bayang, warna serta pemetaan tona dinaik taraf untuk gaya kartun sinematik.
+- Kualiti grafik dilaraskan secara automatik supaya kekal lancar pada telefon.
+- Semua peningkatan dibuat tanpa mengubah atau memadam rumah dan kemajuan pemain.
+
+## 👥 Versi V17 — Banyak Akaun pada Satu Peranti
+
+- Pemilik peranti boleh mencipta sebanyak mana akaun pemain yang diperlukan.
+- Setiap akaun menjana ID MathBina unik sendiri.
+- Pemain boleh bertukar akaun daripada lobi tanpa menimpa rumah, XP atau inventori pemain lain.
+- Profil satu-akaun versi lama dipindahkan secara automatik supaya binaan sedia ada kekal selamat.
+- Paparan pengurusan akaun direka supaya mudah digunakan pada telefon.
+
+## 🕹️ Versi V16 — Umur Pilihan & Arked XP
+
+Pemilihan aras tidak lagi diwajibkan. Murid boleh terus bermain menggunakan **Aras umum**, atau meleret pilihan umur 7 hingga 17 tahun jika mahu soalan Matematik disesuaikan dengan umur mereka.
+
+Permainan baharu **Arked XP: Tangkap Bintang** memberi 10 XP dan 2 syiling bagi setiap bintang yang berjaya diketuk dalam tempoh 20 saat. Permainan direka dengan sasaran sentuhan besar untuk telefon.
+
+## 🌤️ Versi V15 — Lobi Tanpa Bingkai
+
+Bingkai putih besar pada halaman masuk telah dibuang supaya gambar rumah komuniti di latar belakang lebih jelas kelihatan. Panel maklumat kini lutsinar, ringan dan kekal mudah dibaca pada telefon.
+
+Pelangi kini turut dikategorikan sebagai hiasan udara. Murid boleh memilih mana-mana aras dan meletakkan pelangi terapung tanpa memerlukan blok sokongan di bawahnya.
+
 ## 🌟 Versi V14 — Kejiranan Pulau Terapung
 
 Pentas 3D kini memaparkan nama pemilik rumah dan rumah-rumah Galeri Kawan sebagai pulau terapung di ruang biru. Murid boleh mengetuk pulau untuk masuk dan melihat rumah pemiliknya dalam 3D. Lawatan sentiasa menggunakan **Mod Lihat Sahaja**: alat bina dan padam dikunci supaya rumah kawan tidak boleh diubah, dan butang `Rumah Saya` membawa pemain kembali ke binaan sendiri.
