@@ -2302,21 +2302,8 @@
               <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()">
               <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()">
             </div>
-            <div class="quick-classes-wrapper" style="margin-top: 6px; padding: 6px 8px; background: rgba(255,255,255,0.78); border-radius: 10px; border: 1.5px dashed #38bdf8;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                <span style="font-size: 0.66rem; font-weight: 900; color: #0369a1;">🏫 Pilihan Pantas SK Ranggu Tawau:</span>
-                <span style="font-size: 0.58rem; color: #64748b; font-weight: 800;">Klik untuk isi</span>
-              </div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Khoir', 11)">5 Khoir</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Mumtaz', 11)">5 Mumtaz</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Jayyid', 11)">5 Jayyid</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('5 Iltizam', 11)">5 Iltizam</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Khoir', 12)">6 Khoir</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Mumtaz', 12)">6 Mumtaz</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Jayyid', 12)">6 Jayyid</button>
-                <button type="button" class="quick-class-chip" onclick="quickSelectSKRanggu('6 Iltizam', 12)">6 Iltizam</button>
-              </div>
+            <div style="margin-top: 5px; font-size: 0.62rem; color: #475569; font-weight: 800; display: flex; align-items: center; gap: 4px;">
+              <span>🌐</span> <span>Terbuka untuk semua murid sekolah rendah & menengah di seluruh Malaysia.</span>
             </div>
           </div>
         </div>
@@ -9142,7 +9129,10 @@ const COMBAT_BANK = {
       ctx.fillText(studentName, 600, 298);
 
       // Student Class & School
-      const classInfo = STATE.className ? `${STATE.className} • ${STATE.schoolName || 'SK Ranggu Tawau'}` : 'SK Ranggu Tawau';
+      const schoolDisplay = STATE.schoolName ? STATE.schoolName : '';
+      const classInfo = STATE.className && schoolDisplay 
+        ? `${STATE.className} • ${schoolDisplay}` 
+        : (schoolDisplay || (STATE.className ? `${STATE.className} • Malaysia` : 'Kementerian Pendidikan Malaysia'));
       ctx.fillStyle = '#0284c7';
       ctx.font = '800 21px "Nunito", sans-serif';
       ctx.fillText(classInfo, 600, 336);
