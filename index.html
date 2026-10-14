@@ -2494,12 +2494,12 @@
 
           <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
           <div class="form-group">
-            <label class="form-label" data-i18n="schoolClassLabel">2. SEKOLAH & KELAS (DIKUNCI SELEPAS DIISI):</label>
+            <label class="form-label" data-i18n="schoolClassLabel">2. SEKOLAH & KELAS:</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
               <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
               <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
             </div>
-            <div id="school-class-lock-notice" style="display:none; margin-top: 6px; padding: 7px 10px; border-radius: 8px; font-size: 0.68rem; font-weight: 800; line-height: 1.4;"></div>
+            <div id="school-class-lock-notice" style="display:none;"></div>
             <div style="margin-top: 5px; font-size: 0.62rem; color: #475569; font-weight: 800; display: flex; align-items: center; gap: 4px;">
               <span>🌐</span> <span>Terbuka untuk semua murid sekolah rendah & menengah di seluruh Malaysia.</span>
             </div>
@@ -3248,7 +3248,7 @@
     const I18N = Object.freeze({
       ms: {
         language:'Bahasa', chooseLanguage:'🌐 Pilih Bahasa', languageHint:'Pilihan bahasa akan disimpan pada peranti ini.', languageSaved:'Bahasa Malaysia dipilih.',
-        ageLabel:'1. PILIH UMUR / TAHUN (WAJIB):', chooseAge:'🎓 Tekan untuk pilih umur / tahun', ageRequired:'⚠️ Sila pilih umur supaya soalan mengikut aras anda.', schoolClassLabel:'2. SEKOLAH & KELAS (DIKUNCI SELEPAS DIISI):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
+        ageLabel:'1. PILIH UMUR / TAHUN (WAJIB):', chooseAge:'🎓 Tekan untuk pilih umur / tahun', ageRequired:'⚠️ Sila pilih umur supaya soalan mengikut aras anda.', schoolClassLabel:'2. SEKOLAH & KELAS:', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
         brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan',        nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama untuk muat simpanan & ID pengguna.', progressFound:'💾 Kemajuan lama ditemui: {blocks} blok sedia.', idStable:'🪪 ID {id} kekal pada peranti ini.', idWillGenerate:'🪪 ID baharu dijana selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', megaItems:'👑 Item Mega', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
@@ -3259,7 +3259,7 @@
       },
       en: {
         language:'English', chooseLanguage:'🌐 Choose Language', languageHint:'Your language choice will be saved on this device.', languageSaved:'English selected.',
-        ageLabel:'1. CHOOSE AGE / YEAR (REQUIRED):', chooseAge:'🎓 Tap to choose your age / year', ageRequired:'⚠️ Choose your age so questions match your level.', schoolClassLabel:'2. SCHOOL & CLASS (LOCKED AFTER ENTRY):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
+        ageLabel:'1. CHOOSE AGE / YEAR (REQUIRED):', chooseAge:'🎓 Tap to choose your age / year', ageRequired:'⚠️ Choose your age so questions match your level.', schoolClassLabel:'2. SCHOOL & CLASS:', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
         brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name to load saved build & ID.', progressFound:'💾 Previous progress found: {blocks} blocks ready.', idStable:'🪪 ID {id} linked to this device.', idWillGenerate:'🪪 New ID generated upon entry.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', megaItems:'👑 Mega Items', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
@@ -3270,7 +3270,7 @@
       },
       zh: {
         language:'中文', chooseLanguage:'🌐 选择语言', languageHint:'语言选择将保存在此设备上。', languageSaved:'已选择中文。',
-        ageLabel:'1. 选择年龄 / 年级（必填）：', chooseAge:'🎓 点击选择年龄 / 年级', ageRequired:'⚠️ 请选择年龄，以获得适合程度的题目。', schoolClassLabel:'2. 学校和班级（填写后锁定）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
+        ageLabel:'1. 选择年龄 / 年级（必填）：', chooseAge:'🎓 点击选择年龄 / 年级', ageRequired:'⚠️ 请选择年龄，以获得适合程度的题目。', schoolClassLabel:'2. 学校和班级：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
         brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'输入姓名以读取已保存进度与 ID。', progressFound:'💾 找到之前的进度：{blocks} 积木就绪。', idStable:'🪪 ID {id} 已绑定此设备。', idWillGenerate:'🪪 进入后自动生成 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', megaItems:'👑 大型珍藏', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
@@ -3281,7 +3281,7 @@
       },
       ta: {
         language:'தமிழ்', chooseLanguage:'🌐 மொழியைத் தேர்ந்தெடுக்கவும்', languageHint:'மொழித் தேர்வு இந்தச் சாதனத்தில் சேமிக்கப்படும்.', languageSaved:'தமிழ் தேர்ந்தெடுக்கப்பட்டது.',
-        ageLabel:'1. வயது / ஆண்டைத் தேர்வுசெய்க (கட்டாயம்):', chooseAge:'🎓 வயது / ஆண்டைத் தேர்வு செய்ய தட்டவும்', ageRequired:'⚠️ உங்கள் நிலைக்கு ஏற்ற கேள்விகளுக்காக வயதைத் தேர்வுசெய்க.', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (உள்ளிட்ட பின் பூட்டப்படும்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
+        ageLabel:'1. வயது / ஆண்டைத் தேர்வுசெய்க (கட்டாயம்):', chooseAge:'🎓 வயது / ஆண்டைத் தேர்வு செய்ய தட்டவும்', ageRequired:'⚠️ உங்கள் நிலைக்கு ஏற்ற கேள்விகளுக்காக வயதைத் தேர்வுசெய்க.', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு:', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
         brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'சேமிப்பை ஏற்ற பெயரை உள்ளிடவும்.', progressFound:'💾 முந்தைய முன்னேற்றம்: {blocks} கட்டைகள் தயார்.', idStable:'🪪 ID {id} சாதனத்தில் உள்ளது.', idWillGenerate:'🪪 நுழைந்ததும் ID உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', megaItems:'👑 மெகா பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
@@ -4334,44 +4334,31 @@ const COMBAT_BANK = {
 
       if (schoolInput) {
         schoolInput.readOnly = shouldLock;
-        schoolInput.style.backgroundColor = shouldLock ? '#f1f5f9' : '#fff';
-        schoolInput.style.cursor = shouldLock ? 'not-allowed' : 'text';
+        schoolInput.style.backgroundColor = shouldLock ? '#f8fafc' : '#fff';
+        schoolInput.style.cursor = shouldLock ? 'default' : 'text';
         schoolInput.style.color = shouldLock ? '#334155' : '#0f172a';
-        schoolInput.title = shouldLock ? '🔒 Sekolah telah dikunci. Hubungi Guru/Admin untuk kemas kini.' : '';
+        schoolInput.title = '';
       }
 
       if (classInput) {
         classInput.readOnly = shouldLock;
-        classInput.style.backgroundColor = shouldLock ? '#f1f5f9' : '#fff';
-        classInput.style.cursor = shouldLock ? 'not-allowed' : 'text';
+        classInput.style.backgroundColor = shouldLock ? '#f8fafc' : '#fff';
+        classInput.style.cursor = shouldLock ? 'default' : 'text';
         classInput.style.color = shouldLock ? '#334155' : '#0f172a';
-        classInput.title = shouldLock ? '🔒 Kelas telah dikunci. Hubungi Guru/Admin untuk kemas kini.' : '';
+        classInput.title = '';
       }
 
       if (nameInput) {
         const lockName = shouldLock && Boolean(STATE.studentName && STATE.studentName.length >= 3);
         nameInput.readOnly = lockName;
         nameInput.style.backgroundColor = lockName ? '#f8fafc' : '#fff';
-        nameInput.style.cursor = lockName ? 'not-allowed' : 'text';
-        nameInput.title = lockName ? '🔒 Nama murid telah didaftarkan. Hubungi Guru/Admin untuk pertukaran.' : '';
+        nameInput.style.cursor = lockName ? 'default' : 'text';
+        nameInput.title = '';
       }
 
       if (lockNotice) {
-        if (shouldLock) {
-          lockNotice.style.display = 'block';
-          lockNotice.style.background = '#fef2f2';
-          lockNotice.style.border = '1.5px solid #fca5a5';
-          lockNotice.style.color = '#991b1b';
-          lockNotice.innerHTML = `🔒 <b>Sekolah & Kelas telah didaftarkan & dikunci.</b><br><span style="font-size:0.62rem; color:#7f1d1d;">Untuk menukar Nama, Sekolah, Kelas atau Tahun, berikan ID anda (<code>${STATE.userId || '...'}</code>) kepada Guru.</span>`;
-        } else if (hasSchoolOrClass && isUnlocked) {
-          lockNotice.style.display = 'block';
-          lockNotice.style.background = '#f0fdf4';
-          lockNotice.style.border = '1.5px solid #86efac';
-          lockNotice.style.color = '#166534';
-          lockNotice.innerHTML = `🔓 <b>Kebenaran Guru Aktif:</b> Anda dibenarkan mengedit Nama, Sekolah, Kelas & Tahun pada peranti ini.`;
-        } else {
-          lockNotice.style.display = 'none';
-        }
+        lockNotice.style.display = 'none';
+        lockNotice.innerHTML = '';
       }
 
       if (hudBtnProfile) {
@@ -4380,17 +4367,11 @@ const COMBAT_BANK = {
     }
 
     function handleLockedSchoolClassClick() {
-      const isLocked = Boolean((STATE.schoolName || STATE.classLabel) && !isProfileEditAllowed(STATE.userId));
-      if (isLocked) {
-        showToast(`🔒 Sekolah & Kelas dikunci. Berikan ID ${STATE.userId || ''} kepada Guru untuk kemas kini.`);
-      }
+      // Tidak perlu memberitahu atau memaparkan notis kunci
     }
 
     function handleLockedStudentNameClick() {
-      const isLocked = Boolean((STATE.schoolName || STATE.classLabel) && !isProfileEditAllowed(STATE.userId) && STATE.studentName && STATE.studentName.length >= 3);
-      if (isLocked) {
-        showToast(`🔒 Nama murid dikunci. Berikan ID ${STATE.userId || ''} kepada Guru untuk kemas kini.`);
-      }
+      // Tidak perlu memberitahu atau memaparkan notis kunci
     }
 
     function cleanOptionalProfileText(value, limit) {
