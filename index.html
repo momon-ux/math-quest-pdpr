@@ -1697,9 +1697,15 @@
     .safe-chat-message.mine .safe-chat-bubble { background:#dcfce7; border-color:#4ade80; box-shadow:0 2px 0 #16a34a; }
     .safe-chat-name { color:#0369a1; font-size:.58rem; font-weight:900; }
     .safe-chat-text { margin-top:2px; color:#0f172a; font-size:.72rem; font-weight:800; }
-    .safe-chat-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
-    .safe-chat-choice { border:1.5px solid #38bdf8; border-radius:10px; padding:8px 6px; background:#fff; color:#075985; font-size:.66rem; font-weight:900; cursor:pointer; }
+    .safe-chat-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; max-height:85px; overflow-y:auto; padding-right:2px; }
+    .safe-chat-choice { border:1.5px solid #38bdf8; border-radius:10px; padding:6px 6px; background:#fff; color:#075985; font-size:.65rem; font-weight:900; cursor:pointer; }
     .safe-chat-choice:active { transform:translateY(1px); background:#e0f2fe; }
+    .safe-chat-input-bar { display:flex; gap:6px; margin:7px 0 6px; }
+    .safe-chat-input-bar input { flex:1; min-width:0; padding:8px 10px; border:2px solid #38bdf8; border-radius:10px; font-size:.76rem; font-weight:800; color:#0f172a; background:#f8fafc; outline:none; }
+    .safe-chat-input-bar input:focus { border-color:#0284c7; background:#fff; box-shadow:0 0 0 3px rgba(56,189,248,.25); }
+    .safe-chat-input-bar button { padding:8px 14px; border:none; border-radius:10px; background:linear-gradient(135deg,#0284c7,#0369a1); color:#fff; font-size:.74rem; font-weight:900; cursor:pointer; white-space:nowrap; box-shadow:0 2px 0 #075985; transition:transform .1s, filter .1s; }
+    .safe-chat-input-bar button:hover { filter:brightness(1.08); }
+    .safe-chat-input-bar button:active { transform:translateY(1px); box-shadow:none; }
     .live-chat-panel { position:absolute; z-index:220; top:102px; right:10px; bottom:66px; width:min(390px,calc(100% - 20px)); display:none; align-items:stretch; pointer-events:none; }
     .live-chat-panel .game-modal-box { width:100%; max-height:100%; margin:0; padding:11px; pointer-events:auto; border:3px solid #38bdf8; box-shadow:0 12px 32px rgba(15,23,42,.34),0 5px 0 #0369a1; background:rgba(255,255,255,.97); backdrop-filter:blur(12px); }
     .live-chat-status { display:inline-flex; align-items:center; gap:5px; margin-top:3px; color:#047857; font-size:.58rem; font-weight:900; letter-spacing:.3px; }
@@ -2828,9 +2834,13 @@
         <div class="safe-chat-feed" id="safe-chat-feed" aria-live="polite">
           <div class="safe-chat-empty">Memuatkan mesej pemain…</div>
         </div>
-        <div style="font-size:.64rem;font-weight:900;color:#475569;" data-i18n="chooseMessage">Pilih mesej untuk dihantar:</div>
+        <div class="safe-chat-input-bar">
+          <input type="text" id="input-free-chat" maxlength="120" placeholder="Taip mesej bebas anda di sini…" data-i18n-placeholder="chatInputPlaceholder" autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFreeChatMessage();}">
+          <button type="button" id="btn-send-free-chat" onclick="sendFreeChatMessage()" data-i18n="sendChat">Kirim 🚀</button>
+        </div>
+        <div style="font-size:.64rem;font-weight:900;color:#475569;" data-i18n="chooseMessage">Pilihan pantas / Quick phrases:</div>
         <div class="safe-chat-choices" id="safe-chat-choices"></div>
-        <div style="font-size:.58rem;color:#64748b;line-height:1.35;" data-i18n="chatSafety">🛡️ Demi keselamatan murid, Chat Ceria tidak menyediakan ruangan menaip bebas. Tambah ID rumah seseorang di Galeri Kawan untuk melihat mesejnya.</div>
+        <div style="font-size:.58rem;color:#64748b;line-height:1.35;" data-i18n="chatSafety">💬 Ruang sembang bebas MathBina! Berbual secara berhemah dan kongsi idea binaan bersama rakan.</div>
       </div>
     </aside>
 
@@ -3043,7 +3053,7 @@
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', megaItems:'👑 Item Mega', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
         shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: MATH BLASTER', catches:'musuh', home:'🏡 RUMAH', arcadePrompt:'Gerakkan kapal dan tembak musuh yang membawa jawapan betul!', arcadeRules:'Gerak kiri atau kanan, sejajarkan kapal dan tekan TEMBAK. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
         timesTableChart:'JADUAL SIFIR 1-12', timesTableTitle:'📖 JADUAL SIFIR MATEMATIK 1 HINGGA 12', timesTableSubtitle:'Rujukan sifir lengkap bersaiz besar untuk murid Sekolah Rendah & Menengah', tableWord:'Sifir', allTables:'Semua Sifir 1-12',
-        chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, chat menggunakan ayat dan emoji selamat tanpa ruangan menaip bebas.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
+        chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilihan pantas / Quick phrases:', chatSafety:'💬 Ruang sembang bebas MathBina! Berbual secara berhemah dan kongsi idea binaan bersama rakan.', chatEmpty:'Belum ada mesej. Taip mesej bebas anda di atas atau pilih ayat pantas! 👋', chatInputPlaceholder:'Taip mesej bebas anda di sini…', sendChat:'Kirim 🚀',
         hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
       },
       en: {
@@ -3054,7 +3064,7 @@
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', megaItems:'👑 Mega Items', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
         shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH BLASTER', catches:'targets', home:'🏡 HOME', arcadePrompt:'Move your ship and shoot the enemy carrying the correct answer!', arcadeRules:'Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
         timesTableChart:'TIMES TABLE 1-12', timesTableTitle:'📖 MULTIPLICATION TIMES TABLE 1 TO 12', timesTableSubtitle:'Large, device-friendly multiplication reference chart for students', tableWord:'Table', allTables:'All Tables 1-12',
-        chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, chat uses safe phrases and emojis without a free-text box.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
+        chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Quick phrases:', chatSafety:'💬 MathBina free chat room! Chat respectfully and share building ideas with friends.', chatEmpty:'No messages yet. Type a message above or tap a quick phrase! 👋', chatInputPlaceholder:'Type your message here…', sendChat:'Send 🚀',
         hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
       },
       zh: {
@@ -3065,7 +3075,7 @@
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', megaItems:'👑 大型珍藏', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
         shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学战机', catches:'目标', home:'🏡 家园', arcadePrompt:'移动飞船，射击带有正确答案的敌机！', arcadeRules:'左右移动，对准目标后按“开火”。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
         timesTableChart:'乘法表 1-12', timesTableTitle:'📖 乘法口诀表 1 至 12', timesTableSubtitle:'大字体高清设备乘法口诀表', tableWord:'乘法表', allTables:'全部乘法表 1-12',
-        chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，聊天只使用安全短语和表情，不提供自由输入框。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
+        chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择快捷短语：', chatSafety:'💬 MathBina 自由聊天室！友善交流，与朋友分享建造创意。', chatEmpty:'还没有消息。在上方输入自由消息或选择快捷短语！👋', chatInputPlaceholder:'在此输入自由消息…', sendChat:'发送 🚀',
         hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
       },
       ta: {
@@ -3076,7 +3086,7 @@
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', megaItems:'👑 மெகா பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
         shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித விண்கலம்', catches:'இலக்குகள்', home:'🏡 வீடு', arcadePrompt:'விண்கலத்தை நகர்த்தி சரியான விடையுள்ள எதிரியைச் சுடுங்கள்!', arcadeRules:'இடது அல்லது வலது நகர்ந்து இலக்கைச் சீரமைத்து FIRE அழுத்தவும். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
         timesTableChart:'பெருக்கல் வாய்ப்பாடு 1-12', timesTableTitle:'📖 பெருக்கல் வாய்ப்பாடு 1 முதல் 12 வரை', timesTableSubtitle:'பெரிய எழுத்துக்களில் பெருக்கல் வாய்ப்பாடு', tableWord:'வாய்ப்பாடு', allTables:'அனைத்து வாய்ப்பாடுகளும் 1-12',
-        chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக அரட்டை பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களை மட்டும் பயன்படுத்தும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
+        chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'விரைவு சொற்றொடரைத் தேர்ந்தெடுக்கவும்:', chatSafety:'💬 MathBina அரட்டை! நண்பர்களுடன் மரியாதையுடன் பேசி யோசனைகளைப் பகிருங்கள்.', chatEmpty:'இன்னும் செய்தி இல்லை. மேலே தட்டச்சு செய்யவும் அல்லது விரைவு சொற்றொடரைத் தேர்ந்தெடுக்கவும்! 👋', chatInputPlaceholder:'உங்கள் செய்தியை இங்கே தட்டச்சு செய்க…', sendChat:'அனுப்பு 🚀',
         hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
       }
     });
@@ -7581,18 +7591,29 @@ const COMBAT_BANK = {
     function renderSafeChatMessages(payload) {
       const feed=document.getElementById('safe-chat-feed');if(!feed)return;
       const allowed=new Map(SAFE_CHAT_MESSAGES.map(message=>[message.id,t(message.id)]));
-      const records=(Array.isArray(payload)?payload:Object.values(payload||{})).filter(item=>item&&allowed.has(item.messageId))
+      const records=(Array.isArray(payload)?payload:Object.values(payload||{}))
+        .filter(item=>item && (Boolean(item.text) || allowed.has(item.messageId)))
         .sort((a,b)=>Number(a.createdAt||0)-Number(b.createdAt||0)).slice(-30);
       feed.innerHTML='';
       if(!records.length){
         const empty=document.createElement('div');empty.className='safe-chat-empty';empty.textContent=t('chatEmpty');feed.appendChild(empty);return;
       }
       records.forEach(record=>{
-        const row=document.createElement('div');row.className=`safe-chat-message${normalizeUserId(record.senderId)===STATE.userId?' mine':''}`;
+        const isMine = normalizeUserId(record.senderId)===STATE.userId;
+        const row=document.createElement('div');row.className=`safe-chat-message${isMine?' mine':''}`;
         const avatar=document.createElement('div');avatar.className='safe-chat-avatar';avatar.textContent=String(record.avatar||'👷‍♂️').slice(0,4);
         const bubble=document.createElement('div');bubble.className='safe-chat-bubble';
         const name=document.createElement('div');name.className='safe-chat-name';name.textContent=cleanOptionalProfileText(record.displayName,30)||'Arkitek MathBina';
-        const message=document.createElement('div');message.className='safe-chat-text';message.textContent=allowed.get(record.messageId);
+        const message=document.createElement('div');message.className='safe-chat-text';
+        let bodyText = '';
+        if (record.text) {
+          bodyText = cleanOptionalProfileText(record.text, 120);
+        } else if (record.messageId && allowed.has(record.messageId)) {
+          bodyText = allowed.get(record.messageId);
+        } else {
+          bodyText = cleanOptionalProfileText(record.messageId, 120);
+        }
+        message.textContent = bodyText;
         bubble.append(name,message);row.append(avatar,bubble);feed.appendChild(row);
       });
       feed.scrollTop=feed.scrollHeight;
@@ -7612,7 +7633,7 @@ const COMBAT_BANK = {
         renderSafeChatMessages(unique);
         if(!unique.length&&!friendIds.length){
           const feed=document.getElementById('safe-chat-feed');
-          if(feed)feed.innerHTML='<div class="safe-chat-empty">Tambah ID rakan di Galeri Rumah Kawan-Kawan untuk melihat mesej mereka. Anda juga boleh menghantar sapaan pertama! 👋</div>';
+          if(feed)feed.innerHTML='<div class="safe-chat-empty">Taip mesej bebas anda di atas untuk memulakan sembang! 👋 Anda juga boleh menambah ID rakan di Galeri Kawan.</div>';
         }
         updateSafeChatLiveStatus('chatConnected');
       } catch(error) {
@@ -7628,6 +7649,10 @@ const COMBAT_BANK = {
       if(!STATE.userId||!STATE.studentName)return showToast('Isi profil dan masuk ke rumah dahulu untuk menggunakan chat.');
       const modal=document.getElementById('modal-safe-chat');if(modal)modal.style.display='flex';
       safeChatOpen=true;renderSafeChatChoices();updateSafeChatLiveStatus('chatConnecting');refreshSafeChat();audio.init();audio.playPop();
+      setTimeout(()=>{
+        const input=document.getElementById('input-free-chat');
+        if(input)input.focus();
+      },80);
     }
 
     function closeSafeChat() {
@@ -7636,18 +7661,55 @@ const COMBAT_BANK = {
       document.getElementById('btn-safe-chat')?.classList.remove('live');
     }
 
+    async function sendFreeChatMessage() {
+      if(!STATE.userId||!STATE.studentName)return showToast('Isi profil dan masuk ke rumah dahulu untuk menggunakan chat.');
+      const input=document.getElementById('input-free-chat');if(!input)return;
+      const text=cleanOptionalProfileText(input.value,120);
+      if(!text){
+        showToast('⚠️ Taip mesej anda dahulu sebelum kirim.');
+        input.focus();
+        return;
+      }
+      const now=Date.now();
+      if(now-safeChatLastSentAt<2500)return showToast('⏳ Tunggu sebentar sebelum menghantar mesej seterusnya.');
+      try {
+        const message={
+          id:`${now}-${randomMathBinaCode(4)}`,
+          senderId:STATE.userId,
+          displayName:galleryDisplayName(STATE.studentName),
+          avatar:STATE.avatar||'👷‍♂️',
+          text:text,
+          createdAt:now
+        };
+        STATE.chatMessages=[...(Array.isArray(STATE.chatMessages)?STATE.chatMessages:[]),message].slice(-12);
+        saveCurrentStudentState();
+        input.value='';
+        safeChatLastSentAt=now;
+        audio.playPop();
+        showToast('💬 Mesej berjaya dikirim!');
+        await refreshSafeChat();
+        syncStudentToCloud().catch(err=>console.warn('Gagal sync chat ke awan:',err));
+      } catch(error) {
+        showToast('⚠️ Mesej disimpan pada peranti; sambungan awan akan dicuba semula.');
+      }
+    }
+
     async function sendSafeChatMessage(messageId) {
       const preset=SAFE_CHAT_MESSAGES.find(message=>message.id===messageId);if(!preset)return;
       const now=Date.now();
-      if(now-safeChatLastSentAt<5000)return showToast('⏳ Tunggu sebentar sebelum menghantar mesej seterusnya.');
+      if(now-safeChatLastSentAt<2500)return showToast('⏳ Tunggu sebentar sebelum menghantar mesej seterusnya.');
       try {
-        const message={id:`${now}-${randomMathBinaCode(4)}`,senderId:STATE.userId,displayName:galleryDisplayName(STATE.studentName),avatar:STATE.avatar,messageId:preset.id,createdAt:now};
+        const message={id:`${now}-${randomMathBinaCode(4)}`,senderId:STATE.userId,displayName:galleryDisplayName(STATE.studentName),avatar:STATE.avatar||'👷‍♂️',messageId:preset.id,createdAt:now};
         STATE.chatMessages=[...(Array.isArray(STATE.chatMessages)?STATE.chatMessages:[]),message].slice(-12);
         saveCurrentStudentState();
-        const synced=await syncStudentToCloud();
-        if(!synced)throw new Error('Mesej tidak dapat disimpan ke awan.');
-        safeChatLastSentAt=now;audio.playPop();showToast('💬 Mesej selamat dihantar!');await refreshSafeChat();
-      } catch(error) { showToast('⚠️ Mesej disimpan pada peranti; sambungan awan akan dicuba semula.'); }
+        safeChatLastSentAt=now;
+        audio.playPop();
+        showToast('💬 Mesej selamat dihantar!');
+        await refreshSafeChat();
+        syncStudentToCloud().catch(err=>console.warn('Gagal sync chat ke awan:',err));
+      } catch(error) {
+        showToast('⚠️ Mesej disimpan pada peranti; sambungan awan akan dicuba semula.');
+      }
     }
 
     function cloudHouseUrl(lookupKey, idToken = '') {

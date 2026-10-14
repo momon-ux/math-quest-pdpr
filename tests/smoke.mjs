@@ -160,7 +160,8 @@ assert.match(html, /function sendSafeChatMessage/, 'mesej Chat Ceria mesti boleh
 assert.match(html, /chatMessages:\(STATE\.chatMessages\|\|\[\]\)\.slice\(-12\)/, 'mesej selamat mesti disimpan bersama rekod awan pemilik');
 assert.match(html, /friends\.flatMap\(friend=>friend\.chatMessages\|\|\[\]\)/, 'chat mesti memuatkan mesej daripada rumah rakan yang ditambah');
 const safeChatMarkup = html.slice(html.indexOf('id="modal-safe-chat"'), html.indexOf('id="modal-leaderboard"'));
-assert.doesNotMatch(safeChatMarkup, /<input/, 'Chat Ceria tidak boleh mempunyai ruangan menaip bebas');
+assert.match(safeChatMarkup, /id="input-free-chat"/, 'Chat MathBina mesti mempunyai ruangan menaip bebas');
+assert.match(html, /function sendFreeChatMessage/, 'fungsi menghantar mesej chat bebas mesti tersedia');
 assert.match(html, /function sellBlockItem/, 'item kedai mesti boleh dijual semula');
 assert.match(html, /Math\.floor\(item\.price\*\.5\)/, 'harga jual semula mesti 50 peratus daripada harga asal');
 assert.match(html, /Sahkan jual/, 'jualan item mesti memerlukan pengesahan kedua');
