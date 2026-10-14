@@ -4,6 +4,12 @@
 
 ---
 
+## 🌟 Versi V14 — Kejiranan Pulau Terapung
+
+Pentas 3D kini memaparkan nama pemilik rumah dan rumah-rumah Galeri Kawan sebagai pulau terapung di ruang biru. Murid boleh mengetuk pulau untuk masuk dan melihat rumah pemiliknya dalam 3D. Lawatan sentiasa menggunakan **Mod Lihat Sahaja**: alat bina dan padam dikunci supaya rumah kawan tidak boleh diubah, dan butang `Rumah Saya` membawa pemain kembali ke binaan sendiri.
+
+---
+
 ## 🌟 Versi V13 — Objek Udara Bebas
 
 Helikopter, roket angkasa, awan, matahari dan bulan boleh diletakkan tanpa blok sokongan pada mana-mana aras yang dipilih. Peraturan sokongan masih dikekalkan untuk dinding, bumbung, perabot dan semua objek darat supaya binaan rumah kekal kemas.

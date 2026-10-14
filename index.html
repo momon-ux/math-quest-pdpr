@@ -670,6 +670,23 @@
     }
     #voxel-world { width: 100%; height: 100%; display: block; touch-action: none; }
     #sandbox-grid-canvas { display: none; }
+    .world-owner-label {
+      position:absolute; top:8px; left:50%; z-index:5; transform:translateX(-50%);
+      max-width:min(58%,420px); padding:6px 12px; border:2px solid rgba(255,255,255,.95);
+      border-radius:999px; background:rgba(2,132,199,.90); color:#fff;
+      box-shadow:0 5px 14px rgba(15,23,42,.25); text-align:center; pointer-events:none;
+      font-size:.68rem; font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .world-owner-label small { display:block; margin-top:1px; font-size:.47rem; color:#e0f2fe; }
+    .friend-visit-banner {
+      display:none; position:absolute; left:50%; bottom:9px; z-index:7; transform:translateX(-50%);
+      width:min(92%,480px); padding:8px 10px; border:3px solid #facc15; border-radius:14px;
+      background:rgba(15,23,42,.94); color:#fff; box-shadow:0 8px 22px rgba(15,23,42,.35);
+      align-items:center; justify-content:space-between; gap:8px;
+    }
+    .friend-visit-banner strong { display:block; font-size:.68rem; color:#fde68a; }
+    .friend-visit-banner small { display:block; margin-top:2px; font-size:.48rem; color:#e2e8f0; }
+    .friend-visit-banner button { flex:0 0 auto; border:0; border-radius:9px; padding:7px 9px; background:#22c55e; color:#fff; font-size:.56rem; font-weight:900; cursor:pointer; }
     .build-status-card {
       position: absolute; top: 8px; left: 8px; z-index: 4;
       background: rgba(255,255,255,.92); border: 2px solid #16a34a;
@@ -696,6 +713,12 @@
       .voxel-stage { min-height:220px; border-width:3px; border-radius:10px; }
       .build-help { display:none; }
       .build-status-card { top:5px; left:5px; padding:4px 6px; }
+      .world-owner-label { top:5px; left:auto; right:5px; transform:none; max-width:55%; padding:4px 8px; font-size:.57rem; }
+      .world-owner-label small { font-size:.42rem; }
+      .friend-visit-banner { bottom:5px; padding:6px 7px; }
+      .friend-visit-banner strong { font-size:.57rem; }
+      .friend-visit-banner small { font-size:.43rem; }
+      .friend-visit-banner button { padding:6px 7px; font-size:.48rem; }
       .sandbox-bottom-dock { height:60px; padding:0 6px; }
     }
 
@@ -1588,6 +1611,11 @@
         <div class="voxel-stage" id="voxel-stage">
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
+          <div class="world-owner-label" id="world-owner-label">🏡 Rumah Anda<small>Ketuk pulau terapung untuk melawat rumah kawan</small></div>
+          <div class="friend-visit-banner" id="friend-visit-banner">
+            <div><strong id="friend-visit-name">👀 Melawat Rumah Kawan</strong><small>🔒 Mod Lihat Sahaja • Rumah ini tidak boleh diubah</small></div>
+            <button type="button" onclick="exitFriendHouseVisit()">↩ Rumah Saya</button>
+          </div>
           <div class="build-status-card">
             <div class="level-badge" id="house-level-text">Tahap 1 • Tapak & Asas</div>
             <div style="font-size:.62rem;font-weight:800;color:#334155" id="house-progress-text">Kemajuan rumah: 0%</div>
@@ -2652,6 +2680,7 @@ const COMBAT_BANK = {
     }
 
     function returnToLobby() {
+      if(V3.visitingEntry)exitFriendHouseVisit();
       saveCurrentStudentState();
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-lobby').style.display = 'flex';
@@ -3653,6 +3682,7 @@ const COMBAT_BANK = {
     const V3 = {
       scene: null, camera: null, renderer: null, raycaster: null,
       world: null, preview: null, buildPlane: null, animationId: null,
+      neighborhood: null, friendIslandTargets: [], visitingEntry: null,
       yaw: Math.PI / 4, pitch: 0.68, distance: 18,
       dragging: false, moved: false, pointerId: null, lastX: 0, lastY: 0,
       pinchDistance: 0, pointers: new Map(), targetCell: null,
@@ -4318,6 +4348,101 @@ const COMBAT_BANK = {
       V3.scene.add(new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:0x167c35,transparent:true,opacity:.48})));
     }
 
+    function makeWorldNameSprite(text, accent = '#0284c7') {
+      const canvas=document.createElement('canvas');canvas.width=768;canvas.height=160;
+      const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle='rgba(255,255,255,.96)';ctx.strokeStyle=accent;ctx.lineWidth=10;
+      ctx.beginPath();ctx.roundRect(10,10,748,140,42);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#78350f';ctx.font='900 44px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      const safe=String(text||'Rumah Kawan').slice(0,34);ctx.fillText(`🏡 ${safe}`,384,80);
+      const texture=new THREE.CanvasTexture(canvas);texture.minFilter=THREE.LinearFilter;
+      const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false}));
+      sprite.scale.set(5.2,1.08,1);sprite.renderOrder=20;return sprite;
+    }
+
+    function sampleIslandVoxels(entry) {
+      return Array.isArray(entry?.voxels)&&entry.voxels.length?entry.voxels.slice(0,150):[
+        {x:5,y:0,z:3,type:'parquet_floor'},{x:6,y:0,z:3,type:'parquet_floor'},{x:7,y:0,z:3,type:'parquet_floor'},
+        {x:5,y:1,z:3,type:'wood_wall'},{x:6,y:1,z:3,type:'window_glass'},{x:7,y:1,z:3,type:'wood_wall'},
+        {x:5,y:2,z:3,type:'roof_red'},{x:6,y:2,z:3,type:'roof_red'},{x:7,y:2,z:3,type:'roof_red'},
+        {x:6,y:1,z:4,type:'door_wood'},{x:4,y:0,z:4,type:'tree_shade'}
+      ];
+    }
+
+    function createFriendIsland(entry,index) {
+      const group=new THREE.Group();
+      const grass=new THREE.Mesh(new THREE.CylinderGeometry(2.25,1.85,.42,8),new THREE.MeshLambertMaterial({color:0x4ade80}));
+      grass.castShadow=true;grass.receiveShadow=true;group.add(grass);
+      const rock=new THREE.Mesh(new THREE.ConeGeometry(1.82,1.65,8),new THREE.MeshLambertMaterial({color:0x64748b}));
+      rock.rotation.z=Math.PI;rock.position.y=-1.02;rock.castShadow=true;group.add(rock);
+      const house=new THREE.Group();sampleIslandVoxels(entry).forEach(v=>house.add(createVoxelObject(v)));
+      house.scale.setScalar(.30);house.position.set(0,.28,0);group.add(house);
+      const islandName=entry.id==='rumah-contoh-mathbina'||entry.id==='mathbina-sample'?'Cikgu Fikrey':(entry.displayName||'Kawan');
+      const label=makeWorldNameSprite(`Rumah ${islandName}`,index%2?'#7c3aed':'#0284c7');
+      label.position.set(0,2.55,0);group.add(label);
+      group.scale.setScalar(.75);
+      group.userData.galleryId=entry.id;group.userData.baseY=0;group.userData.floatPhase=index*1.35;
+      group.traverse(obj=>{obj.userData.galleryId=entry.id;});
+      return group;
+    }
+
+    function refreshNeighborhoodIslands() {
+      if(!V3.scene||!window.THREE)return;
+      if(V3.neighborhood)V3.scene.remove(V3.neighborhood);
+      V3.neighborhood=new THREE.Group();V3.friendIslandTargets=[];
+      const positions=[[-4,4.5,-4],[-9,5.4,-2],[-2,6.2,-9],[5,6.8,-5],[-6,7.6,5]];
+      COMMUNITY_GALLERY.slice(0,positions.length).forEach((entry,index)=>{
+        const island=createFriendIsland(entry,index);const [x,y,z]=positions[index];
+        island.position.set(x,y,z);island.userData.baseY=y;
+        V3.neighborhood.add(island);V3.friendIslandTargets.push(island);
+      });
+      V3.scene.add(V3.neighborhood);
+    }
+
+    function openFriendIslandFromPointer(e) {
+      if(!V3.raycaster||!V3.friendIslandTargets.length)return false;
+      const rect=V3.renderer.domElement.getBoundingClientRect();
+      const pointer=new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-((e.clientY-rect.top)/rect.height)*2+1);
+      V3.raycaster.setFromCamera(pointer,V3.camera);
+      const hit=V3.raycaster.intersectObjects(V3.friendIslandTargets,true)[0];
+      if(!hit)return false;
+      let node=hit.object;while(node&&!node.userData.galleryId)node=node.parent;
+      if(!node?.userData.galleryId)return false;
+      const entry=COMMUNITY_GALLERY.find(item=>item.id===node.userData.galleryId);
+      if(entry)enterFriendHouseVisit(entry);
+      return true;
+    }
+
+    function enterFriendHouseVisit(entry) {
+      if(!entry||!V3.world)return;
+      V3.visitingEntry=entry;
+      if(V3.preview){V3.scene.remove(V3.preview);V3.preview=null;}
+      if(V3.neighborhood)V3.neighborhood.visible=false;
+      renderVoxelSet(sampleIslandVoxels(entry));
+      const banner=document.getElementById('friend-visit-banner');
+      const name=document.getElementById('friend-visit-name');
+      const owner=document.getElementById('world-owner-label');
+      const status=document.querySelector('.build-status-card');
+      if(name)name.textContent=`👀 Melawat Rumah ${entry.displayName||'Kawan'}`;
+      if(banner)banner.style.display='flex';
+      if(status)status.style.display='none';
+      if(owner)owner.innerHTML=`🏡 Rumah ${escapeHtml(entry.displayName||'Kawan')}<small>🔒 Mod Lihat Sahaja</small>`;
+      showToast(`🔒 Rumah ${entry.displayName||'kawan'} dibuka dalam Mod Lihat Sahaja.`);
+    }
+
+    function exitFriendHouseVisit() {
+      if(!V3.visitingEntry)return;
+      V3.visitingEntry=null;
+      rebuildVoxelWorld();
+      if(V3.neighborhood)V3.neighborhood.visible=true;
+      const banner=document.getElementById('friend-visit-banner');
+      const status=document.querySelector('.build-status-card');
+      if(banner)banner.style.display='none';
+      if(status)status.style.display='block';
+      updateSandboxHud();updatePreviewMesh();
+      showToast('🏡 Kembali ke rumah anda. Alat binaan dibuka semula.');
+    }
+
     function initSandboxCanvas() {
       if (!window.THREE) {
         document.getElementById('voxel-stage').innerHTML = '<div style="padding:30px;text-align:center;font-weight:900">Enjin 3D tidak dapat dimuat. Sila semak sambungan internet dan muat semula.</div>';
@@ -4342,13 +4467,17 @@ const COMBAT_BANK = {
       sun.shadow.mapSize.set(1024,1024); sun.shadow.camera.left=-12; sun.shadow.camera.right=12; sun.shadow.camera.top=12; sun.shadow.camera.bottom=-12; V3.scene.add(sun);
       V3.buildPlane = new THREE.Mesh(new THREE.PlaneGeometry(GRID_COLS,GRID_ROWS),new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
       V3.buildPlane.rotation.x = -Math.PI/2; V3.scene.add(V3.buildPlane);
-      bindVoxelInput(canvas); resizeVoxelRenderer(); rebuildVoxelWorld(); updateBuildPlane(); updateCamera();
+      bindVoxelInput(canvas); resizeVoxelRenderer(); rebuildVoxelWorld(); refreshNeighborhoodIslands(); updateBuildPlane(); updateCamera();
       if (!V3.resizeBound) { window.addEventListener('resize',resizeVoxelRenderer); V3.resizeBound=true; }
       const loop = () => {
         V3.animationId = requestAnimationFrame(loop);
         if (V3.autoRotate && !V3.dragging) {
           V3.yaw += 0.005;
           updateCamera();
+        }
+        if(V3.neighborhood){
+          const now=performance.now()*.001;
+          V3.neighborhood.children.forEach(island=>{island.position.y=island.userData.baseY+Math.sin(now+island.userData.floatPhase)*.18;});
         }
         V3.renderer.render(V3.scene, V3.camera);
       }; loop();
@@ -4391,7 +4520,9 @@ const COMBAT_BANK = {
         } else updateTargetFromPointer(e);
       });
       canvas.addEventListener('pointerup',e=>{
-        if (!V3.moved && V3.pointers.size<2) { updateTargetFromPointer(e); if(V3.targetCell) handleVoxelCellClicked(V3.targetCell); }
+        if (!V3.moved && V3.pointers.size<2) {
+          if(!openFriendIslandFromPointer(e)){updateTargetFromPointer(e);if(V3.targetCell)handleVoxelCellClicked(V3.targetCell);}
+        }
         V3.pointers.delete(e.pointerId); V3.pinchDistance=0; if(e.pointerId===V3.pointerId)V3.dragging=false;
       });
       canvas.addEventListener('pointercancel',e=>{V3.pointers.delete(e.pointerId);V3.dragging=false;V3.pinchDistance=0;});
@@ -4418,7 +4549,7 @@ const COMBAT_BANK = {
     function updatePreviewMesh() {
       if (!V3.scene) return;
       if(V3.preview){V3.scene.remove(V3.preview);V3.preview=null;}
-      if(!V3.targetCell||STATE.eraserActive)return;
+      if(!V3.targetCell||STATE.eraserActive||V3.visitingEntry)return;
       V3.preview=createVoxelObject({...V3.targetCell,type:STATE.activeBlockId,rotation:STATE.blockRotation},true);V3.scene.add(V3.preview);
     }
 
@@ -4440,6 +4571,7 @@ const COMBAT_BANK = {
 
     function handleVoxelCellClicked(cell) {
       audio.init();
+      if(V3.visitingEntry)return showToast('🔒 Mod Lihat Sahaja: rumah kawan tidak boleh diubah.');
       const existing=findVoxel(cell.x,cell.y,cell.z);
       if(STATE.eraserActive){
         if(!existing)return;
@@ -4463,10 +4595,14 @@ const COMBAT_BANK = {
       rebuildVoxelWorld();renderPaletteDock();updateSandboxHud();saveCurrentStudentState();
     }
 
-    function rebuildVoxelWorld() {
+    function renderVoxelSet(voxels) {
       if(!V3.world)return;
       while(V3.world.children.length)V3.world.remove(V3.world.children[0]);
-      (STATE.voxels||[]).forEach(v=>V3.world.add(createVoxelObject(v)));
+      (voxels||[]).forEach(v=>V3.world.add(createVoxelObject(v)));
+    }
+
+    function rebuildVoxelWorld() {
+      renderVoxelSet(STATE.voxels||[]);
     }
 
     function drawSandboxScene(){ rebuildVoxelWorld(); }
@@ -4507,6 +4643,8 @@ const COMBAT_BANK = {
       const level=document.getElementById('house-level-text');if(level)level.textContent=`Tahap ${p.level} • ${p.label}`;
       const progress=document.getElementById('house-progress-text');if(progress)progress.textContent=`Kemajuan rumah: ${p.percent}%`;
       const fill=document.getElementById('house-progress-fill');if(fill)fill.style.width=`${p.percent}%`;
+      const owner=document.getElementById('world-owner-label');
+      if(owner&&!V3.visitingEntry)owner.innerHTML=`🏡 Rumah ${escapeHtml(STATE.studentName||'Anda')}<small>Ketuk pulau terapung untuk melawat rumah kawan</small>`;
     }
 
     function toggleEraserTool() {
@@ -4701,6 +4839,7 @@ const COMBAT_BANK = {
       if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Cikgu Mohammad Fikrey bin Abdul Gapar', yearLabel:'Rumah Contoh Rasmi', avatar:'👨‍🏫', approved:true, voxels:[] }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
+      refreshNeighborhoodIslands();
       clearInterval(communityGalleryTimer);
       if (COMMUNITY_GALLERY.length > 1) communityGalleryTimer = setInterval(()=>{
         if (document.getElementById('view-lobby')?.style.display === 'none') return;
@@ -4725,13 +4864,14 @@ const COMBAT_BANK = {
       }
     }
 
-    function openCommunityGallery() {
+    function openCommunityGallery(focusId = '') {
       const modal = document.getElementById('modal-community-gallery');
       const grid = document.getElementById('community-gallery-grid');
       if (!modal || !grid) return;
       grid.innerHTML = '';
       COMMUNITY_GALLERY.forEach(entry=>{
-        const card=document.createElement('article');card.className='community-card';
+        const card=document.createElement('article');card.className='community-card';card.dataset.galleryId=entry.id;
+        if(focusId&&entry.id===focusId){card.style.outline='4px solid #facc15';card.style.boxShadow='0 0 0 7px rgba(2,132,199,.35)';}
         const canvas=document.createElement('canvas');canvas.width=420;canvas.height=240;drawGalleryHouse(canvas,entry);card.appendChild(canvas);
         const info=document.createElement('div');info.className='community-card-info';
         const avatar=document.createElement('div');avatar.className='community-card-avatar';avatar.textContent=entry.avatar||'🏡';
@@ -4741,6 +4881,12 @@ const COMBAT_BANK = {
         labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
       });
       modal.style.display='flex';
+      if(focusId){
+        const focused=grid.querySelector(`[data-gallery-id="${CSS.escape(focusId)}"]`);
+        if(focused)setTimeout(()=>focused.scrollIntoView({behavior:'smooth',block:'center'}),80);
+        const entry=COMMUNITY_GALLERY.find(item=>item.id===focusId);
+        if(entry)showToast(`🏝️ Melawat Rumah ${entry.displayName}!`);
+      }
     }
 
     function closeCommunityGallery() {

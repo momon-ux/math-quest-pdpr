@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v13-airborne-items';
+const CACHE_NAME = 'mathbina-v14-floating-neighborhood';
 const APP_SHELL = [
   './',
   './index.html',
