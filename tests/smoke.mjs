@@ -228,5 +228,12 @@ assert.match(html, /function drawShooterLandscape/, 'landskap realistik Math Sho
 assert.match(html, /function drawShooterCannon/, 'meriam besi padu dan roda kayu mesti dilukis');
 assert.match(html, /const BALLOON_PALETTES =/, 'palet 3D berkilat belon mesti wujud');
 assert.match(html, /function drawShooterFortressBastion/, 'kubu batu pelantar meriam mesti wujud');
+assert.match(html, /class="[^"]*lobby-games-hub/, 'zon permainan matematik mesti wujud dalam lobi untuk akses pantas telefon');
+assert.match(html, /id="modal-all-games"/, 'modal pilihan semua permainan matematik cari XP mesti wujud');
+assert.match(html, /function openAllGamesModal/, 'fungsi membuka senarai semua permainan mesti wujud');
+assert.match(html, /function launchGameFromLobby/, 'permainan matematik mesti boleh dimulakan terus dari lobi');
+assert.match(html, /class="[^"]*btn-game-shooter/, 'butang pantas Math Shooter mesti wujud dalam zon lobi');
+assert.match(html, /class="[^"]*btn-game-wheel/, 'butang pantas Roda Sifir mesti wujud dalam zon lobi');
+assert.match(html, /class="[^"]*btn-game-arcade/, 'butang pantas Arked Blaster mesti wujud dalam zon lobi');
 
 console.log('Semua semakan smoke MathBina V32 lulus.');

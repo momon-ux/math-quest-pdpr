@@ -269,6 +269,117 @@
       overflow:auto;
       padding:2px;
     }
+
+    /* ==============================================================
+       LOBBY GAMES HUB (PILIHAN SEMUA GAME CARI XP - MESRA FON)
+       ============================================================== */
+    .lobby-games-hub {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 2px solid #38bdf8;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,249,255,0.98));
+      box-shadow: 0 3px 0 #0284c7;
+    }
+    .lobby-games-hub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .lobby-games-hub-title {
+      font-size: 0.76rem;
+      font-weight: 900;
+      color: #0369a1;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+    .lobby-games-hub-tag {
+      font-size: 0.62rem;
+      font-weight: 900;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #bae6fd;
+    }
+    .lobby-games-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .lobby-game-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 3px;
+      padding: 9px 6px;
+      border-radius: 11px;
+      border: 2px solid;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+    }
+    .lobby-game-btn:active {
+      transform: translateY(2px);
+      box-shadow: none;
+    }
+    .lobby-game-btn .game-btn-icon {
+      font-size: 1.55rem;
+      line-height: 1;
+    }
+    .lobby-game-btn .game-btn-text b {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+    .lobby-game-btn .game-btn-text small {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 800;
+      opacity: 0.92;
+      margin-top: 1px;
+    }
+    .lobby-game-btn .game-btn-badge {
+      position: absolute;
+      top: -6px;
+      right: 4px;
+      font-size: 0.52rem;
+      font-weight: 900;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: #0f172a;
+      color: #fef08a;
+      border: 1px solid #eab308;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .btn-game-shooter {
+      background: linear-gradient(135deg, #fb923c, #ea580c);
+      border-color: #c2410c;
+      color: #fff;
+    }
+    .btn-game-wheel {
+      background: linear-gradient(135deg, #c084fc, #9333ea);
+      border-color: #7e22ce;
+      color: #fff;
+    }
+    .btn-game-arcade {
+      background: linear-gradient(135deg, #22d3ee, #0891b2);
+      border-color: #0e7490;
+      color: #fff;
+    }
+    .btn-game-sifir {
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      border-color: #0369a1;
+      color: #fff;
+    }
     .community-card { overflow:hidden; border:2px solid #bae6fd; border-radius:13px; background:#fff; box-shadow:0 3px 0 #0284c7; }
     .community-card canvas { width:100%; height:130px; display:block; background:#7dd3fc; }
     .community-card-info { display:flex; align-items:center; gap:8px; padding:8px 10px; }
@@ -1713,11 +1824,20 @@
       }
       .sandbox-action-ribbon .mobile-secondary { display:none; }
       .sandbox-action-ribbon.expanded .mobile-secondary { display:flex; }
-      .mobile-more-toggle { display:flex; order:3; }
       .btn-xp-shooter { order:1; }
-      .btn-shop { order:2; }
-      .level-control { order:4; }
-      .mobile-secondary { order:5; }
+      .btn-xp-wheel { order:2; }
+      .btn-xp-arcade { order:3; }
+      .btn-shop { order:4; }
+      .btn-sifir-chart { order:5; }
+      .btn-blueprint { order:6; }
+      .level-control { order:7; }
+      .mobile-more-toggle { display:flex; order:8; }
+      .mobile-secondary { order:9; }
+      .lobby-games-hub-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .lobby-game-btn { flex-direction: row; text-align: left; padding: 7px 8px; gap: 8px; justify-content: flex-start; }
+      .lobby-game-btn .game-btn-icon { font-size: 1.4rem; }
+      .lobby-game-btn .game-btn-text b { font-size: 0.72rem; }
+      .lobby-game-btn .game-btn-text small { font-size: 0.55rem; }
       .level-control { min-height: 35px; justify-content: center; padding: 1px 2px; }
       .level-control button { width: 24px; height: 28px; }
       #build-level-label { min-width: 43px; font-size: 0.55rem; }
@@ -1813,11 +1933,20 @@
       .ribbon-btn { width:100%; min-width:0; min-height:31px; padding:3px 5px; font-size:.5rem; white-space:normal; justify-content:center; }
       .sandbox-action-ribbon .mobile-secondary { display:none; }
       .sandbox-action-ribbon.expanded .mobile-secondary { display:flex; }
-      .mobile-more-toggle { display:flex; order:3; }
       .btn-xp-shooter { order:1; }
-      .btn-shop { order:2; }
-      .level-control { order:4; }
-      .mobile-secondary { order:5; }
+      .btn-xp-wheel { order:2; }
+      .btn-xp-arcade { order:3; }
+      .btn-shop { order:4; }
+      .btn-sifir-chart { order:5; }
+      .btn-blueprint { order:6; }
+      .level-control { order:7; }
+      .mobile-more-toggle { display:flex; order:8; }
+      .mobile-secondary { order:9; }
+      .lobby-games-hub-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+      .lobby-game-btn { padding: 4px 6px; gap: 4px; }
+      .lobby-game-btn .game-btn-icon { font-size: 1.15rem; }
+      .lobby-game-btn .game-btn-text b { font-size: 0.62rem; }
+      .lobby-game-btn .game-btn-text small { font-size: 0.5rem; }
       .level-control { min-width:0; min-height:31px; justify-content:center; }
       .level-control button { width:23px; height:25px; }
       #build-level-label { min-width:40px; font-size:.5rem; }
@@ -2102,6 +2231,48 @@
           <div class="community-open-hint" data-i18n="viewGallery">View Gallery →</div>
         </div>
 
+        <!-- ZON PERMAINAN MATEMATIK & CARI XP (MESRA FON & DESKTOP) -->
+        <div class="lobby-games-hub" aria-label="Pilihan Permainan Matematik Cari XP">
+          <div class="lobby-games-hub-header">
+            <span class="lobby-games-hub-title">🎮 ZON CARI XP & SYILING MATEMATIK</span>
+            <span class="lobby-games-hub-tag">⭐ Kumpul XP Bina Rumah</span>
+          </div>
+          <div class="lobby-games-hub-grid">
+            <button class="lobby-game-btn btn-game-shooter" type="button" onclick="launchGameFromLobby('shooter')" title="Tembak belon matematik guna meriam 3D">
+              <span class="game-btn-badge">+100 XP</span>
+              <span class="game-btn-icon">🎯</span>
+              <div class="game-btn-text">
+                <b>Math Shooter</b>
+                <small>Meriam Belon 3D</small>
+              </div>
+            </button>
+            <button class="lobby-game-btn btn-game-wheel" type="button" onclick="launchGameFromLobby('wheel')" title="Putar roda cabaran sifir mengikut umur">
+              <span class="game-btn-badge">+300 XP</span>
+              <span class="game-btn-icon">🎡</span>
+              <div class="game-btn-text">
+                <b>Roda Sifir</b>
+                <small>Putar & Kuiz Aras</small>
+              </div>
+            </button>
+            <button class="lobby-game-btn btn-game-arcade" type="button" onclick="launchGameFromLobby('arcade')" title="Arked Math Blaster tembak musuh bergerak 30 saat">
+              <span class="game-btn-badge">Kombo Rush</span>
+              <span class="game-btn-icon">🕹️</span>
+              <div class="game-btn-text">
+                <b>Arked Blaster</b>
+                <small>Laser Angkasa 30s</small>
+              </div>
+            </button>
+            <button class="lobby-game-btn btn-game-sifir" type="button" onclick="openTimesTableModal()" title="Carta dan Jadual Sifir 1 hingga 12">
+              <span class="game-btn-badge">Sifir 1-12</span>
+              <span class="game-btn-icon">📖</span>
+              <div class="game-btn-text">
+                <b>Jadual Sifir</b>
+                <small>Carta & Semakan</small>
+              </div>
+            </button>
+          </div>
+        </div>
+
         <div class="lobby-row-grid">
           <!-- Umur wajib dipilih supaya semua permainan menggunakan aras soalan yang tepat. -->
           <div class="form-group">
@@ -2225,10 +2396,10 @@
         </div>
 
         <div class="hud-stats-group" style="display: flex; gap: 8px; align-items: center;">
-          <div class="hud-wallet-pill">
+          <div class="hud-wallet-pill" onclick="openAllGamesModal()" style="cursor: pointer;" title="Tekan untuk pilih permainan cari XP & Syiling">
             <span>⭐</span> <span id="hud-sandbox-xp">150 XP</span>
           </div>
-          <div class="hud-wallet-pill">
+          <div class="hud-wallet-pill" onclick="openAllGamesModal()" style="cursor: pointer;" title="Tekan untuk pilih permainan cari XP & Syiling">
             <span>🪙</span> <span id="hud-sandbox-coins">150 Syiling</span>
           </div>
           <div class="hud-blocks-count">
@@ -2237,6 +2408,7 @@
         </div>
 
         <div class="hud-actions-group" style="display: flex; gap: 6px;">
+          <button onclick="openAllGamesModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #0284c7; background: #e0f2fe; color: #0284c7; font-size: 1.05rem; cursor: pointer;" id="btn-all-games-hub" title="Pusat Permainan Matematik Cari XP">🎮</button>
           <button onclick="toggleGraphicsQuality()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-gfx-quality" title="Kualiti Grafik: Lancar / Cantik">⚡</button>
           <button class="language-trigger" id="btn-language-sandbox" type="button" onclick="openLanguageModal()" title="Language">🌐</button>
           <button onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
@@ -2249,24 +2421,29 @@
 
       <!-- Action Ribbon -->
       <div class="sandbox-action-ribbon">
-        <button class="ribbon-btn btn-blueprint mobile-secondary" onclick="closeMobileTools(); openBlueprintModal()" title="Bina rumah starter Minecraft mengikut pelan rujukan Reddit">
-          <span>🏡</span> <span data-i18n="blueprint">PELAN RUMAH</span>
-        </button>
         <button class="ribbon-btn btn-xp-shooter" onclick="closeMobileTools(); launchMathShooter()">
           <span>🎯</span> <span data-i18n="mathShooter">CARI XP: MATH SHOOTER</span>
         </button>
-        <button class="ribbon-btn btn-xp-wheel mobile-secondary" onclick="closeMobileTools(); launchMathWheel()">
+        <button class="ribbon-btn btn-xp-wheel" onclick="closeMobileTools(); launchMathWheel()">
           <span>🎡</span> <span data-i18n="mathWheel">CARI XP: RODA SIFIR</span>
         </button>
-        <button class="ribbon-btn btn-sifir-chart mobile-secondary" onclick="closeMobileTools(); openTimesTableModal()" title="Lihat Carta & Jadual Sifir 1 hingga 12">
-          <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR</span>
-        </button>
-        <button class="ribbon-btn btn-xp-arcade mobile-secondary" onclick="closeMobileTools(); launchArcadeGame()">
+        <button class="ribbon-btn btn-xp-arcade" onclick="closeMobileTools(); launchArcadeGame()">
           <span>🕹️</span> <span data-i18n="arcade">ARKED XP</span>
         </button>
         <button class="ribbon-btn btn-shop" onclick="closeMobileTools(); openShopModal()">
           <span>🛒</span> <span data-i18n="shop">KEDAI BLOK & LEGO</span>
         </button>
+        <button class="ribbon-btn btn-sifir-chart" onclick="closeMobileTools(); openTimesTableModal()" title="Lihat Carta & Jadual Sifir 1 hingga 12">
+          <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR</span>
+        </button>
+        <button class="ribbon-btn btn-blueprint" onclick="closeMobileTools(); openBlueprintModal()" title="Bina rumah starter Minecraft mengikut pelan rujukan Reddit">
+          <span>🏡</span> <span data-i18n="blueprint">PELAN RUMAH</span>
+        </button>
+        <div class="level-control">
+          <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
+          <span id="build-level-label">Level 1</span>
+          <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
+        </div>
         <button class="ribbon-btn mobile-more-toggle" id="btn-mobile-more" type="button" onclick="toggleMobileTools()" aria-expanded="false">
           <span>☰</span> <span data-i18n="more">MORE</span>
         </button>
@@ -2275,11 +2452,6 @@
         </button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" data-i18n="undo">↶ UNDO</button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" data-i18n="redo">↷ REDO</button>
-        <div class="level-control">
-          <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
-          <span id="build-level-label">Level 1</span>
-          <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
-        </div>
         <button class="ribbon-btn btn-certificate mobile-secondary" onclick="closeMobileTools(); downloadArchitectCertificate()" title="Jana & Muat Turun Sijil Digital">
           <span>📜</span> <span data-i18n="certificate">SIJIL ARKITEK</span>
         </button>
@@ -2441,6 +2613,76 @@
         </div>
         <div class="times-table-content-area" id="times-table-content">
           <!-- Equations rendered via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         MODAL: PUSAT PILIHAN SEMUA PERMAINAN MATEMATIK & XP (MESRA PERANTI)
+         ============================================================== -->
+    <div class="game-modal-overlay" id="modal-all-games" style="display:none;" onclick="if(event.target===this)closeAllGamesModal()">
+      <div class="game-modal-box" style="max-width:540px; border-color:#38bdf8;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #bae6fd;padding-bottom:8px;margin-bottom:12px;">
+          <div>
+            <div style="font-size:0.64rem;font-weight:900;color:#0284c7;letter-spacing:0.7px;text-transform:uppercase;">Zon Pembelajaran & Hiburan</div>
+            <h3 style="margin:2px 0 0;font-size:1.15rem;color:#0f172a;font-weight:900;">🎮 PILIHAN SEMUA GAME CARI XP</h3>
+            <p style="margin:2px 0 0;font-size:.72rem;color:#64748b;font-weight:800;">Selesaikan cabaran matematik untuk kumpul XP & syiling bagi membina rumah impian anda!</p>
+          </div>
+          <button onclick="closeAllGamesModal()" class="mini-action-btn" style="background:#f1f5f9;color:#0f172a;font-size:.9rem;padding:4px 9px;">✕</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr;gap:10px;max-height:62vh;overflow-y:auto;padding:2px;">
+          <!-- Card 1: Math Shooter -->
+          <div style="display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:10px;background:#fff7ed;border:2px solid #fdba74;border-radius:12px;box-shadow:0 2px 4px rgba(234,88,12,0.1);">
+            <div style="font-size:2rem;text-align:center;">🎯</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:0.92rem;font-weight:900;color:#9a3412;">Math Shooter</span>
+                <span style="font-size:0.58rem;font-weight:900;background:#ea580c;color:#fff;padding:1px 6px;border-radius:6px;">+100 XP / Soalan</span>
+              </div>
+              <p style="margin:3px 0 0;font-size:0.7rem;color:#7c2d12;font-weight:700;line-height:1.2;">Tembak belon matematik menggunakan meriam besi padu 3D realistik. Tepat dan pantas!</p>
+            </div>
+            <button onclick="closeAllGamesModal(); launchMathShooter();" style="padding:8px 14px;background:#ea580c;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #9a3412;">▶ MAIN</button>
+          </div>
+
+          <!-- Card 2: Roda Sifir -->
+          <div style="display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:10px;background:#faf5ff;border:2px solid #d8b4fe;border-radius:12px;box-shadow:0 2px 4px rgba(147,51,234,0.1);">
+            <div style="font-size:2rem;text-align:center;">🎡</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:0.92rem;font-weight:900;color:#6b21a8;">Roda Sifir & Matematik</span>
+                <span style="font-size:0.58rem;font-weight:900;background:#9333ea;color:#fff;padding:1px 6px;border-radius:6px;">+150 - 300 XP</span>
+              </div>
+              <p style="margin:3px 0 0;font-size:0.7rem;color:#581c87;font-weight:700;line-height:1.2;">Putar roda sifir bergemerlapan dan jawab kuiz matematik mengikut umur/tahun anda.</p>
+            </div>
+            <button onclick="closeAllGamesModal(); launchMathWheel();" style="padding:8px 14px;background:#9333ea;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #6b21a8;">▶ PUTAR</button>
+          </div>
+
+          <!-- Card 3: Arked Blaster -->
+          <div style="display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:10px;background:#ecfeff;border:2px solid #67e8f9;border-radius:12px;box-shadow:0 2px 4px rgba(8,145,178,0.1);">
+            <div style="font-size:2rem;text-align:center;">🕹️</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:0.92rem;font-weight:900;color:#155e75;">Arked Math Blaster</span>
+                <span style="font-size:0.58rem;font-weight:900;background:#0891b2;color:#fff;padding:1px 6px;border-radius:6px;">Kombo XP Rush</span>
+              </div>
+              <p style="margin:3px 0 0;font-size:0.7rem;color:#164e63;font-weight:700;line-height:1.2;">Kawal kapal angkasa dan tembak laser ke sasaran musuh dalam masa 30 saat!</p>
+            </div>
+            <button onclick="closeAllGamesModal(); launchArcadeGame();" style="padding:8px 14px;background:#0891b2;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #155e75;">▶ BLASTER</button>
+          </div>
+
+          <!-- Card 4: Jadual Sifir -->
+          <div style="display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:10px;background:#f0f9ff;border:2px solid #7dd3fc;border-radius:12px;box-shadow:0 2px 4px rgba(2,132,199,0.1);">
+            <div style="font-size:2rem;text-align:center;">📖</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:0.92rem;font-weight:900;color:#075985;">Carta Jadual Sifir 1-12</span>
+                <span style="font-size:0.58rem;font-weight:900;background:#0284c7;color:#fff;padding:1px 6px;border-radius:6px;">Rujukan & Ujian</span>
+              </div>
+              <p style="margin:3px 0 0;font-size:0.7rem;color:#0c4a6e;font-weight:700;line-height:1.2;">Paparan sifir besar mesra telefon dengan pilihan uji kefahaman sifir pantas.</p>
+            </div>
+            <button onclick="closeAllGamesModal(); openTimesTableModal();" style="padding:8px 14px;background:#0284c7;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #075985;">🔍 LIHAT</button>
+          </div>
         </div>
       </div>
     </div>
@@ -4245,16 +4487,65 @@ const COMBAT_BANK = {
       showToast(currentLanguage === 'ms' ? '🎯 Zon Math Shooter: Tembak belon jawapan tepat untuk dapat XP!' : '🎯 Math Shooter: Shoot the balloon with the correct answer to earn XP!');
     }
 
+    function openAllGamesModal() {
+      const modal = document.getElementById('modal-all-games');
+      if (modal) modal.style.display = 'flex';
+      audio.init();
+      audio.playPop();
+    }
+
+    function closeAllGamesModal() {
+      const modal = document.getElementById('modal-all-games');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function launchGameFromLobby(game) {
+      audio.init();
+      if (!STATE.age) {
+        showToast(currentLanguage === 'ms' 
+          ? '⚠️ Sila pilih Umur / Tahun (Langkah 1) dahulu untuk aras soalan yang tepat!' 
+          : '⚠️ Please select your Age / Grade (Step 1) first for the correct difficulty!');
+        document.getElementById('age-picker-trigger')?.focus();
+        setTimeout(() => toggleAgePicker(true), 80);
+        return;
+      }
+      const nameInput = document.getElementById('input-student-name');
+      if (nameInput && nameInput.value) {
+        updateStudentNameInput(nameInput.value);
+      }
+      if (!STATE.studentName || STATE.studentName.length < 3) {
+        STATE.studentName = (nameInput?.value?.trim()) || 'Arkitek Cilik';
+      }
+      ensurePlayerIdentity();
+      persistDeviceProfile();
+
+      window.lastGameReturnScreen = 'lobby';
+      document.getElementById('view-lobby').style.display = 'none';
+
+      if (game === 'shooter') {
+        launchMathShooter();
+      } else if (game === 'wheel') {
+        launchMathWheel();
+      } else if (game === 'arcade') {
+        launchArcadeGame();
+      }
+    }
+
     function exitMinigameToSandbox() {
       if (STATE.shooter.animId) cancelAnimationFrame(STATE.shooter.animId);
       stopArcadeTimers();
       document.getElementById('view-shooter').style.display = 'none';
       document.getElementById('view-wheel').style.display = 'none';
       document.getElementById('view-arcade').style.display = 'none';
-      document.getElementById('view-sandbox').style.display = 'flex';
-      updateSandboxHud();
-      renderPaletteDock();
-      drawSandboxScene();
+      if (window.lastGameReturnScreen === 'lobby') {
+        document.getElementById('view-lobby').style.display = 'flex';
+        window.lastGameReturnScreen = null;
+      } else {
+        document.getElementById('view-sandbox').style.display = 'flex';
+        updateSandboxHud();
+        renderPaletteDock();
+        drawSandboxScene();
+      }
       saveCurrentStudentState();
     }
 
