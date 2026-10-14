@@ -61,10 +61,10 @@ assert.match(html, /COMMUNITY_GALLERY = \[\.\.\.friends, \.\.\.shared\]/, 'galer
 assert.equal(gallery.entries[0]?.displayName, 'Cikgu Mohammad Fikrey bin Abdul Gapar', 'rumah contoh rasmi mesti menggunakan nama penuh pembangun');
 assert.ok(Array.isArray(gallery.entries) && gallery.entries.length > 0, 'galeri pusat mesti mempunyai sekurang-kurangnya satu rumah rasmi');
 assert.ok(gallery.entries.every(entry => entry.approved !== false), 'rumah galeri pusat mesti diluluskan');
-assert.match(html, /id="chip-age-none"/, 'murid mesti boleh bermain tanpa memilih umur');
 for (let age = 7; age <= 17; age++) {
   assert.match(html, new RegExp(`id="chip-age-${age}"`), `pilihan umur ${age} mesti tersedia`);
 }
+assert.doesNotMatch(html, /id="chip-age-none"/, 'pilihan melangkau umur mesti dibuang');
 assert.doesNotMatch(html, /id="select-lobby-class"/, 'senarai kelas tetap tidak boleh dipaksa kepada murid pelbagai sekolah');
 assert.match(html, /id="input-school-name"/, 'nama sekolah pilihan mesti boleh ditaip sendiri');
 assert.match(html, /id="input-class-name"/, 'nama kelas pilihan mesti boleh ditaip sendiri');
@@ -84,9 +84,12 @@ assert.match(html, /mathbina-house-v2\|\$\{userId\}/, 'carian awan mesti menggun
 assert.match(html, /identitytoolkit\.googleapis\.com\/v1\/accounts:signUp/, 'akaun tanpa nama Firebase mesti dijana tanpa kata laluan murid');
 assert.match(html, /function editPlayerProfile/, 'profil sekolah, kelas dan aras mesti boleh diedit');
 assert.match(html, /function gradeLabel/, 'label Tahun dan Tingkatan mesti disokong');
-assert.match(html, /id="age-scroll-picker"/, 'pemilih umur pilihan mesti boleh dileret pada telefon');
-assert.match(html, /scroll-snap-type:\s*x mandatory/, 'pemilih aras mesti berhenti kemas pada setiap pilihan');
+assert.match(html, /id="age-picker-trigger"/, 'semua umur mesti disembunyikan dalam satu butang pemilih');
+assert.match(html, /\.age-picker-trigger[\s\S]*background:rgba\(255,255,255,\.24\)/, 'butang umur mesti menggunakan latar lutsinar');
+assert.match(html, /\.age-picker-wrap\.open \.toggle-grade-box/, 'senarai umur mesti dibuka hanya selepas butang ditekan');
 assert.match(html, /function scrollSelectedAgeIntoView/, 'umur aktif mesti dibawa masuk ke kawasan yang kelihatan');
+assert.match(html, /if \(!STATE\.age\)[\s\S]*toggleAgePicker\(true\)/, 'umur mesti diwajibkan sebelum memasuki permainan');
+assert.match(html, /STATE\.grade = STATE\.age \? Math\.max\(1, Math\.min\(11, STATE\.age - 6\)\)/, 'aras soalan mesti dipetakan terus daripada umur');
 assert.match(html, /11:\s*\['Fungsi'/, 'Roda Matematik Tingkatan 5 mesti tersedia');
 assert.match(html, /const FRIEND_HOUSES_KEY/, 'senarai ID rumah kawan mesti disimpan pada peranti');
 assert.match(html, /id="world-owner-label"/, 'pentas 3D mesti memaparkan nama pemilik rumah');
@@ -95,7 +98,7 @@ assert.match(html, /function refreshNeighborhoodIslands/, 'pulau rumah kawan mes
 assert.match(html, /openFriendIslandFromPointer/, 'pulau rumah kawan mesti boleh diketuk untuk dilawati');
 assert.match(html, /function enterFriendHouseVisit/, 'rumah kawan mesti boleh dibuka dalam paparan 3D');
 assert.match(html, /Mod Lihat Sahaja/, 'lawatan rumah kawan mesti ditandakan sebagai lihat sahaja');
-assert.match(html, /if\(V3\.visitingEntry\)return showToast\('🔒 Mod Lihat Sahaja/, 'alat bina mesti dikunci ketika melihat rumah kawan');
+assert.match(html, /if\(V3\.visitingEntry\)return showToast\(uiMessage\('🔒 Mod Lihat Sahaja/, 'alat bina mesti dikunci ketika melihat rumah kawan');
 assert.match(html, /function exitFriendHouseVisit/, 'pengguna mesti boleh kembali ke rumah sendiri');
 assert.match(html, /id="view-arcade"/, 'paparan Arked XP mesti tersedia');
 assert.match(html, /function launchArcadeGame/, 'Arked XP mesti boleh dibuka dari dunia binaan');
@@ -140,8 +143,26 @@ for (const language of ['ms', 'en', 'zh', 'ta']) {
   assert.match(html, new RegExp(`data-language="${language}"`), `pilihan bahasa ${language} mesti tersedia`);
 }
 assert.match(html, /const LANGUAGE_STORAGE_KEY/, 'pilihan bahasa mesti disimpan pada peranti');
+assert.match(html, /const LANGUAGE_STORAGE_KEY = 'mathbina_language_v2'/, 'versi pilihan bahasa baharu mesti mengelakkan tetapan lama mengatasi English');
+assert.match(html, /let currentLanguage = 'en'/, 'English mesti menjadi bahasa asal');
+assert.match(html, /return I18N\[value\] \? value : 'en'/, 'bahasa simpanan yang tidak sah mesti kembali kepada English');
+assert.match(html, /<html lang="en">/, 'dokumen awal mesti menggunakan English');
 assert.match(html, /function applyLanguage/, 'bahasa pilihan mesti digunakan pada antara muka');
 assert.match(html, /document\.documentElement\.lang=/, 'bahasa dokumen mesti dikemas kini untuk kebolehcapaian');
 assert.match(html, /button\.textContent=t\(message\.id\)/, 'mesej Chat Ceria mesti diterjemahkan mengikut bahasa penerima');
+assert.match(html, /class="live-chat-panel" id="modal-safe-chat"/, 'chat langsung mesti menjadi panel terapung yang tidak menutup permainan');
+assert.match(html, /id="safe-chat-live-status"/, 'status sambungan LIVE mesti dipaparkan');
+assert.match(html, /setTimeout\(refreshSafeChat,1500\)/, 'mesej rakan mesti dikemas kini hampir secara langsung');
+assert.match(html, /updateSafeChatLiveStatus\('chatConnected'\)/, 'panel mesti menunjukkan apabila sambungan chat aktif');
+assert.match(html, /type === 'cobblestone'[\s\S]*DodecahedronGeometry/, 'batu cobblestone mesti menggunakan gugusan batu bersegi dan bukan kubus');
+assert.match(html, /type === 'oak_log'[\s\S]*CylinderGeometry/, 'kayu balak mesti berbentuk silinder dengan hujung kayu');
+assert.match(html, /type === 'bush_leaf'[\s\S]*leaf_bright/, 'semak mesti mempunyai gugusan daun berlapis');
+assert.match(html, /type === 'stone_wall'[\s\S]*face\.scale\.set/, 'dinding batu mesti mempunyai permukaan batu 3D');
+assert.match(html, /type === 'swimming_pool'[\s\S]*water_blue/, 'kolam mesti mempunyai bingkai dan permukaan air tersendiri');
+assert.equal((html.match(/type === 'car_red'/g) || []).length, 1, 'kereta hanya boleh mempunyai satu model 3D muktamad');
+assert.equal((html.match(/type === 'chimney'/g) || []).length, 1, 'cerobong hanya boleh mempunyai satu model 3D muktamad');
+assert.equal((html.match(/type === 'garden_lamp'/g) || []).length, 1, 'lampu taman hanya boleh mempunyai satu model 3D muktamad');
+assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti digunakan untuk grafik yang lebih jelas');
+assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
-console.log('Semua semakan smoke MathBina V22 lulus.');
+console.log('Semua semakan smoke MathBina V26 lulus.');
