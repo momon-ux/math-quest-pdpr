@@ -260,6 +260,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      min-width: 0;
     }
     .form-label {
       font-size: 0.72rem;
@@ -269,11 +270,30 @@
       letter-spacing: 0.5px;
     }
     .toggle-grade-box {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: flex;
       gap: 8px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 3px 3px 7px;
+      touch-action: pan-x;
+      width: 100%;
+      max-width: 100%;
+    }
+    .toggle-grade-box::-webkit-scrollbar {
+      display: none;
+    }
+    .grade-scroll-hint {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: #64748b;
+      text-align: right;
     }
     .grade-chip {
+      flex: 0 0 auto;
+      min-width: 112px;
       padding: 8px;
       font-size: 0.88rem;
       font-weight: 900;
@@ -283,6 +303,7 @@
       color: #475569;
       cursor: pointer;
       box-shadow: 0 3px 0 #94a3b8;
+      scroll-snap-align: start;
     }
     .grade-chip.active {
       background: var(--gold-yellow);
@@ -1095,8 +1116,8 @@
       .community-owner { font-size:.78rem; }
       .community-meta { font-size:.6rem; }
       .community-open-hint { display:none; }
-      .toggle-grade-box { grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
-      .grade-chip { min-width:0; padding:7px 3px; font-size:.7rem; }
+      .toggle-grade-box { gap:6px; margin-right:-10px; padding-right:18px; }
+      .grade-chip { min-width:96px; padding:8px 10px; font-size:.72rem; }
       .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
       .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
       .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
@@ -1193,7 +1214,7 @@
       .lobby-header { flex-direction: column; }
       .credit-badge { max-width: none; width: 100%; text-align: left; }
       .lobby-row-grid { gap: 7px; }
-      .grade-chip { padding: 6px; font-size: 0.76rem; }
+      .grade-chip { min-width:92px; padding:7px 9px; font-size:0.72rem; }
       .custom-select { min-height: 42px; }
       .sandbox-action-ribbon { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .build-status-card { max-width: 82%; }
@@ -1418,8 +1439,8 @@
         <div class="lobby-row-grid">
           <!-- Pilih Tahun -->
           <div class="form-group">
-            <label class="form-label">1. PILIH TAHUN / TINGKATAN ANDA:</label>
-            <div class="toggle-grade-box">
+            <label class="form-label">1. PILIH ARAS ANDA:</label>
+            <div class="toggle-grade-box" id="grade-scroll-picker" role="listbox" aria-label="Pilih tahun atau tingkatan">
               <button class="grade-chip active" id="chip-year-1" onclick="selectLobbyGrade(1)">1️⃣ TAHUN 1</button>
               <button class="grade-chip" id="chip-year-2" onclick="selectLobbyGrade(2)">2️⃣ TAHUN 2</button>
               <button class="grade-chip" id="chip-year-3" onclick="selectLobbyGrade(3)">3️⃣ TAHUN 3</button>
@@ -1432,6 +1453,7 @@
               <button class="grade-chip" id="chip-form-4" onclick="selectLobbyGrade(10)">🎓 TINGKATAN 4</button>
               <button class="grade-chip" id="chip-form-5" onclick="selectLobbyGrade(11)">🎓 TINGKATAN 5</button>
             </div>
+            <div class="grade-scroll-hint" aria-hidden="true">← Leret untuk lihat semua aras →</div>
           </div>
 
           <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
@@ -2006,9 +2028,17 @@
       { id: 'car_red', name: 'Kereta Sukan Merah', cat: 'vehicle', price: 250, icon: '🚗', color: '#dc2626' },
       { id: 'helicopter', name: 'Helikopter Penyelamat', cat: 'vehicle', price: 400, icon: '🚁', color: '#ea580c' },
       { id: 'rocket', name: 'Roket Angkasa', cat: 'vehicle', price: 500, icon: '🚀', color: '#6366f1' },
+      { id: 'sky_cloud', name: 'Awan Gebu', cat: 'vehicle', price: 120, icon: '☁️', color: '#e2e8f0' },
+      { id: 'sky_sun', name: 'Matahari Ceria', cat: 'vehicle', price: 180, icon: '☀️', color: '#facc15' },
+      { id: 'sky_moon', name: 'Bulan Malam', cat: 'vehicle', price: 180, icon: '🌙', color: '#cbd5e1' },
       { id: 'pet_cat', name: 'Kucing Comel', cat: 'vehicle', price: 100, icon: '🐱', color: '#f97316' },
       { id: 'pet_dino', name: 'Dinosaur Jinak', cat: 'vehicle', price: 250, icon: '🦖', color: '#16a34a' }
     ];
+    const AIRBORNE_TYPES = new Set(['helicopter', 'rocket', 'sky_cloud', 'sky_sun', 'sky_moon']);
+
+    function isAirborneType(type) {
+      return AIRBORNE_TYPES.has(type);
+    }
 
     /* ==============================================================
        BANK SOALAN KSSR SEMAKAN (TAHUN 5 & TAHUN 6)
@@ -2487,18 +2517,33 @@ const COMBAT_BANK = {
       restoreDeviceProfile();
       for (let level = 1; level <= 11; level++) {
         const id = level <= 6 ? `chip-year-${level}` : `chip-form-${level - 6}`;
-        document.getElementById(id)?.classList.toggle('active', level === STATE.grade);
+        const chip = document.getElementById(id);
+        chip?.classList.toggle('active', level === STATE.grade);
+        chip?.setAttribute('aria-selected', String(level === STATE.grade));
       }
+      requestAnimationFrame(() => scrollSelectedGradeIntoView(false));
       updateProfilePreview();
       updateStudentSaveStatus();
+    }
+
+    function scrollSelectedGradeIntoView(smooth = true) {
+      const id = STATE.grade <= 6 ? `chip-year-${STATE.grade}` : `chip-form-${STATE.grade - 6}`;
+      document.getElementById(id)?.scrollIntoView({
+        behavior: smooth ? 'smooth' : 'auto',
+        block: 'nearest',
+        inline: 'center'
+      });
     }
 
     function selectLobbyGrade(g) {
       STATE.grade = Math.max(1, Math.min(11, Number(g) || 1));
       for (let level = 1; level <= 11; level++) {
         const id = level <= 6 ? `chip-year-${level}` : `chip-form-${level - 6}`;
-        document.getElementById(id)?.classList.toggle('active', level === STATE.grade);
+        const chip = document.getElementById(id);
+        chip?.classList.toggle('active', level === STATE.grade);
+        chip?.setAttribute('aria-selected', String(level === STATE.grade));
       }
+      scrollSelectedGradeIntoView();
       updateSchoolClassInput();
       updateProfilePreview();
       audio.init(); audio.playPop();
@@ -2837,7 +2882,9 @@ const COMBAT_BANK = {
           document.getElementById('btn-eraser-mode').classList.remove('active');
           renderPaletteDock();
           audio.init(); audio.playPop();
-          showToast(`Alatan Aktif: ${meta.name}`);
+          showToast(isAirborneType(k)
+            ? `✈️ ${meta.name}: pilih aras, kemudian ketuk petak untuk letak bebas.`
+            : `Alatan Aktif: ${meta.name}`);
         };
         slot.innerHTML = `
           <div class="slot-qty">${qty}</div>
@@ -3984,6 +4031,9 @@ const COMBAT_BANK = {
         stone_light: mat(0xcbd5e1), lamp_dark: mat(0x334155), lamp_glow: mat(0xfef08a),
         tyre: mat(0x111827), metal: mat(0x94a3b8), car_red: mat(0xdc2626),
         rescue_orange: mat(0xea580c), rocket_blue: mat(0x6366f1), rocket_red: mat(0xef4444),
+        sky_sun: new THREE.MeshBasicMaterial({ color:0xfacc15 }),
+        sky_sun_ray: new THREE.MeshBasicMaterial({ color:0xf97316 }),
+        sky_moon: mat(0xe2e8f0), sky_moon_crater: mat(0x94a3b8),
         cat_orange: mat(0xf97316), cat_cream: mat(0xffedd5), cat_dark: mat(0x7c2d12),
         dino_green: mat(0x16a34a), dino_light: mat(0x86efac), dino_dark: mat(0x14532d),
         gold_main: new THREE.MeshStandardMaterial({ color:0xfacc15, metalness:.88, roughness:.20 }),
@@ -4199,6 +4249,28 @@ const COMBAT_BANK = {
         add(new THREE.BoxGeometry(.10,.30,.42),red,-.25,-.29,0);
         add(new THREE.BoxGeometry(.10,.30,.42),red,.25,-.29,0);
         add(new THREE.SphereGeometry(.09,10,8),preview?material:V3.materials.window_glass,0,.10,.22);
+      } else if (type === 'sky_cloud') {
+        const cloud = preview ? material : V3.materials.cloud_white;
+        add(new THREE.SphereGeometry(.28,12,8),cloud,-.28,-.08,0).scale.set(1.25,.72,.82);
+        add(new THREE.SphereGeometry(.34,12,8),cloud,0,.02,0).scale.set(1.25,.82,.88);
+        add(new THREE.SphereGeometry(.26,12,8),cloud,.31,-.09,0).scale.set(1.20,.68,.78);
+        add(new THREE.SphereGeometry(.20,10,7),cloud,.05,.23,0);
+      } else if (type === 'sky_sun') {
+        const sun = preview ? material : V3.materials.sky_sun;
+        const ray = preview ? material : V3.materials.sky_sun_ray;
+        add(new THREE.SphereGeometry(.32,18,12),sun,0,0,0);
+        for(let i=0;i<12;i++){
+          const angle=i*Math.PI/6;
+          const beam=add(new THREE.BoxGeometry(.08,.25,.08),ray,Math.sin(angle)*.47,Math.cos(angle)*.47,0);
+          beam.rotation.z=-angle;
+        }
+      } else if (type === 'sky_moon') {
+        const moon = preview ? material : V3.materials.sky_moon;
+        const crater = preview ? material : V3.materials.sky_moon_crater;
+        add(new THREE.SphereGeometry(.34,18,12),moon,0,0,0);
+        add(new THREE.SphereGeometry(.07,10,7),crater,-.13,.12,.29).scale.set(1,.75,.35);
+        add(new THREE.SphereGeometry(.05,10,7),crater,.14,-.08,.31).scale.set(1,.8,.35);
+        add(new THREE.SphereGeometry(.035,9,6),crater,.04,.18,.32).scale.set(1,.8,.35);
       } else if (type === 'pet_cat') {
         const orange = preview ? material : V3.materials.cat_orange;
         const cream = preview ? material : V3.materials.cat_cream;
@@ -4378,7 +4450,7 @@ const COMBAT_BANK = {
       const type=STATE.activeBlockId;
       if(!type)return showToast('Pilih blok dari alatan dahulu.');
       if((STATE.inventory[type]||0)<=0)return showToast('Blok ini telah habis. Beli lagi di kedai.');
-      if(cell.y>0&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.');
+      if(cell.y>0&&!isAirborneType(type)&&!findVoxel(cell.x,cell.y-1,cell.z))return showToast('⚠️ Blok perlu sokongan di bawah. Turun aras dan bina dahulu.');
       let placementRotation=STATE.blockRotation;
       if(type.startsWith('door_')||type==='window_glass'){
         const attachment=getOpeningAttachment(cell,existing);
@@ -4509,6 +4581,9 @@ const COMBAT_BANK = {
       if (id.includes('stone') || id.includes('cobble') || id.includes('concrete')) return { top:'#cbd5e1', left:'#64748b', right:'#94a3b8' };
       if (id.includes('gold')) return { top:'#fde047', left:'#ca8a04', right:'#eab308' };
       if (id.includes('diamond')) return { top:'#5eead4', left:'#0f766e', right:'#14b8a6' };
+      if (id.includes('sky_cloud')) return { top:'#fff', left:'#cbd5e1', right:'#e2e8f0' };
+      if (id.includes('sky_sun')) return { top:'#fde047', left:'#ea580c', right:'#f59e0b' };
+      if (id.includes('sky_moon')) return { top:'#e2e8f0', left:'#64748b', right:'#94a3b8' };
       if (id.includes('door')) return { top:'#b45309', left:'#78350f', right:'#92400e' };
       if (id.includes('fence')) return { top:'#fff', left:'#cbd5e1', right:'#e2e8f0' };
       if (id.includes('car') || id.includes('rocket')) return { top:'#fb7185', left:'#be123c', right:'#e11d48' };
@@ -4615,15 +4690,15 @@ const COMBAT_BANK = {
       let shared = [];
       let friends = [];
       try {
-        const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=7`, { cache:'no-store' });
+        const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=8`, { cache:'no-store' });
         if (response.ok) {
           const data = await response.json();
           shared = (Array.isArray(data) ? data : data.entries || []).filter(item=>item && item.approved !== false);
         }
       } catch (error) {}
       try { friends = (await Promise.all(getFriendUserIds().map(fetchFriendHouse))).filter(Boolean); } catch(e) {}
-      COMMUNITY_GALLERY = [...friends, ...shared, ...getLocalGalleryEntries()];
-      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Pasukan MathBina', yearLabel:'Rumah Contoh', avatar:'🏡', approved:true, voxels:[] }];
+      COMMUNITY_GALLERY = [...friends, ...shared];
+      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Cikgu Mohammad Fikrey bin Abdul Gapar', yearLabel:'Rumah Contoh Rasmi', avatar:'👨‍🏫', approved:true, voxels:[] }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
       clearInterval(communityGalleryTimer);

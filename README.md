@@ -4,6 +4,20 @@
 
 ---
 
+## 🌟 Versi V13 — Objek Udara Bebas
+
+Helikopter, roket angkasa, awan, matahari dan bulan boleh diletakkan tanpa blok sokongan pada mana-mana aras yang dipilih. Peraturan sokongan masih dikekalkan untuk dinding, bumbung, perabot dan semua objek darat supaya binaan rumah kekal kemas.
+
+---
+
+## 🌟 Versi V12 — Pemilih Aras Mesra Telefon
+
+Pemilihan Tahun 1 hingga Tingkatan 5 kini menggunakan satu baris mendatar yang boleh dileret kiri dan kanan. Susun atur ini menjimatkan ruang pada skrin telefon tanpa membuang mana-mana aras pembelajaran.
+
+Galeri awal hanya memaparkan satu rumah contoh rasmi, iaitu **Rumah Cikgu Mohammad Fikrey bin Abdul Gapar**. Rumah murid tidak dipaparkan secara automatik dan hanya ditambah apabila pengguna memasukkan ID MathBina rakannya sendiri.
+
+---
+
 ## 🌟 Versi V11 — ID Pengguna, Galeri Kawan & Simpanan Awan Firebase
 
 Versi ini menjana ID awam MathBina untuk setiap pemain, membenarkan sekolah, kelas dan aras diedit, menyokong soalan Tahun 1 hingga Tingkatan 5, serta menyimpan binaan ke Firebase secara automatik. Rumah kawan boleh ditambah menggunakan ID tanpa menunggu kelulusan guru. Setiap rumah diikat kepada identiti tanpa nama peranti pemilik supaya orang lain hanya boleh melihat dan tidak boleh menimpa binaannya.
