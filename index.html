@@ -3504,6 +3504,13 @@ const COMBAT_BANK = {
         stairs_wood: mat(0xa16207), fence_white: mat(0xf8fafc),
         tree_trunk: mat(0x7c3f19), tree_shade: mat(0x218739),
         tree_leaf_dark: mat(0x166534), tree_leaf_light: mat(0x4ade80),
+        rose_red: mat(0xe11d48), flower_yellow: mat(0xfacc15), flower_center: mat(0x713f12),
+        stem_green: mat(0x15803d), water_blue: mat(0x38bdf8, { transparent:true, opacity:.78 }),
+        stone_light: mat(0xcbd5e1), lamp_dark: mat(0x334155), lamp_glow: mat(0xfef08a),
+        tyre: mat(0x111827), metal: mat(0x94a3b8), car_red: mat(0xdc2626),
+        rescue_orange: mat(0xea580c), rocket_blue: mat(0x6366f1), rocket_red: mat(0xef4444),
+        cat_orange: mat(0xf97316), cat_cream: mat(0xffedd5), cat_dark: mat(0x7c2d12),
+        dino_green: mat(0x16a34a), dino_light: mat(0x86efac), dino_dark: mat(0x14532d),
         default: mat(0x9a6a35), preview: mat(0x4ade80, { transparent:true, opacity:.42 })
       };
     }
@@ -3588,6 +3595,111 @@ const COMBAT_BANK = {
         add(new THREE.DodecahedronGeometry(.36,0), leafDark,-.34,.32,.04);
         add(new THREE.DodecahedronGeometry(.36,0), leaf,.34,.32,-.04);
         add(new THREE.DodecahedronGeometry(.34,0), leafLight,0,.68,.02);
+      } else if (type === 'rose_flower' || type === 'sunflower') {
+        const stem = preview ? material : V3.materials.stem_green;
+        const petal = preview ? material : (type === 'rose_flower' ? V3.materials.rose_red : V3.materials.flower_yellow);
+        add(new THREE.CylinderGeometry(.045,.055,.62,8), stem,0,-.17,0);
+        add(new THREE.BoxGeometry(.22,.08,.10), stem,-.13,-.12,0);
+        add(new THREE.BoxGeometry(.22,.08,.10), stem,.13,.02,0);
+        if (type === 'rose_flower') {
+          add(new THREE.DodecahedronGeometry(.23,0), petal,0,.22,0);
+          add(new THREE.DodecahedronGeometry(.14,0), petal,-.14,.26,.02);
+          add(new THREE.DodecahedronGeometry(.14,0), petal,.14,.26,-.02);
+        } else {
+          for (let i=0;i<8;i++) {
+            const a=i*Math.PI/4;
+            add(new THREE.SphereGeometry(.105,8,6),petal,Math.cos(a)*.20,.24+Math.sin(a)*.20,0);
+          }
+          add(new THREE.SphereGeometry(.13,10,8),preview?material:V3.materials.flower_center,0,.24,.03);
+        }
+      } else if (type === 'fountain') {
+        const stone = preview ? material : V3.materials.stone_light;
+        const water = preview ? material : V3.materials.water_blue;
+        add(new THREE.CylinderGeometry(.45,.48,.16,16),stone,0,-.40,0);
+        add(new THREE.CylinderGeometry(.35,.37,.05,16),water,0,-.29,0);
+        add(new THREE.CylinderGeometry(.09,.12,.58,12),stone,0,-.05,0);
+        add(new THREE.CylinderGeometry(.26,.10,.10,12),stone,0,.24,0);
+        add(new THREE.CylinderGeometry(.19,.02,.30,12),water,0,.40,0);
+      } else if (type === 'garden_lamp') {
+        const dark = preview ? material : V3.materials.lamp_dark;
+        add(new THREE.CylinderGeometry(.16,.22,.10,10),dark,0,-.43,0);
+        add(new THREE.CylinderGeometry(.055,.07,.63,10),dark,0,-.10,0);
+        add(new THREE.BoxGeometry(.30,.28,.30),preview?material:V3.materials.lamp_glow,0,.26,0);
+        add(new THREE.ConeGeometry(.25,.17,4),dark,0,.49,0);
+      } else if (type === 'chimney') {
+        const brick = preview ? material : V3.materials.brick_wall;
+        add(new THREE.BoxGeometry(.46,.82,.46),brick,0,-.06,0);
+        add(new THREE.BoxGeometry(.58,.12,.58),brick,0,.41,0);
+      } else if (type === 'bicycle') {
+        const tyre = preview ? material : V3.materials.tyre;
+        const metal = preview ? material : V3.materials.metal;
+        const wheel = (x) => {
+          const w=add(new THREE.TorusGeometry(.25,.045,8,18),tyre,x,-.20,0);
+          w.rotation.y=Math.PI/2;
+          for(let i=0;i<4;i++){
+            const spoke=add(new THREE.BoxGeometry(.025,.47,.025),metal,x,-.20,0);
+            spoke.rotation.z=i*Math.PI/4;
+          }
+        };
+        wheel(-.31); wheel(.31);
+        const frameA=add(new THREE.BoxGeometry(.055,.52,.055),preview?material:V3.materials.car_red,-.04,-.03,0);frameA.rotation.z=.72;
+        const frameB=add(new THREE.BoxGeometry(.055,.48,.055),preview?material:V3.materials.car_red,.15,-.06,0);frameB.rotation.z=-.75;
+        add(new THREE.BoxGeometry(.34,.055,.055),preview?material:V3.materials.car_red,.02,-.14,0);
+        add(new THREE.BoxGeometry(.24,.045,.08),metal,.16,.23,0);
+      } else if (type === 'car_red') {
+        const body = preview ? material : V3.materials.car_red;
+        const tyre = preview ? material : V3.materials.tyre;
+        add(new THREE.BoxGeometry(.88,.27,.55),body,0,-.20,0);
+        add(new THREE.BoxGeometry(.50,.25,.48),body,-.05,.06,0);
+        add(new THREE.BoxGeometry(.25,.18,.50),preview?material:V3.materials.window_glass,.03,.08,0);
+        [[-.28,-.38],[.28,-.38],[-.28,.38],[.28,.38]].forEach(([x,z])=>{
+          const wheel=add(new THREE.CylinderGeometry(.13,.13,.10,12),tyre,x,-.34,z);wheel.rotation.x=Math.PI/2;
+        });
+      } else if (type === 'helicopter') {
+        const body = preview ? material : V3.materials.rescue_orange;
+        const metal = preview ? material : V3.materials.metal;
+        add(new THREE.SphereGeometry(.30,12,8),body,-.12,-.02,0).scale.set(1.2,.78,.78);
+        add(new THREE.BoxGeometry(.58,.12,.12),body,.26,-.02,0);
+        add(new THREE.BoxGeometry(.18,.34,.08),body,.52,.08,0);
+        add(new THREE.BoxGeometry(.82,.035,.08),metal,-.10,.34,0);
+        add(new THREE.BoxGeometry(.08,.035,.82),metal,-.10,.34,0);
+        add(new THREE.BoxGeometry(.04,.42,.42),metal,.58,.11,0).rotation.x=Math.PI/4;
+        add(new THREE.BoxGeometry(.64,.045,.045),metal,-.08,-.34,0);
+      } else if (type === 'rocket') {
+        const body = preview ? material : V3.materials.rocket_blue;
+        const red = preview ? material : V3.materials.rocket_red;
+        add(new THREE.CylinderGeometry(.22,.26,.62,12),body,0,-.06,0);
+        add(new THREE.ConeGeometry(.23,.34,12),red,0,.42,0);
+        add(new THREE.ConeGeometry(.15,.22,10),preview?material:V3.materials.flower_yellow,0,-.50,0).rotation.x=Math.PI;
+        add(new THREE.BoxGeometry(.10,.30,.42),red,-.25,-.29,0);
+        add(new THREE.BoxGeometry(.10,.30,.42),red,.25,-.29,0);
+        add(new THREE.SphereGeometry(.09,10,8),preview?material:V3.materials.window_glass,0,.10,.22);
+      } else if (type === 'pet_cat') {
+        const orange = preview ? material : V3.materials.cat_orange;
+        const cream = preview ? material : V3.materials.cat_cream;
+        const dark = preview ? material : V3.materials.cat_dark;
+        add(new THREE.SphereGeometry(.28,12,8),orange,0,-.12,0).scale.set(.90,1.12,.72);
+        add(new THREE.SphereGeometry(.23,12,8),orange,0,.24,.02);
+        add(new THREE.ConeGeometry(.10,.20,4),orange,-.14,.45,.01).rotation.z=-.12;
+        add(new THREE.ConeGeometry(.10,.20,4),orange,.14,.45,.01).rotation.z=.12;
+        add(new THREE.SphereGeometry(.065,8,6),cream,0,.20,.21);
+        add(new THREE.SphereGeometry(.025,8,6),dark,-.08,.29,.21);
+        add(new THREE.SphereGeometry(.025,8,6),dark,.08,.29,.21);
+        add(new THREE.SphereGeometry(.025,8,6),dark,0,.22,.27);
+        [-.15,.15].forEach(x=>{add(new THREE.CylinderGeometry(.055,.06,.28,8),orange,x,-.38,.04);});
+        const tail=add(new THREE.TorusGeometry(.20,.045,7,14,Math.PI*1.4),orange,.25,-.06,-.13);tail.rotation.y=Math.PI/2;
+      } else if (type === 'pet_dino') {
+        const green = preview ? material : V3.materials.dino_green;
+        const light = preview ? material : V3.materials.dino_light;
+        const dark = preview ? material : V3.materials.dino_dark;
+        add(new THREE.SphereGeometry(.30,12,8),green,-.05,-.14,0).scale.set(1.18,.80,.72);
+        add(new THREE.CylinderGeometry(.11,.17,.42,9),green,.22,.10,0).rotation.z=-.25;
+        add(new THREE.SphereGeometry(.20,10,7),green,.31,.31,0).scale.set(1.15,.75,.72);
+        add(new THREE.ConeGeometry(.16,.58,9),green,-.43,-.05,0).rotation.z=Math.PI/2;
+        add(new THREE.SphereGeometry(.07,8,6),light,.37,.24,.14);
+        add(new THREE.SphereGeometry(.025,8,6),dark,.39,.35,.16);
+        [-.19,.17].forEach(x=>{add(new THREE.CylinderGeometry(.065,.075,.28,8),green,x,-.38,.02);});
+        for(let i=0;i<4;i++) add(new THREE.ConeGeometry(.07,.16,4),light,-.25+i*.13,.17,0).rotation.z=Math.PI;
       } else {
         add(new THREE.BoxGeometry(.96,.96,.96));
       }

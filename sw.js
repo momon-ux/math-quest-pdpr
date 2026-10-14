@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v4';
+const CACHE_NAME = 'mathbina-v5-model-objek';
 const APP_SHELL = [
   './',
   './index.html',
