@@ -3035,10 +3035,10 @@
         <div class="safe-chat-feed" id="safe-chat-feed" aria-live="polite">
           <div class="safe-chat-empty">Memuatkan mesej pemain…</div>
         </div>
-        <div class="safe-chat-input-bar">
+        <form class="safe-chat-input-bar" onsubmit="event.preventDefault();sendFreeChatMessage();">
           <input type="text" id="input-free-chat" maxlength="120" placeholder="Taip mesej bebas anda di sini…" data-i18n-placeholder="chatInputPlaceholder" autocomplete="off" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFreeChatMessage();}">
-          <button type="button" id="btn-send-free-chat" onclick="sendFreeChatMessage()" data-i18n="sendChat">Kirim 🚀</button>
-        </div>
+          <button type="submit" id="btn-send-free-chat" onclick="sendFreeChatMessage()" data-i18n="sendChat">Kirim 🚀</button>
+        </form>
         <div style="font-size:.64rem;font-weight:900;color:#475569;" data-i18n="chooseMessage">Pilihan pantas / Quick phrases:</div>
         <div class="safe-chat-choices" id="safe-chat-choices"></div>
         <div style="font-size:.58rem;color:#64748b;line-height:1.35;" data-i18n="chatSafety">💬 Ruang sembang bebas MathBina! Berbual secara berhemah dan kongsi idea binaan bersama rakan.</div>
@@ -7917,14 +7917,14 @@ const COMBAT_BANK = {
     }
 
     function scheduleCloudSave(delay = 4200) {
-      if (cloudRestoreInProgress || !STATE.userId || !STATE.ownerSecret || !(STATE.voxels || []).length) return;
+      if (cloudRestoreInProgress || !STATE.userId || !STATE.ownerSecret || (!(STATE.voxels || []).length && !(STATE.chatMessages || []).length)) return;
       clearTimeout(cloudSaveTimer);
       cloudSaveTimer = setTimeout(syncStudentToCloud, delay);
     }
 
     async function syncStudentToCloud() {
       const identity = await getCloudIdentity();
-      if (!identity || !(STATE.voxels || []).length) return false;
+      if (!identity || (!(STATE.voxels || []).length && !(STATE.chatMessages || []).length)) return false;
       try {
         const auth = await ensureCloudAuth();
         const response = await fetch(cloudHouseUrl(identity.lookupKey, auth.idToken), {
