@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "privacy": "Paparkan nama ringkas atau nama samaran, kelas dan avatar sahaja. Semua rumah mesti diluluskan guru.",
+  "privacy": "Paparkan nama ringkas atau nama samaran, tahun dan avatar sahaja. Semua rumah mesti diluluskan guru.",
   "entries": [
     {
       "id": "rumah-contoh-mathbina",
       "displayName": "Cikgu Fikrey",
-      "className": "Rumah Contoh Rasmi",
+      "yearLabel": "Rumah Contoh Rasmi",
       "avatar": "👨‍🏫",
       "approved": true,
       "voxels": []

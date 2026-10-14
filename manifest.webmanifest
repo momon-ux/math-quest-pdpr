@@ -1,7 +1,7 @@
 {
   "name": "MathBina",
   "short_name": "MathBina",
-  "description": "Permainan matematik dan pembina rumah voxel 3D untuk murid Tahun 5 dan Tahun 6.",
+  "description": "Permainan matematik dan pembina rumah voxel 3D untuk murid Tahun 1 hingga Tahun 6 dari pelbagai sekolah.",
   "id": "/math-quest-pdpr/",
   "start_url": "./",
   "scope": "./",

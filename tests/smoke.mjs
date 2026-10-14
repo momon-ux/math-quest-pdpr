@@ -50,5 +50,14 @@ assert.match(html, /function drawGalleryHouse/, 'pratonton rumah galeri mesti di
 assert.match(html, /Rumah diluluskan guru/, 'galeri mesti menerangkan proses kelulusan guru');
 assert.ok(Array.isArray(gallery.entries) && gallery.entries.length > 0, 'galeri pusat mesti mempunyai sekurang-kurangnya satu rumah rasmi');
 assert.ok(gallery.entries.every(entry => entry.approved !== false), 'rumah galeri pusat mesti diluluskan');
+for (let year = 1; year <= 6; year++) {
+  assert.match(html, new RegExp(`id="chip-year-${year}"`), `pilihan Tahun ${year} mesti tersedia`);
+}
+assert.doesNotMatch(html, /id="select-lobby-class"/, 'senarai kelas tetap tidak boleh dipaksa kepada murid pelbagai sekolah');
+assert.match(html, /id="input-school-name"/, 'nama sekolah pilihan mesti boleh ditaip sendiri');
+assert.match(html, /id="input-class-name"/, 'nama kelas pilihan mesti boleh ditaip sendiri');
+assert.match(html, /function getWheelSlicesForGrade/, 'Roda Sifir mesti berubah mengikut aras tahun');
+assert.match(html, /grade === 1[\s\S]*TAMBAH CERIA/, 'soalan Tahun 1 mesti menggunakan operasi asas');
+assert.match(html, /COMBAT_BANK\[`grade\$\{STATE\.grade\}`\]/, 'Math Shooter mesti memilih bank soalan mengikut tahun');
 
-console.log('Semua semakan smoke MathBina V6 lulus.');
+console.log('Semua semakan smoke MathBina V7 lulus.');

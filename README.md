@@ -1,10 +1,10 @@
-# 🏡 MathBina: Misi Bina Rumah Impian PDPR (Tahun 5 & 6)
-### *Aplikasi Gamifikasi Pendidikan Matematik Rendah KSSR Semakan — SK Ranggu Tawau*
+# 🏡 MathBina: Misi Bina Rumah Impian (Tahun 1 hingga Tahun 6)
+### *Aplikasi Gamifikasi Pendidikan Matematik Rendah untuk murid dari pelbagai sekolah*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
 
 ---
 
-## 🌟 Versi V5 — Pelan Rumah Starter Minecraft (Reddit Starter House) & Enjin Voxel 3D
+## 🌟 Versi V7 — Galeri Komuniti & Soalan Mengikut Aras Tahun 1–6
 
 Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berdasarkan Rujukan Rasmi Reddit: *A simple starter house*)** yang membolehkan murid melihat rumah impian terbentuk sempurna secara 3D:
 
@@ -31,13 +31,15 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 4. **Ekonomi Syiling & 2 Minigame Menjana XP (Zero Reading Fatigue):**
    - 🎯 **Math Shooter (Meriam Belon):** Meriam kartun hijau membidik belon-belon terapung. Tembak belon dengan jawapan matematik yang betul -> **POP! 🎈💥** meletup dan dapat **+100 XP**!
    - 🎡 **Roda Sifir & Operasi (Spinning Wheel):** Putar roda bertuah 8 segmen, selesaikan soalan kilat dalam 15 saat -> dapat **+150 XP** sehingga **+300 XP (Jackpot)**!
+   - Kedua-dua minigame menjana soalan mengikut aras tahun yang dipilih, daripada operasi asas Tahun 1 hingga operasi bergabung Tahun 6.
 
 5. **Penyimpanan Perkembangan Murid (Persistent Auto-Save):**
    - Binaan 3D, baki syiling, markah XP, dan kemajuan fasa rumah setiap murid disimpan secara automatik dalam `localStorage`.
 
-6. **Pilihan 8 Kelas SK Ranggu Tawau:**
-   - **Tahun 5:** `5 Khoir`, `5 Mumtaz`, `5 Jayyid`, `5 Iltizam`
-   - **Tahun 6:** `6 Khoir`, `6 Mumtaz`, `6 Jayyid`, `6 Iltizam`
+6. **Terbuka kepada semua sekolah:**
+   - Pilihan **Tahun 1 hingga Tahun 6**.
+   - Nama sekolah dan kelas ialah ruangan pilihan yang boleh ditaip sendiri tanpa senarai kelas tetap.
+   - Galeri awam hanya memaparkan nama ringkas, tahun dan avatar bagi rumah yang diluluskan guru.
 
 7. **📅 Papan Skor Kalendar PDPR & Eksport Excel (CSV):**
    - Menyenaraikan semua rekod murid mengikut kalendar sesi PDPR.
@@ -51,7 +53,7 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 ## 🕹️ Aliran Permainan (Gameplay Loop)
 
 ```
-[LOBBY: PILIH TAHUN & KELAS SK RANGGU + TAIP NAMA]
+[LOBBY: PILIH TAHUN 1–6 + TAIP NAMA; SEKOLAH/KELAS PILIHAN]
                   │
                   ▼
    🏡 DUNIA 3D MINECRAFT STARTER HOUSE (THREE.JS)

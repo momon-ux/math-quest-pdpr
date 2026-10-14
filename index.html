@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>MathBina — Misi Bina Rumah Impian SK Ranggu Tawau</title>
+  <title>MathBina — Misi Bina Rumah Impian Tahun 1 hingga 6</title>
   <meta name="application-name" content="MathBina">
   <meta name="apple-mobile-web-app-title" content="MathBina">
   <link rel="manifest" href="manifest.webmanifest">
@@ -264,7 +264,7 @@
     }
     .toggle-grade-box {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
     }
     .grade-chip {
@@ -1089,6 +1089,8 @@
       .community-owner { font-size:.78rem; }
       .community-meta { font-size:.6rem; }
       .community-open-hint { display:none; }
+      .toggle-grade-box { grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+      .grade-chip { min-width:0; padding:7px 3px; font-size:.7rem; }
       .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
       .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
       .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
@@ -1388,7 +1390,7 @@
             <img class="brand-app-icon" src="mathbina-icon-192.png" alt="Ikon MathBina">
             <div>
               <div class="game-title-logo">MATHBINA</div>
-              <div class="sub-badge">Misi Bina Rumah Impian — SK Ranggu Tawau</div>
+              <div class="sub-badge">Misi Bina Rumah Impian — Matematik Tahun 1 hingga 6</div>
             </div>
           </div>
           <div class="credit-badge">
@@ -1410,19 +1412,24 @@
         <div class="lobby-row-grid">
           <!-- Pilih Tahun -->
           <div class="form-group">
-            <label class="form-label">1. PILIH TAHUN:</label>
+            <label class="form-label">1. PILIH TAHUN ANDA:</label>
             <div class="toggle-grade-box">
-              <button class="grade-chip active" id="chip-year-5" onclick="selectLobbyGrade(5)">📘 TAHUN 5</button>
-              <button class="grade-chip" id="chip-year-6" onclick="selectLobbyGrade(6)">📙 TAHUN 6</button>
+              <button class="grade-chip active" id="chip-year-1" onclick="selectLobbyGrade(1)">1️⃣ TAHUN 1</button>
+              <button class="grade-chip" id="chip-year-2" onclick="selectLobbyGrade(2)">2️⃣ TAHUN 2</button>
+              <button class="grade-chip" id="chip-year-3" onclick="selectLobbyGrade(3)">3️⃣ TAHUN 3</button>
+              <button class="grade-chip" id="chip-year-4" onclick="selectLobbyGrade(4)">4️⃣ TAHUN 4</button>
+              <button class="grade-chip" id="chip-year-5" onclick="selectLobbyGrade(5)">5️⃣ TAHUN 5</button>
+              <button class="grade-chip" id="chip-year-6" onclick="selectLobbyGrade(6)">6️⃣ TAHUN 6</button>
             </div>
           </div>
 
-          <!-- Pilih Kelas -->
+          <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
           <div class="form-group">
-            <label class="form-label">2. PILIH KELAS:</label>
-            <select id="select-lobby-class" class="custom-select" onchange="onLobbyClassChanged(this.value)">
-              <!-- Populated dynamically -->
-            </select>
+            <label class="form-label">2. SEKOLAH & KELAS (PILIHAN):</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" oninput="updateSchoolClassInput()">
+              <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" oninput="updateSchoolClassInput()">
+            </div>
           </div>
         </div>
 
@@ -1439,7 +1446,7 @@
             <div>
               <div class="profile-preview-kicker">Profil Pemain MathBina</div>
               <div class="profile-preview-name" id="profile-preview-name">Nama anda akan muncul di sini</div>
-              <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • 5 Khoir</div>
+              <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • Tahun 1</div>
             </div>
           </div>
         </div>
@@ -1486,7 +1493,7 @@
           <div class="avatar-icon-bubble" id="hud-sandbox-avatar">👷‍♂️</div>
           <div>
             <div class="hud-name-label" id="hud-sandbox-name">Murid</div>
-            <span class="hud-class-tag" id="hud-sandbox-class">5 Khoir</span>
+            <span class="hud-class-tag" id="hud-sandbox-class">Tahun 1</span>
           </div>
         </div>
 
@@ -1771,7 +1778,7 @@
         <div class="modal-head">
           <div>
             <div class="modal-title">🏘️ Galeri Rumah Kawan-Kawan</div>
-            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;">Nama ringkas, kelas dan avatar sahaja • Rumah diluluskan guru</div>
+            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;">Nama ringkas, tahun dan avatar sahaja • Rumah diluluskan guru</div>
           </div>
           <button class="modal-close-btn" onclick="closeCommunityGallery()">✕</button>
         </div>
@@ -1802,7 +1809,7 @@
     <div class="game-modal-overlay" id="modal-admin-panel">
       <div class="game-modal-box" style="max-width: 680px;">
         <div class="modal-head">
-          <div class="modal-title">⚙️ Alat Semakan Rekod Guru — SK Ranggu</div>
+          <div class="modal-title">⚙️ Alat Semakan Rekod Guru MathBina</div>
           <button class="modal-close-btn" onclick="closeAdminPanel()">✕</button>
         </div>
 
@@ -1936,28 +1943,6 @@
     }
 
     /* ==============================================================
-       SENARAI KELAS SAHAJA — MURID MENGISI NAMA SENDIRI
-       ============================================================== */
-    const DEFAULT_CLASSES = {
-      grade5: ["5 Khoir", "5 Mumtaz", "5 Jayyid", "5 Iltizam"],
-      grade6: ["6 Khoir", "6 Mumtaz", "6 Jayyid", "6 Iltizam"]
-    };
-
-    const CLASS_STORAGE_KEY = "MATH_QUEST_CLASSES_SK_RANGGU_V4";
-
-    function getClasses() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(CLASS_STORAGE_KEY) || "null");
-        if (saved && Array.isArray(saved.grade5) && Array.isArray(saved.grade6)) return saved;
-      } catch (error) {}
-      return JSON.parse(JSON.stringify(DEFAULT_CLASSES));
-    }
-
-    function saveClasses(classes) {
-      try { localStorage.setItem(CLASS_STORAGE_KEY, JSON.stringify(classes)); } catch (error) {}
-    }
-
-    /* ==============================================================
        KATALOG BLOK, RUMAH, TAMAN & KENDERAAN (XP BLOCK SHOP)
        ============================================================== */
     const BLOCK_CATALOG = [
@@ -2064,7 +2049,84 @@ const COMBAT_BANK = {
       ]
     };
 
+    function makeNumberQuestion(tag, question, correct, delta = 1, suffix = '') {
+      const values = [correct, correct + delta, Math.max(0, correct - delta)];
+      if (values[2] === values[0]) values[2] = correct + (delta * 2);
+      const correctLabel = `${Number(correct).toLocaleString('ms-MY')}${suffix}`;
+      const opts = [...new Set(values.map(value => `${Number(value).toLocaleString('ms-MY')}${suffix}`))];
+      while (opts.length < 3) opts.push(`${Number(correct + delta * (opts.length + 1)).toLocaleString('ms-MY')}${suffix}`);
+      opts.sort(() => Math.random() - 0.5);
+      return { tag, q: question, opts, ans: opts.indexOf(correctLabel) };
+    }
+
     function generateDynamicQuestion(grade) {
+      grade = Math.max(1, Math.min(6, Number(grade) || 1));
+      if (grade === 1) {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const a = Math.floor(Math.random() * 10) + 1;
+          const b = Math.floor(Math.random() * (20 - a)) + 1;
+          return makeNumberQuestion('TAMBAH CERIA', `${a} + ${b} =`, a + b, 1);
+        }
+        if (type === 1) {
+          const a = Math.floor(Math.random() * 15) + 5;
+          const b = Math.floor(Math.random() * a) + 1;
+          return makeNumberQuestion('TOLAK CERIA', `${a} − ${b} =`, a - b, 1);
+        }
+        const start = Math.floor(Math.random() * 15) + 1;
+        return makeNumberQuestion('SAMBUNG NOMBOR', `${start}, ${start + 1}, ${start + 2}, ___`, start + 3, 1);
+      }
+
+      if (grade === 2) {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const a = Math.floor(Math.random() * 50) + 10;
+          const b = Math.floor(Math.random() * (100 - a)) + 1;
+          return makeNumberQuestion('TAMBAH PANTAS', `${a} + ${b} =`, a + b, 5);
+        }
+        if (type === 1) {
+          const table = [2, 5, 10][Math.floor(Math.random() * 3)];
+          const mult = Math.floor(Math.random() * 9) + 1;
+          return makeNumberQuestion('SIFIR ASAS', `${table} × ${mult} =`, table * mult, table);
+        }
+        const ringgit = Math.floor(Math.random() * 8) + 2;
+        const sen = ringgit * 100;
+        return makeNumberQuestion('WANG MUDAH', `RM${ringgit} bersamaan berapa sen?`, sen, 100, ' sen');
+      }
+
+      if (grade === 3) {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const a = Math.floor(Math.random() * 9) + 2;
+          const b = Math.floor(Math.random() * 9) + 2;
+          return makeNumberQuestion('SIFIR HEBAT', `${a} × ${b} =`, a * b, a);
+        }
+        if (type === 1) {
+          const divisor = Math.floor(Math.random() * 8) + 2;
+          const quotient = Math.floor(Math.random() * 9) + 2;
+          return makeNumberQuestion('BAHAGI TEPAT', `${divisor * quotient} ÷ ${divisor} =`, quotient, 1);
+        }
+        const half = Math.floor(Math.random() * 20) + 2;
+        return makeNumberQuestion('PECAHAN MUDAH', `½ daripada ${half * 2} =`, half, 2);
+      }
+
+      if (grade === 4) {
+        const type = Math.floor(Math.random() * 3);
+        if (type === 0) {
+          const a = Math.floor(Math.random() * 80) + 20;
+          const b = Math.floor(Math.random() * 8) + 2;
+          return makeNumberQuestion('DARAB PANTAS', `${a} × ${b} =`, a * b, b * 5);
+        }
+        if (type === 1) {
+          const side = Math.floor(Math.random() * 12) + 3;
+          return makeNumberQuestion('PERIMETER', `Perimeter segi empat sama bersisi ${side} cm =`, side * 4, 4, ' cm');
+        }
+        const thousands = Math.floor(Math.random() * 8) + 1;
+        const hundreds = Math.floor(Math.random() * 9);
+        const value = thousands * 1000 + hundreds * 100;
+        return makeNumberQuestion('NILAI TEMPAT', `${thousands} ribu + ${hundreds} ratus =`, value, 100);
+      }
+
       if (grade === 6) {
         const type = Math.floor(Math.random() * 3);
         if (type === 0) {
@@ -2119,8 +2181,10 @@ const COMBAT_BANK = {
     const GRID_ROWS = 8;
 
     const STATE = {
-      grade: 5,
-      className: '5 Khoir',
+      grade: 1,
+      schoolName: '',
+      classLabel: '',
+      className: 'Tahun 1',
       studentName: '',
       avatar: '👷‍♂️',
       avatarTitle: 'Arkitek Cilik',
@@ -2210,6 +2274,16 @@ const COMBAT_BANK = {
         const legacyClass = saved?.className || (separator >= 0 ? legacyKey.slice(separator + 1) : '');
         return getStudentSaveKey(legacyName, legacyClass) === canonicalKey;
       });
+      if (!matches.length) {
+        // Laluan pemulihan untuk rekod versi lama yang menggunakan nama kelas
+        // tetap (contohnya 5 Khoir). Padankan nama dan tahun supaya rumah lama
+        // masih ditemui selepas kelas/sekolah dijadikan ruangan pilihan.
+        Object.entries(all).forEach(([legacyKey, saved]) => {
+          if (normalizeStudentIdentity(saved?.studentName) === normalizeStudentIdentity(name) && Number(saved?.grade) === Number(STATE.grade)) {
+            matches.push([legacyKey, saved]);
+          }
+        });
+      }
       if (!matches.length) return null;
       matches.sort((a, b) => String(b[1]?.lastUpdated || '').localeCompare(String(a[1]?.lastUpdated || '')));
       return { key: matches[0][0], saved: matches[0][1] };
@@ -2300,43 +2374,34 @@ const COMBAT_BANK = {
        LOBBY SETUP & EVENT HANDLERS
        ============================================================== */
     function initLobbyUI() {
-      updateLobbyClassDropdown(STATE.grade);
-      updateProfilePreview();
-    }
-
-    function selectLobbyGrade(g) {
-      STATE.grade = g;
-      document.getElementById('chip-year-5').classList.toggle('active', g === 5);
-      document.getElementById('chip-year-6').classList.toggle('active', g === 6);
-      updateLobbyClassDropdown(g);
-      updateProfilePreview();
-      audio.init(); audio.playPop();
-    }
-
-    function updateLobbyClassDropdown(grade) {
-      const classes = getClasses();
-      const gradeKey = grade === 5 ? 'grade5' : 'grade6';
-      const classList = classes[gradeKey] || [];
-      const select = document.getElementById('select-lobby-class');
-      if (!select) return;
-
-      select.innerHTML = '';
-      classList.forEach((cls) => {
-        const opt = document.createElement('option');
-        opt.value = cls;
-        opt.textContent = cls;
-        select.appendChild(opt);
-      });
-
-      if (classList.length > 0) {
-        STATE.className = classList[0];
-        select.value = classList[0];
+      for (let year = 1; year <= 6; year++) {
+        document.getElementById(`chip-year-${year}`)?.classList.toggle('active', year === STATE.grade);
       }
       updateProfilePreview();
     }
 
-    function onLobbyClassChanged(cls) {
-      STATE.className = cls;
+    function selectLobbyGrade(g) {
+      STATE.grade = Math.max(1, Math.min(6, Number(g) || 1));
+      for (let year = 1; year <= 6; year++) {
+        document.getElementById(`chip-year-${year}`)?.classList.toggle('active', year === STATE.grade);
+      }
+      updateSchoolClassInput();
+      updateProfilePreview();
+      audio.init(); audio.playPop();
+    }
+
+    function cleanOptionalProfileText(value, limit) {
+      return String(value || '').replace(/[<>]/g, '').replace(/\s+/g, ' ').trimStart().slice(0, limit).trim();
+    }
+
+    function updateSchoolClassInput() {
+      const schoolInput = document.getElementById('input-school-name');
+      const classInput = document.getElementById('input-class-name');
+      STATE.schoolName = cleanOptionalProfileText(schoolInput?.value, 80);
+      STATE.classLabel = cleanOptionalProfileText(classInput?.value, 40);
+      if (schoolInput && schoolInput.value !== STATE.schoolName) schoolInput.value = STATE.schoolName;
+      if (classInput && classInput.value !== STATE.classLabel) classInput.value = STATE.classLabel;
+      STATE.className = [`Tahun ${STATE.grade}`, STATE.classLabel, STATE.schoolName].filter(Boolean).join(' • ');
       updateProfilePreview();
       updateStudentSaveStatus();
     }
@@ -2347,7 +2412,7 @@ const COMBAT_BANK = {
       const meta = document.getElementById('profile-preview-meta');
       if (avatar) avatar.textContent = STATE.avatar;
       if (name) name.textContent = STATE.studentName || 'Nama anda akan muncul di sini';
-      if (meta) meta.textContent = `${STATE.avatarTitle} • ${STATE.className}`;
+      if (meta) meta.textContent = `${STATE.avatarTitle} • Tahun ${STATE.grade}`;
     }
 
     function updateStudentNameInput(value) {
@@ -2386,6 +2451,7 @@ const COMBAT_BANK = {
 
     function enterBuildingPlot() {
       audio.init();
+      updateSchoolClassInput();
       const nameInput = document.getElementById('input-student-name');
       updateStudentNameInput(nameInput ? nameInput.value : STATE.studentName);
       if (STATE.studentName.length < 3) {
@@ -2403,7 +2469,7 @@ const COMBAT_BANK = {
       // Update HUD
       document.getElementById('hud-sandbox-avatar').textContent = STATE.avatar;
       document.getElementById('hud-sandbox-name').textContent = STATE.studentName;
-      document.getElementById('hud-sandbox-class').textContent = STATE.className;
+      document.getElementById('hud-sandbox-class').textContent = `Tahun ${STATE.grade}`;
 
       updateSandboxHud();
       renderPaletteDock();
@@ -2793,9 +2859,10 @@ const COMBAT_BANK = {
     }
 
     function loadNextShooterQuestion() {
-      const pool = STATE.grade === 5 ? COMBAT_BANK.grade5 : COMBAT_BANK.grade6;
-      let q = pool[Math.floor(Math.random() * pool.length)];
-      if (Math.random() > 0.5) q = generateDynamicQuestion(STATE.grade);
+      const pool = COMBAT_BANK[`grade${STATE.grade}`] || [];
+      let q = pool.length && Math.random() <= 0.5
+        ? pool[Math.floor(Math.random() * pool.length)]
+        : generateDynamicQuestion(STATE.grade);
 
       STATE.shooter.currentQ = q;
 
@@ -3004,8 +3071,21 @@ const COMBAT_BANK = {
     /* ==============================================================
        MINIGAME 2: RODA SIFIR & OPERASI (SPINNING WHEEL CARI XP)
        ============================================================== */
+    function getWheelSlicesForGrade(grade) {
+      const slices = {
+        1: ['Tambah', 'Tolak', 'Sambung Nombor', 'Banding Nombor', 'Wang Mudah', 'Masa Mudah', 'Bentuk', '🌟 JACKPOT'],
+        2: ['Tambah', 'Tolak', 'Sifir 2', 'Sifir 5', 'Sifir 10', 'Wang', 'Masa', '🌟 JACKPOT'],
+        3: ['Sifir 2', 'Sifir 3', 'Sifir 4', 'Sifir 5', 'Bahagi', 'Pecahan', 'Masa', '🌟 JACKPOT'],
+        4: ['Sifir 6', 'Sifir 7', 'Sifir 8', 'Sifir 9', 'Bahagi', 'Pecahan', 'Ukuran', '🌟 JACKPOT'],
+        5: ['Sifir 6', 'Sifir 7', 'Sifir 8', 'Sifir 9', 'Pecahan', 'Peratus', 'Wang', '🌟 JACKPOT'],
+        6: ['Operasi Bergabung', 'Nombor Juta', 'Pecahan', 'Peratus', 'Nisbah', 'Wang', 'Ukuran', '🌟 JACKPOT']
+      };
+      return slices[Math.max(1, Math.min(6, Number(grade) || 1))];
+    }
+
     function launchMathWheel() {
       saveCurrentStudentState();
+      STATE.wheel.slices = getWheelSlicesForGrade(STATE.grade);
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-wheel').style.display = 'flex';
 
@@ -3143,9 +3223,10 @@ const COMBAT_BANK = {
         qText = `${num} × ${mult} = ?`;
         opts = [`${correctAns}`, `${correctAns + num}`, `${Math.max(2, correctAns - num)}`].sort(() => Math.random() - 0.5);
       } else if (topic.includes("JACKPOT")) {
-        qText = `10 × 25 + 50 = ? (BONUS JACKPOT!)`;
-        correctAns = 300;
-        opts = ["300", "280", "320"].sort(() => Math.random() - 0.5);
+        const qObj = generateDynamicQuestion(STATE.grade);
+        qText = `${qObj.q} (BONUS JACKPOT TAHUN ${STATE.grade}!)`;
+        opts = qObj.opts;
+        correctAns = qObj.opts[qObj.ans];
       } else {
         const qObj = generateDynamicQuestion(STATE.grade);
         qText = qObj.q;
@@ -3365,7 +3446,7 @@ const COMBAT_BANK = {
         "Blok Terbina", "Tarikh", "Masa", "Catatan Guru"
       ];
       const example = [
-        "CONTOH - PADAM BARIS INI", "Nama Murid", "5 Khoir", "5", "150", "150",
+        "CONTOH - PADAM BARIS INI", "Nama Murid", "Nama kelas (pilihan)", "1", "150", "150",
         "0", "0", "1", "0", "0", "YYYY-MM-DD", "HH:MM", ""
       ];
       const quote = value => '"' + String(value).replace(/"/g, '""') + '"';
@@ -3465,6 +3546,8 @@ const COMBAT_BANK = {
         version: 3,
         grade: STATE.grade,
         className: STATE.className,
+        schoolName: STATE.schoolName,
+        classLabel: STATE.classLabel,
         studentName: STATE.studentName,
         avatar: STATE.avatar,
         avatarTitle: STATE.avatarTitle,
@@ -3487,6 +3570,9 @@ const COMBAT_BANK = {
       const match = findStudentSave(name, cls);
       const saved = match?.saved;
       if (saved) {
+        STATE.grade = Math.max(1, Math.min(6, Number(saved.grade) || STATE.grade));
+        STATE.schoolName = saved.schoolName || STATE.schoolName || '';
+        STATE.classLabel = saved.classLabel || STATE.classLabel || '';
         STATE.xp = Number(saved.xp ?? 150);
         STATE.coins = Number(saved.coins ?? Math.max(150, Math.floor(STATE.xp / 2)));
         STATE.inventory = saved.inventory || { wood_wall: 6, roof_red: 3, door_wood: 1 };
@@ -4135,7 +4221,7 @@ const COMBAT_BANK = {
       return Object.entries(getAllSaves()).map(([key,saved])=>({
         id:`local-${key}`,
         displayName:galleryDisplayName(saved?.studentName),
-        className:saved?.className || 'MathBina',
+        yearLabel:`Tahun ${Math.max(1,Math.min(6,Number(saved?.grade)||1))}`,
         avatar:saved?.avatar || '👷‍♂️',
         voxels:Array.isArray(saved?.voxels) ? saved.voxels : migrateLegacyGrid(saved?.grid),
         localOnly:true,
@@ -4146,14 +4232,14 @@ const COMBAT_BANK = {
     async function loadCommunityGallery() {
       let shared = [];
       try {
-        const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=6`, { cache:'no-store' });
+        const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=7`, { cache:'no-store' });
         if (response.ok) {
           const data = await response.json();
           shared = (Array.isArray(data) ? data : data.entries || []).filter(item=>item && item.approved !== false);
         }
       } catch (error) {}
       COMMUNITY_GALLERY = [...shared, ...getLocalGalleryEntries()];
-      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Pasukan MathBina', className:'Rumah Contoh', avatar:'🏡', approved:true, voxels:[] }];
+      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Pasukan MathBina', yearLabel:'Rumah Contoh', avatar:'🏡', approved:true, voxels:[] }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
       clearInterval(communityGalleryTimer);
@@ -4172,7 +4258,7 @@ const COMBAT_BANK = {
       const owner = document.getElementById('community-spotlight-owner');
       const meta = document.getElementById('community-spotlight-meta');
       if (owner) owner.textContent = `${entry.avatar || '🏡'} Rumah ${entry.displayName || 'Arkitek MathBina'}`;
-      if (meta) meta.textContent = `${entry.className || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : 'Diluluskan guru'}`;
+      if (meta) meta.textContent = `${entry.yearLabel || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : 'Diluluskan guru'}`;
       const backdrop = document.getElementById('community-backdrop');
       if (backdrop && canvas) {
         backdrop.style.backgroundImage = `url(${canvas.toDataURL('image/jpeg',.78)})`;
@@ -4192,7 +4278,7 @@ const COMBAT_BANK = {
         const avatar=document.createElement('div');avatar.className='community-card-avatar';avatar.textContent=entry.avatar||'🏡';
         const labels=document.createElement('div');
         const name=document.createElement('div');name.className='community-card-name';name.textContent=`Rumah ${entry.displayName||'Arkitek MathBina'}`;
-        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.className||'MathBina'} • ${entry.localOnly?'Peranti ini':'Diluluskan guru'}`;
+        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.yearLabel||'MathBina'} • ${entry.localOnly?'Peranti ini':'Diluluskan guru'}`;
         labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
       });
       modal.style.display='flex';
