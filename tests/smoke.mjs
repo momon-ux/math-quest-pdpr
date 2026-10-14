@@ -215,10 +215,8 @@ assert.match(html, /minXp:\s*900/, 'fasa pelan rumah mesti mempunyai syarat kela
 assert.match(html, /STATE\.coins\s*=\s*Math\.max\(0,\s*\(STATE\.coins\s*\|\|\s*0\)\s*-\s*totalCost\)/, 'bina rumah lengkap mesti menolak jumlah syiling sebenar');
 assert.match(html, /class="camera-quick-controls"/, 'kawalan pantas kamera 3D mesti wujud pada kanvas');
 assert.match(html, /function quickSelectSKRanggu/, 'pilihan pantas kelas SK Ranggu mesti disediakan');
-assert.match(html, /function downloadArchitectCertificate/, 'penjana sijil arkitek digital mesti disediakan');
-assert.match(html, /function drawKpmLogo/, 'logo rasmi KPM mesti dilukis pada sijil');
-assert.match(html, /function drawSkRangguLogo/, 'lencana rasmi SK Ranggu Tawau mesti dilukis pada sijil');
-assert.match(html, /function drawGoldSeal/, 'cop mohor emas cemerlang mesti dilukis pada sijil');
+assert.doesNotMatch(html, /downloadArchitectCertificate/, 'tiada fungsi sijil digital mengikut permintaan');
+assert.doesNotMatch(html, /btn-certificate/, 'tiada butang sijil dalam ribbon alatan');
 
 assert.match(html, /function toggleGraphicsQuality/, 'suis kualiti grafik mesti disediakan');
 assert.match(html, /function copyHouseShareLink/, 'pautan kongsi rumah kawan mesti disediakan');
