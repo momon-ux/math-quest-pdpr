@@ -254,4 +254,11 @@ assert.match(html, /function launchArcadeGame\(\)\s*\{[^}]*closeSafeChat\(\);\s*
 assert.match(html, /\.name-entry-status\.has-progress/, 'status kemajuan lama mesti mempunyai penggayaan kompak beraksen');
 assert.match(html, /status\.classList\.(add|remove)\('has-progress'\)/, 'status simpanan mesti mengaktifkan kelas kompak');
 
+assert.match(html, /class="[^"]*profile-action-btn/, 'butang tindakan profil mesti menyokong mod ikon kompak');
+assert.match(html, /class="[^"]*cam-icon/, 'kawalan kamera 3D mesti mempunyai ikon pantas');
+assert.match(html, /class="[^"]*ribbon-icon/, 'ribbon alatan mesti mempunyai ikon yang mencerminkan fungsi');
+assert.match(html, /class="[^"]*btn-dock-buy-more/, 'butang beli lagi blok mesti mempunyai penggayaan mesra sentuhan');
+assert.match(html, /\.cam-btn \.cam-label[\s\S]*?display:\s*none\s*!important;/, 'label teks kamera mesti disembunyikan pada telefon');
+assert.match(html, /\.ribbon-btn \.ribbon-label[\s\S]*?display:\s*none\s*!important;/, 'label teks alatan mesti disembunyikan pada telefon untuk paparan ikon bersih');
+
 console.log('Semua semakan smoke MathBina V32 lulus.');

@@ -801,6 +801,37 @@
       transform: translateY(2px);
       box-shadow: none;
     }
+    .ribbon-btn .mobile-only { display: none; }
+    .profile-action-btn .p-btn-icon { display: none; }
+    .profile-action-btn .p-badge {
+      font-size: 0.65rem;
+      background: #0284c7;
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 6px;
+      font-weight: 900;
+      margin-left: 3px;
+    }
+    .btn-dock-buy-more {
+      padding: 6px 10px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      background: #fef08a;
+      border: 1.5px dashed #ca8a04;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.1s ease;
+    }
+    .btn-dock-buy-more:hover {
+      background: #fde047;
+      transform: scale(1.03);
+    }
+    .btn-dock-buy-more .dock-buy-icon { display: none; }
+    .btn-back-home .back-home-icon { display: none; }
     .mobile-more-toggle { display: none; background:#334155; border-color:#0f172a; color:#fff; }
     .mobile-more-toggle.active { background:#facc15; border-color:#92400e; color:#713f12; }
     .btn-xp-shooter {
@@ -1796,9 +1827,37 @@
       .profile-preview-kicker { display: none; }
       .profile-preview-name { font-size: 0.88rem; }
       .profile-preview-meta { font-size: 0.62rem; margin-top: 1px; }
-      .profile-id-row { gap: 4px; margin-top: 3px; }
-      .profile-id-code { padding: 2px 6px; font-size: 0.62rem; border-radius: 6px; }
+      .profile-id-row {
+        gap: 5px;
+        margin-top: 3px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .profile-id-code {
+        padding: 3px 6px;
+        font-size: 0.62rem;
+        border-radius: 6px;
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       .mini-action-btn { padding: 3px 6px; font-size: 0.58rem; border-radius: 6px; }
+      .profile-action-btn {
+        padding: 4px 6px !important;
+        font-size: 0.85rem !important;
+        min-width: 32px;
+        height: 30px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        gap: 2px;
+      }
+      .profile-action-btn .p-btn-icon { display: inline-flex !important; font-size: 0.95rem; }
+      .profile-action-btn .p-btn-label { display: none !important; }
+      .profile-action-btn .p-badge { font-size: 0.58rem; padding: 0 4px; border-radius: 4px; }
       .avatar-picker-row { display: grid; grid-template-columns: 1fr 1fr; }
       .avatar-chip { max-width: none; min-height: 42px; padding: 5px 7px; font-size: 0.68rem; }
       .btn-enter-world { min-height: 48px; padding: 9px; font-size: 0.92rem; }
@@ -1842,15 +1901,26 @@
       .ribbon-btn {
         width: 100%;
         min-width: 0;
-        min-height: 35px;
+        min-height: 38px;
         justify-content: center;
-        padding: 3px 4px;
-        font-size: 0.5rem;
-        line-height: 1.05;
-        white-space: normal;
-        text-align: center;
+        padding: 2px !important;
+        font-size: 1.25rem;
+        line-height: 1;
         border-width: 1.5px;
-        border-radius: 7px;
+        border-radius: 8px;
+      }
+      .ribbon-btn .ribbon-icon {
+        font-size: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ribbon-btn .ribbon-label, .ribbon-btn .desktop-only {
+        display: none !important;
+      }
+      .ribbon-btn .mobile-only {
+        display: inline-flex !important;
+        font-size: 1.25rem;
       }
       .sandbox-action-ribbon .mobile-secondary { display:none; }
       .sandbox-action-ribbon.expanded .mobile-secondary { display:flex; }
@@ -1873,6 +1943,25 @@
       #build-level-label { min-width: 43px; font-size: 0.55rem; }
       .sandbox-canvas-wrapper { padding: 2px 3px; }
       .voxel-stage { min-height: 150px; border-width: 2px; }
+      .camera-quick-controls {
+        top: 6px;
+        right: 6px;
+        gap: 4px;
+      }
+      .cam-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0 !important;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem !important;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+      }
+      .cam-btn .cam-label, .cam-btn span[data-i18n] {
+        display: none !important;
+      }
       .rotation-indicator { right:7px; bottom:30px; width:142px; padding:6px; }
       .block-editor-btn { min-height:32px; }
       .rotation-indicator-angle { font-size:.5rem; }
@@ -1880,6 +1969,40 @@
       .sandbox-bottom-dock { height: 58px; gap: 5px; padding: 0 5px; }
       .dock-title-label { display: none; }
       .palette-item-slot { min-width: 48px; height: 48px; }
+      .btn-dock-buy-more {
+        padding: 4px 10px !important;
+        font-size: 1.1rem !important;
+        min-width: 44px;
+        height: 44px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+      }
+      .btn-dock-buy-more .dock-buy-icon { display: inline-flex !important; }
+      .btn-dock-buy-more .dock-buy-label { display: none !important; }
+      .btn-back-home {
+        padding: 5px 9px !important;
+        font-size: 1rem !important;
+        min-width: 36px;
+        height: 36px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-back-home .back-home-icon { display: inline-flex !important; }
+      .btn-back-home .back-home-text { display: none !important; }
+      .btn-sifir-chart-toggle {
+        padding: 5px 9px !important;
+        font-size: 1rem !important;
+        min-width: 36px;
+        height: 36px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-sifir-chart-toggle .chart-btn-icon { display: inline-flex !important; font-size: 1.1rem; }
+      .btn-sifir-chart-toggle .chart-btn-label { display: none !important; }
       .developer-credit-bar { font-size: 0.52rem; }
 
       .game-modal-overlay { padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom)); }
@@ -1960,7 +2083,22 @@
         display:grid; height:auto; min-height:40px; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px;
         padding:3px max(6px, env(safe-area-inset-right)) 3px max(6px, env(safe-area-inset-left)); overflow:visible;
       }
-      .ribbon-btn { width:100%; min-width:0; min-height:31px; padding:3px 5px; font-size:.5rem; white-space:normal; justify-content:center; }
+      .ribbon-btn {
+        width:100%; min-width:0; min-height:31px; padding:2px !important; font-size:1.05rem; justify-content:center;
+      }
+      .ribbon-btn .ribbon-icon {
+        font-size: 1.15rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ribbon-btn .ribbon-label, .ribbon-btn .desktop-only {
+        display: none !important;
+      }
+      .ribbon-btn .mobile-only {
+        display: inline-flex !important;
+        font-size: 1.15rem;
+      }
       .sandbox-action-ribbon .mobile-secondary { display:none; }
       .sandbox-action-ribbon.expanded .mobile-secondary { display:flex; }
       .btn-xp-shooter { order:1; }
@@ -1982,6 +2120,24 @@
       #build-level-label { min-width:40px; font-size:.5rem; }
       .sandbox-canvas-wrapper { padding:2px max(3px, env(safe-area-inset-right)) 2px max(3px, env(safe-area-inset-left)); }
       .voxel-stage { min-height:90px; border-width:2px; border-radius:9px; }
+      .camera-quick-controls {
+        top: 5px;
+        right: 5px;
+        gap: 3px;
+      }
+      .cam-btn {
+        width: 28px;
+        height: 28px;
+        padding: 0 !important;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem !important;
+        border-radius: 6px;
+      }
+      .cam-btn .cam-label, .cam-btn span[data-i18n] {
+        display: none !important;
+      }
       .rotation-indicator { right:6px; bottom:20px; width:138px; padding:5px; }
       .block-editor-btn { min-height:28px; }
       .rotation-indicator-angle { font-size:.46rem; }
@@ -1994,6 +2150,17 @@
       .sandbox-bottom-dock { height:46px; gap:4px; padding:0 max(5px, env(safe-area-inset-right)) 0 max(5px, env(safe-area-inset-left)); }
       .dock-title-label { display:none; }
       .palette-item-slot { min-width:40px; height:40px; }
+      .btn-dock-buy-more {
+        padding: 2px 6px !important;
+        font-size: .85rem !important;
+        min-width: 36px;
+        height: 36px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-dock-buy-more .dock-buy-icon { display: inline-flex !important; }
+      .btn-dock-buy-more .dock-buy-label { display: none !important; }
       .developer-credit-bar { font-size:.45rem; line-height:1.1; padding-top:1px; padding-bottom:calc(1px + env(safe-area-inset-bottom)); }
 
       .game-modal-overlay { align-items:center; padding:max(4px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left)); }
@@ -2355,11 +2522,18 @@
               <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • Aras umum</div>
               <div class="profile-id-row">
                 <span class="profile-id-code" id="profile-user-id">ID created after entry</span>
-                <button class="mini-action-btn" type="button" onclick="copyUserId()" data-i18n="copyId">📋 Copy ID</button>
-                <button class="mini-action-btn" type="button" onclick="openDeviceAccounts()"><span data-i18n="deviceAccounts">👥 Device Accounts</span> (<span id="device-account-count">0</span>)</button>
-                <button class="mini-action-btn" type="button" onclick="createNewDeviceAccount()" data-i18n="newAccount">＋ New Account</button>
-                <button class="mini-action-btn" type="button" onclick="copyHouseShareLink()" title="Salin pautan untuk kawan melawat">🔗 Kongsi Pautan Rumah</button>
-                
+                <button class="mini-action-btn profile-action-btn" type="button" onclick="copyUserId()" title="Salin ID MathBina" aria-label="Salin ID MathBina">
+                  <span class="p-btn-icon" aria-hidden="true">📋</span><span class="p-btn-label" data-i18n="copyId">📋 Copy ID</span>
+                </button>
+                <button class="mini-action-btn profile-action-btn" type="button" onclick="openDeviceAccounts()" title="Akaun Peranti MathBina" aria-label="Akaun Peranti">
+                  <span class="p-btn-icon" aria-hidden="true">👥</span><span class="p-btn-label" data-i18n="deviceAccounts">👥 Device Accounts</span><span class="p-badge" id="device-account-count">0</span>
+                </button>
+                <button class="mini-action-btn profile-action-btn" type="button" onclick="createNewDeviceAccount()" title="Cipta Akaun Baharu" aria-label="Cipta Akaun Baharu">
+                  <span class="p-btn-icon" aria-hidden="true">➕</span><span class="p-btn-label" data-i18n="newAccount">＋ New Account</span>
+                </button>
+                <button class="mini-action-btn profile-action-btn" type="button" onclick="copyHouseShareLink()" title="Salin pautan untuk kawan melawat" aria-label="Kongsi Pautan Rumah">
+                  <span class="p-btn-icon" aria-hidden="true">🔗</span><span class="p-btn-label">🔗 Kongsi Pautan</span>
+                </button>
               </div>
             </div>
           </div>
@@ -2439,39 +2613,43 @@
 
       <!-- Action Ribbon -->
       <div class="sandbox-action-ribbon">
-        <button class="ribbon-btn btn-xp-shooter" onclick="closeMobileTools(); launchMathShooter()">
-          <span>🎯</span> <span data-i18n="mathShooter">CARI XP: MATH SHOOTER</span>
+        <button class="ribbon-btn btn-xp-shooter" onclick="closeMobileTools(); launchMathShooter()" title="Cari XP: Math Shooter" aria-label="Math Shooter">
+          <span class="ribbon-icon">🎯</span> <span class="ribbon-label" data-i18n="mathShooter">CARI XP: MATH SHOOTER</span>
         </button>
-        <button class="ribbon-btn btn-xp-wheel" onclick="closeMobileTools(); launchMathWheel()">
-          <span>🎡</span> <span data-i18n="mathWheel">CARI XP: RODA SIFIR</span>
+        <button class="ribbon-btn btn-xp-wheel" onclick="closeMobileTools(); launchMathWheel()" title="Cari XP: Roda Sifir" aria-label="Roda Sifir">
+          <span class="ribbon-icon">🎡</span> <span class="ribbon-label" data-i18n="mathWheel">CARI XP: RODA SIFIR</span>
         </button>
-        <button class="ribbon-btn btn-xp-arcade" onclick="closeMobileTools(); launchArcadeGame()">
-          <span>🕹️</span> <span data-i18n="arcade">ARKED XP</span>
+        <button class="ribbon-btn btn-xp-arcade" onclick="closeMobileTools(); launchArcadeGame()" title="Arked XP" aria-label="Arked XP">
+          <span class="ribbon-icon">🕹️</span> <span class="ribbon-label" data-i18n="arcade">ARKED XP</span>
         </button>
-        <button class="ribbon-btn btn-shop" onclick="closeMobileTools(); openShopModal()">
-          <span>🛒</span> <span data-i18n="shop">KEDAI BLOK & LEGO</span>
+        <button class="ribbon-btn btn-shop" onclick="closeMobileTools(); openShopModal()" title="Kedai Blok & Lego" aria-label="Kedai Blok">
+          <span class="ribbon-icon">🛒</span> <span class="ribbon-label" data-i18n="shop">KEDAI BLOK & LEGO</span>
         </button>
-        <button class="ribbon-btn btn-sifir-chart" onclick="closeMobileTools(); openTimesTableModal()" title="Lihat Carta & Jadual Sifir 1 hingga 12">
-          <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR</span>
+        <button class="ribbon-btn btn-sifir-chart" onclick="closeMobileTools(); openTimesTableModal()" title="Lihat Carta & Jadual Sifir 1 hingga 12" aria-label="Jadual Sifir">
+          <span class="ribbon-icon">📖</span> <span class="ribbon-label" data-i18n="timesTableChart">JADUAL SIFIR</span>
         </button>
-        <button class="ribbon-btn btn-blueprint" onclick="closeMobileTools(); openBlueprintModal()" title="Bina rumah starter Minecraft mengikut pelan rujukan Reddit">
-          <span>🏡</span> <span data-i18n="blueprint">PELAN RUMAH</span>
+        <button class="ribbon-btn btn-blueprint" onclick="closeMobileTools(); openBlueprintModal()" title="Bina rumah starter Minecraft mengikut pelan rujukan Reddit" aria-label="Pelan Rumah">
+          <span class="ribbon-icon">🏡</span> <span class="ribbon-label" data-i18n="blueprint">PELAN RUMAH</span>
         </button>
         <div class="level-control">
           <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
           <span id="build-level-label">Level 1</span>
           <button onclick="changeBuildLevel(1)" aria-label="Naik aras">+</button>
         </div>
-        <button class="ribbon-btn mobile-more-toggle" id="btn-mobile-more" type="button" onclick="toggleMobileTools()" aria-expanded="false">
-          <span>☰</span> <span data-i18n="more">MORE</span>
+        <button class="ribbon-btn mobile-more-toggle" id="btn-mobile-more" type="button" onclick="toggleMobileTools()" aria-expanded="false" title="Lagi Alatan" aria-label="Lagi Alatan">
+          <span class="ribbon-icon">☰</span> <span class="ribbon-label" data-i18n="more">MORE</span>
         </button>
-        <button class="ribbon-btn btn-eraser mobile-secondary" id="btn-eraser-mode" onclick="closeMobileTools(); toggleEraserTool()">
-          <span>🧹</span> <span data-i18n="eraser">ALAT PADAM</span>
+        <button class="ribbon-btn btn-eraser mobile-secondary" id="btn-eraser-mode" onclick="closeMobileTools(); toggleEraserTool()" title="Alat Padam" aria-label="Alat Padam">
+          <span class="ribbon-icon">🧹</span> <span class="ribbon-label" data-i18n="eraser">ALAT PADAM</span>
         </button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" data-i18n="undo">↶ UNDO</button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" data-i18n="redo">↷ REDO</button>
-        <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()">
-          <span>📸</span> <span data-i18n="photo">TANGKAP GAMBAR RUMAH</span>
+        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" title="Undo Bina" aria-label="Undo Bina">
+          <span class="ribbon-icon mobile-only" aria-hidden="true">↶</span><span class="ribbon-label desktop-only" data-i18n="undo">↶ UNDO</span>
+        </button>
+        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" title="Redo Bina" aria-label="Redo Bina">
+          <span class="ribbon-icon mobile-only" aria-hidden="true">↷</span><span class="ribbon-label desktop-only" data-i18n="redo">↷ REDO</span>
+        </button>
+        <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()" title="Tangkap Gambar Rumah" aria-label="Foto Rumah">
+          <span class="ribbon-icon">📸</span> <span class="ribbon-label" data-i18n="photo">TANGKAP GAMBAR RUMAH</span>
         </button>
       </div>
 
@@ -2479,10 +2657,10 @@
       <div class="sandbox-canvas-wrapper">
         <div class="voxel-stage" id="voxel-stage">
           <div class="camera-quick-controls" role="group" aria-label="Kawalan kamera 3D">
-            <button class="cam-btn" type="button" onclick="setCameraView('front')" title="Pandangan Hadapan">👁️ <span data-i18n="camFront">Depan</span></button>
-            <button class="cam-btn" type="button" onclick="setCameraView('iso')" title="Pandangan Isometrik">📐 <span data-i18n="camIso">Isometrik</span></button>
-            <button class="cam-btn" type="button" onclick="setCameraView('top')" title="Pandangan Atas">🔝 <span data-i18n="camTop">Atas</span></button>
-            <button class="cam-btn" id="btn-cam-autorotate" type="button" onclick="toggleAutoRotateCamera()" title="Putar 360° Automatik">🔄 <span data-i18n="camRotate">360°</span></button>
+            <button class="cam-btn" type="button" onclick="setCameraView('front')" title="Pandangan Hadapan" aria-label="Pandangan Hadapan"><span class="cam-icon">👁️</span> <span class="cam-label" data-i18n="camFront">Depan</span></button>
+            <button class="cam-btn" type="button" onclick="setCameraView('iso')" title="Pandangan Isometrik" aria-label="Pandangan Isometrik"><span class="cam-icon">📐</span> <span class="cam-label" data-i18n="camIso">Isometrik</span></button>
+            <button class="cam-btn" type="button" onclick="setCameraView('top')" title="Pandangan Atas" aria-label="Pandangan Atas"><span class="cam-icon">🔝</span> <span class="cam-label" data-i18n="camTop">Atas</span></button>
+            <button class="cam-btn" id="btn-cam-autorotate" type="button" onclick="toggleAutoRotateCamera()" title="Putar 360° Automatik" aria-label="Putar 360° Automatik"><span class="cam-icon">🔄</span> <span class="cam-label" data-i18n="camRotate">360°</span></button>
           </div>
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
@@ -2527,8 +2705,8 @@
         <div id="palette-slots-container" style="display: flex; gap: 6px; align-items: center;">
           <!-- Active owned blocks -->
         </div>
-        <button onclick="openShopModal()" data-i18n="buyMore" style="padding: 6px 10px; font-size: 0.72rem; font-weight: 900; background: #fef08a; border: 1.5px dashed #ca8a04; border-radius: 10px; cursor: pointer; white-space: nowrap;">
-          + BELI LAGI BLOK
+        <button class="btn-dock-buy-more" onclick="openShopModal()" title="Beli Lagi Blok di Kedai" aria-label="Beli Lagi Blok">
+          <span class="dock-buy-icon">🛒➕</span><span class="dock-buy-label" data-i18n="buyMore">+ BELI LAGI BLOK</span>
         </button>
       </div>
       <div class="developer-credit-bar"><span data-i18n="developerLabel">👨‍💻 System Developer:</span> <b>Mohammad Fikrey bin Abdul Gapar</b></div>
@@ -2551,8 +2729,8 @@
           <div class="hud-wallet-pill">
             <span>🪙</span> <span id="hud-shooter-xp">150 XP</span>
           </div>
-          <button onclick="exitMinigameToSandbox()" style="padding: 6px 14px; font-size: 0.8rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;">
-            <span data-i18n="backHome">🏡 BACK HOME</span>
+          <button class="btn-back-home" onclick="exitMinigameToSandbox()" style="padding: 6px 14px; font-size: 0.8rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;" title="Kembali ke Padang Binaan" aria-label="Kembali ke Rumah">
+            <span class="back-home-icon" aria-hidden="true">🏡</span><span class="back-home-text" data-i18n="backHome">🏡 BACK HOME</span>
           </button>
         </div>
       </div>
@@ -2581,10 +2759,12 @@
             <div style="font-size: 0.72rem; color: #475569;" data-i18n="wheelSubtitle">Spin the wheel and solve the challenge to earn a +150 XP bonus!</div>
           </div>
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button type="button" class="btn-sifir-chart-toggle" onclick="openTimesTableModal()">
-              <span>📖</span> <span data-i18n="timesTableChart">JADUAL SIFIR 1-12</span>
+            <button type="button" class="btn-sifir-chart-toggle" onclick="openTimesTableModal()" title="Carta Jadual Sifir 1-12" aria-label="Jadual Sifir">
+              <span class="chart-btn-icon" aria-hidden="true">📖</span> <span class="chart-btn-label" data-i18n="timesTableChart">JADUAL SIFIR 1-12</span>
             </button>
-            <button onclick="exitMinigameToSandbox()" style="padding: 8px 14px; font-size: 0.82rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;" data-i18n="backHome">🏡 BACK HOME</button>
+            <button class="btn-back-home" onclick="exitMinigameToSandbox()" style="padding: 8px 14px; font-size: 0.82rem; font-weight: 900; background: #22c55e; color: #fff; border: 1.5px solid #15803d; border-radius: 10px; cursor: pointer;" title="Kembali ke Padang Binaan" aria-label="Kembali ke Rumah">
+              <span class="back-home-icon" aria-hidden="true">🏡</span><span class="back-home-text" data-i18n="backHome">🏡 BACK HOME</span>
+            </button>
           </div>
         </div>
 
@@ -8813,7 +8993,7 @@ const COMBAT_BANK = {
       ribbon.classList.toggle('expanded',expanded);
       button.classList.toggle('active',expanded);
       button.setAttribute('aria-expanded',String(expanded));
-      button.innerHTML=expanded?`<span>✕</span><span>${t('close')}</span>`:`<span>☰</span><span>${t('more')}</span>`;
+      button.innerHTML=expanded?`<span class="ribbon-icon">✕</span><span class="ribbon-label">${t('close')}</span>`:`<span class="ribbon-icon">☰</span><span class="ribbon-label">${t('more')}</span>`;
       setTimeout(resizeVoxelRenderer,80);
     }
 
