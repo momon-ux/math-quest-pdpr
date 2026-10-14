@@ -216,4 +216,9 @@ assert.match(html, /function openTimesTableModal/, 'fungsi membuka jadual sifir 
 assert.match(html, /function renderTimesTableContent/, 'fungsi memaparkan sifir 1-12 mesti wujud');
 assert.match(html, /class="[^"]*btn-sifir-chart/, 'butang pantas jadual sifir mesti tersedia dalam ribbon');
 
+assert.match(html, /function drawShooterLandscape/, 'landskap realistik Math Shooter mesti wujud');
+assert.match(html, /function drawShooterCannon/, 'meriam besi padu dan roda kayu mesti dilukis');
+assert.match(html, /const BALLOON_PALETTES =/, 'palet 3D berkilat belon mesti wujud');
+assert.match(html, /function drawShooterFortressBastion/, 'kubu batu pelantar meriam mesti wujud');
+
 console.log('Semua semakan smoke MathBina V32 lulus.');

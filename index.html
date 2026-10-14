@@ -930,7 +930,8 @@
       display: none;
       flex-direction: column;
       z-index: 30;
-      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-bot) 85%, #86efac 100%);
+      background: radial-gradient(circle at 75% 20%, #38bdf8 0%, #0284c7 45%, #0369a1 100%);
+      overflow: hidden;
     }
     .shooter-top-hud {
       height: 48px;
@@ -941,6 +942,8 @@
       justify-content: space-between;
       padding: 0 14px;
       z-index: 50;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     }
     .shooter-question-banner {
       position: absolute;
@@ -948,44 +951,53 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 40;
-      background: #ffffff;
-      border: 3.5px solid #f59e0b;
-      border-radius: 16px;
-      padding: 8px 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #fef3c7 100%);
+      border: 3.5px solid #d97706;
+      border-radius: 20px;
+      padding: 8px 26px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 6px 0 #b45309, 0 12px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 0 #92400e, 0 14px 28px rgba(0,0,0,0.38);
       min-width: 280px;
       max-width: 85%;
+      pointer-events: none;
     }
     .shooter-bottom-answers {
       position: absolute;
-      bottom: 12px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 12px;
       z-index: 45;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .btn-answer-balloon {
-      background: #ffffff;
-      border: 3px solid #f97316;
-      border-radius: 16px;
-      padding: 8px 18px;
-      font-size: clamp(0.95rem, 2.5vw, 1.35rem);
-      font-weight: 900;
+      background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
+      border: 3px solid #ea580c;
+      border-radius: 18px;
+      padding: 10px 22px;
+      font-size: clamp(1rem, 2.8vw, 1.45rem);
+      font-weight: 1000;
       color: #0f172a;
       cursor: pointer;
-      box-shadow: 0 4px 0 #c2410c, 0 6px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 5px 0 #9a3412, 0 8px 18px rgba(0,0,0,0.28);
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.12s ease;
+      touch-action: manipulation;
+    }
+    .btn-answer-balloon:hover {
+      background: #ffedd5;
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 #9a3412, 0 10px 20px rgba(0,0,0,0.32);
     }
     .btn-answer-balloon:active {
       transform: translateY(3px);
-      box-shadow: 0 1px 0 #c2410c;
+      box-shadow: 0 2px 0 #9a3412;
     }
     #shooter-canvas {
       position: absolute;
@@ -3275,6 +3287,11 @@ const COMBAT_BANK = {
         cannonballs: [],
         particles: [],
         smoke: [],
+        clouds: [],
+        floatingTexts: [],
+        muzzleFlashes: [],
+        screenShake: 0,
+        crosshair: { x: -100, y: -100, active: false },
         currentQ: null,
         qIndex: 0,
         combo: 1
@@ -4564,12 +4581,33 @@ const COMBAT_BANK = {
       resizeShooterCanvas();
       window.addEventListener('resize', resizeShooterCanvas);
 
+      if (!s.clouds || s.clouds.length === 0) {
+        initShooterClouds();
+      }
+
+      // Pointer tracking for aiming crosshair & interactive hover
+      s.canvas.addEventListener('pointermove', (e) => {
+        const rect = s.canvas.getBoundingClientRect();
+        const scaleX = s.canvas.width / rect.width;
+        const scaleY = s.canvas.height / rect.height;
+        s.crosshair = {
+          x: (e.clientX - rect.left) * scaleX,
+          y: (e.clientY - rect.top) * scaleY,
+          active: true
+        };
+      });
+
+      s.canvas.addEventListener('pointerleave', () => {
+        if (s.crosshair) s.crosshair.active = false;
+      });
+
       s.canvas.addEventListener('pointerdown', (e) => {
         const rect = s.canvas.getBoundingClientRect();
         const scaleX = s.canvas.width / rect.width;
         const scaleY = s.canvas.height / rect.height;
         const clickX = (e.clientX - rect.left) * scaleX;
         const clickY = (e.clientY - rect.top) * scaleY;
+        s.crosshair = { x: clickX, y: clickY, active: true };
         handleShooterCanvasClick(clickX, clickY);
       });
 
@@ -4577,14 +4615,38 @@ const COMBAT_BANK = {
       shooterLoop();
     }
 
+    function initShooterClouds() {
+      const s = STATE.shooter;
+      s.clouds = [];
+      const numClouds = 6;
+      const w = s.canvas ? s.canvas.width : window.innerWidth;
+      for (let i = 0; i < numClouds; i++) {
+        s.clouds.push({
+          x: (w / numClouds) * i + Math.random() * 80,
+          y: 45 + Math.random() * (s.canvas ? s.canvas.height * 0.28 : 140),
+          scale: 0.65 + Math.random() * 0.65,
+          speed: 0.25 + Math.random() * 0.35,
+          alpha: 0.55 + Math.random() * 0.35
+        });
+      }
+    }
+
     function resizeShooterCanvas() {
       const s = STATE.shooter;
       if (!s.canvas) return;
       s.canvas.width = window.innerWidth;
       s.canvas.height = window.innerHeight;
-      s.cannon.x = Math.max(90, s.canvas.width * 0.12);
-      s.cannon.y = s.canvas.height - 70;
+      s.cannon.x = Math.max(100, s.canvas.width * 0.12);
+      s.cannon.y = s.canvas.height - 75;
     }
+
+    const BALLOON_PALETTES = [
+      { name: 'ruby', base: '#dc2626', light: '#fca5a5', dark: '#991b1b', shadow: '#450a0a', border: '#b91c1c' },
+      { name: 'sapphire', base: '#0284c7', light: '#7dd3fc', dark: '#0369a1', shadow: '#082f49', border: '#0284c7' },
+      { name: 'emerald', base: '#16a34a', light: '#86efac', dark: '#15803d', shadow: '#052e16', border: '#16a34a' },
+      { name: 'amethyst', base: '#9333ea', light: '#d8b4fe', dark: '#7e22ce', shadow: '#3b0764', border: '#7e22ce' },
+      { name: 'amber', base: '#ea580c', light: '#fdba74', dark: '#c2410c', shadow: '#431407', border: '#c2410c' }
+    ];
 
     function loadNextShooterQuestion() {
       const pool = COMBAT_BANK[`grade${STATE.grade}`] || [];
@@ -4597,18 +4659,18 @@ const COMBAT_BANK = {
       document.getElementById('shooter-tag-text').textContent = currentLanguage === 'ms' && q.tag ? q.tag : t('mathOperation');
       document.getElementById('shooter-formula-text').textContent = q.q;
 
-      // Spawn balloons
+      // Spawn balloons with 3D palette
       const count = q.opts.length;
       const s = STATE.shooter;
       s.balloons = [];
-      const startX = s.canvas.width * 0.40;
+      const startX = s.canvas.width * 0.38;
       const endX = s.canvas.width * 0.88;
       const step = count > 1 ? (endX - startX) / (count - 1) : 0;
-      const colors = ['#f97316', '#ef4444', '#0ea5e9', '#a855f7'];
 
       q.opts.forEach((opt, idx) => {
         const bx = count === 1 ? (startX + endX) / 2 : startX + idx * step;
-        const by = s.canvas.height * 0.38 + (idx % 2 === 0 ? -12 : 12);
+        const by = s.canvas.height * 0.36 + (idx % 2 === 0 ? -16 : 16);
+        const palette = BALLOON_PALETTES[idx % BALLOON_PALETTES.length];
         s.balloons.push({
           idx: idx,
           text: opt,
@@ -4616,8 +4678,11 @@ const COMBAT_BANK = {
           x: bx,
           y: by,
           baseY: by,
-          radius: Math.min(50, Math.max(38, s.canvas.width * 0.042)),
-          color: colors[idx % colors.length],
+          currentX: bx,
+          currentY: by,
+          radius: Math.min(54, Math.max(40, s.canvas.width * 0.046)),
+          palette: palette,
+          color: palette.base,
           popped: false,
           wobbleOffset: Math.random() * Math.PI * 2
         });
@@ -4629,7 +4694,7 @@ const COMBAT_BANK = {
       q.opts.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'btn-answer-balloon';
-        btn.innerHTML = `<span>🎈</span> <span>${opt}</span>`;
+        btn.innerHTML = `<span>🎯</span> <span>${opt}</span>`;
         btn.onclick = () => fireShooterCannonAt(idx);
         dock.appendChild(btn);
       });
@@ -4637,14 +4702,27 @@ const COMBAT_BANK = {
 
     function handleShooterCanvasClick(clickX, clickY) {
       const s = STATE.shooter;
+      let closestIdx = -1;
+      let closestDist = Infinity;
+
       for (let i = 0; i < s.balloons.length; i++) {
         const b = s.balloons[i];
         if (b.popped) continue;
-        const dist = Math.hypot(clickX - b.x, clickY - b.y);
-        if (dist <= b.radius + 18) {
+        const bx = b.currentX || b.x;
+        const by = b.currentY || b.y;
+        const dist = Math.hypot(clickX - bx, clickY - by);
+        if (dist <= b.radius * 1.35 + 24) {
           fireShooterCannonAt(i);
           return;
         }
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIdx = i;
+        }
+      }
+
+      if (closestIdx !== -1 && closestDist < Math.max(140, s.canvas.width * 0.22)) {
+        fireShooterCannonAt(closestIdx);
       }
     }
 
@@ -4655,143 +4733,875 @@ const COMBAT_BANK = {
 
       audio.init();
 
-      const dx = target.x - s.cannon.x;
-      const dy = target.y - s.cannon.y;
+      const tx = target.currentX || target.x;
+      const ty = target.currentY || target.y;
+      const dx = tx - s.cannon.x;
+      const dy = ty - s.cannon.y;
       s.cannon.targetAngle = Math.atan2(dy, dx);
       s.cannon.angle = s.cannon.targetAngle;
-      s.cannon.recoil = 18;
+      s.cannon.recoil = 22;
+      s.screenShake = 6;
 
       audio.playCannon();
 
-      // Launch cannonball
+      // Muzzle location
+      const barrelLen = 88;
+      const mx = s.cannon.x + Math.cos(s.cannon.angle) * barrelLen;
+      const my = s.cannon.y + Math.sin(s.cannon.angle) * barrelLen;
+
+      // Fiery Muzzle Flash
+      s.muzzleFlashes.push({
+        x: mx,
+        y: my,
+        angle: s.cannon.angle,
+        life: 1.0
+      });
+
+      // Billowing smoke puffs at muzzle
+      for (let k = 0; k < 6; k++) {
+        const spread = (Math.random() - 0.5) * 0.6;
+        const spd = 3 + Math.random() * 5;
+        s.smoke.push({
+          x: mx + (Math.random() - 0.5) * 8,
+          y: my + (Math.random() - 0.5) * 8,
+          vx: Math.cos(s.cannon.angle + spread) * spd,
+          vy: Math.sin(s.cannon.angle + spread) * spd - 0.8,
+          radius: 8 + Math.random() * 8,
+          maxRadius: 28 + Math.random() * 16,
+          life: 1.0,
+          decay: 0.022 + Math.random() * 0.02
+        });
+      }
+
+      // Launch Incendiary Cannonball
       s.cannonballs.push({
-        x: s.cannon.x + Math.cos(s.cannon.angle) * 60,
-        y: s.cannon.y + Math.sin(s.cannon.angle) * 60,
-        targetX: target.x,
-        targetY: target.y,
+        x: mx,
+        y: my,
+        targetX: tx,
+        targetY: ty,
         balloonIdx: balloonIdx,
-        speed: 26,
-        radius: 12
+        speed: 28,
+        radius: 13,
+        trail: []
       });
     }
 
-    function shooterLoop() {
-      const s = STATE.shooter;
-      const ctx = s.ctx;
-      const w = s.canvas.width;
-      const h = s.canvas.height;
-
-      ctx.clearRect(0, 0, w, h);
-
-      // 1. Grassy Hills
-      ctx.fillStyle = '#16a34a';
+    function drawVolumetricCloud(ctx, cx, cy, scale, alpha) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(scale, scale);
+      ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
       ctx.beginPath();
-      ctx.ellipse(w * 0.25, h + 30, w * 0.45, 120, 0, 0, Math.PI * 2);
+      ctx.arc(0, 0, 32, 0, Math.PI * 2);
+      ctx.arc(26, -12, 28, 0, Math.PI * 2);
+      ctx.arc(56, -6, 26, 0, Math.PI * 2);
+      ctx.arc(78, 6, 22, 0, Math.PI * 2);
+      ctx.arc(38, 14, 28, 0, Math.PI * 2);
+      ctx.closePath();
       ctx.fill();
 
+      // Soft cloud bottom shading
+      ctx.fillStyle = `rgba(226, 232, 240, ${alpha * 0.45})`;
+      ctx.beginPath();
+      ctx.arc(38, 14, 24, 0, Math.PI * 2);
+      ctx.arc(0, 10, 20, 0, Math.PI * 2);
+      ctx.arc(70, 10, 18, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawPineSilhouette(ctx, x, y, size) {
+      ctx.beginPath();
+      ctx.moveTo(x, y - size);
+      ctx.lineTo(x + size * 0.45, y);
+      ctx.lineTo(x - size * 0.45, y);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawShooterLandscape(ctx, w, h, time, s) {
+      // 1. Sky Gradient
+      const sky = ctx.createLinearGradient(0, 0, 0, h);
+      sky.addColorStop(0, '#0284c7');
+      sky.addColorStop(0.38, '#38bdf8');
+      sky.addColorStop(0.72, '#bae6fd');
+      sky.addColorStop(0.94, '#fef08a');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Radiant Sun
+      const sunX = w * 0.78;
+      const sunY = h * 0.16;
+      const glow = ctx.createRadialGradient(sunX, sunY, 15, sunX, sunY, 140);
+      glow.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+      glow.addColorStop(0.25, 'rgba(254, 240, 138, 0.6)');
+      glow.addColorStop(0.65, 'rgba(253, 224, 71, 0.15)');
+      glow.addColorStop(1, 'rgba(253, 224, 71, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, 140, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, 26, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 3. Volumetric Floating Clouds
+      if (s.clouds) {
+        s.clouds.forEach(c => {
+          c.x += c.speed;
+          if (c.x > w + 160) c.x = -160;
+          drawVolumetricCloud(ctx, c.x, c.y, c.scale, c.alpha);
+        });
+      }
+
+      // 4. Distant Mountain Layer 1 (Misty Slate-Blue Alpine Ridge)
+      ctx.fillStyle = 'rgba(100, 116, 139, 0.38)';
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.68);
+      const mPts1 = [
+        [w * 0.1, h * 0.48], [w * 0.22, h * 0.58], [w * 0.35, h * 0.44],
+        [w * 0.52, h * 0.56], [w * 0.68, h * 0.42], [w * 0.85, h * 0.52], [w, h * 0.46]
+      ];
+      mPts1.forEach(([px, py]) => ctx.lineTo(px, py));
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fill();
+
+      // 5. Distant Mountain Layer 2 (Evergreen Ridge)
+      ctx.fillStyle = 'rgba(15, 118, 110, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.74);
+      const mPts2 = [
+        [w * 0.15, h * 0.58], [w * 0.32, h * 0.66], [w * 0.48, h * 0.54],
+        [w * 0.64, h * 0.64], [w * 0.82, h * 0.52], [w, h * 0.62]
+      ];
+      mPts2.forEach(([px, py]) => ctx.lineTo(px, py));
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fill();
+
+      // 6. Rolling Green Foothills (Midground)
+      const hillGrad1 = ctx.createLinearGradient(0, h * 0.55, 0, h);
+      hillGrad1.addColorStop(0, '#15803d');
+      hillGrad1.addColorStop(1, '#14532d');
+      ctx.fillStyle = hillGrad1;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.76);
+      ctx.bezierCurveTo(w * 0.25, h * 0.66, w * 0.65, h * 0.84, w, h * 0.72);
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Little pine trees dotted on hill crests
+      ctx.fillStyle = '#14532d';
+      const treeSpans = [w * 0.28, w * 0.32, w * 0.48, w * 0.52, w * 0.78, w * 0.82, w * 0.85];
+      treeSpans.forEach(tx => {
+        const ty = h * 0.72 + Math.sin(tx) * 12;
+        drawPineSilhouette(ctx, tx, ty, 14);
+      });
+    }
+
+    function drawShooterFortressBastion(ctx, s, w, h) {
+      // Base Granite Wall
+      const wallGrad = ctx.createLinearGradient(0, s.cannon.y, 0, h);
+      wallGrad.addColorStop(0, '#475569');
+      wallGrad.addColorStop(0.5, '#334155');
+      wallGrad.addColorStop(1, '#1e293b');
+      ctx.fillStyle = wallGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      ctx.lineTo(0, s.cannon.y + 36);
+      ctx.lineTo(s.cannon.x + 95, s.cannon.y + 36);
+      ctx.bezierCurveTo(s.cannon.x + 160, s.cannon.y + 55, s.cannon.x + 220, h, s.cannon.x + 280, h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Cobblestone Masonry courses
+      ctx.strokeStyle = 'rgba(15, 23, 42, 0.45)';
+      ctx.lineWidth = 2;
+      for (let y = s.cannon.y + 55; y < h; y += 22) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(Math.min(w, s.cannon.x + 220), y);
+        ctx.stroke();
+      }
+
+      // Wooden timber platform buffer
+      ctx.fillStyle = '#78350f';
+      ctx.strokeStyle = '#451a03';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(s.cannon.x - 48, s.cannon.y + 24, 110, 15, 4);
+      ctx.fill(); ctx.stroke();
+
+      // Fresh grass blades along the fortress edge
       ctx.fillStyle = '#22c55e';
-      ctx.beginPath();
-      ctx.ellipse(s.cannon.x + 20, h + 20, 180, 110, 0, 0, Math.PI * 2);
-      ctx.fill();
+      for (let gx = s.cannon.x - 30; gx < s.cannon.x + 160; gx += 10) {
+        const gy = s.cannon.y + 36 + Math.sin(gx) * 4;
+        ctx.beginPath();
+        ctx.moveTo(gx, gy);
+        ctx.lineTo(gx + 3, gy - 8);
+        ctx.lineTo(gx + 6, gy);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
 
-      // 2. Green Cannon
+    function drawShooterAimGuide(ctx, s) {
+      if (!s.crosshair || !s.crosshair.active) return;
+      const barrelLen = 88;
+      const mx = s.cannon.x + Math.cos(s.cannon.angle) * barrelLen;
+      const my = s.cannon.y + Math.sin(s.cannon.angle) * barrelLen;
+
+      // Dashed Aiming Line
+      ctx.save();
+      ctx.setLineDash([6, 6]);
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.65)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(mx, my);
+      ctx.lineTo(s.crosshair.x, s.crosshair.y);
+      ctx.stroke();
+
+      // Aiming Reticle (Crosshair)
+      ctx.setLineDash([]);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(s.crosshair.x, s.crosshair.y, 16, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 4 Crosshair ticks
+      ctx.beginPath();
+      ctx.moveTo(s.crosshair.x - 22, s.crosshair.y);
+      ctx.lineTo(s.crosshair.x - 12, s.crosshair.y);
+      ctx.moveTo(s.crosshair.x + 12, s.crosshair.y);
+      ctx.lineTo(s.crosshair.x + 22, s.crosshair.y);
+      ctx.moveTo(s.crosshair.x, s.crosshair.y - 22);
+      ctx.lineTo(s.crosshair.x, s.crosshair.y - 12);
+      ctx.moveTo(s.crosshair.x, s.crosshair.y + 12);
+      ctx.lineTo(s.crosshair.x, s.crosshair.y + 22);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawShooterCannon(ctx, s, time) {
+      const rx = -Math.cos(s.cannon.angle) * s.cannon.recoil;
+      const ry = -Math.sin(s.cannon.angle) * s.cannon.recoil;
+      if (s.cannon.recoil > 0) s.cannon.recoil = Math.max(0, s.cannon.recoil - 1.8);
+
       ctx.save();
       ctx.translate(s.cannon.x, s.cannon.y);
-      ctx.fillStyle = '#1e293b';
+
+      // 1. Carriage Frame (Cheek)
+      const woodGrad = ctx.createLinearGradient(-30, 0, 30, 20);
+      woodGrad.addColorStop(0, '#92400e');
+      woodGrad.addColorStop(0.5, '#78350f');
+      woodGrad.addColorStop(1, '#451a03');
+      ctx.fillStyle = woodGrad;
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.arc(0, 12, 26, 0, Math.PI * 2);
+      ctx.moveTo(-28, 26);
+      ctx.lineTo(26, 26);
+      ctx.lineTo(18, 0);
+      ctx.lineTo(-20, 0);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      // Carriage Iron Straps & Rivets
+      ctx.fillStyle = '#334155';
+      ctx.beginPath();
+      ctx.arc(-18, 14, 3, 0, Math.PI * 2);
+      ctx.arc(14, 14, 3, 0, Math.PI * 2);
       ctx.fill();
 
+      // 2. Cast-Iron Artillery Barrel
+      ctx.save();
+      ctx.translate(rx, ry);
       ctx.rotate(s.cannon.angle);
-      const recoilOffset = -s.cannon.recoil;
-      if (s.cannon.recoil > 0) s.cannon.recoil = Math.max(0, s.cannon.recoil - 1.5);
 
-      ctx.fillStyle = '#16a34a';
-      ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 3;
+      // Barrel dimensions
+      const barrelLen = 88;
+      const breechR = 20;
+      const muzzleR = 14;
+      const flaredR = 19;
+
+      // Barrel Linear Metallic Gradient
+      const metalGrad = ctx.createLinearGradient(0, -breechR, 0, breechR);
+      metalGrad.addColorStop(0.0, '#0f172a');
+      metalGrad.addColorStop(0.2, '#334155');
+      metalGrad.addColorStop(0.48, '#e2e8f0');
+      metalGrad.addColorStop(0.75, '#475569');
+      metalGrad.addColorStop(1.0, '#1e293b');
+
+      // Cascabel knob at breech
+      ctx.fillStyle = '#1e293b';
       ctx.beginPath();
-      ctx.roundRect(recoilOffset - 10, -18, 75, 36, [4, 12, 12, 4]);
+      ctx.arc(-14, 0, 11, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Main Tapered Barrel Body
+      ctx.fillStyle = metalGrad;
+      ctx.strokeStyle = '#020617';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(-10, -breechR);
+      ctx.lineTo(barrelLen - 12, -muzzleR);
+      ctx.lineTo(barrelLen, -flaredR);
+      ctx.lineTo(barrelLen, flaredR);
+      ctx.lineTo(barrelLen - 12, muzzleR);
+      ctx.lineTo(-10, breechR);
+      ctx.arc(-10, 0, breechR, Math.PI / 2, -Math.PI / 2);
+      ctx.closePath();
       ctx.fill(); ctx.stroke();
 
+      // Raised Brass Reinforcement Bands (Astragals)
+      const brassGrad = ctx.createLinearGradient(0, -breechR, 0, breechR);
+      brassGrad.addColorStop(0, '#78350f');
+      brassGrad.addColorStop(0.45, '#fde047');
+      brassGrad.addColorStop(1, '#92400e');
+      ctx.fillStyle = brassGrad;
+
+      // Band 1: Breech band
+      ctx.fillRect(8, -breechR - 1.5, 7, breechR * 2 + 3);
+      // Band 2: Mid-barrel band
+      ctx.fillRect(44, -muzzleR - 2.5, 6, muzzleR * 2 + 5);
+      // Band 3: Muzzle collar
+      ctx.fillRect(barrelLen - 12, -flaredR, 5, flaredR * 2);
+
+      // Hollow Dark Bore at Muzzle tip
+      ctx.fillStyle = '#020617';
+      ctx.beginPath();
+      ctx.ellipse(barrelLen, 0, 5, flaredR - 4, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Trunnion Cylinder Hub
+      ctx.fillStyle = '#334155';
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 9, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#facc15';
       ctx.beginPath();
-      ctx.roundRect(recoilOffset + 60, -21, 10, 42, 3);
-      ctx.fill(); ctx.stroke();
-      ctx.restore();
+      ctx.arc(0, 0, 4, 0, Math.PI * 2);
+      ctx.fill();
 
-      // 3. Update & Draw Cannonballs
+      ctx.restore(); // end barrel translate/rotate
+
+      // 3. Large Wooden Artillery Wheel with Iron Rim
+      const wheelR = 32;
+      ctx.save();
+      ctx.translate(0, 16);
+
+      // Outer Iron Tire Rim
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 5.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, wheelR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Wooden Felloes
+      ctx.strokeStyle = '#92400e';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(0, 0, wheelR - 3.5, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 8 Wooden Spokes
+      ctx.strokeStyle = '#78350f';
+      ctx.lineWidth = 3.5;
+      for (let a = 0; a < 8; a++) {
+        const ang = (a / 8) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(ang) * (wheelR - 6), Math.sin(ang) * (wheelR - 6));
+        ctx.stroke();
+      }
+
+      // Wheel Hub
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.arc(0, 0, 11, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(0, 0, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore(); // end wheel
+
+      ctx.restore(); // end cannon translate
+    }
+
+    function drawMuzzleFlashesAndSmoke(ctx, s) {
+      // Muzzle Flashes
+      for (let i = s.muzzleFlashes.length - 1; i >= 0; i--) {
+        const mf = s.muzzleFlashes[i];
+        ctx.save();
+        ctx.translate(mf.x, mf.y);
+        ctx.rotate(mf.angle);
+
+        // Flash Core
+        ctx.fillStyle = `rgba(255, 255, 255, ${mf.life})`;
+        ctx.beginPath();
+        ctx.arc(0, 0, 16 * mf.life, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Starburst Flames
+        ctx.fillStyle = `rgba(249, 115, 22, ${mf.life * 0.85})`;
+        ctx.beginPath();
+        ctx.moveTo(0, -18 * mf.life);
+        ctx.lineTo(38 * mf.life, 0);
+        ctx.lineTo(0, 18 * mf.life);
+        ctx.lineTo(-12 * mf.life, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+        mf.life -= 0.18;
+        if (mf.life <= 0) s.muzzleFlashes.splice(i, 1);
+      }
+
+      // Smoke Puffs
+      for (let i = s.smoke.length - 1; i >= 0; i--) {
+        const sm = s.smoke[i];
+        sm.x += sm.vx;
+        sm.y += sm.vy;
+        sm.radius = Math.min(sm.maxRadius, sm.radius + 0.8);
+        sm.life -= sm.decay;
+
+        if (sm.life <= 0) {
+          s.smoke.splice(i, 1);
+          continue;
+        }
+
+        ctx.fillStyle = `rgba(226, 232, 240, ${sm.life * 0.45})`;
+        ctx.beginPath();
+        ctx.arc(sm.x, sm.y, sm.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function updateAndDrawCannonballs(ctx, s) {
       for (let i = s.cannonballs.length - 1; i >= 0; i--) {
         const cb = s.cannonballs[i];
         const dx = cb.targetX - cb.x;
         const dy = cb.targetY - cb.y;
         const dist = Math.hypot(dx, dy);
 
+        // Record trailing wake
+        cb.trail.push({ x: cb.x, y: cb.y, size: cb.radius, life: 1.0 });
+        if (cb.trail.length > 8) cb.trail.shift();
+
+        // Spawn trailing sparks
+        if (Math.random() < 0.75) {
+          s.particles.push({
+            type: 'spark',
+            x: cb.x + (Math.random() - 0.5) * 6,
+            y: cb.y + (Math.random() - 0.5) * 6,
+            vx: (Math.random() - 0.5) * 2 - Math.cos(s.cannon.angle) * 3,
+            vy: (Math.random() - 0.5) * 2 - Math.sin(s.cannon.angle) * 3,
+            radius: 2 + Math.random() * 2.5,
+            color: Math.random() < 0.5 ? '#fef08a' : '#f97316',
+            life: 1.0,
+            decay: 0.05
+          });
+        }
+
         if (dist <= cb.speed) {
-          // Hit!
+          // HIT TARGET!
           const target = s.balloons[cb.balloonIdx];
+          const hitX = target ? (target.currentX || target.x) : cb.targetX;
+          const hitY = target ? (target.currentY || target.y) : cb.targetY;
+
           if (target && target.isCorrect) {
-            // POP!
             target.popped = true;
             const earned = 100 * s.combo;
             const coinReward = Math.max(5, Math.round(earned / 5));
             awardMathReward(earned, coinReward);
             s.combo++;
             audio.playPop();
+            s.screenShake = 8;
+
+            // Spawn Shockwave
+            s.particles.push({
+              type: 'shockwave',
+              x: hitX,
+              y: hitY,
+              radius: 12,
+              maxRadius: 75,
+              color: target.color,
+              life: 1.0,
+              decay: 0.045
+            });
+
+            // Spawn Balloon Rubber Shards
+            for (let p = 0; p < 18; p++) {
+              const ang = Math.random() * Math.PI * 2;
+              const spd = 3.5 + Math.random() * 6.5;
+              s.particles.push({
+                type: 'shard',
+                x: hitX,
+                y: hitY,
+                vx: Math.cos(ang) * spd,
+                vy: Math.sin(ang) * spd - 2,
+                size: 6 + Math.random() * 8,
+                rot: Math.random() * Math.PI,
+                vRot: (Math.random() - 0.5) * 0.3,
+                color: target.palette.base,
+                life: 1.0,
+                decay: 0.025
+              });
+            }
+
+            // Spawn Golden Sparkle Stars / Confetti
+            for (let c = 0; c < 14; c++) {
+              const ang = Math.random() * Math.PI * 2;
+              const spd = 2 + Math.random() * 5;
+              s.particles.push({
+                type: 'star',
+                x: hitX,
+                y: hitY,
+                vx: Math.cos(ang) * spd,
+                vy: Math.sin(ang) * spd - 3,
+                radius: 4 + Math.random() * 4,
+                color: c % 2 === 0 ? '#facc15' : '#ffffff',
+                life: 1.0,
+                decay: 0.03
+              });
+            }
+
+            // Floating XP Text
+            s.floatingTexts.push({
+              text: `+${earned} XP!`,
+              x: hitX,
+              y: hitY - 14,
+              color: '#facc15',
+              scale: 1.35,
+              life: 1.0,
+              vy: -1.8
+            });
+            if (s.combo >= 2) {
+              s.floatingTexts.push({
+                text: `🔥 ×${s.combo} COMBO!`,
+                x: hitX,
+                y: hitY + 22,
+                color: '#f97316',
+                scale: 1.15,
+                life: 1.0,
+                vy: -1.3
+              });
+            }
+
             document.getElementById('hud-shooter-xp').textContent = `${STATE.xp.toLocaleString()} XP • ${STATE.coins.toLocaleString()} 🪙`;
             showToast(currentLanguage === 'ms' ? `🎈 Betul! +${earned} XP dan +${coinReward} syiling!` : `🎈 Correct! +${earned} XP and +${coinReward} coins!`);
 
             setTimeout(() => {
               loadNextShooterQuestion();
-            }, 650);
+            }, 680);
           } else {
             recordWrongMathAttempt();
             audio.playBoing();
             s.combo = 1;
+            s.screenShake = 4;
             showToast(uiMessage('OOPS! Jawapan salah. Cuba lagi!','OOPS! Wrong answer. Try again!','答错了，再试一次！','தவறான பதில். மீண்டும் முயலுங்கள்!'));
           }
+
           s.cannonballs.splice(i, 1);
           continue;
         }
 
+        // Move Cannonball along trajectory
         const angle = Math.atan2(dy, dx);
         cb.x += Math.cos(angle) * cb.speed;
         cb.y += Math.sin(angle) * cb.speed;
 
-        ctx.fillStyle = '#f97316';
+        // Draw Trailing Fire Wake
+        cb.trail.forEach((tr, tIdx) => {
+          const tAlpha = (tIdx / cb.trail.length) * 0.55;
+          ctx.fillStyle = `rgba(249, 115, 22, ${tAlpha})`;
+          ctx.beginPath();
+          ctx.arc(tr.x, tr.y, tr.size * (tIdx / cb.trail.length), 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Fiery Heat Aura
+        const aura = ctx.createRadialGradient(cb.x, cb.y, 4, cb.x, cb.y, cb.radius * 2.2);
+        aura.addColorStop(0, 'rgba(254, 240, 138, 0.85)');
+        aura.addColorStop(0.5, 'rgba(249, 115, 22, 0.55)');
+        aura.addColorStop(1, 'rgba(249, 115, 22, 0)');
+        ctx.fillStyle = aura;
+        ctx.beginPath();
+        ctx.arc(cb.x, cb.y, cb.radius * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 3D Spherical Incandescent Core
+        const coreGrad = ctx.createRadialGradient(cb.x - 3, cb.y - 3, 2, cb.x, cb.y, cb.radius);
+        coreGrad.addColorStop(0, '#ffffff');
+        coreGrad.addColorStop(0.3, '#fef08a');
+        coreGrad.addColorStop(0.65, '#f97316');
+        coreGrad.addColorStop(1, '#0f172a');
+        ctx.fillStyle = coreGrad;
         ctx.beginPath();
         ctx.arc(cb.x, cb.y, cb.radius, 0, Math.PI * 2);
         ctx.fill();
       }
+    }
 
-      // 4. Draw Balloons
-      const time = performance.now();
+    function drawShooterBalloons(ctx, s, time) {
       s.balloons.forEach(b => {
         if (b.popped) return;
-        b.y = b.baseY + Math.sin((time / 1000) * 2 + b.wobbleOffset) * 8;
 
-        // String
-        ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 2;
+        // Bobbing & Gentle Sway
+        const by = b.baseY + Math.sin((time / 1000) * 2.2 + b.wobbleOffset) * 10;
+        const bx = b.x + Math.sin((time / 1400) * 1.8 + b.wobbleOffset) * 4;
+        b.currentX = bx;
+        b.currentY = by;
+
+        // Hover target test
+        const isHovered = s.crosshair && s.crosshair.active && (Math.hypot(s.crosshair.x - bx, s.crosshair.y - by) < b.radius * 1.35);
+
+        // 1. Natural Curved String
+        const stringEndX = bx + Math.sin(time / 650 + b.wobbleOffset) * 8;
+        const stringEndY = by + b.radius * 1.25 + 38;
+        ctx.strokeStyle = '#475569';
+        ctx.lineWidth = 2.2;
         ctx.beginPath();
-        ctx.moveTo(b.x, b.y + b.radius);
-        ctx.lineTo(b.x, b.y + b.radius + 35);
+        ctx.moveTo(bx, by + b.radius * 1.15);
+        ctx.quadraticCurveTo(bx + (stringEndX - bx) * 0.4, by + b.radius * 1.25 + 18, stringEndX, stringEndY);
         ctx.stroke();
 
-        // Balloon Body
-        ctx.fillStyle = b.color;
-        ctx.strokeStyle = '#0f172a';
+        // 2. Hover Pulsing Target Halo
+        if (isHovered) {
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 3.5;
+          ctx.beginPath();
+          ctx.arc(bx, by, b.radius * 1.32, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // 3. 3D Volume Balloon Body (Egg/Pear Shape)
+        ctx.save();
+        ctx.translate(bx, by);
+
+        // 3D Radial Illumination Gradient
+        const ballGrad = ctx.createRadialGradient(-b.radius * 0.32, -b.radius * 0.35, b.radius * 0.12, 0, 0, b.radius * 1.3);
+        ballGrad.addColorStop(0, b.palette.light);
+        ballGrad.addColorStop(0.42, b.palette.base);
+        ballGrad.addColorStop(0.8, b.palette.dark);
+        ballGrad.addColorStop(1.0, b.palette.shadow);
+        ctx.fillStyle = ballGrad;
+        ctx.strokeStyle = b.palette.shadow;
+        ctx.lineWidth = 2.5;
+
+        ctx.beginPath();
+        ctx.ellipse(0, 0, b.radius, b.radius * 1.2, 0, 0, Math.PI * 2);
+        ctx.fill(); ctx.stroke();
+
+        // High-Gloss White Specular Crescent Highlight
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.beginPath();
+        ctx.ellipse(-b.radius * 0.36, -b.radius * 0.42, b.radius * 0.32, b.radius * 0.16, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Secondary Soft Rim Glint
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+        ctx.beginPath();
+        ctx.arc(b.radius * 0.46, b.radius * 0.35, b.radius * 0.09, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Tied Knot at base
+        ctx.fillStyle = b.palette.dark;
+        ctx.beginPath();
+        ctx.moveTo(-5, b.radius * 1.18);
+        ctx.lineTo(5, b.radius * 1.18);
+        ctx.lineTo(7, b.radius * 1.26);
+        ctx.lineTo(-7, b.radius * 1.26);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+
+        // 4. Ultra-Crisp Target Answer Badge (Embossed Medallion)
+        const badgeW = Math.max(54, b.radius * 1.55);
+        const badgeH = Math.max(34, b.radius * 0.88);
+        ctx.save();
+        ctx.translate(bx, by + 4);
+
+        // Badge Shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.45)';
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetY = 3;
+
+        // Badge Pill Body
+        const badgeGrad = ctx.createLinearGradient(0, -badgeH / 2, 0, badgeH / 2);
+        badgeGrad.addColorStop(0, '#ffffff');
+        badgeGrad.addColorStop(1, '#f1f5f9');
+        ctx.fillStyle = badgeGrad;
+        ctx.strokeStyle = b.palette.border;
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.ellipse(b.x, b.y, b.radius, b.radius * 1.15, 0, 0, Math.PI * 2);
-        ctx.fill(); ctx.stroke();
+        ctx.roundRect(-badgeW / 2, -badgeH / 2, badgeW, badgeH, 12);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.stroke();
 
         // Text
         ctx.fillStyle = '#0f172a';
-        ctx.font = `900 ${Math.max(16, b.radius * 0.52)}px 'Fredoka', sans-serif`;
+        ctx.font = `1000 ${Math.max(18, b.radius * 0.58)}px 'Fredoka', 'Nunito', sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(b.text, b.x, b.y);
+        ctx.fillText(b.text, 0, 1);
+
+        ctx.restore();
       });
+    }
+
+    function drawShooterParticles(ctx, s) {
+      for (let i = s.particles.length - 1; i >= 0; i--) {
+        const p = s.particles[i];
+
+        if (p.type === 'shockwave') {
+          p.radius += (p.maxRadius - p.radius) * 0.2;
+          p.life -= p.decay;
+          if (p.life <= 0) { s.particles.splice(i, 1); continue; }
+          ctx.strokeStyle = `rgba(255, 255, 255, ${p.life * 0.75})`;
+          ctx.lineWidth = 4 * p.life;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.stroke();
+        } else if (p.type === 'shard') {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35; // gravity
+          p.rot += p.vRot;
+          p.life -= p.decay;
+          if (p.life <= 0) { s.particles.splice(i, 1); continue; }
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.beginPath();
+          ctx.moveTo(-p.size / 2, -p.size / 2);
+          ctx.lineTo(p.size / 2, 0);
+          ctx.lineTo(0, p.size / 2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        } else if (p.type === 'star') {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.2;
+          p.life -= p.decay;
+          if (p.life <= 0) { s.particles.splice(i, 1); continue; }
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+        } else if (p.type === 'spark') {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= p.decay;
+          if (p.life <= 0) { s.particles.splice(i, 1); continue; }
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1.0;
+        }
+      }
+    }
+
+    function drawShooterFloatingTexts(ctx, s) {
+      for (let i = s.floatingTexts.length - 1; i >= 0; i--) {
+        const ft = s.floatingTexts[i];
+        ft.y += ft.vy;
+        ft.life -= 0.022;
+        if (ft.life <= 0) { s.floatingTexts.splice(i, 1); continue; }
+
+        ctx.save();
+        ctx.translate(ft.x, ft.y);
+        ctx.scale(ft.scale, ft.scale);
+        ctx.globalAlpha = Math.min(1, ft.life * 1.5);
+        ctx.font = "1000 24px 'Fredoka', 'Nunito', sans-serif";
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Dark Outline
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 4.5;
+        ctx.strokeText(ft.text, 0, 0);
+
+        // Fill
+        ctx.fillStyle = ft.color;
+        ctx.fillText(ft.text, 0, 0);
+        ctx.restore();
+      }
+    }
+
+    function shooterLoop() {
+      const s = STATE.shooter;
+      if (!s.ctx || !s.canvas) return;
+      const ctx = s.ctx;
+      const w = s.canvas.width;
+      const h = s.canvas.height;
+      const time = performance.now();
+
+      ctx.save();
+
+      // Dynamic Camera Screen Shake
+      if (s.screenShake > 0) {
+        const sx = (Math.random() - 0.5) * s.screenShake;
+        const sy = (Math.random() - 0.5) * s.screenShake;
+        ctx.translate(sx, sy);
+        s.screenShake *= 0.86;
+        if (s.screenShake < 0.25) s.screenShake = 0;
+      }
+
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. Realistic Sky & Mountain Landscape
+      drawShooterLandscape(ctx, w, h, time, s);
+
+      // 2. Fortress Stone Bastion (where the cannon sits)
+      drawShooterFortressBastion(ctx, s, w, h);
+
+      // 3. Aiming Laser & Reticle Guide
+      drawShooterAimGuide(ctx, s);
+
+      // 4. Update & Draw Cannonballs + Fire Trail
+      updateAndDrawCannonballs(ctx, s);
+
+      // 5. Realistic Artillery Cannon (Carriage, Wheel, Cast-Iron Barrel, Recoil)
+      drawShooterCannon(ctx, s, time);
+
+      // 6. Draw Muzzle Flashes & Smoke
+      drawMuzzleFlashesAndSmoke(ctx, s);
+
+      // 7. Draw 3D Realistic Glossy Balloons with Physics & Target Badges
+      drawShooterBalloons(ctx, s, time);
+
+      // 8. Explosion Particles (Rubber Shards, Confetti, Shockwaves)
+      drawShooterParticles(ctx, s);
+
+      // 9. Floating XP and Combo Score Popups
+      drawShooterFloatingTexts(ctx, s);
+
+      ctx.restore();
 
       s.animId = requestAnimationFrame(shooterLoop);
     }
