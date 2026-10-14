@@ -77,6 +77,7 @@ assert.doesNotMatch(html, /id="select-lobby-class"/, 'senarai kelas tetap tidak 
 assert.match(html, /id="input-school-name"/, 'nama sekolah pilihan mesti boleh ditaip sendiri');
 assert.match(html, /id="input-class-name"/, 'nama kelas pilihan mesti boleh ditaip sendiri');
 assert.match(html, /function getWheelSlicesForGrade/, 'Roda Sifir mesti berubah mengikut aras tahun');
+assert.match(html, /function generateWheelQuestionForTopic/, 'penjana soalan roda sifir mesti memadankan topik dengan operasi matematik');
 assert.match(html, /grade === 1[\s\S]*TAMBAH CERIA/, 'soalan Tahun 1 mesti menggunakan operasi asas');
 assert.match(html, /COMBAT_BANK\[`grade\$\{STATE\.grade\}`\]/, 'Math Shooter mesti memilih bank soalan mengikut tahun');
 assert.match(html, /FIREBASE_DATABASE_URL/, 'alamat Firebase mesti tersedia');
