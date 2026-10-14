@@ -148,6 +148,10 @@ assert.match(html, /let currentLanguage = 'en'/, 'English mesti menjadi bahasa a
 assert.match(html, /return I18N\[value\] \? value : 'en'/, 'bahasa simpanan yang tidak sah mesti kembali kepada English');
 assert.match(html, /<html lang="en">/, 'dokumen awal mesti menggunakan English');
 assert.match(html, /function applyLanguage/, 'bahasa pilihan mesti digunakan pada antara muka');
+assert.match(html, /id="rotation-indicator"/, 'indikator putaran lutsinar mesti tersedia pada pentas 3D');
+assert.match(html, /function updateRotationIndicator/, 'indikator putaran mesti dikemas kini apabila blok dipilih');
+assert.match(html, /hasSelectedBlock && !STATE\.eraserActive && !V3\.visitingEntry/, 'indikator hanya boleh muncul untuk blok milik pemain dalam mod binaan');
+assert.doesNotMatch(html, /closeMobileTools\(\); rotateSelectedBlock\(\)/, 'butang putar lama tidak boleh memenuhi menu kawalan');
 assert.match(html, /document\.documentElement\.lang=/, 'bahasa dokumen mesti dikemas kini untuk kebolehcapaian');
 assert.match(html, /button\.textContent=t\(message\.id\)/, 'mesej Chat Ceria mesti diterjemahkan mengikut bahasa penerima');
 assert.match(html, /class="live-chat-panel" id="modal-safe-chat"/, 'chat langsung mesti menjadi panel terapung yang tidak menutup permainan');
@@ -165,4 +169,4 @@ assert.equal((html.match(/type === 'garden_lamp'/g) || []).length, 1, 'lampu tam
 assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti digunakan untuk grafik yang lebih jelas');
 assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
-console.log('Semua semakan smoke MathBina V26 lulus.');
+console.log('Semua semakan smoke MathBina V27 lulus.');
