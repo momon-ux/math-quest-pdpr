@@ -5,10 +5,941 @@
     {
       "id": "rumah-contoh-mathbina",
       "displayName": "Cikgu Mohammad Fikrey bin Abdul Gapar",
-      "yearLabel": "Rumah Contoh Rasmi",
+      "yearLabel": "Villa Mahligai 5 Aras (Contoh Rasmi)",
       "avatar": "👨‍🏫",
       "approved": true,
-      "voxels": []
+      "voxels": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 4,
+          "type": "bicycle"
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "z": 4,
+          "type": "tree_shade"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "z": 5,
+          "type": "cobblestone"
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "z": 5,
+          "type": "cobblestone"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "z": 5,
+          "type": "cobblestone"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "z": 6,
+          "type": "cobblestone"
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "z": 6,
+          "type": "car_red"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "z": 6,
+          "type": "cobblestone"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "z": 7,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "z": 7,
+          "type": "cobblestone"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "z": 7,
+          "type": "cobblestone"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 6,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 6,
+          "type": "rose_flower"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 6,
+          "type": "cobblestone"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 6,
+          "type": "fountain"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 6,
+          "type": "cobblestone"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 6,
+          "type": "sunflower"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 6,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 5,
+          "type": "bush_leaf"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 5,
+          "type": "cobblestone"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 5,
+          "type": "bush_leaf"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 7,
+          "type": "cobblestone"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "z": 4,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "z": 4,
+          "type": "swimming_pool"
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "z": 4,
+          "type": "swimming_pool"
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "z": 4,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "z": 5,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "z": 5,
+          "type": "swimming_pool"
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "z": 5,
+          "type": "swimming_pool"
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "z": 5,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "z": 6,
+          "type": "pet_cat"
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "z": 6,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "z": 6,
+          "type": "rose_flower"
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "z": 6,
+          "type": "tree_shade"
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "z": 7,
+          "type": "fence_white"
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "z": 7,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 1,
+          "type": "cobblestone"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 2,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 3,
+          "type": "parquet_floor"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "z": 4,
+          "type": "cobblestone"
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "z": 1,
+          "type": "tree_shade"
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "z": 0,
+          "type": "tree_shade"
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "z": 1,
+          "type": "tree_shade"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "z": 1,
+          "type": "oak_log"
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "z": 1,
+          "type": "oak_log"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "z": 1,
+          "type": "chimney"
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 8,
+          "y": 1,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "z": 2,
+          "type": "glass_wall"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "z": 3,
+          "type": "glass_wall"
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "z": 2,
+          "type": "glass_wall"
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "z": 3,
+          "type": "door_glass"
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "z": 4,
+          "type": "brick_wall"
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "z": 4,
+          "type": "window_glass"
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "z": 4,
+          "type": "door_glass"
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "z": 4,
+          "type": "window_glass"
+        },
+        {
+          "x": 8,
+          "y": 1,
+          "z": 4,
+          "type": "brick_wall"
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "z": 5,
+          "type": "lantern"
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "z": 2,
+          "type": "stairs_wood"
+        },
+        {
+          "x": 8,
+          "y": 1,
+          "z": 2,
+          "type": "gold_block"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "z": 1,
+          "type": "oak_log"
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "z": 1,
+          "type": "oak_log"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "z": 1,
+          "type": "window_glass"
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "z": 1,
+          "type": "chimney"
+        },
+        {
+          "x": 7,
+          "y": 2,
+          "z": 1,
+          "type": "window_glass"
+        },
+        {
+          "x": 8,
+          "y": 2,
+          "z": 1,
+          "type": "brick_wall"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "z": 2,
+          "type": "glass_wall"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "z": 3,
+          "type": "glass_wall"
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "z": 2,
+          "type": "glass_wall"
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "z": 3,
+          "type": "glass_wall"
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "z": 4,
+          "type": "window_glass"
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "z": 4,
+          "type": "glass_wall"
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "z": 4,
+          "type": "door_glass"
+        },
+        {
+          "x": 7,
+          "y": 2,
+          "z": 4,
+          "type": "glass_wall"
+        },
+        {
+          "x": 8,
+          "y": 2,
+          "z": 4,
+          "type": "window_glass"
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "z": 5,
+          "type": "fence_white"
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "z": 5,
+          "type": "rose_flower"
+        },
+        {
+          "x": 7,
+          "y": 2,
+          "z": 5,
+          "type": "fence_white"
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "z": 3,
+          "type": "lantern"
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "z": 2,
+          "type": "oak_log"
+        },
+        {
+          "x": 8,
+          "y": 3,
+          "z": 2,
+          "type": "oak_log"
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 8,
+          "y": 3,
+          "z": 4,
+          "type": "oak_log"
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "z": 2,
+          "type": "stone_wall"
+        },
+        {
+          "x": 6,
+          "y": 3,
+          "z": 2,
+          "type": "chimney"
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "z": 2,
+          "type": "stone_wall"
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "z": 3,
+          "type": "glass_wall"
+        },
+        {
+          "x": 8,
+          "y": 3,
+          "z": 3,
+          "type": "glass_wall"
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "z": 4,
+          "type": "glass_wall"
+        },
+        {
+          "x": 6,
+          "y": 3,
+          "z": 4,
+          "type": "window_glass"
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "z": 4,
+          "type": "glass_wall"
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "z": 3,
+          "type": "diamond_block"
+        },
+        {
+          "x": 6,
+          "y": 3,
+          "z": 3,
+          "type": "gold_block"
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "z": 3,
+          "type": "diamond_block"
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "z": 2,
+          "type": "roof_red"
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "z": 3,
+          "type": "roof_red"
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "z": 4,
+          "type": "roof_red"
+        },
+        {
+          "x": 9,
+          "y": 3,
+          "z": 2,
+          "type": "roof_red"
+        },
+        {
+          "x": 9,
+          "y": 3,
+          "z": 3,
+          "type": "roof_red"
+        },
+        {
+          "x": 9,
+          "y": 3,
+          "z": 4,
+          "type": "roof_red"
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "z": 2,
+          "type": "roof_flat"
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "z": 2,
+          "type": "chimney"
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "z": 2,
+          "type": "roof_flat"
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "z": 3,
+          "type": "roof_flat"
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "z": 3,
+          "type": "helicopter"
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "z": 3,
+          "type": "roof_flat"
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "z": 3,
+          "type": "fence_white"
+        },
+        {
+          "x": 8,
+          "y": 4,
+          "z": 3,
+          "type": "fence_white"
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "z": 4,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "z": 4,
+          "type": "roof_flat"
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "z": 4,
+          "type": "garden_lamp"
+        },
+        {
+          "x": 6,
+          "y": 5,
+          "z": 3,
+          "type": "rainbow_block"
+        },
+        {
+          "x": 4,
+          "y": 5,
+          "z": 3,
+          "type": "sky_cloud"
+        },
+        {
+          "x": 8,
+          "y": 5,
+          "z": 3,
+          "type": "sky_cloud"
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "z": 2,
+          "type": "sky_sun"
+        }
+      ]
     }
   ]
 }

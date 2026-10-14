@@ -7221,20 +7221,19 @@ const COMBAT_BANK = {
       sprite.scale.set(5.2,1.08,1);sprite.renderOrder=20;return sprite;
     }
 
+    const OFFICIAL_SAMPLE_HOUSE_VOXELS = [{"x":0,"y":0,"z":4,"type":"bicycle"},{"x":1,"y":0,"z":4,"type":"cobblestone"},{"x":2,"y":0,"z":4,"type":"tree_shade"},{"x":0,"y":0,"z":5,"type":"cobblestone"},{"x":1,"y":0,"z":5,"type":"cobblestone"},{"x":2,"y":0,"z":5,"type":"cobblestone"},{"x":0,"y":0,"z":6,"type":"cobblestone"},{"x":1,"y":0,"z":6,"type":"car_red"},{"x":2,"y":0,"z":6,"type":"cobblestone"},{"x":0,"y":0,"z":7,"type":"garden_lamp"},{"x":1,"y":0,"z":7,"type":"cobblestone"},{"x":2,"y":0,"z":7,"type":"cobblestone"},{"x":3,"y":0,"z":6,"type":"garden_lamp"},{"x":4,"y":0,"z":6,"type":"rose_flower"},{"x":5,"y":0,"z":6,"type":"cobblestone"},{"x":6,"y":0,"z":6,"type":"fountain"},{"x":7,"y":0,"z":6,"type":"cobblestone"},{"x":8,"y":0,"z":6,"type":"sunflower"},{"x":9,"y":0,"z":6,"type":"garden_lamp"},{"x":5,"y":0,"z":5,"type":"bush_leaf"},{"x":6,"y":0,"z":5,"type":"cobblestone"},{"x":7,"y":0,"z":5,"type":"bush_leaf"},{"x":3,"y":0,"z":7,"type":"fence_white"},{"x":4,"y":0,"z":7,"type":"fence_white"},{"x":5,"y":0,"z":7,"type":"fence_white"},{"x":6,"y":0,"z":7,"type":"cobblestone"},{"x":7,"y":0,"z":7,"type":"fence_white"},{"x":8,"y":0,"z":7,"type":"fence_white"},{"x":9,"y":0,"z":7,"type":"fence_white"},{"x":10,"y":0,"z":4,"type":"parquet_floor"},{"x":11,"y":0,"z":4,"type":"swimming_pool"},{"x":12,"y":0,"z":4,"type":"swimming_pool"},{"x":13,"y":0,"z":4,"type":"parquet_floor"},{"x":10,"y":0,"z":5,"type":"parquet_floor"},{"x":11,"y":0,"z":5,"type":"swimming_pool"},{"x":12,"y":0,"z":5,"type":"swimming_pool"},{"x":13,"y":0,"z":5,"type":"parquet_floor"},{"x":10,"y":0,"z":6,"type":"pet_cat"},{"x":11,"y":0,"z":6,"type":"parquet_floor"},{"x":12,"y":0,"z":6,"type":"rose_flower"},{"x":13,"y":0,"z":6,"type":"tree_shade"},{"x":10,"y":0,"z":7,"type":"fence_white"},{"x":11,"y":0,"z":7,"type":"fence_white"},{"x":12,"y":0,"z":7,"type":"fence_white"},{"x":13,"y":0,"z":7,"type":"garden_lamp"},{"x":3,"y":0,"z":1,"type":"cobblestone"},{"x":4,"y":0,"z":1,"type":"cobblestone"},{"x":5,"y":0,"z":1,"type":"cobblestone"},{"x":6,"y":0,"z":1,"type":"cobblestone"},{"x":7,"y":0,"z":1,"type":"cobblestone"},{"x":8,"y":0,"z":1,"type":"cobblestone"},{"x":9,"y":0,"z":1,"type":"cobblestone"},{"x":3,"y":0,"z":2,"type":"parquet_floor"},{"x":4,"y":0,"z":2,"type":"parquet_floor"},{"x":5,"y":0,"z":2,"type":"parquet_floor"},{"x":6,"y":0,"z":2,"type":"parquet_floor"},{"x":7,"y":0,"z":2,"type":"parquet_floor"},{"x":8,"y":0,"z":2,"type":"parquet_floor"},{"x":9,"y":0,"z":2,"type":"parquet_floor"},{"x":3,"y":0,"z":3,"type":"parquet_floor"},{"x":4,"y":0,"z":3,"type":"parquet_floor"},{"x":5,"y":0,"z":3,"type":"parquet_floor"},{"x":6,"y":0,"z":3,"type":"parquet_floor"},{"x":7,"y":0,"z":3,"type":"parquet_floor"},{"x":8,"y":0,"z":3,"type":"parquet_floor"},{"x":9,"y":0,"z":3,"type":"parquet_floor"},{"x":3,"y":0,"z":4,"type":"cobblestone"},{"x":4,"y":0,"z":4,"type":"cobblestone"},{"x":5,"y":0,"z":4,"type":"cobblestone"},{"x":6,"y":0,"z":4,"type":"cobblestone"},{"x":7,"y":0,"z":4,"type":"cobblestone"},{"x":8,"y":0,"z":4,"type":"cobblestone"},{"x":9,"y":0,"z":4,"type":"cobblestone"},{"x":1,"y":0,"z":1,"type":"tree_shade"},{"x":6,"y":0,"z":0,"type":"tree_shade"},{"x":11,"y":0,"z":1,"type":"tree_shade"},{"x":3,"y":1,"z":1,"type":"oak_log"},{"x":9,"y":1,"z":1,"type":"oak_log"},{"x":3,"y":1,"z":4,"type":"oak_log"},{"x":9,"y":1,"z":4,"type":"oak_log"},{"x":4,"y":1,"z":1,"type":"brick_wall"},{"x":5,"y":1,"z":1,"type":"brick_wall"},{"x":6,"y":1,"z":1,"type":"chimney"},{"x":7,"y":1,"z":1,"type":"brick_wall"},{"x":8,"y":1,"z":1,"type":"brick_wall"},{"x":3,"y":1,"z":2,"type":"glass_wall"},{"x":3,"y":1,"z":3,"type":"glass_wall"},{"x":9,"y":1,"z":2,"type":"glass_wall"},{"x":9,"y":1,"z":3,"type":"door_glass"},{"x":4,"y":1,"z":4,"type":"brick_wall"},{"x":5,"y":1,"z":4,"type":"window_glass"},{"x":6,"y":1,"z":4,"type":"door_glass"},{"x":7,"y":1,"z":4,"type":"window_glass"},{"x":8,"y":1,"z":4,"type":"brick_wall"},{"x":6,"y":1,"z":5,"type":"lantern"},{"x":4,"y":1,"z":2,"type":"stairs_wood"},{"x":8,"y":1,"z":2,"type":"gold_block"},{"x":3,"y":2,"z":1,"type":"oak_log"},{"x":9,"y":2,"z":1,"type":"oak_log"},{"x":3,"y":2,"z":4,"type":"oak_log"},{"x":9,"y":2,"z":4,"type":"oak_log"},{"x":4,"y":2,"z":1,"type":"brick_wall"},{"x":5,"y":2,"z":1,"type":"window_glass"},{"x":6,"y":2,"z":1,"type":"chimney"},{"x":7,"y":2,"z":1,"type":"window_glass"},{"x":8,"y":2,"z":1,"type":"brick_wall"},{"x":3,"y":2,"z":2,"type":"glass_wall"},{"x":3,"y":2,"z":3,"type":"glass_wall"},{"x":9,"y":2,"z":2,"type":"glass_wall"},{"x":9,"y":2,"z":3,"type":"glass_wall"},{"x":4,"y":2,"z":4,"type":"window_glass"},{"x":5,"y":2,"z":4,"type":"glass_wall"},{"x":6,"y":2,"z":4,"type":"door_glass"},{"x":7,"y":2,"z":4,"type":"glass_wall"},{"x":8,"y":2,"z":4,"type":"window_glass"},{"x":5,"y":2,"z":5,"type":"fence_white"},{"x":6,"y":2,"z":5,"type":"rose_flower"},{"x":7,"y":2,"z":5,"type":"fence_white"},{"x":6,"y":2,"z":3,"type":"lantern"},{"x":4,"y":3,"z":2,"type":"oak_log"},{"x":8,"y":3,"z":2,"type":"oak_log"},{"x":4,"y":3,"z":4,"type":"oak_log"},{"x":8,"y":3,"z":4,"type":"oak_log"},{"x":5,"y":3,"z":2,"type":"stone_wall"},{"x":6,"y":3,"z":2,"type":"chimney"},{"x":7,"y":3,"z":2,"type":"stone_wall"},{"x":4,"y":3,"z":3,"type":"glass_wall"},{"x":8,"y":3,"z":3,"type":"glass_wall"},{"x":5,"y":3,"z":4,"type":"glass_wall"},{"x":6,"y":3,"z":4,"type":"window_glass"},{"x":7,"y":3,"z":4,"type":"glass_wall"},{"x":5,"y":3,"z":3,"type":"diamond_block"},{"x":6,"y":3,"z":3,"type":"gold_block"},{"x":7,"y":3,"z":3,"type":"diamond_block"},{"x":3,"y":3,"z":2,"type":"roof_red"},{"x":3,"y":3,"z":3,"type":"roof_red"},{"x":3,"y":3,"z":4,"type":"roof_red"},{"x":9,"y":3,"z":2,"type":"roof_red"},{"x":9,"y":3,"z":3,"type":"roof_red"},{"x":9,"y":3,"z":4,"type":"roof_red"},{"x":5,"y":4,"z":2,"type":"roof_flat"},{"x":6,"y":4,"z":2,"type":"chimney"},{"x":7,"y":4,"z":2,"type":"roof_flat"},{"x":5,"y":4,"z":3,"type":"roof_flat"},{"x":6,"y":4,"z":3,"type":"helicopter"},{"x":7,"y":4,"z":3,"type":"roof_flat"},{"x":4,"y":4,"z":3,"type":"fence_white"},{"x":8,"y":4,"z":3,"type":"fence_white"},{"x":5,"y":4,"z":4,"type":"garden_lamp"},{"x":6,"y":4,"z":4,"type":"roof_flat"},{"x":7,"y":4,"z":4,"type":"garden_lamp"},{"x":6,"y":5,"z":3,"type":"rainbow_block"},{"x":4,"y":5,"z":3,"type":"sky_cloud"},{"x":8,"y":5,"z":3,"type":"sky_cloud"},{"x":2,"y":5,"z":2,"type":"sky_sun"}];
+
     function sampleIslandVoxels(entry) {
-      return Array.isArray(entry?.voxels)&&entry.voxels.length?entry.voxels.slice(0,150):[
-        {x:5,y:0,z:3,type:'parquet_floor'},{x:6,y:0,z:3,type:'parquet_floor'},{x:7,y:0,z:3,type:'parquet_floor'},
-        {x:5,y:1,z:3,type:'wood_wall'},{x:6,y:1,z:3,type:'window_glass'},{x:7,y:1,z:3,type:'wood_wall'},
-        {x:5,y:2,z:3,type:'roof_red'},{x:6,y:2,z:3,type:'roof_red'},{x:7,y:2,z:3,type:'roof_red'},
-        {x:6,y:1,z:4,type:'door_wood'},{x:4,y:0,z:4,type:'tree_shade'}
-      ];
+      return Array.isArray(entry?.voxels) && entry.voxels.length
+        ? entry.voxels.slice(0, 350)
+        : OFFICIAL_SAMPLE_HOUSE_VOXELS;
     }
 
     function createFriendIsland(entry,index) {
       const group=new THREE.Group();
-      const grass=new THREE.Mesh(new THREE.CylinderGeometry(2.25,1.85,.42,8),new THREE.MeshLambertMaterial({color:0x4ade80}));
+      const grass=new THREE.Mesh(new THREE.CylinderGeometry(2.70,2.20,.45,8),new THREE.MeshLambertMaterial({color:0x4ade80}));
       grass.castShadow=true;grass.receiveShadow=true;group.add(grass);
-      const rock=new THREE.Mesh(new THREE.ConeGeometry(1.82,1.65,8),new THREE.MeshLambertMaterial({color:0x64748b}));
+      const rock=new THREE.Mesh(new THREE.ConeGeometry(2.20,1.88,8),new THREE.MeshLambertMaterial({color:0x64748b}));
       rock.rotation.z=Math.PI;rock.position.y=-1.02;rock.castShadow=true;group.add(rock);
       const house=new THREE.Group();sampleIslandVoxels(entry).forEach(v=>house.add(createVoxelObject(v)));
       house.scale.setScalar(.30);house.position.set(0,.28,0);group.add(house);
@@ -7682,7 +7681,11 @@ const COMBAT_BANK = {
 
     function galleryColorForType(type) {
       const id = String(type || 'wood_wall');
-      if (id.includes('roof') || id.includes('brick')) return { top:'#ef4444', left:'#b91c1c', right:'#dc2626' };
+      if (id.includes('rainbow')) return { top:'#ec4899', left:'#8b5cf6', right:'#3b82f6' };
+      if (id.includes('helicopter')) return { top:'#f97316', left:'#c2410c', right:'#ea580c' };
+      if (id.includes('fountain')) return { top:'#38bdf8', left:'#0284c7', right:'#0ea5e9' };
+      if (id.includes('lamp') || id.includes('lantern')) return { top:'#fef08a', left:'#ca8a04', right:'#eab308' };
+      if (id.includes('roof') || id.includes('brick') || id.includes('chimney')) return { top:'#ef4444', left:'#b91c1c', right:'#dc2626' };
       if (id.includes('glass') || id.includes('window') || id.includes('pool')) return { top:'#67e8f9', left:'#0891b2', right:'#22d3ee' };
       if (id.includes('tree') || id.includes('leaf') || id.includes('flower') || id.includes('bush')) return { top:'#4ade80', left:'#15803d', right:'#22c55e' };
       if (id.includes('stone') || id.includes('cobble') || id.includes('concrete')) return { top:'#cbd5e1', left:'#64748b', right:'#94a3b8' };
@@ -7718,19 +7721,9 @@ const COMBAT_BANK = {
       ctx.fillStyle='#86efac';ctx.strokeStyle='#16a34a';ctx.lineWidth=2;
       ctx.beginPath();ground.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fill();ctx.stroke();
 
-      const sample = voxels.length ? voxels : [
-        ...Array.from({length:6},(_,x)=>({x:x+4,y:0,z:3,type:'parquet_floor'})),
-        ...Array.from({length:6},(_,x)=>({x:x+4,y:0,z:6,type:'parquet_floor'})),
-        ...Array.from({length:3},(_,y)=>({x:4,y:y+1,z:3,type:'wood_wall'})),
-        ...Array.from({length:3},(_,y)=>({x:9,y:y+1,z:3,type:'wood_wall'})),
-        ...Array.from({length:6},(_,x)=>({x:x+4,y:1,z:3,type:x===2?'window_glass':'wood_wall'})),
-        ...Array.from({length:6},(_,x)=>({x:x+4,y:2,z:3,type:'wood_wall'})),
-        ...Array.from({length:6},(_,x)=>({x:x+4,y:3,z:3,type:'roof_red'})),
-        {x:6,y:1,z:6,type:'door_wood'},{x:7,y:1,z:6,type:'window_glass'},
-        {x:3,y:0,z:5,type:'tree_shade'},{x:10,y:0,z:5,type:'rose_flower'}
-      ];
+      const sample = voxels.length ? voxels : OFFICIAL_SAMPLE_HOUSE_VOXELS;
       sample.sort((a,b)=>(a.x+a.z+a.y*.08)-(b.x+b.z+b.y*.08));
-      sample.slice(0,220).forEach(v=>{
+      sample.slice(0,350).forEach(v=>{
         const x = cx + (Number(v.x)-Number(v.z))*tileW/2;
         const y = baseY + (Number(v.x)+Number(v.z))*tileH/2 - Number(v.y||0)*blockH;
         const c = galleryColorForType(v.type);
@@ -7807,7 +7800,7 @@ const COMBAT_BANK = {
       } catch (error) {}
       try { friends = (await Promise.all(getFriendUserIds().map(fetchFriendHouse))).filter(Boolean); } catch(e) {}
       COMMUNITY_GALLERY = [...friends, ...shared];
-      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Mohammad Fikrey bin Abdul Gapar', yearLabel:'MathBina', avatar:'👨‍🏫', approved:true, voxels:[] }];
+      if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Cikgu Mohammad Fikrey bin Abdul Gapar', yearLabel:'Villa Mahligai 5 Aras (Contoh Rasmi)', avatar:'👨‍🏫', approved:true, voxels:OFFICIAL_SAMPLE_HOUSE_VOXELS }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
       refreshNeighborhoodIslands();
@@ -7842,6 +7835,7 @@ const COMBAT_BANK = {
       grid.innerHTML = '';
       COMMUNITY_GALLERY.forEach(entry=>{
         const card=document.createElement('article');card.className='community-card';card.dataset.galleryId=entry.id;
+        card.style.cursor='pointer';
         if(focusId&&entry.id===focusId){card.style.outline='4px solid #facc15';card.style.boxShadow='0 0 0 7px rgba(2,132,199,.35)';}
         const canvas=document.createElement('canvas');canvas.width=420;canvas.height=240;drawGalleryHouse(canvas,entry);card.appendChild(canvas);
         const info=document.createElement('div');info.className='community-card-info';
@@ -7849,7 +7843,28 @@ const COMBAT_BANK = {
         const labels=document.createElement('div');
         const name=document.createElement('div');name.className='community-card-name';name.textContent=`${galleryTerm('house')} ${entry.displayName||galleryTerm('architect')}`;
         const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=galleryMetaText(entry);
-        labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
+        labels.append(name,meta);
+        const visitBtn=document.createElement('button');
+        visitBtn.className='mini-action-btn';
+        visitBtn.type='button';
+        visitBtn.style.cssText='margin-left:auto;white-space:nowrap;cursor:pointer;background:#0284c7;color:#fff;border-color:#0369a1;font-weight:900;';
+        visitBtn.textContent='👀 Lawat 3D';
+        info.append(avatar,labels,visitBtn);
+        card.appendChild(info);
+        card.onclick=()=>{
+          closeCommunityGallery();
+          if(document.getElementById('view-sandbox').style.display!=='flex'){
+            document.getElementById('view-lobby').style.display='none';
+            document.getElementById('view-sandbox').style.display='flex';
+            document.getElementById('hud-sandbox-avatar').textContent=STATE.avatar||'👷‍♂️';
+            document.getElementById('hud-sandbox-name').textContent=STATE.studentName||'Pelawat';
+            document.getElementById('hud-sandbox-class').textContent=playerLevelLabel();
+            document.getElementById('hud-user-id').textContent=STATE.userId||'TETAMU';
+            updateSandboxHud();renderPaletteDock();initSandboxCanvas();
+          }
+          enterFriendHouseVisit(entry);
+        };
+        grid.appendChild(card);
       });
       modal.style.display='flex';
       if(focusId){

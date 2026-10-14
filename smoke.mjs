@@ -61,6 +61,14 @@ assert.match(html, /COMMUNITY_GALLERY = \[\.\.\.friends, \.\.\.shared\]/, 'galer
 assert.equal(gallery.entries[0]?.displayName, 'Cikgu Mohammad Fikrey bin Abdul Gapar', 'rumah contoh rasmi mesti menggunakan nama penuh pembangun');
 assert.ok(Array.isArray(gallery.entries) && gallery.entries.length > 0, 'galeri pusat mesti mempunyai sekurang-kurangnya satu rumah rasmi');
 assert.ok(gallery.entries.every(entry => entry.approved !== false), 'rumah galeri pusat mesti diluluskan');
+assert.ok(gallery.entries[0]?.voxels?.length >= 100, 'rumah contoh Cikgu Fikrey mesti mengandungi binaan mewah mahligai berbilang aras');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'helicopter'), 'rumah contoh mesti mempunyai helikopter rasmi di helipad');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'car_red'), 'rumah contoh mesti mempunyai kereta sukan di laluan masuk');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'swimming_pool'), 'rumah contoh mesti mempunyai kolam renang');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'fountain'), 'rumah contoh mesti mempunyai air pancut diraja');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'gold_block'), 'rumah contoh mesti mempunyai khazanah jongkong emas');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'diamond_block'), 'rumah contoh mesti mempunyai permata berlian');
+assert.ok(gallery.entries[0]?.voxels?.some(v => v.type === 'rainbow_block'), 'rumah contoh mesti mempunyai gerbang pelangi aras puncak');
 for (let age = 7; age <= 17; age++) {
   assert.match(html, new RegExp(`id="chip-age-${age}"`), `pilihan umur ${age} mesti tersedia`);
 }
