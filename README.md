@@ -1,6 +1,12 @@
-# 🏡 MathBina: Misi Bina Rumah Impian (Tahun 1 hingga Tahun 6)
-### *Aplikasi Gamifikasi Pendidikan Matematik Rendah untuk murid dari pelbagai sekolah*
+# 🏡 MathBina: Misi Bina Rumah Impian (Tahun 1 hingga Tingkatan 5)
+### *Aplikasi Gamifikasi Pendidikan Matematik untuk murid dari pelbagai sekolah*
 ### 👨‍💻 **Pembangun Sistem:** Mohammad Fikrey bin Abdul Gapar (Cikgu Fikrey / Momon)
+
+---
+
+## 🌟 Versi V11 — ID Pengguna, Galeri Kawan & Simpanan Awan Firebase
+
+Versi ini menjana ID awam MathBina untuk setiap pemain, membenarkan sekolah, kelas dan aras diedit, menyokong soalan Tahun 1 hingga Tingkatan 5, serta menyimpan binaan ke Firebase secara automatik. Rumah kawan boleh ditambah menggunakan ID tanpa menunggu kelulusan guru. Setiap rumah diikat kepada identiti tanpa nama peranti pemilik supaya orang lain hanya boleh melihat dan tidak boleh menimpa binaannya.
 
 ---
 

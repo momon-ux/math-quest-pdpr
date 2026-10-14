@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>MathBina — Misi Bina Rumah Impian Tahun 1 hingga 6</title>
+  <title>MathBina — Misi Bina Rumah Impian Sekolah Rendah & Menengah</title>
   <meta name="application-name" content="MathBina">
   <meta name="apple-mobile-web-app-title" content="MathBina">
   <link rel="manifest" href="manifest.webmanifest">
@@ -215,6 +215,12 @@
     .community-card-avatar { font-size:1.35rem; }
     .community-card-name { font-size:.78rem; font-weight:900; color:#78350f; }
     .community-card-meta { font-size:.62rem; font-weight:800; color:#64748b; }
+    .profile-id-row { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:6px; }
+    .profile-id-code { padding:5px 9px; border-radius:8px; background:#0f172a; color:#fef08a; font:900 .72rem/1.1 monospace; letter-spacing:.7px; }
+    .mini-action-btn { border:1px solid #0284c7; border-radius:8px; padding:5px 8px; background:#e0f2fe; color:#075985; font-size:.64rem; font-weight:900; cursor:pointer; }
+    .gallery-add-panel { display:grid; grid-template-columns:1fr auto; gap:7px; margin:10px 0; padding:10px; border:1.5px solid #22d3ee; border-radius:11px; background:#ecfeff; }
+    .gallery-add-panel input { min-width:0; border:1.5px solid #0891b2; border-radius:8px; padding:9px 10px; font-size:.78rem; font-weight:800; text-transform:uppercase; }
+    .gallery-add-panel button { border:0; border-radius:8px; padding:8px 12px; background:#0284c7; color:#fff; font-size:.7rem; font-weight:900; cursor:pointer; }
     .lobby-header {
       display: flex;
       justify-content: space-between;
@@ -1390,7 +1396,7 @@
             <img class="brand-app-icon" src="mathbina-icon-192.png" alt="Ikon MathBina">
             <div>
               <div class="game-title-logo">MATHBINA</div>
-              <div class="sub-badge">Misi Bina Rumah Impian — Matematik Tahun 1 hingga 6</div>
+              <div class="sub-badge">Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah</div>
             </div>
           </div>
           <div class="credit-badge">
@@ -1404,7 +1410,7 @@
           <div style="min-width:0;">
             <div class="community-kicker">🏘️ Galeri Rumah Kawan-Kawan</div>
             <div class="community-owner" id="community-spotlight-owner">Rumah Contoh MathBina</div>
-            <div class="community-meta" id="community-spotlight-meta">Diluluskan guru • Paparan semua peranti</div>
+            <div class="community-meta" id="community-spotlight-meta">Tambah rumah kawan menggunakan ID MathBina</div>
           </div>
           <div class="community-open-hint">Lihat Galeri →</div>
         </div>
@@ -1412,7 +1418,7 @@
         <div class="lobby-row-grid">
           <!-- Pilih Tahun -->
           <div class="form-group">
-            <label class="form-label">1. PILIH TAHUN ANDA:</label>
+            <label class="form-label">1. PILIH TAHUN / TINGKATAN ANDA:</label>
             <div class="toggle-grade-box">
               <button class="grade-chip active" id="chip-year-1" onclick="selectLobbyGrade(1)">1️⃣ TAHUN 1</button>
               <button class="grade-chip" id="chip-year-2" onclick="selectLobbyGrade(2)">2️⃣ TAHUN 2</button>
@@ -1420,12 +1426,17 @@
               <button class="grade-chip" id="chip-year-4" onclick="selectLobbyGrade(4)">4️⃣ TAHUN 4</button>
               <button class="grade-chip" id="chip-year-5" onclick="selectLobbyGrade(5)">5️⃣ TAHUN 5</button>
               <button class="grade-chip" id="chip-year-6" onclick="selectLobbyGrade(6)">6️⃣ TAHUN 6</button>
+              <button class="grade-chip" id="chip-form-1" onclick="selectLobbyGrade(7)">🏫 TINGKATAN 1</button>
+              <button class="grade-chip" id="chip-form-2" onclick="selectLobbyGrade(8)">🏫 TINGKATAN 2</button>
+              <button class="grade-chip" id="chip-form-3" onclick="selectLobbyGrade(9)">🏫 TINGKATAN 3</button>
+              <button class="grade-chip" id="chip-form-4" onclick="selectLobbyGrade(10)">🎓 TINGKATAN 4</button>
+              <button class="grade-chip" id="chip-form-5" onclick="selectLobbyGrade(11)">🎓 TINGKATAN 5</button>
             </div>
           </div>
 
           <!-- Sekolah dan kelas bebas supaya murid dari mana-mana sekolah boleh bermain. -->
           <div class="form-group">
-            <label class="form-label">2. SEKOLAH & KELAS (PILIHAN):</label>
+            <label class="form-label">2. SEKOLAH & KELAS (BOLEH DIEDIT KEMUDIAN):</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
               <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" oninput="updateSchoolClassInput()">
               <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" oninput="updateSchoolClassInput()">
@@ -1440,13 +1451,17 @@
             <input type="text" id="input-student-name" class="student-name-input" maxlength="80" autocomplete="name" inputmode="text" placeholder="Taip nama penuh anda" oninput="updateStudentNameInput(this.value)" onkeydown="if(event.key==='Enter') enterBuildingPlot()">
           </div>
           <div style="font-size: 1.8rem; align-self: center;" aria-hidden="true">✍️</div>
-          <div class="name-entry-status" id="student-name-status">Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.</div>
+          <div class="name-entry-status" id="student-name-status">Isi nama, sekolah dan kelas yang sama untuk membuka rumah pada peranti lain.</div>
           <div class="profile-preview-card" aria-live="polite">
             <div class="profile-preview-avatar" id="profile-preview-avatar">👷‍♂️</div>
             <div>
               <div class="profile-preview-kicker">Profil Pemain MathBina</div>
               <div class="profile-preview-name" id="profile-preview-name">Nama anda akan muncul di sini</div>
               <div class="profile-preview-meta" id="profile-preview-meta">Arkitek Cilik • Tahun 1</div>
+              <div class="profile-id-row">
+                <span class="profile-id-code" id="profile-user-id">ID dijana selepas masuk</span>
+                <button class="mini-action-btn" type="button" onclick="copyUserId()">📋 Salin ID</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1489,12 +1504,14 @@
     <div id="view-sandbox">
       <!-- Top HUD -->
       <div class="sandbox-top-hud">
-        <div class="player-hud-badge">
+          <div class="player-hud-badge">
           <div class="avatar-icon-bubble" id="hud-sandbox-avatar">👷‍♂️</div>
           <div>
             <div class="hud-name-label" id="hud-sandbox-name">Murid</div>
             <span class="hud-class-tag" id="hud-sandbox-class">Tahun 1</span>
+            <button class="mini-action-btn" id="hud-user-id" onclick="copyUserId()" title="Salin ID untuk dikongsi dengan kawan">ID MathBina</button>
           </div>
+          <button class="mini-action-btn" onclick="editPlayerProfile()" title="Ubah tahun atau tingkatan, sekolah dan kelas">✏️ Profil</button>
         </div>
 
         <div class="hud-stats-group" style="display: flex; gap: 8px; align-items: center;">
@@ -1778,12 +1795,16 @@
         <div class="modal-head">
           <div>
             <div class="modal-title">🏘️ Galeri Rumah Kawan-Kawan</div>
-            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;">Nama ringkas, tahun dan avatar sahaja • Rumah diluluskan guru</div>
+            <div style="font-size:.65rem;font-weight:800;color:#64748b;margin-top:2px;">Tambah dan lihat rumah kawan menggunakan ID MathBina</div>
           </div>
           <button class="modal-close-btn" onclick="closeCommunityGallery()">✕</button>
         </div>
         <div style="background:#ecfeff;border:1.5px solid #22d3ee;border-radius:10px;padding:8px 10px;font-size:.7rem;color:#155e75;line-height:1.45;">
-          Rumah dalam senarai pusat boleh dilihat oleh semua murid. Rumah yang tersimpan pada telefon ini ditandakan <b>Peranti ini</b> dan tidak dihantar secara automatik.
+          Masukkan ID MathBina kawan untuk menambah rumahnya. ID ini hanya membenarkan paparan rumah—kawan tidak boleh mengubah binaan pemilik.
+        </div>
+        <div class="gallery-add-panel">
+          <input id="friend-user-id" maxlength="14" inputmode="text" placeholder="Contoh: MB-7K4P-9Q2X" onkeydown="if(event.key==='Enter') addFriendHouseById()">
+          <button onclick="addFriendHouseById()">➕ Tambah Rumah</button>
         </div>
         <div class="community-gallery-grid" id="community-gallery-grid"></div>
       </div>
@@ -2060,7 +2081,34 @@ const COMBAT_BANK = {
     }
 
     function generateDynamicQuestion(grade) {
-      grade = Math.max(1, Math.min(6, Number(grade) || 1));
+      grade = Math.max(1, Math.min(11, Number(grade) || 1));
+      if (grade >= 7) {
+        const form = grade - 6;
+        const type = Math.floor(Math.random() * 3);
+        if (form === 1) {
+          if (type === 0) { const a=Math.floor(Math.random()*16)-8,b=Math.floor(Math.random()*16)-8; return makeNumberQuestion('INTEGER',`${a} + (${b}) =`,a+b,2); }
+          if (type === 1) { const x=Math.floor(Math.random()*8)+2,k=Math.floor(Math.random()*12)+2; return makeNumberQuestion('ALGEBRA ASAS',`Jika x = ${x}, 3x + ${k} =`,3*x+k,3); }
+          const base=Math.floor(Math.random()*6)+2; return makeNumberQuestion('KUASA DUA',`${base}² =`,base*base,base);
+        }
+        if (form === 2) {
+          if (type === 0) { const x=Math.floor(Math.random()*10)+2,a=Math.floor(Math.random()*5)+2,b=Math.floor(Math.random()*12)+1; return makeNumberQuestion('PERSAMAAN LINEAR',`${a}x + ${b} = ${a*x+b}. Nilai x =`,x,2); }
+          if (type === 1) { const a=Math.floor(Math.random()*4)+2,b=Math.floor(Math.random()*3)+2; return makeNumberQuestion('HUKUM INDEKS',`${a}² × ${a}³ = ${a}ⁿ. n =`,5,1); }
+          const n=(Math.floor(Math.random()*7)+2)*5; return makeNumberQuestion('PERATUS',`15% daripada ${n*20/3} =`,n,5);
+        }
+        if (form === 3) {
+          if (type === 0) { const triples=[[3,4,5],[5,12,13],[8,15,17]][Math.floor(Math.random()*3)]; return makeNumberQuestion('PYTHAGORAS',`Sisi tegak ${triples[0]} cm dan ${triples[1]} cm. Hipotenus =`,triples[2],2,' cm'); }
+          if (type === 1) { const m=Math.floor(Math.random()*5)+1,x=Math.floor(Math.random()*5)+2,c=Math.floor(Math.random()*8)+1; return makeNumberQuestion('GARIS LURUS',`y = ${m}x + ${c}, x = ${x}. y =`,m*x+c,3); }
+          const r=Math.floor(Math.random()*6)+2; return makeNumberQuestion('BULATAN',`Diameter bulatan berjari-jari ${r} cm =`,r*2,2,' cm');
+        }
+        if (form === 4) {
+          if (type === 0) { const x=Math.floor(Math.random()*6)+2,a=Math.floor(Math.random()*4)+1,b=Math.floor(Math.random()*4)+5; return makeNumberQuestion('KUADRATIK',`(x − ${a})(x − ${b}) = 0. Satu punca ialah ${a}; punca lain =`,b,2); }
+          if (type === 1) { const p=[30,45,60][Math.floor(Math.random()*3)]; const values={30:0.5,45:0.71,60:0.87}; const correct=`${values[p]}`; const opts=[correct,'1.00','0.25'].sort(()=>Math.random()-.5); return {tag:'TRIGONOMETRI',q:`Nilai anggaran sin ${p}° =`,opts,ans:opts.indexOf(correct)}; }
+          const mean=Math.floor(Math.random()*12)+5; return makeNumberQuestion('MIN',`Min bagi ${mean-2}, ${mean}, ${mean+2} =`,mean,2);
+        }
+        if (type === 0) { const p=[0.2,0.4,0.6,0.8][Math.floor(Math.random()*4)]; const correct=`${Number((1-p).toFixed(1))}`; const opts=[correct,`${p}`,`${Number(Math.min(1,p+.1).toFixed(1))}`].sort(()=>Math.random()-.5); return {tag:'KEBARANGKALIAN',q:`P(A) = ${p}. P(bukan A) =`,opts,ans:opts.indexOf(correct)}; }
+        if (type === 1) { const principal=(Math.floor(Math.random()*5)+1)*1000,rate=5; return makeNumberQuestion('FAEDAH MUDAH',`Faedah ${rate}% setahun bagi RM${principal} =`,principal*rate/100,50,''); }
+        const n=Math.floor(Math.random()*5)+2; return makeNumberQuestion('FUNGSI',`f(x)=2x+3. f(${n}) =`,2*n+3,2);
+      }
       if (grade === 1) {
         const type = Math.floor(Math.random() * 3);
         if (type === 0) {
@@ -2176,6 +2224,8 @@ const COMBAT_BANK = {
        ============================================================== */
     const SAVE_STORAGE_KEY = "MATH_CRAFT_SAVE_SK_RANGGU_V2";
     const LEADERBOARD_KEY = "MATH_CRAFT_LEADERBOARD_SK_RANGGU_V2";
+    const DEVICE_PROFILE_KEY = "MATHBINA_DEVICE_PROFILE_V1";
+    const FRIEND_HOUSES_KEY = "MATHBINA_FRIEND_HOUSES_V1";
 
     const GRID_COLS = 14;
     const GRID_ROWS = 8;
@@ -2186,6 +2236,8 @@ const COMBAT_BANK = {
       classLabel: '',
       className: 'Tahun 1',
       studentName: '',
+      userId: '',
+      ownerSecret: '',
       avatar: '👷‍♂️',
       avatarTitle: 'Arkitek Cilik',
 
@@ -2257,8 +2309,65 @@ const COMBAT_BANK = {
         .toLocaleLowerCase('ms-MY');
     }
 
+    function gradeLabel(value = STATE.grade) {
+      const level = Math.max(1, Math.min(11, Number(value) || 1));
+      return level <= 6 ? `Tahun ${level}` : `Tingkatan ${level - 6}`;
+    }
+
+    function randomMathBinaCode(length = 8) {
+      const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const bytes = new Uint8Array(length);
+      crypto.getRandomValues(bytes);
+      return Array.from(bytes, byte => alphabet[byte % alphabet.length]).join('');
+    }
+
+    function normalizeUserId(value) {
+      const compact = String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^MB/, '');
+      return compact.length === 8 ? `MB-${compact.slice(0,4)}-${compact.slice(4)}` : '';
+    }
+
+    function persistDeviceProfile() {
+      if (!STATE.userId || !STATE.ownerSecret) return;
+      const profile = {
+        userId:STATE.userId, ownerSecret:STATE.ownerSecret, studentName:STATE.studentName,
+        grade:STATE.grade, schoolName:STATE.schoolName, classLabel:STATE.classLabel,
+        avatar:STATE.avatar, avatarTitle:STATE.avatarTitle
+      };
+      try { localStorage.setItem(DEVICE_PROFILE_KEY, JSON.stringify(profile)); } catch(e) {}
+    }
+
+    function ensurePlayerIdentity() {
+      if (!STATE.userId) STATE.userId = `MB-${randomMathBinaCode(4)}-${randomMathBinaCode(4)}`;
+      if (!STATE.ownerSecret) STATE.ownerSecret = randomMathBinaCode(24);
+      persistDeviceProfile();
+      updateProfilePreview();
+      return STATE.userId;
+    }
+
+    function restoreDeviceProfile() {
+      try {
+        const profile = JSON.parse(localStorage.getItem(DEVICE_PROFILE_KEY) || 'null');
+        if (!profile || !normalizeUserId(profile.userId) || !profile.ownerSecret) return;
+        STATE.userId = normalizeUserId(profile.userId);
+        STATE.ownerSecret = String(profile.ownerSecret);
+        STATE.studentName = cleanOptionalProfileText(profile.studentName, 80);
+        STATE.grade = Math.max(1, Math.min(11, Number(profile.grade) || 1));
+        STATE.schoolName = cleanOptionalProfileText(profile.schoolName, 80);
+        STATE.classLabel = cleanOptionalProfileText(profile.classLabel, 40);
+        STATE.avatar = profile.avatar || STATE.avatar;
+        STATE.avatarTitle = profile.avatarTitle || STATE.avatarTitle;
+        STATE.className = [gradeLabel(), STATE.classLabel, STATE.schoolName].filter(Boolean).join(' • ');
+        const nameInput = document.getElementById('input-student-name');
+        const schoolInput = document.getElementById('input-school-name');
+        const classInput = document.getElementById('input-class-name');
+        if (nameInput) nameInput.value = STATE.studentName;
+        if (schoolInput) schoolInput.value = STATE.schoolName;
+        if (classInput) classInput.value = STATE.classLabel;
+      } catch(e) {}
+    }
+
     function getStudentSaveKey(name, cls) {
-      return `${normalizeStudentIdentity(name)}|${normalizeStudentIdentity(cls)}`;
+      return STATE.userId ? `id:${STATE.userId}` : `${normalizeStudentIdentity(name)}|${normalizeStudentIdentity(cls)}`;
     }
 
     function findStudentSave(name, cls) {
@@ -2272,7 +2381,7 @@ const COMBAT_BANK = {
         const separator = legacyKey.indexOf('|');
         const legacyName = saved?.studentName || (separator >= 0 ? legacyKey.slice(0, separator) : '');
         const legacyClass = saved?.className || (separator >= 0 ? legacyKey.slice(separator + 1) : '');
-        return getStudentSaveKey(legacyName, legacyClass) === canonicalKey;
+        return `${normalizeStudentIdentity(legacyName)}|${normalizeStudentIdentity(legacyClass)}` === `${normalizeStudentIdentity(name)}|${normalizeStudentIdentity(cls)}`;
       });
       if (!matches.length) {
         // Laluan pemulihan untuk rekod versi lama yang menggunakan nama kelas
@@ -2291,7 +2400,7 @@ const COMBAT_BANK = {
 
     function saveCurrentStudentState() {
       if (!STATE.studentName) return;
-      const key = `${STATE.studentName}|${STATE.className}`;
+      const key = getStudentSaveKey(STATE.studentName, STATE.className);
       const all = getAllSaves();
       let placedCount = 0;
       for (let r = 0; r < GRID_ROWS; r++) {
@@ -2302,6 +2411,7 @@ const COMBAT_BANK = {
       all[key] = {
         grade: STATE.grade,
         className: STATE.className,
+        userId: STATE.userId,
         studentName: STATE.studentName,
         avatar: STATE.avatar,
         xp: STATE.xp,
@@ -2374,16 +2484,20 @@ const COMBAT_BANK = {
        LOBBY SETUP & EVENT HANDLERS
        ============================================================== */
     function initLobbyUI() {
-      for (let year = 1; year <= 6; year++) {
-        document.getElementById(`chip-year-${year}`)?.classList.toggle('active', year === STATE.grade);
+      restoreDeviceProfile();
+      for (let level = 1; level <= 11; level++) {
+        const id = level <= 6 ? `chip-year-${level}` : `chip-form-${level - 6}`;
+        document.getElementById(id)?.classList.toggle('active', level === STATE.grade);
       }
       updateProfilePreview();
+      updateStudentSaveStatus();
     }
 
     function selectLobbyGrade(g) {
-      STATE.grade = Math.max(1, Math.min(6, Number(g) || 1));
-      for (let year = 1; year <= 6; year++) {
-        document.getElementById(`chip-year-${year}`)?.classList.toggle('active', year === STATE.grade);
+      STATE.grade = Math.max(1, Math.min(11, Number(g) || 1));
+      for (let level = 1; level <= 11; level++) {
+        const id = level <= 6 ? `chip-year-${level}` : `chip-form-${level - 6}`;
+        document.getElementById(id)?.classList.toggle('active', level === STATE.grade);
       }
       updateSchoolClassInput();
       updateProfilePreview();
@@ -2401,7 +2515,8 @@ const COMBAT_BANK = {
       STATE.classLabel = cleanOptionalProfileText(classInput?.value, 40);
       if (schoolInput && schoolInput.value !== STATE.schoolName) schoolInput.value = STATE.schoolName;
       if (classInput && classInput.value !== STATE.classLabel) classInput.value = STATE.classLabel;
-      STATE.className = [`Tahun ${STATE.grade}`, STATE.classLabel, STATE.schoolName].filter(Boolean).join(' • ');
+      STATE.className = [gradeLabel(), STATE.classLabel, STATE.schoolName].filter(Boolean).join(' • ');
+      persistDeviceProfile();
       updateProfilePreview();
       updateStudentSaveStatus();
     }
@@ -2412,7 +2527,9 @@ const COMBAT_BANK = {
       const meta = document.getElementById('profile-preview-meta');
       if (avatar) avatar.textContent = STATE.avatar;
       if (name) name.textContent = STATE.studentName || 'Nama anda akan muncul di sini';
-      if (meta) meta.textContent = `${STATE.avatarTitle} • Tahun ${STATE.grade}`;
+      if (meta) meta.textContent = `${STATE.avatarTitle} • ${gradeLabel()}`;
+      const id = document.getElementById('profile-user-id');
+      if (id) id.textContent = STATE.userId || 'ID dijana selepas masuk';
     }
 
     function updateStudentNameInput(value) {
@@ -2420,6 +2537,7 @@ const COMBAT_BANK = {
       const input = document.getElementById('input-student-name');
       if (input && input.value !== clean) input.value = clean;
       STATE.studentName = clean.trim();
+      persistDeviceProfile();
       updateStudentSaveStatus();
       updateProfilePreview();
     }
@@ -2428,19 +2546,22 @@ const COMBAT_BANK = {
       const status = document.getElementById('student-name-status');
       if (!status) return;
       if (STATE.studentName.length < 3) {
-        status.textContent = 'Nama ini digunakan untuk menyimpan kemajuan pada peranti ini sahaja.';
+        status.textContent = 'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.';
         return;
       }
       const match = findStudentSave(STATE.studentName, STATE.className);
       const blocks = match ? (match.saved?.voxels?.length ?? match.saved?.placedBlocks ?? 0) : 0;
       status.textContent = match
         ? `✅ Kemajuan lama ditemui: ${blocks} blok akan dibuka semula.`
-        : `✅ Profil baharu sedia dicipta untuk ${STATE.studentName}.`;
+        : STATE.userId
+          ? `🪪 ID ${STATE.userId} kekal walaupun tahun, sekolah atau kelas diubah.`
+          : `🪪 ID pengguna akan dijana automatik selepas masuk.`;
     }
 
     function pickAvatar(emoji, title) {
       STATE.avatar = emoji;
       STATE.avatarTitle = title;
+      persistDeviceProfile();
       document.getElementById('av-builder').classList.toggle('active', emoji === '👷‍♂️');
       document.getElementById('av-designer').classList.toggle('active', emoji === '🧕');
       document.getElementById('av-agent').classList.toggle('active', emoji === '🦸‍♂️');
@@ -2460,6 +2581,9 @@ const COMBAT_BANK = {
         return;
       }
 
+      ensurePlayerIdentity();
+      persistDeviceProfile();
+
       const restored = loadStudentProfile(STATE.studentName, STATE.className);
 
       // Hide Lobby, Show Sandbox
@@ -2469,15 +2593,17 @@ const COMBAT_BANK = {
       // Update HUD
       document.getElementById('hud-sandbox-avatar').textContent = STATE.avatar;
       document.getElementById('hud-sandbox-name').textContent = STATE.studentName;
-      document.getElementById('hud-sandbox-class').textContent = `Tahun ${STATE.grade}`;
+      document.getElementById('hud-sandbox-class').textContent = gradeLabel();
+      document.getElementById('hud-user-id').textContent = STATE.userId;
 
       updateSandboxHud();
       renderPaletteDock();
       initSandboxCanvas();
+      restoreStudentFromCloud();
 
       showToast(restored
-        ? `✅ Selamat kembali ${STATE.studentName}! Binaan lama anda telah dibuka.`
-        : `Selamat Datang ${STATE.studentName}! Bina rumah impian anda! 🏡`);
+        ? `✅ Selamat kembali ${STATE.studentName}! Menyemak simpanan awan…`
+        : `☁️ Menyemak rumah ${STATE.studentName} dalam simpanan awan…`);
     }
 
     function returnToLobby() {
@@ -2486,6 +2612,19 @@ const COMBAT_BANK = {
       document.getElementById('view-lobby').style.display = 'flex';
       updateProfilePreview();
       loadCommunityGallery();
+    }
+
+    function editPlayerProfile() {
+      returnToLobby();
+      const schoolInput = document.getElementById('input-school-name');
+      if (schoolInput) schoolInput.focus();
+      showToast('✏️ Ubah tahun/tingkatan, sekolah atau kelas. ID anda kekal sama.');
+    }
+
+    async function copyUserId() {
+      if (!STATE.userId) return showToast('Masuk ke dunia binaan dahulu untuk menjana ID.');
+      try { await navigator.clipboard.writeText(STATE.userId); showToast(`📋 ID ${STATE.userId} disalin!`); }
+      catch(e) { showToast(`ID anda: ${STATE.userId}`); }
     }
 
     /* ==============================================================
@@ -3078,9 +3217,14 @@ const COMBAT_BANK = {
         3: ['Sifir 2', 'Sifir 3', 'Sifir 4', 'Sifir 5', 'Bahagi', 'Pecahan', 'Masa', '🌟 JACKPOT'],
         4: ['Sifir 6', 'Sifir 7', 'Sifir 8', 'Sifir 9', 'Bahagi', 'Pecahan', 'Ukuran', '🌟 JACKPOT'],
         5: ['Sifir 6', 'Sifir 7', 'Sifir 8', 'Sifir 9', 'Pecahan', 'Peratus', 'Wang', '🌟 JACKPOT'],
-        6: ['Operasi Bergabung', 'Nombor Juta', 'Pecahan', 'Peratus', 'Nisbah', 'Wang', 'Ukuran', '🌟 JACKPOT']
+        6: ['Operasi Bergabung', 'Nombor Juta', 'Pecahan', 'Peratus', 'Nisbah', 'Wang', 'Ukuran', '🌟 JACKPOT'],
+        7: ['Integer', 'Algebra Asas', 'Kuasa Dua', 'Pecahan', 'Nisbah', 'Perimeter', 'Data', '🌟 JACKPOT'],
+        8: ['Persamaan Linear', 'Indeks', 'Peratus', 'Koordinat', 'Nisbah', 'Bentuk', 'Data', '🌟 JACKPOT'],
+        9: ['Pythagoras', 'Garis Lurus', 'Bulatan', 'Sudut', 'Transformasi', 'Data', 'Kebarangkalian', '🌟 JACKPOT'],
+        10: ['Kuadratik', 'Trigonometri', 'Set', 'Min', 'Graf', 'Kebarangkalian', 'Kewangan', '🌟 JACKPOT'],
+        11: ['Fungsi', 'Kebarangkalian', 'Statistik', 'Faedah', 'Matriks', 'Graf', 'Nombor Indeks', '🌟 JACKPOT']
       };
-      return slices[Math.max(1, Math.min(6, Number(grade) || 1))];
+      return slices[Math.max(1, Math.min(11, Number(grade) || 1))];
     }
 
     function launchMathWheel() {
@@ -3224,7 +3368,7 @@ const COMBAT_BANK = {
         opts = [`${correctAns}`, `${correctAns + num}`, `${Math.max(2, correctAns - num)}`].sort(() => Math.random() - 0.5);
       } else if (topic.includes("JACKPOT")) {
         const qObj = generateDynamicQuestion(STATE.grade);
-        qText = `${qObj.q} (BONUS JACKPOT TAHUN ${STATE.grade}!)`;
+        qText = `${qObj.q} (BONUS JACKPOT ${gradeLabel().toUpperCase()}!)`;
         opts = qObj.opts;
         correctAns = qObj.opts[qObj.ans];
       } else {
@@ -3339,7 +3483,7 @@ const COMBAT_BANK = {
                 <span style="font-weight:900;">${medal}</span>
                 <div>
                   <div style="font-weight:800; color:#0f172a;">${safeName}</div>
-                  <div style="font-size:0.65rem; color:#64748b;">${safeClass} • Thn ${Number(it.grade || 0)} • ${escapeHtml(it.time || '')} • ${Number(it.questions || 0)} soalan • ${Number(it.accuracy || 0)}% tepat</div>
+                  <div style="font-size:0.65rem; color:#64748b;">${safeClass} • ${escapeHtml(gradeLabel(it.grade))} • ${escapeHtml(it.time || '')} • ${Number(it.questions || 0)} soalan • ${Number(it.accuracy || 0)}% tepat</div>
                 </div>
               </div>
               <div class="leader-record-score" style="text-align:right;">
@@ -3366,7 +3510,7 @@ const COMBAT_BANK = {
       };
       let csv = "Bil,Nama Murid,Kelas,Tahun,Skor XP,Syiling,Soalan,Ketepatan,Tahap Rumah,Kemajuan Rumah,Blok Terbina,Tarikh,Masa\n";
       all.forEach((r, i) => {
-        csv += [i + 1, r.name, r.className, `Tahun ${r.grade}`, r.xp, r.coins || 0, r.questions || 0,
+        csv += [i + 1, r.name, r.className, gradeLabel(r.grade), r.xp, r.coins || 0, r.questions || 0,
           `${r.accuracy || 0}%`, r.houseLevel || 1, `${r.houseProgress || 0}%`, r.blocks || 0, r.date, r.time]
           .map(csvCell).join(',') + '\n';
       });
@@ -3384,7 +3528,7 @@ const COMBAT_BANK = {
       t += `👨‍💻 Pembangun: Mohammad Fikrey bin Abdul Gapar\n`;
       t += `Tarikh: ${new Date().toLocaleDateString('ms-MY')}\n\n`;
       all.forEach((r, i) => {
-        t += `${i+1}. [${r.date}] ${r.name} (${r.className}) - Thn ${r.grade}: ${r.xp} XP | 🧱 ${r.blocks || 0} Blok\n`;
+        t += `${i+1}. [${r.date}] ${r.name} (${r.className}) - ${gradeLabel(r.grade)}: ${r.xp} XP | 🧱 ${r.blocks || 0} Blok\n`;
       });
       if (navigator.clipboard) {
         navigator.clipboard.writeText(t).then(() => showToast("Format WhatsApp disalin!"));
@@ -3537,6 +3681,153 @@ const COMBAT_BANK = {
       return voxels;
     }
 
+    const FIREBASE_API_KEY = 'AIzaSyDmHTkWr9C0Yi2Ow1Joj0hz1ycVSxksQjU';
+    const FIREBASE_DATABASE_URL = 'https://mathbina-cloud-c8de8-default-rtdb.asia-southeast1.firebasedatabase.app';
+    const CLOUD_AUTH_SESSION_KEY = 'MATHBINA_FIREBASE_AUTH_V1';
+    let cloudSaveTimer = null;
+    let cloudRestoreInProgress = false;
+
+    function normalizeCloudIdentity(value) {
+      return String(value || '').normalize('NFKC').replace(/\s+/g, ' ').trim().toLocaleLowerCase('ms-MY');
+    }
+
+    async function sha256Text(value) {
+      const bytes = new TextEncoder().encode(value);
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      return Array.from(new Uint8Array(digest), byte=>byte.toString(16).padStart(2,'0')).join('');
+    }
+
+    async function getCloudIdentity() {
+      const userId = normalizeUserId(STATE.userId);
+      if (!userId || !STATE.ownerSecret) return null;
+      return {
+        lookupKey: await sha256Text(`mathbina-house-v2|${userId}`)
+      };
+    }
+
+    function readCloudAuthSession() {
+      try { return JSON.parse(localStorage.getItem(CLOUD_AUTH_SESSION_KEY) || 'null'); }
+      catch(e) { return null; }
+    }
+
+    function storeCloudAuthSession(payload) {
+      const session = {
+        idToken:payload.idToken || payload.id_token,
+        refreshToken:payload.refreshToken || payload.refresh_token,
+        localId:payload.localId || payload.user_id,
+        expiresAt:Date.now() + Math.max(60, Number(payload.expiresIn || payload.expires_in || 3600)) * 1000
+      };
+      localStorage.setItem(CLOUD_AUTH_SESSION_KEY, JSON.stringify(session));
+      return session;
+    }
+
+    async function ensureCloudAuth() {
+      let session = readCloudAuthSession();
+      if (session?.idToken && session?.localId && Number(session.expiresAt) > Date.now() + 60000) return session;
+
+      if (session?.refreshToken) {
+        try {
+          const refreshed = await fetch(`https://securetoken.googleapis.com/v1/token?key=${FIREBASE_API_KEY}`, {
+            method:'POST',
+            headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+            body:new URLSearchParams({ grant_type:'refresh_token', refresh_token:session.refreshToken })
+          });
+          if (refreshed.ok) return storeCloudAuthSession(await refreshed.json());
+        } catch(e) {}
+      }
+
+      const created = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body:JSON.stringify({ returnSecureToken:true })
+      });
+      if (!created.ok) throw new Error('Pengesahan awan tidak tersedia.');
+      return storeCloudAuthSession(await created.json());
+    }
+
+    function cloudHouseUrl(lookupKey, idToken = '') {
+      const url = `${FIREBASE_DATABASE_URL}/houses/${encodeURIComponent(lookupKey)}.json`;
+      return idToken ? `${url}?auth=${encodeURIComponent(idToken)}` : url;
+    }
+
+    function scheduleCloudSave(delay = 4200) {
+      if (cloudRestoreInProgress || !STATE.userId || !STATE.ownerSecret || !(STATE.voxels || []).length) return;
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(syncStudentToCloud, delay);
+    }
+
+    async function syncStudentToCloud() {
+      const identity = await getCloudIdentity();
+      if (!identity || !(STATE.voxels || []).length) return false;
+      try {
+        const auth = await ensureCloudAuth();
+        const response = await fetch(cloudHouseUrl(identity.lookupKey, auth.idToken), {
+          method:'PUT',
+          headers:{ 'Content-Type':'application/json' },
+          body:JSON.stringify({
+            ownerUid:auth.localId,
+            displayName:galleryDisplayName(STATE.studentName),
+            year:STATE.grade,
+            avatar:STATE.avatar,
+            voxels:STATE.voxels,
+            state:{ xp:STATE.xp, coins:STATE.coins, inventory:STATE.inventory, mathStats:STATE.mathStats },
+            updatedAt:new Date().toISOString()
+          })
+        });
+        if (!response.ok) throw new Error('Simpanan awan gagal.');
+        return true;
+      } catch (error) {
+        console.warn('MathBina cloud save:', error);
+        return false;
+      }
+    }
+
+    async function restoreStudentFromCloud() {
+      const identity = await getCloudIdentity();
+      if (!identity) {
+        showToast('ℹ️ ID pengguna belum tersedia. Masuk semula untuk menjana ID.');
+        return false;
+      }
+      try {
+        const response = await fetch(cloudHouseUrl(identity.lookupKey), { cache:'no-store' });
+        const house = await response.json().catch(()=>null);
+        if (response.ok && !house) {
+          scheduleCloudSave(250);
+          showToast('☁️ Profil awan baharu sedia. Binaan akan disimpan automatik.');
+          return false;
+        }
+        if (!response.ok || !house) throw new Error('Rumah awan tidak dapat dibuka.');
+
+        const local = findStudentSave(STATE.studentName, STATE.className)?.saved;
+        const localIsNewer = (STATE.voxels || []).length && String(local?.lastUpdated || '') > String(house.updatedAt || '');
+        if (localIsNewer) {
+          scheduleCloudSave(250);
+          showToast('☁️ Binaan pada peranti ini lebih baharu dan sedang diselaraskan.');
+          return true;
+        }
+
+        cloudRestoreInProgress = true;
+        const cloudState = house.state || {};
+        STATE.grade = Math.max(1, Math.min(11, Number(house.year) || STATE.grade));
+        STATE.avatar = house.avatar || STATE.avatar;
+        STATE.voxels = Array.isArray(house.voxels) ? house.voxels : STATE.voxels;
+        STATE.xp = Number.isFinite(Number(cloudState.xp)) ? Number(cloudState.xp) : STATE.xp;
+        STATE.coins = Number.isFinite(Number(cloudState.coins)) ? Number(cloudState.coins) : STATE.coins;
+        if (cloudState.inventory && Object.keys(cloudState.inventory).length) STATE.inventory = cloudState.inventory;
+        if (cloudState.mathStats) STATE.mathStats = cloudState.mathStats;
+        rebuildVoxelWorld(); renderPaletteDock(); updateSandboxHud(); saveCurrentStudentState();
+        document.getElementById('hud-sandbox-avatar').textContent = STATE.avatar;
+        showToast(`☁️ Rumah ${STATE.studentName} berjaya dibuka dari simpanan awan!`);
+        return true;
+      } catch (error) {
+        console.warn('MathBina cloud restore:', error);
+        showToast('⚠️ Simpanan tempatan dibuka. Awan akan dicuba semula kemudian.');
+        return false;
+      } finally {
+        cloudRestoreInProgress = false;
+      }
+    }
+
     function saveCurrentStudentState() {
       if (!STATE.studentName) return;
       const key = getStudentSaveKey(STATE.studentName, STATE.className);
@@ -3546,6 +3837,7 @@ const COMBAT_BANK = {
         version: 3,
         grade: STATE.grade,
         className: STATE.className,
+        userId: STATE.userId,
         schoolName: STATE.schoolName,
         classLabel: STATE.classLabel,
         studentName: STATE.studentName,
@@ -3563,24 +3855,23 @@ const COMBAT_BANK = {
         lastUpdated: new Date().toISOString()
       };
       try { localStorage.setItem(SAVE_STORAGE_KEY, JSON.stringify(all)); } catch(e) {}
+      persistDeviceProfile();
       recordToLeaderboard(STATE.studentName, STATE.className, STATE.grade, STATE.xp, STATE.voxels.length, progress);
+      scheduleCloudSave();
     }
 
     function loadStudentProfile(name, cls) {
       const match = findStudentSave(name, cls);
       const saved = match?.saved;
       if (saved) {
-        STATE.grade = Math.max(1, Math.min(6, Number(saved.grade) || STATE.grade));
-        STATE.schoolName = saved.schoolName || STATE.schoolName || '';
-        STATE.classLabel = saved.classLabel || STATE.classLabel || '';
         STATE.xp = Number(saved.xp ?? 150);
         STATE.coins = Number(saved.coins ?? Math.max(150, Math.floor(STATE.xp / 2)));
         STATE.inventory = saved.inventory || { wood_wall: 6, roof_red: 3, door_wood: 1 };
         STATE.grid = saved.grid || initEmptyGrid();
         STATE.voxels = Array.isArray(saved.voxels) ? saved.voxels : migrateLegacyGrid(saved.grid);
         STATE.mathStats = saved.mathStats || { total: 0, correct: 0 };
-        STATE.avatar = saved.avatar || '👷‍♂️';
-        STATE.avatarTitle = saved.avatarTitle || 'Arkitek Cilik';
+        // Profil semasa (aras, sekolah, kelas dan avatar) milik pengguna dan
+        // tidak boleh ditimpa oleh salinan lama apabila mereka mengeditnya.
       } else {
         STATE.xp = 150;
         STATE.coins = 150;
@@ -4271,7 +4562,7 @@ const COMBAT_BANK = {
       return Object.entries(getAllSaves()).map(([key,saved])=>({
         id:`local-${key}`,
         displayName:galleryDisplayName(saved?.studentName),
-        yearLabel:`Tahun ${Math.max(1,Math.min(6,Number(saved?.grade)||1))}`,
+        yearLabel:gradeLabel(saved?.grade),
         avatar:saved?.avatar || '👷‍♂️',
         voxels:Array.isArray(saved?.voxels) ? saved.voxels : migrateLegacyGrid(saved?.grid),
         localOnly:true,
@@ -4279,8 +4570,50 @@ const COMBAT_BANK = {
       })).filter(entry=>entry.voxels.length).slice(0,12);
     }
 
+    function getFriendUserIds() {
+      try {
+        const ids = JSON.parse(localStorage.getItem(FRIEND_HOUSES_KEY) || '[]');
+        return Array.isArray(ids) ? [...new Set(ids.map(normalizeUserId).filter(Boolean))].slice(0,40) : [];
+      } catch(e) { return []; }
+    }
+
+    async function fetchFriendHouse(userId) {
+      const normalized = normalizeUserId(userId);
+      if (!normalized) return null;
+      const lookupKey = await sha256Text(`mathbina-house-v2|${normalized}`);
+      const response = await fetch(cloudHouseUrl(lookupKey), { cache:'no-store' });
+      if (!response.ok) return null;
+      const house = await response.json().catch(()=>null);
+      if (!house) return null;
+      return {
+        id:`friend-${normalized}`, userId:normalized, displayName:house.displayName || 'Arkitek MathBina',
+        yearLabel:gradeLabel(house.year), avatar:house.avatar || '🏡',
+        voxels:Array.isArray(house.voxels) ? house.voxels : [], friendHouse:true, approved:true
+      };
+    }
+
+    async function addFriendHouseById() {
+      const input = document.getElementById('friend-user-id');
+      const userId = normalizeUserId(input?.value);
+      if (!userId) return showToast('⚠️ Masukkan ID lengkap seperti MB-7K4P-9Q2X.');
+      if (userId === STATE.userId) return showToast('ℹ️ Itu ID rumah anda sendiri.');
+      showToast('🔎 Mencari rumah kawan…');
+      try {
+        const house = await fetchFriendHouse(userId);
+        if (!house) return showToast('🏚️ Rumah belum ditemui. Pastikan ID betul dan pemilik sudah membina rumah.');
+        const ids = getFriendUserIds();
+        if (!ids.includes(userId)) ids.unshift(userId);
+        localStorage.setItem(FRIEND_HOUSES_KEY, JSON.stringify(ids.slice(0,40)));
+        if (input) input.value = '';
+        await loadCommunityGallery();
+        openCommunityGallery();
+        showToast(`✅ Rumah ${house.displayName} ditambah ke galeri!`);
+      } catch(e) { showToast('⚠️ Galeri awan tidak dapat dicapai sekarang. Cuba lagi.'); }
+    }
+
     async function loadCommunityGallery() {
       let shared = [];
+      let friends = [];
       try {
         const response = await fetch(`${COMMUNITY_GALLERY_URL}?v=7`, { cache:'no-store' });
         if (response.ok) {
@@ -4288,7 +4621,8 @@ const COMBAT_BANK = {
           shared = (Array.isArray(data) ? data : data.entries || []).filter(item=>item && item.approved !== false);
         }
       } catch (error) {}
-      COMMUNITY_GALLERY = [...shared, ...getLocalGalleryEntries()];
+      try { friends = (await Promise.all(getFriendUserIds().map(fetchFriendHouse))).filter(Boolean); } catch(e) {}
+      COMMUNITY_GALLERY = [...friends, ...shared, ...getLocalGalleryEntries()];
       if (!COMMUNITY_GALLERY.length) COMMUNITY_GALLERY = [{ id:'mathbina-sample', displayName:'Pasukan MathBina', yearLabel:'Rumah Contoh', avatar:'🏡', approved:true, voxels:[] }];
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
@@ -4308,7 +4642,7 @@ const COMBAT_BANK = {
       const owner = document.getElementById('community-spotlight-owner');
       const meta = document.getElementById('community-spotlight-meta');
       if (owner) owner.textContent = `${entry.avatar || '🏡'} Rumah ${entry.displayName || 'Arkitek MathBina'}`;
-      if (meta) meta.textContent = `${entry.yearLabel || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : 'Diluluskan guru'}`;
+      if (meta) meta.textContent = `${entry.yearLabel || 'MathBina'} • ${entry.localOnly ? 'Peranti ini' : entry.friendHouse ? `ID ${entry.userId}` : 'Rumah contoh'}`;
       const backdrop = document.getElementById('community-backdrop');
       if (backdrop && canvas) {
         backdrop.style.backgroundImage = `url(${canvas.toDataURL('image/jpeg',.78)})`;
@@ -4328,7 +4662,7 @@ const COMBAT_BANK = {
         const avatar=document.createElement('div');avatar.className='community-card-avatar';avatar.textContent=entry.avatar||'🏡';
         const labels=document.createElement('div');
         const name=document.createElement('div');name.className='community-card-name';name.textContent=`Rumah ${entry.displayName||'Arkitek MathBina'}`;
-        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.yearLabel||'MathBina'} • ${entry.localOnly?'Peranti ini':'Diluluskan guru'}`;
+        const meta=document.createElement('div');meta.className='community-card-meta';meta.textContent=`${entry.yearLabel||'MathBina'} • ${entry.localOnly?'Peranti ini':entry.friendHouse?`ID ${entry.userId}`:'Rumah contoh'}`;
         labels.append(name,meta);info.append(avatar,labels);card.appendChild(info);grid.appendChild(card);
       });
       modal.style.display='flex';

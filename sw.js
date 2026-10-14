@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v8-hiasan-khas';
+const CACHE_NAME = 'mathbina-v11-firebase-cloud';
 const APP_SHELL = [
   './',
   './index.html',
