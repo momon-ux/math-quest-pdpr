@@ -7140,6 +7140,332 @@ const COMBAT_BANK = {
       } catch(e){}
     }
 
+
+    /* ==============================================================
+       OFFICIAL EMBLEMS FOR CERTIFICATE: KPM & SK RANGGU TAWAU
+       ============================================================== */
+    function drawKpmLogo(ctx, cx, cy, r) {
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Circular white shield background with golden border
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#d97706';
+      ctx.stroke();
+
+      // Outer blue ring
+      ctx.beginPath();
+      ctx.arc(0, 0, r - 4, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#0284c7';
+      ctx.stroke();
+
+      // Top Crescent & 14-Point Star (Jata Malaysia)
+      ctx.fillStyle = '#f59e0b';
+      // Crescent
+      ctx.beginPath();
+      ctx.arc(-2, -r * 0.48, r * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(2, -r * 0.50, r * 0.18, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 14-point Royal Star
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      const starR = r * 0.12, starInner = r * 0.055;
+      for (let i = 0; i < 28; i++) {
+        const a = (i * Math.PI) / 14 - Math.PI / 2;
+        const rad = (i % 2 === 0) ? starR : starInner;
+        const sx = 7 + rad * Math.cos(a);
+        const sy = -r * 0.48 + rad * Math.sin(a);
+        if (i === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      // National Shield (Jata Negara)
+      const sw = r * 0.58, sh = r * 0.62;
+      const topY = -r * 0.22;
+      ctx.beginPath();
+      ctx.moveTo(-sw/2, topY);
+      ctx.lineTo(sw/2, topY);
+      ctx.lineTo(sw/2, topY + sh * 0.6);
+      ctx.quadraticCurveTo(sw/2, topY + sh, 0, topY + sh * 1.15);
+      ctx.quadraticCurveTo(-sw/2, topY + sh, -sw/2, topY + sh * 0.6);
+      ctx.closePath();
+      ctx.fillStyle = '#1e3a8a';
+      ctx.fill();
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Kris Top Red Box
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(-sw * 0.45, topY + 2, sw * 0.9, sh * 0.28);
+      // Kris dagger silhouettes
+      ctx.fillStyle = '#fef08a';
+      for (let k = -2; k <= 2; k++) {
+        ctx.fillRect(k * (sw * 0.17) - 1, topY + 4, 3, sh * 0.22);
+      }
+
+      // Middle 4 colour vertical stripes (Red, Black, White, Yellow)
+      const stripeW = (sw * 0.9) / 4;
+      const midY = topY + sh * 0.30;
+      const midH = sh * 0.32;
+      ctx.fillStyle = '#dc2626'; ctx.fillRect(-sw * 0.45, midY, stripeW, midH);
+      ctx.fillStyle = '#0f172a'; ctx.fillRect(-sw * 0.45 + stripeW, midY, stripeW, midH);
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(-sw * 0.45 + stripeW * 2, midY, stripeW, midH);
+      ctx.fillStyle = '#facc15'; ctx.fillRect(-sw * 0.45 + stripeW * 3, midY, stripeW, midH);
+
+      // Bottom quadrant (Sabah / Sarawak / Malacca / Bunga Raya)
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath();
+      ctx.arc(0, topY + sh * 0.78, sw * 0.26, 0, Math.PI);
+      ctx.fill();
+      // Hibiscus flower center
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath(); ctx.arc(0, topY + sh * 0.74, 4, 0, Math.PI * 2); ctx.fill();
+
+      // Golden Laurel supporters flanking shield
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(-sw * 0.62, topY + sh * 0.5, r * 0.35, Math.PI * 0.4, Math.PI * 1.5, false);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(sw * 0.62, topY + sh * 0.5, r * 0.35, Math.PI * 1.5, Math.PI * 2.6, false);
+      ctx.stroke();
+
+      // Ribbon Banner at bottom
+      ctx.fillStyle = '#facc15';
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 1.5;
+      const rw = r * 0.92, rh = 12, ry = topY + sh * 1.08;
+      ctx.beginPath();
+      ctx.rect(-rw/2, ry, rw, rh);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#78350f';
+      ctx.font = '900 6.5px "Nunito", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BERSEKUTU BERTAMBAH MUTU', 0, ry + 8.5);
+
+      // Curved Label below
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 8px "Nunito", sans-serif';
+      ctx.fillText('KEMENTERIAN PENDIDIKAN', 0, r * 0.88);
+
+      ctx.restore();
+    }
+
+    function drawSkRangguLogo(ctx, cx, cy, r) {
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Circular base with Royal Blue & Gold
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#1e3a8a';
+      ctx.stroke();
+
+      // Inner Gold Ring
+      ctx.beginPath();
+      ctx.arc(0, 0, r - 4, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#f59e0b';
+      ctx.stroke();
+
+      // School Shield
+      const sw = r * 0.62, sh = r * 0.68;
+      const topY = -r * 0.38;
+      ctx.beginPath();
+      ctx.moveTo(-sw/2, topY);
+      ctx.lineTo(sw/2, topY);
+      ctx.lineTo(sw/2, topY + sh * 0.65);
+      ctx.quadraticCurveTo(sw/2, topY + sh, 0, topY + sh * 1.12);
+      ctx.quadraticCurveTo(-sw/2, topY + sh, -sw/2, topY + sh * 0.65);
+      ctx.closePath();
+      ctx.fillStyle = '#1e40af';
+      ctx.fill();
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Top Shield Field (Golden Yellow with Torch of Knowledge)
+      ctx.fillStyle = '#fef08a';
+      ctx.fillRect(-sw * 0.44, topY + 2, sw * 0.88, sh * 0.34);
+
+      // Torch / Obor Kejayaan
+      ctx.fillStyle = '#ea580c';
+      ctx.beginPath();
+      ctx.arc(0, topY + 9, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#facc15';
+      ctx.beginPath();
+      ctx.arc(0, topY + 9, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      // Torch handle
+      ctx.fillStyle = '#78350f';
+      ctx.fillRect(-2, topY + 14, 4, sh * 0.16);
+
+      // Middle divider with Hill (Bukit Ranggu / Tawau Green Hills)
+      ctx.fillStyle = '#15803d';
+      ctx.beginPath();
+      ctx.moveTo(-sw * 0.44, topY + sh * 0.58);
+      ctx.quadraticCurveTo(-sw * 0.15, topY + sh * 0.38, 0, topY + sh * 0.46);
+      ctx.quadraticCurveTo(sw * 0.20, topY + sh * 0.34, sw * 0.44, topY + sh * 0.58);
+      ctx.lineTo(sw * 0.44, topY + sh * 0.72);
+      ctx.lineTo(-sw * 0.44, topY + sh * 0.72);
+      ctx.closePath();
+      ctx.fill();
+
+      // Open Book of Knowledge (Buku Terbuka Matematik & Sains)
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(0, topY + sh * 0.82);
+      ctx.quadraticCurveTo(-sw * 0.2, topY + sh * 0.74, -sw * 0.38, topY + sh * 0.76);
+      ctx.lineTo(-sw * 0.38, topY + sh * 0.94);
+      ctx.quadraticCurveTo(-sw * 0.2, topY + sh * 0.90, 0, topY + sh * 0.98);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, topY + sh * 0.82);
+      ctx.quadraticCurveTo(sw * 0.2, topY + sh * 0.74, sw * 0.38, topY + sh * 0.76);
+      ctx.lineTo(sw * 0.38, topY + sh * 0.94);
+      ctx.quadraticCurveTo(sw * 0.2, topY + sh * 0.90, 0, topY + sh * 0.98);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Math symbols on open book
+      ctx.fillStyle = '#0369a1';
+      ctx.font = 'bold 8px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('+', -sw * 0.18, topY + sh * 0.88);
+      ctx.fillText('×', sw * 0.18, topY + sh * 0.88);
+
+      // Laurels flanking the school shield
+      ctx.strokeStyle = '#15803d';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(-sw * 0.60, topY + sh * 0.5, r * 0.35, Math.PI * 0.4, Math.PI * 1.5, false);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(sw * 0.60, topY + sh * 0.5, r * 0.35, Math.PI * 1.5, Math.PI * 2.6, false);
+      ctx.stroke();
+
+      // Bottom School Motto Banner
+      ctx.fillStyle = '#1e3a8a';
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1.5;
+      const rw = r * 0.92, rh = 12, ry = topY + sh * 1.08;
+      ctx.beginPath();
+      ctx.rect(-rw/2, ry, rw, rh);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#fef08a';
+      ctx.font = '900 6.5px "Nunito", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BERILMU • BERDISIPLIN • BERBAKTI', 0, ry + 8.5);
+
+      // Label below
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 8.5px "Nunito", sans-serif';
+      ctx.fillText('SK RANGGU TAWAU', 0, r * 0.88);
+
+      ctx.restore();
+    }
+
+    function drawGoldSeal(ctx, cx, cy, r) {
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Golden Ribbon Tails
+      ctx.fillStyle = '#b45309';
+      ctx.beginPath();
+      ctx.moveTo(-16, r * 0.6);
+      ctx.lineTo(-32, r * 1.45);
+      ctx.lineTo(-14, r * 1.30);
+      ctx.lineTo(0, r * 1.45);
+      ctx.lineTo(0, r * 0.6);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = '#d97706';
+      ctx.beginPath();
+      ctx.moveTo(0, r * 0.6);
+      ctx.lineTo(0, r * 1.45);
+      ctx.lineTo(14, r * 1.30);
+      ctx.lineTo(32, r * 1.45);
+      ctx.lineTo(16, r * 0.6);
+      ctx.closePath();
+      ctx.fill();
+
+      // Serrated Starburst Gold Badge
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      const numPoints = 36;
+      for (let i = 0; i < numPoints * 2; i++) {
+        const a = (i * Math.PI) / numPoints;
+        const rad = (i % 2 === 0) ? r : r * 0.88;
+        const x = rad * Math.cos(a);
+        const y = rad * Math.sin(a);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Concentric Inner Gold Rings
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.80, 0, Math.PI * 2);
+      const grad = ctx.createRadialGradient(0, -r*0.2, 5, 0, 0, r * 0.8);
+      grad.addColorStop(0, '#fef9c3');
+      grad.addColorStop(0.5, '#fde047');
+      grad.addColorStop(1, '#eab308');
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.strokeStyle = '#b45309';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#78350f';
+      ctx.textAlign = 'center';
+      ctx.font = '900 12px "Nunito", sans-serif';
+      ctx.fillText('DISAHKAN', 0, -r * 0.16);
+
+      ctx.font = '900 15px "Nunito", sans-serif';
+      ctx.fillStyle = '#92400e';
+      ctx.fillText('CEMERLANG', 0, r * 0.12);
+
+      // 5 Stars
+      ctx.font = '11px "Nunito", sans-serif';
+      ctx.fillStyle = '#b45309';
+      ctx.fillText('★★★★★', 0, r * 0.38);
+
+      ctx.font = '800 7.5px "Nunito", sans-serif';
+      ctx.fillStyle = '#78350f';
+      ctx.fillText('SK RANGGU TAWAU', 0, r * 0.54);
+
+      ctx.restore();
+    }
     function downloadArchitectCertificate() {
       audio.init(); audio.playFanfare();
       const canvas = document.createElement('canvas');
@@ -7148,96 +7474,124 @@ const COMBAT_BANK = {
       const ctx = canvas.getContext('2d');
       if (!ctx) return showToast('Ralat menjana sijil.');
 
-      // Background Parchment & Border
-      ctx.fillStyle = '#fefcf6';
+      // Background Parchment
+      ctx.fillStyle = '#fefdf8';
       ctx.fillRect(0, 0, 1200, 840);
 
-      // Gradient Outer Border
+      // Watermark in background
+      ctx.save();
+      ctx.globalAlpha = 0.04;
+      drawSkRangguLogo(ctx, 600, 440, 220);
+      ctx.restore();
+
+      // Outer Royal Gold Border
       const gradBorder = ctx.createLinearGradient(0, 0, 1200, 840);
-      gradBorder.addColorStop(0, '#d97706');
-      gradBorder.addColorStop(0.5, '#f59e0b');
-      gradBorder.addColorStop(1, '#b45309');
+      gradBorder.addColorStop(0, '#b45309');
+      gradBorder.addColorStop(0.25, '#f59e0b');
+      gradBorder.addColorStop(0.5, '#d97706');
+      gradBorder.addColorStop(0.75, '#f59e0b');
+      gradBorder.addColorStop(1, '#92400e');
       ctx.strokeStyle = gradBorder;
       ctx.lineWidth = 14;
       ctx.strokeRect(16, 16, 1168, 808);
 
-      // Inner Fine Border
+      // Inner Navy Blue Accent Border
+      ctx.strokeStyle = '#1e3a8a';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(30, 30, 1140, 780);
+
+      // Thin Gold Inset Line
       ctx.strokeStyle = '#ca8a04';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(32, 32, 1136, 776);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(36, 36, 1128, 768);
 
       // Corner Ornaments
       const drawCorner = (cx, cy) => {
-        ctx.fillStyle = '#b45309';
+        ctx.fillStyle = '#d97706';
         ctx.beginPath();
-        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+        ctx.arc(cx, cy, 9, 0, Math.PI * 2);
         ctx.fill();
+        ctx.strokeStyle = '#1e3a8a';
+        ctx.lineWidth = 2;
+        ctx.stroke();
       };
       drawCorner(44, 44); drawCorner(1156, 44); drawCorner(44, 796); drawCorner(1156, 796);
 
-      // Header Banner
-      ctx.fillStyle = '#0284c7';
-      ctx.fillRect(150, 48, 900, 42);
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '900 20px "Nunito", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('KEMENTERIAN PENDIDIKAN MALAYSIA • SK RANGGU TAWAU, SABAH', 600, 76);
+      // Draw Official Logos: KPM on Left, SK Ranggu on Right
+      drawKpmLogo(ctx, 125, 118, 52);
+      drawSkRangguLogo(ctx, 1075, 118, 52);
 
-      // Main Title
-      ctx.fillStyle = '#78350f';
-      ctx.font = '900 38px "Nunito", sans-serif';
-      ctx.fillText('SIJIL PENGHARGAAN ARKITEK CILIK MATEMATIK', 600, 140);
+      // Center Institutional Header
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '800 16px "Nunito", sans-serif';
+      ctx.fillText('KEMENTERIAN PENDIDIKAN MALAYSIA', 600, 68);
 
       ctx.fillStyle = '#0369a1';
-      ctx.font = '800 18px "Nunito", sans-serif';
-      ctx.fillText('PROGRAM PEMBELAJARAN MATEMATIK KSSR & MISI BINA RUMAH 3D (MATHBINA)', 600, 172);
+      ctx.font = '700 13px "Nunito", sans-serif';
+      ctx.fillText('JABATAN PENDIDIKAN NEGERI SABAH • PEJABAT PENDIDIKAN DAERAH TAWAU', 600, 89);
 
-      // Divider Ribbon
+      ctx.fillStyle = '#1e3a8a';
+      ctx.font = '900 22px "Nunito", sans-serif';
+      ctx.fillText('SEKOLAH KEBANGSAAN RANGGU TAWAU', 600, 118);
+
+      // Main Certificate Title
+      ctx.fillStyle = '#78350f';
+      ctx.font = '900 36px "Nunito", sans-serif';
+      ctx.fillText('SIJIL PENGHARGAAN ARKITEK CILIK MATEMATIK', 600, 168);
+
+      ctx.fillStyle = '#0284c7';
+      ctx.font = '800 16px "Nunito", sans-serif';
+      ctx.fillText('PROGRAM PEMBELAJARAN MATEMATIK KSSR & MISI BINA RUMAH 3D (MATHBINA)', 600, 195);
+
+      // Divider Ribbon with Gold Center
       ctx.strokeStyle = '#eab308';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 3.5;
       ctx.beginPath();
-      ctx.moveTo(350, 192);
-      ctx.lineTo(850, 192);
+      ctx.moveTo(320, 208);
+      ctx.lineTo(880, 208);
       ctx.stroke();
 
       // Certificate Body Text
       ctx.fillStyle = '#334155';
-      ctx.font = '600 20px "Nunito", sans-serif';
-      ctx.fillText('Dengan ini diperakui bahawa', 600, 235);
+      ctx.font = '600 19px "Nunito", sans-serif';
+      ctx.fillText('Dengan ini diperakui bahawa', 600, 248);
 
       // Student Name (Prominent & Golden)
       const studentName = (STATE.studentName || 'Arkitek Cilik').toUpperCase();
       ctx.fillStyle = '#0f172a';
-      ctx.font = '900 42px "Nunito", sans-serif';
-      ctx.fillText(studentName, 600, 290);
+      ctx.font = '900 40px "Nunito", sans-serif';
+      ctx.fillText(studentName, 600, 298);
 
       // Student Class & School
       const classInfo = STATE.className ? `${STATE.className} • ${STATE.schoolName || 'SK Ranggu Tawau'}` : 'SK Ranggu Tawau';
       ctx.fillStyle = '#0284c7';
-      ctx.font = '800 22px "Nunito", sans-serif';
-      ctx.fillText(classInfo, 600, 330);
+      ctx.font = '800 21px "Nunito", sans-serif';
+      ctx.fillText(classInfo, 600, 336);
 
       // Achievement Details
       const p = calculateHouseProgress();
       ctx.fillStyle = '#475569';
-      ctx.font = '600 19px "Nunito", sans-serif';
-      ctx.fillText(`Telah menunjukkan kecemerlangan daya cipta dan kemahiran berfikir aras tinggi`, 600, 380);
+      ctx.font = '600 18px "Nunito", sans-serif';
+      ctx.fillText(`Telah menunjukkan kecemerlangan daya cipta dan kemahiran berfikir aras tinggi`, 600, 382);
       ctx.fillText(`dalam menyelesaikan cabaran matematik dengan mengumpul sebanyak ${STATE.xp.toLocaleString()} XP`, 600, 412);
-      ctx.fillText(`serta berjaya mendirikan Rumah Impian 3D dengan kemajuan ${p.percent}% (Tahap ${p.level} • ${p.label}).`, 600, 444);
+      ctx.fillText(`serta berjaya mendirikan Rumah Impian 3D dengan kemajuan ${p.percent}% (Tahap ${p.level} • ${p.label}).`, 600, 442);
 
-      // House 3D Preview Image on certificate (if available)
+      // Draw Gold Embossed Seal at Bottom Left
+      drawGoldSeal(ctx, 220, 680, 48);
+
+      // Draw 3D House Preview Card in Center-Bottom
       if (V3.renderer) {
         try {
           V3.renderer.render(V3.scene, V3.camera);
           const houseImg = new Image();
           houseImg.onload = () => {
-            // Draw thumbnail card
             ctx.fillStyle = '#e0f2fe';
-            ctx.fillRect(450, 480, 300, 180);
+            ctx.fillRect(450, 478, 300, 180);
             ctx.strokeStyle = '#0284c7';
             ctx.lineWidth = 3;
-            ctx.strokeRect(450, 480, 300, 180);
-            ctx.drawImage(houseImg, 452, 482, 296, 176);
+            ctx.strokeRect(450, 478, 300, 180);
+            ctx.drawImage(houseImg, 452, 480, 296, 176);
             finalizeCertificateDownload(canvas, studentName);
           };
           houseImg.src = V3.renderer.domElement.toDataURL('image/png');

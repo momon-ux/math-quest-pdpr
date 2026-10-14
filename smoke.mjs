@@ -195,6 +195,10 @@ assert.match(html, /class="[^"]*btn-blueprint/, 'butang pelan rumah starter mest
 assert.match(html, /class="camera-quick-controls"/, 'kawalan pantas kamera 3D mesti wujud pada kanvas');
 assert.match(html, /function quickSelectSKRanggu/, 'pilihan pantas kelas SK Ranggu mesti disediakan');
 assert.match(html, /function downloadArchitectCertificate/, 'penjana sijil arkitek digital mesti disediakan');
+assert.match(html, /function drawKpmLogo/, 'logo rasmi KPM mesti dilukis pada sijil');
+assert.match(html, /function drawSkRangguLogo/, 'lencana rasmi SK Ranggu Tawau mesti dilukis pada sijil');
+assert.match(html, /function drawGoldSeal/, 'cop mohor emas cemerlang mesti dilukis pada sijil');
+
 assert.match(html, /function toggleGraphicsQuality/, 'suis kualiti grafik mesti disediakan');
 assert.match(html, /function copyHouseShareLink/, 'pautan kongsi rumah kawan mesti disediakan');
 console.log('Semua semakan smoke MathBina V32 lulus.');
