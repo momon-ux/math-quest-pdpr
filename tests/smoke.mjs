@@ -102,8 +102,14 @@ assert.match(html, /if\(V3\.visitingEntry\)return showToast\(uiMessage\('🔒 Mo
 assert.match(html, /function exitFriendHouseVisit/, 'pengguna mesti boleh kembali ke rumah sendiri');
 assert.match(html, /id="view-arcade"/, 'paparan Arked XP mesti tersedia');
 assert.match(html, /function launchArcadeGame/, 'Arked XP mesti boleh dibuka dari dunia binaan');
-assert.match(html, /function catchArcadeTarget/, 'bintang arked mesti boleh diketuk untuk mendapat ganjaran');
-assert.match(html, /awardMathReward\(10, 2\)/, 'setiap bintang mesti memberi 10 XP dan 2 syiling');
+assert.match(html, /function nextArcadeQuestion/, 'Arked XP mesti menjana soalan Matematik baharu');
+assert.match(html, /generateDynamicQuestion\(STATE\.grade\)/, 'soalan arked mesti mengikut aras umur pemain');
+assert.match(html, /className = 'arcade-answer-target'/, 'Arked XP mesti menyediakan sasaran jawapan bergerak');
+assert.match(html, /STATE\.arcade\.combo \+= 1/, 'jawapan berturut-turut mesti membina kombo');
+assert.match(html, /10 \+ Math\.min\(STATE\.arcade\.combo - 1,5\) \* 2/, 'ganjaran XP mesti meningkat bersama kombo');
+assert.match(html, /STATE\.arcade\.seconds = Math\.max\(0,STATE\.arcade\.seconds - 2\)/, 'jawapan salah mesti mempunyai penalti masa');
+assert.match(html, /STATE\.arcade\.seconds = 30/, 'pusingan Math Rush mesti berlangsung 30 saat');
+assert.match(html, /if \(!STATE\.age\) STATE\.grade = Math\.max\(1, Math\.min\(11, Number\(house\.year\)/, 'simpanan awan lama tidak boleh menimpa aras umur semasa');
 assert.match(html, /const DEVICE_PROFILES_KEY/, 'senarai banyak akaun mesti disimpan pada peranti');
 assert.match(html, /const ACTIVE_PROFILE_KEY/, 'akaun aktif mesti diingati pada peranti');
 assert.match(html, /function generateUniqueUserId/, 'setiap akaun baharu mesti menjana ID unik');
@@ -169,4 +175,4 @@ assert.equal((html.match(/type === 'garden_lamp'/g) || []).length, 1, 'lampu tam
 assert.match(html, /const fill=new THREE\.DirectionalLight/, 'cahaya isian mesti digunakan untuk grafik yang lebih jelas');
 assert.match(html, /const sunGlow=new THREE\.Mesh/, 'matahari mesti mempunyai cahaya atmosfera');
 
-console.log('Semua semakan smoke MathBina V27 lulus.');
+console.log('Semua semakan smoke MathBina V28 lulus.');
