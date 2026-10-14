@@ -194,6 +194,13 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 
 ## 🌐 Pautan Rasmi & Deployment
 
+### V27 — Indikator Putaran Lutsinar
+
+- Butang putar lama dikeluarkan daripada menu **Lagi**.
+- Indikator bulat lutsinar muncul di atas pentas 3D apabila blok inventori dipilih.
+- Indikator memaparkan ikon blok, arah dan sudut semasa 0°, 90°, 180° atau 270°.
+- Ketuk indikator untuk memutar blok; indikator tersembunyi semasa alat padam atau lawatan rumah kawan.
+
 ### V26 — English Default & Language Sync
 
 - English kini menjadi bahasa asal untuk pengguna baharu dan pengguna yang menaik taraf.

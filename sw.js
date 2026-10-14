@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v26-english-default';
+const CACHE_NAME = 'mathbina-v27-rotation-indicator';
 const APP_SHELL = [
   './',
   './index.html',

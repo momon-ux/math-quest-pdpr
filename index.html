@@ -702,6 +702,20 @@
     }
     #voxel-world { width: 100%; height: 100%; display: block; touch-action: none; }
     #sandbox-grid-canvas { display: none; }
+    .rotation-indicator {
+      display:none; position:absolute; right:12px; bottom:38px; z-index:9;
+      width:70px; height:70px; padding:6px; border:1.5px solid rgba(255,255,255,.72);
+      border-radius:50%; background:rgba(15,23,42,.25); color:#fff;
+      -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+      box-shadow:0 6px 18px rgba(15,23,42,.18), inset 0 0 16px rgba(255,255,255,.12);
+      cursor:pointer; align-items:center; justify-content:center; flex-direction:column;
+      touch-action:manipulation; transition:transform .14s ease, background .14s ease, opacity .14s ease;
+    }
+    .rotation-indicator.visible { display:flex; }
+    .rotation-indicator:active { transform:scale(.92); background:rgba(2,132,199,.48); }
+    .rotation-indicator-icon { position:absolute; top:5px; left:8px; font-size:.8rem; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+    .rotation-direction { display:block; font-size:1.45rem; line-height:1; transform:rotate(var(--rotation-angle,0deg)); transition:transform .18s ease; text-shadow:0 2px 5px rgba(0,0,0,.38); }
+    .rotation-indicator-angle { margin-top:2px; font:900 .6rem/1 'Nunito',sans-serif; letter-spacing:.4px; text-shadow:0 1px 3px rgba(0,0,0,.45); }
     .world-owner-label {
       position:absolute; top:8px; left:50%; z-index:5; transform:translateX(-50%);
       max-width:min(58%,420px); padding:6px 12px; border:2px solid rgba(255,255,255,.95);
@@ -1354,6 +1368,9 @@
       #build-level-label { min-width: 43px; font-size: 0.55rem; }
       .sandbox-canvas-wrapper { padding: 2px 3px; }
       .voxel-stage { min-height: 150px; border-width: 2px; }
+      .rotation-indicator { right:7px; bottom:30px; width:58px; height:58px; padding:4px; }
+      .rotation-direction { font-size:1.15rem; }
+      .rotation-indicator-angle { font-size:.52rem; }
       .build-status-card { max-width: 70%; font-size: 0.62rem; }
       .sandbox-bottom-dock { height: 58px; gap: 5px; padding: 0 5px; }
       .dock-title-label { display: none; }
@@ -1447,6 +1464,9 @@
       #build-level-label { min-width:40px; font-size:.5rem; }
       .sandbox-canvas-wrapper { padding:2px max(3px, env(safe-area-inset-right)) 2px max(3px, env(safe-area-inset-left)); }
       .voxel-stage { min-height:90px; border-width:2px; border-radius:9px; }
+      .rotation-indicator { right:6px; bottom:20px; width:52px; height:52px; }
+      .rotation-direction { font-size:1rem; }
+      .rotation-indicator-angle { font-size:.48rem; }
       .build-status-card { top:4px; left:4px; padding:3px 5px; max-width:38%; }
       .level-badge, .build-status-card #house-progress-text { font-size:.48rem !important; }
       .build-progress-track { height:4px; margin-top:2px; }
@@ -1859,7 +1879,6 @@
         </button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); undoBuild()" data-i18n="undo">↶ UNDO</button>
         <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); redoBuild()" data-i18n="redo">↷ REDO</button>
-        <button class="ribbon-btn btn-build-tool mobile-secondary" onclick="closeMobileTools(); rotateSelectedBlock()" data-i18n="rotate">↻ ROTATE BLOCK</button>
         <div class="level-control">
           <button onclick="changeBuildLevel(-1)" aria-label="Turun aras">−</button>
           <span id="build-level-label">Level 1</span>
@@ -1875,6 +1894,11 @@
         <div class="voxel-stage" id="voxel-stage">
           <canvas id="voxel-world" aria-label="Tapak pembinaan rumah voxel 3D"></canvas>
           <canvas id="sandbox-grid-canvas"></canvas>
+          <button class="rotation-indicator" id="rotation-indicator" type="button" onclick="rotateSelectedBlock()" aria-label="Rotate block">
+            <span class="rotation-indicator-icon" id="rotation-indicator-icon">🧱</span>
+            <span class="rotation-direction">➤</span>
+            <span class="rotation-indicator-angle" id="rotation-indicator-angle">0°</span>
+          </button>
           <div class="world-owner-label" id="world-owner-label">🏡 Your House<small>Tap a floating island to visit a friend's house</small></div>
           <div class="friend-visit-banner" id="friend-visit-banner">
             <div><strong id="friend-visit-name">👀 Visiting a Friend's House</strong><small>🔒 View Only • This house cannot be changed</small></div>
@@ -3551,6 +3575,7 @@ const COMBAT_BANK = {
 
       if (ownedKeys.length === 0) {
         dock.innerHTML = `<span style="font-size:0.75rem; color:#94a3b8; font-weight:800;">Tiada blok baki. Beli di kedai!</span>`;
+        updateRotationIndicator();
         return;
       }
 
@@ -3584,6 +3609,7 @@ const COMBAT_BANK = {
         `;
         dock.appendChild(slot);
       });
+      updateRotationIndicator();
     }
 
     function toggleEraserTool() {
@@ -4529,7 +4555,28 @@ const COMBAT_BANK = {
     function rotateSelectedBlock() {
       STATE.blockRotation = (STATE.blockRotation + 1) % 4;
       updatePreviewMesh();
-      showToast(`↻ Arah blok: ${STATE.blockRotation * 90}°`);
+      updateRotationIndicator();
+      showToast(uiMessage(
+        `↻ Arah blok: ${STATE.blockRotation * 90}°`,
+        `↻ Block direction: ${STATE.blockRotation * 90}°`,
+        `↻ 积木方向：${STATE.blockRotation * 90}°`,
+        `↻ கட்டையின் திசை: ${STATE.blockRotation * 90}°`
+      ));
+    }
+
+    function updateRotationIndicator() {
+      const indicator = document.getElementById('rotation-indicator');
+      if (!indicator) return;
+      const item = BLOCK_CATALOG.find(block => block.id === STATE.activeBlockId);
+      const hasSelectedBlock = Boolean(item && (STATE.inventory?.[STATE.activeBlockId] || 0) > 0);
+      const visible = hasSelectedBlock && !STATE.eraserActive && !V3.visitingEntry;
+      indicator.classList.toggle('visible', visible);
+      indicator.style.setProperty('--rotation-angle', `${STATE.blockRotation * 90}deg`);
+      indicator.setAttribute('aria-label', `${t('rotate')} • ${item ? catalogItemName(item) : ''} • ${STATE.blockRotation * 90}°`);
+      const icon = document.getElementById('rotation-indicator-icon');
+      const angle = document.getElementById('rotation-indicator-angle');
+      if (icon) icon.textContent = item?.icon || '🧱';
+      if (angle) angle.textContent = `${STATE.blockRotation * 90}°`;
     }
 
     function changeBuildLevel(delta) {
@@ -5651,6 +5698,7 @@ const COMBAT_BANK = {
       const fill=document.getElementById('house-progress-fill');if(fill)fill.style.width=`${p.percent}%`;
       const owner=document.getElementById('world-owner-label');
       if(owner&&!V3.visitingEntry)owner.innerHTML=`🏡 ${t('yourHouse')} ${escapeHtml(STATE.studentName||'Player')}<small>${t('visitHint')}</small>`;
+      updateRotationIndicator();
     }
 
     function toggleMobileTools(forceExpanded) {
