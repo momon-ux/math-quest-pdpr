@@ -135,5 +135,13 @@ assert.match(html, /id="btn-mobile-more"/, 'telefon mesti mempunyai satu butang 
 assert.match(html, /function toggleMobileTools/, 'kawalan tambahan mesti boleh dibuka dan ditutup');
 assert.match(html, /\.sandbox-action-ribbon \.mobile-secondary \{ display:none; \}/, 'butang sekunder mesti disembunyikan pada paparan telefon');
 assert.match(html, /\.sandbox-action-ribbon\.expanded \.mobile-secondary \{ display:flex; \}/, 'butang sekunder mesti kekal boleh digunakan selepas menu dibuka');
+assert.match(html, /id="modal-language"/, 'pemilih bahasa mesti mempunyai modal mesra telefon');
+for (const language of ['ms', 'en', 'zh', 'ta']) {
+  assert.match(html, new RegExp(`data-language="${language}"`), `pilihan bahasa ${language} mesti tersedia`);
+}
+assert.match(html, /const LANGUAGE_STORAGE_KEY/, 'pilihan bahasa mesti disimpan pada peranti');
+assert.match(html, /function applyLanguage/, 'bahasa pilihan mesti digunakan pada antara muka');
+assert.match(html, /document\.documentElement\.lang=/, 'bahasa dokumen mesti dikemas kini untuk kebolehcapaian');
+assert.match(html, /button\.textContent=t\(message\.id\)/, 'mesej Chat Ceria mesti diterjemahkan mengikut bahasa penerima');
 
-console.log('Semua semakan smoke MathBina V21 lulus.');
+console.log('Semua semakan smoke MathBina V22 lulus.');
