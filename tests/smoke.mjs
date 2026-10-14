@@ -91,6 +91,15 @@ assert.match(html, /MB-\$\{randomMathBinaCode\(4\)\}-\$\{randomMathBinaCode\(4\)
 assert.match(html, /mathbina-house-v2\|\$\{userId\}/, 'carian awan mesti menggunakan ID pengguna dan bukan nama sekolah atau kelas');
 assert.match(html, /identitytoolkit\.googleapis\.com\/v1\/accounts:signUp/, 'akaun tanpa nama Firebase mesti dijana tanpa kata laluan murid');
 assert.match(html, /function editPlayerProfile/, 'profil sekolah, kelas dan aras mesti boleh diedit');
+assert.match(html, /id="school-class-lock-notice"/, 'notis kunci sekolah dan kelas mesti wujud di lobi');
+assert.match(html, /id="hud-btn-profile" style="display:none;"/, 'butang profil mesti disembunyikan daripada murid biasa di sandbox');
+assert.match(html, /function syncProfileLockState/, 'fungsi syncProfileLockState mesti mengunci sekolah dan kelas');
+assert.match(html, /function isProfileEditAllowed/, 'fungsi semakan kebenaran edit profil mesti wujud');
+assert.match(html, /function setProfileEditAllowed/, 'fungsi penetapan kunci profil mesti wujud');
+assert.match(html, /function adminSearchStudentProfile/, 'fungsi carian ID murid oleh admin mesti wujud');
+assert.match(html, /function adminSaveProfileChanges/, 'fungsi simpan profil murid oleh admin mesti wujud');
+assert.match(html, /function adminToggleProfileUnlock/, 'fungsi membuka kunci profil oleh admin mesti wujud');
+assert.match(html, /id="admin-search-user-id"/, 'input carian ID murid oleh admin mesti wujud');
 assert.match(html, /function gradeLabel/, 'label Tahun dan Tingkatan mesti disokong');
 assert.match(html, /id="age-picker-trigger"/, 'semua umur mesti disembunyikan dalam satu butang pemilih');
 assert.match(html, /\.age-picker-trigger[\s\S]*background:rgba\(255,255,255,\.24\)/, 'butang umur mesti menggunakan latar lutsinar');
