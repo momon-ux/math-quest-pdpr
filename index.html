@@ -834,6 +834,7 @@
     .btn-back-home .back-home-icon { display: none; }
     .mobile-more-toggle { display: none; background:#334155; border-color:#0f172a; color:#fff; }
     .mobile-more-toggle.active { background:#facc15; border-color:#92400e; color:#713f12; }
+    .mobile-only-tool { display: none !important; }
     .btn-xp-shooter {
       background: #f97316;
       border-color: #c2410c;
@@ -982,8 +983,7 @@
       .voxel-stage { min-height:220px; border-width:3px; border-radius:10px; }
       .build-help { display:none; }
       .build-status-card { top:5px; left:5px; padding:4px 6px; }
-      .world-owner-label { top:5px; left:auto; right:5px; transform:none; max-width:55%; padding:4px 8px; font-size:.57rem; }
-      .world-owner-label small { font-size:.42rem; }
+      .world-owner-label { display:none !important; }
       .friend-visit-banner { bottom:5px; padding:6px 7px; }
       .friend-visit-banner strong { font-size:.57rem; }
       .friend-visit-banner small { font-size:.43rem; }
@@ -1891,12 +1891,20 @@
       }
       .hud-actions-group { gap: 3px !important; align-self: start; }
       .hud-actions-group button { width: 29px !important; height: 29px !important; }
+      .hud-actions-group .hud-action-extra { display: none !important; }
       .sandbox-action-ribbon {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 4px;
         overflow: visible;
         padding: 4px;
+      }
+      .sandbox-action-ribbon.expanded {
+        max-height: min(250px, 46dvh);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 8px 24px rgba(15,23,42,.35);
+        border-radius: 10px;
       }
       .ribbon-btn {
         width: 100%;
@@ -2079,9 +2087,17 @@
       .hud-wallet-pill, .hud-blocks-count { padding:2px 6px; font-size:.58rem; white-space:nowrap; }
       .hud-actions-group { gap:3px !important; flex:0 0 auto; }
       .hud-actions-group button { width:27px !important; height:27px !important; }
+      .hud-actions-group .hud-action-extra { display: none !important; }
       .sandbox-action-ribbon {
         display:grid; height:auto; min-height:40px; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px;
         padding:3px max(6px, env(safe-area-inset-right)) 3px max(6px, env(safe-area-inset-left)); overflow:visible;
+      }
+      .sandbox-action-ribbon.expanded {
+        max-height: min(220px, 45dvh);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 8px 24px rgba(15,23,42,.35);
+        border-radius: 9px;
       }
       .ribbon-btn {
         width:100%; min-width:0; min-height:31px; padding:2px !important; font-size:1.05rem; justify-content:center;
@@ -2144,8 +2160,7 @@
       .build-status-card { top:4px; left:4px; padding:3px 5px; max-width:38%; }
       .level-badge, .build-status-card #house-progress-text { font-size:.48rem !important; }
       .build-progress-track { height:4px; margin-top:2px; }
-      .world-owner-label { top:4px; padding:3px 7px; max-width:44%; font-size:.5rem; }
-      .world-owner-label small { display:none; }
+      .world-owner-label { display:none !important; }
       .build-help { display:none; }
       .sandbox-bottom-dock { height:46px; gap:4px; padding:0 max(5px, env(safe-area-inset-right)) 0 max(5px, env(safe-area-inset-left)); }
       .dock-title-label { display:none; }
@@ -2600,14 +2615,14 @@
         </div>
 
         <div class="hud-actions-group" style="display: flex; gap: 6px;">
-          <button onclick="openAllGamesModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #0284c7; background: #e0f2fe; color: #0284c7; font-size: 1.05rem; cursor: pointer;" id="btn-all-games-hub" title="Pusat Permainan Matematik Cari XP">🎮</button>
-          <button onclick="toggleGraphicsQuality()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-gfx-quality" title="Kualiti Grafik: Lancar / Cantik">⚡</button>
-          <button class="language-trigger" id="btn-language-sandbox" type="button" onclick="openLanguageModal()" title="Language">🌐</button>
-          <button onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
+          <button class="hud-action-extra" onclick="openAllGamesModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #0284c7; background: #e0f2fe; color: #0284c7; font-size: 1.05rem; cursor: pointer;" id="btn-all-games-hub" title="Pusat Permainan Matematik Cari XP">🎮</button>
+          <button class="hud-action-extra" onclick="toggleGraphicsQuality()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-gfx-quality" title="Kualiti Grafik: Lancar / Cantik">⚡</button>
+          <button class="language-trigger hud-action-extra" id="btn-language-sandbox" type="button" onclick="openLanguageModal()" title="Language">🌐</button>
+          <button class="hud-action-extra" onclick="toggleAudio()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-audio-mute">🔊</button>
           <button onclick="openSafeChat()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" id="btn-safe-chat" title="Chat Ceria MathBina">💬</button>
-          <button onclick="openLeaderboardModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;">📅</button>
-          <button onclick="openAdminModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;">⚙️</button>
-          <button onclick="returnToLobby()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" title="Tukar Murid">🚪</button>
+          <button class="hud-action-extra" onclick="openLeaderboardModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" title="Papan Skor & Kalendar">📅</button>
+          <button class="hud-action-extra" onclick="openAdminModal()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" title="Alat Guru">⚙️</button>
+          <button class="hud-action-extra" onclick="returnToLobby()" style="width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; cursor: pointer;" title="Tukar Murid">🚪</button>
         </div>
       </div>
 
@@ -2650,6 +2665,27 @@
         </button>
         <button class="ribbon-btn btn-snapshot mobile-secondary" onclick="closeMobileTools(); takeHousePhoto()" title="Tangkap Gambar Rumah" aria-label="Foto Rumah">
           <span class="ribbon-icon">📸</span> <span class="ribbon-label" data-i18n="photo">TANGKAP GAMBAR RUMAH</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" onclick="closeMobileTools(); openAllGamesModal()" title="Pusat Permainan Matematik" aria-label="Semua Game">
+          <span class="ribbon-icon">🎮</span> <span class="ribbon-label">SEMUA GAME</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" id="btn-gfx-quality-more" onclick="closeMobileTools(); toggleGraphicsQuality()" title="Kualiti Grafik: Lancar / Cantik" aria-label="Kualiti Grafik">
+          <span class="ribbon-icon">⚡</span> <span class="ribbon-label">GRAFIK</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" onclick="closeMobileTools(); openLanguageModal()" title="Pilih Bahasa" aria-label="Bahasa">
+          <span class="ribbon-icon">🌐</span> <span class="ribbon-label">BAHASA</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" id="btn-audio-mute-more" onclick="closeMobileTools(); toggleAudio()" title="Audio Bunyi" aria-label="Audio Bunyi">
+          <span class="ribbon-icon">🔊</span> <span class="ribbon-label">AUDIO</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" onclick="closeMobileTools(); openLeaderboardModal()" title="Papan Skor & Kalendar" aria-label="Papan Skor">
+          <span class="ribbon-icon">📅</span> <span class="ribbon-label">SKOR</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" onclick="closeMobileTools(); openAdminModal()" title="Alat Guru" aria-label="Alat Guru">
+          <span class="ribbon-icon">⚙️</span> <span class="ribbon-label">GURU</span>
+        </button>
+        <button class="ribbon-btn mobile-secondary mobile-only-tool" onclick="closeMobileTools(); returnToLobby()" title="Tukar Murid / Keluar" aria-label="Keluar">
+          <span class="ribbon-icon">🚪</span> <span class="ribbon-label">KELUAR</span>
         </button>
       </div>
 
@@ -3428,7 +3464,13 @@
 
     function toggleAudio() {
       audio.enabled = !audio.enabled;
-      document.getElementById('btn-audio-mute').textContent = audio.enabled ? '🔊' : '🔇';
+      const muteBtn = document.getElementById('btn-audio-mute');
+      if (muteBtn) muteBtn.textContent = audio.enabled ? '🔊' : '🔇';
+      const muteMore = document.getElementById('btn-audio-mute-more');
+      if (muteMore) {
+        const icon = muteMore.querySelector('.ribbon-icon');
+        if (icon) icon.textContent = audio.enabled ? '🔊' : '🔇';
+      }
       showToast(audio.enabled ? 'Bunyi Aktif' : 'Bunyi Senyap');
     }
 
@@ -9888,6 +9930,11 @@ const COMBAT_BANK = {
       try { localStorage.setItem('MATHBINA_GRAPHICS_QUALITY', quality); } catch(e){}
       const btn = document.getElementById('btn-gfx-quality');
       if (btn) btn.textContent = quality === 'low' ? '⚡' : '✨';
+      const btnMore = document.getElementById('btn-gfx-quality-more');
+      if (btnMore) {
+        const icon = btnMore.querySelector('.ribbon-icon');
+        if (icon) icon.textContent = quality === 'low' ? '⚡' : '✨';
+      }
       
       if (V3.renderer) {
         if (quality === 'low') {
