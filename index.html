@@ -526,9 +526,27 @@
     }
     .name-entry-status {
       grid-column: 1 / -1;
-      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
       font-weight: 800;
       color: #0369a1;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 3px 9px;
+      border-radius: 999px;
+      width: fit-content;
+      max-width: 100%;
+      line-height: 1.25;
+      margin: 1px 0 2px;
+      transition: all 0.2s ease;
+    }
+    .name-entry-status.has-progress {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #86efac;
+      box-shadow: 0 1px 3px rgba(34, 197, 94, 0.15);
     }
     .profile-preview-card {
       grid-column: 1 / -1;
@@ -1770,10 +1788,17 @@
       .brand-app-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 11px; }
       .game-title-logo { font-size: clamp(1.05rem, 5.8vw, 1.45rem); -webkit-text-stroke-width: 1px; }
       .sub-badge { font-size: 0.58rem; padding: 2px 6px; }
-      .credit-badge { font-size: 0.56rem; padding: 4px 6px; max-width: 44%; }
-      .name-entry-card { grid-template-columns: 1fr; }
-      .profile-preview-card { min-height: 68px; padding: 8px 10px; }
-      .profile-preview-avatar { width: 46px; height: 46px; flex-basis: 46px; font-size: 1.45rem; }
+      .name-entry-card { grid-template-columns: 1fr; padding: 8px; gap: 5px; }
+      .name-entry-pen { display: none !important; }
+      .name-entry-status { font-size: 0.64rem; padding: 2px 8px; margin: 1px 0; }
+      .profile-preview-card { min-height: 0; padding: 6px 8px; gap: 8px; border-radius: 10px; }
+      .profile-preview-avatar { width: 36px; height: 36px; flex-basis: 36px; font-size: 1.25rem; }
+      .profile-preview-kicker { display: none; }
+      .profile-preview-name { font-size: 0.88rem; }
+      .profile-preview-meta { font-size: 0.62rem; margin-top: 1px; }
+      .profile-id-row { gap: 4px; margin-top: 3px; }
+      .profile-id-code { padding: 2px 6px; font-size: 0.62rem; border-radius: 6px; }
+      .mini-action-btn { padding: 3px 6px; font-size: 0.58rem; border-radius: 6px; }
       .avatar-picker-row { display: grid; grid-template-columns: 1fr 1fr; }
       .avatar-chip { max-width: none; min-height: 42px; padding: 5px 7px; font-size: 0.68rem; }
       .btn-enter-world { min-height: 48px; padding: 9px; font-size: 0.92rem; }
@@ -1911,9 +1936,9 @@
       .community-meta, .community-kicker, .community-open-hint { font-size:.5rem; }
       .toggle-grade-box { gap:5px; max-height:176px; }
       .grade-chip { min-width:0; padding:5px 7px; font-size:.6rem; }
-      .name-entry-card { grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr); gap:6px; }
-      .profile-preview-card { min-height:54px; padding:5px 8px; }
-      .profile-preview-avatar { width:38px; height:38px; flex-basis:38px; font-size:1.2rem; }
+      .name-entry-card { grid-template-columns: 1fr; gap: 4px; padding: 6px 8px; }
+      .profile-preview-card { min-height: 0; padding: 5px 7px; gap: 6px; }
+      .profile-preview-avatar { width: 32px; height: 32px; flex-basis: 32px; font-size: 1.1rem; }
       .avatar-picker-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
       .avatar-chip { min-height:33px; padding:3px 5px; font-size:.58rem; }
       .btn-enter-world { min-height:36px; padding:6px; font-size:.76rem; }
@@ -2320,8 +2345,8 @@
             <label class="form-label" for="input-student-name" data-i18n="nameLabel">3. ISI NAMA PENUH ANDA:</label>
             <input type="text" id="input-student-name" class="student-name-input" maxlength="80" autocomplete="name" inputmode="text" placeholder="Taip nama penuh anda" data-i18n-placeholder="namePlaceholder" oninput="updateStudentNameInput(this.value)" onclick="handleLockedStudentNameClick()" onkeydown="if(event.key==='Enter') enterBuildingPlot()">
           </div>
-          <div style="font-size: 1.8rem; align-self: center;" aria-hidden="true">✍️</div>
-          <div class="name-entry-status" id="student-name-status">Isi nama, sekolah dan kelas yang sama untuk membuka rumah pada peranti lain.</div>
+          <div class="name-entry-pen" style="font-size: 1.6rem; align-self: center;" aria-hidden="true">✍️</div>
+          <div class="name-entry-status" id="student-name-status">Isi nama untuk memuat simpanan & ID pengguna.</div>
           <div class="profile-preview-card" aria-live="polite">
             <div class="profile-preview-avatar" id="profile-preview-avatar">👷‍♂️</div>
             <div>
@@ -3044,7 +3069,7 @@
       ms: {
         language:'Bahasa', chooseLanguage:'🌐 Pilih Bahasa', languageHint:'Pilihan bahasa akan disimpan pada peranti ini.', languageSaved:'Bahasa Malaysia dipilih.',
         ageLabel:'1. PILIH UMUR / TAHUN (WAJIB):', chooseAge:'🎓 Tekan untuk pilih umur / tahun', ageRequired:'⚠️ Sila pilih umur supaya soalan mengikut aras anda.', schoolClassLabel:'2. SEKOLAH & KELAS (DIKUNCI SELEPAS DIISI):', schoolPlaceholder:'Nama sekolah', classPlaceholder:'Nama kelas', nameLabel:'3. ISI NAMA PENUH ANDA:', namePlaceholder:'Taip nama penuh anda', playerProfile:'Profil Pemain MathBina', avatarLabel:'4. PILIH AVATAR ANDA:', enterWorld:'🚀 MASUK KE PADANG RUMAH IMPIAN!',
-        brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan', nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.', progressFound:'✅ Kemajuan lama ditemui: {blocks} blok akan dibuka semula.', idStable:'🪪 ID {id} kekal walaupun tahun, sekolah atau kelas diubah.', idWillGenerate:'🪪 ID pengguna akan dijana automatik selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
+        brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan',        nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama untuk muat simpanan & ID pengguna.', progressFound:'💾 Kemajuan lama ditemui: {blocks} blok sedia.', idStable:'🪪 ID {id} kekal pada peranti ini.', idWillGenerate:'🪪 ID baharu dijana selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', megaItems:'👑 Item Mega', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
         shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: MATH BLASTER', catches:'musuh', home:'🏡 RUMAH', arcadePrompt:'Gerakkan kapal dan tembak musuh yang membawa jawapan betul!', arcadeRules:'Gerak kiri atau kanan, sejajarkan kapal dan tekan TEMBAK. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
@@ -3055,7 +3080,7 @@
       en: {
         language:'English', chooseLanguage:'🌐 Choose Language', languageHint:'Your language choice will be saved on this device.', languageSaved:'English selected.',
         ageLabel:'1. CHOOSE AGE / YEAR (REQUIRED):', chooseAge:'🎓 Tap to choose your age / year', ageRequired:'⚠️ Choose your age so questions match your level.', schoolClassLabel:'2. SCHOOL & CLASS (LOCKED AFTER ENTRY):', schoolPlaceholder:'School name', classPlaceholder:'Class name', nameLabel:'3. ENTER YOUR FULL NAME:', namePlaceholder:'Type your full name', playerProfile:'MathBina Player Profile', avatarLabel:'4. CHOOSE YOUR AVATAR:', enterWorld:'🚀 ENTER YOUR DREAM-HOME WORLD!',
-        brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name first. MathBina will create a permanent player ID when you enter.', progressFound:'✅ Previous progress found: {blocks} blocks will be restored.', idStable:'🪪 ID {id} stays the same when you change year, school or class.', idWillGenerate:'🪪 A player ID will be created automatically when you enter.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
+        brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name to load saved build & ID.', progressFound:'💾 Previous progress found: {blocks} blocks ready.', idStable:'🪪 ID {id} linked to this device.', idWillGenerate:'🪪 New ID generated upon entry.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', megaItems:'👑 Mega Items', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
         shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH BLASTER', catches:'targets', home:'🏡 HOME', arcadePrompt:'Move your ship and shoot the enemy carrying the correct answer!', arcadeRules:'Move left or right, line up your ship and press FIRE. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
@@ -3066,7 +3091,7 @@
       zh: {
         language:'中文', chooseLanguage:'🌐 选择语言', languageHint:'语言选择将保存在此设备上。', languageSaved:'已选择中文。',
         ageLabel:'1. 选择年龄 / 年级（必填）：', chooseAge:'🎓 点击选择年龄 / 年级', ageRequired:'⚠️ 请选择年龄，以获得适合程度的题目。', schoolClassLabel:'2. 学校和班级（填写后锁定）：', schoolPlaceholder:'学校名称', classPlaceholder:'班级名称', nameLabel:'3. 输入你的全名：', namePlaceholder:'输入你的全名', playerProfile:'MathBina 玩家资料', avatarLabel:'4. 选择你的头像：', enterWorld:'🚀 进入梦想家园！',
-        brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'请先输入姓名。进入后，MathBina 会建立永久玩家 ID。', progressFound:'✅ 找到之前的进度：将恢复 {blocks} 个积木。', idStable:'🪪 更改年级、学校或班级后，ID {id} 保持不变。', idWillGenerate:'🪪 进入后会自动建立玩家 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
+        brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'输入姓名以读取已保存进度与 ID。', progressFound:'💾 找到之前的进度：{blocks} 积木就绪。', idStable:'🪪 ID {id} 已绑定此设备。', idWillGenerate:'🪪 进入后自动生成 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', megaItems:'👑 大型珍藏', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
         shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学战机', catches:'目标', home:'🏡 家园', arcadePrompt:'移动飞船，射击带有正确答案的敌机！', arcadeRules:'左右移动，对准目标后按“开火”。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
@@ -3077,7 +3102,7 @@
       ta: {
         language:'தமிழ்', chooseLanguage:'🌐 மொழியைத் தேர்ந்தெடுக்கவும்', languageHint:'மொழித் தேர்வு இந்தச் சாதனத்தில் சேமிக்கப்படும்.', languageSaved:'தமிழ் தேர்ந்தெடுக்கப்பட்டது.',
         ageLabel:'1. வயது / ஆண்டைத் தேர்வுசெய்க (கட்டாயம்):', chooseAge:'🎓 வயது / ஆண்டைத் தேர்வு செய்ய தட்டவும்', ageRequired:'⚠️ உங்கள் நிலைக்கு ஏற்ற கேள்விகளுக்காக வயதைத் தேர்வுசெய்க.', schoolClassLabel:'2. பள்ளி மற்றும் வகுப்பு (உள்ளிட்ட பின் பூட்டப்படும்):', schoolPlaceholder:'பள்ளியின் பெயர்', classPlaceholder:'வகுப்பின் பெயர்', nameLabel:'3. உங்கள் முழுப் பெயரை உள்ளிடவும்:', namePlaceholder:'உங்கள் முழுப் பெயரைத் தட்டச்சு செய்யவும்', playerProfile:'MathBina விளையாட்டு வீரர் சுயவிவரம்', avatarLabel:'4. உங்கள் அவதாரைத் தேர்வுசெய்யவும்:', enterWorld:'🚀 உங்கள் கனவு வீட்டுக்குள் செல்லுங்கள்!',
-        brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'முதலில் பெயரை உள்ளிடவும். நுழைந்ததும் நிரந்தர வீரர் ID உருவாகும்.', progressFound:'✅ முந்தைய முன்னேற்றம் கிடைத்தது: {blocks} கட்டைகள் மீட்கப்படும்.', idStable:'🪪 ஆண்டு, பள்ளி அல்லது வகுப்பை மாற்றினாலும் ID {id} மாறாது.', idWillGenerate:'🪪 நுழைந்ததும் வீரர் ID தானாக உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
+        brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'சேமிப்பை ஏற்ற பெயரை உள்ளிடவும்.', progressFound:'💾 முந்தைய முன்னேற்றம்: {blocks} கட்டைகள் தயார்.', idStable:'🪪 ID {id} சாதனத்தில் உள்ளது.', idWillGenerate:'🪪 நுழைந்ததும் ID உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', megaItems:'👑 மெகா பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
         shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித விண்கலம்', catches:'இலக்குகள்', home:'🏡 வீடு', arcadePrompt:'விண்கலத்தை நகர்த்தி சரியான விடையுள்ள எதிரியைச் சுடுங்கள்!', arcadeRules:'இடது அல்லது வலது நகர்ந்து இலக்கைச் சீரமைத்து FIRE அழுத்தவும். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
@@ -4242,15 +4267,18 @@ const COMBAT_BANK = {
       if (!status) return;
       if (STATE.studentName.length < 3) {
         status.textContent = t('fillName');
+        status.classList.remove('has-progress');
         return;
       }
       const match = findStudentSave(STATE.studentName, STATE.className);
       const blocks = match ? (match.saved?.voxels?.length ?? match.saved?.placedBlocks ?? 0) : 0;
-      status.textContent = match
-        ? tf('progressFound',{blocks})
-        : STATE.userId
-          ? tf('idStable',{id:STATE.userId})
-          : t('idWillGenerate');
+      if (match) {
+        status.textContent = tf('progressFound', { blocks });
+        status.classList.add('has-progress');
+      } else {
+        status.textContent = STATE.userId ? tf('idStable', { id: STATE.userId }) : t('idWillGenerate');
+        status.classList.remove('has-progress');
+      }
     }
 
     function pickAvatar(emoji, title) {

@@ -251,5 +251,7 @@ assert.match(html, /function hideToast\(\)/, 'fungsi hideToast mesti wujud');
 assert.match(html, /function launchMathShooter\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Math Shooter mesti menutup sembang dan memadamkan toast');
 assert.match(html, /function launchMathWheel\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Roda Sifir mesti menutup sembang dan memadamkan toast');
 assert.match(html, /function launchArcadeGame\(\)\s*\{[^}]*closeSafeChat\(\);\s*hideToast\(\);/, 'pelancaran Arked mesti menutup sembang dan memadamkan toast');
+assert.match(html, /\.name-entry-status\.has-progress/, 'status kemajuan lama mesti mempunyai penggayaan kompak beraksen');
+assert.match(html, /status\.classList\.(add|remove)\('has-progress'\)/, 'status simpanan mesti mengaktifkan kelas kompak');
 
 console.log('Semua semakan smoke MathBina V32 lulus.');
