@@ -1017,7 +1017,7 @@
     }
 
     /* ==============================================================
-       SCREEN 5: ARKED TANGKAP BINTANG
+       SCREEN 5: ARKED MATH RUSH
        ============================================================== */
     #view-arcade {
       position: absolute;
@@ -1059,21 +1059,43 @@
         radial-gradient(circle at 32% 82%,#bae6fd 0 2px,transparent 3px),
         linear-gradient(180deg,rgba(30,64,175,.48),rgba(15,23,42,.72));
     }
-    .arcade-target {
-      position:absolute;
-      width:72px;
-      height:72px;
-      border:0;
-      border-radius:50%;
-      background:radial-gradient(circle,#fef08a 0 34%,#facc15 35% 58%,#f97316 59% 100%);
-      color:#78350f;
-      font-size:2rem;
-      cursor:pointer;
-      box-shadow:0 0 0 5px rgba(255,255,255,.22),0 0 28px #facc15;
-      animation:arcadePulse .72s ease-in-out infinite alternate;
-      touch-action:manipulation;
+    .arcade-question-card {
+      position:absolute; z-index:4; left:50%; top:8%; transform:translateX(-50%);
+      width:min(90%,520px); padding:12px 16px; border:2px solid rgba(255,255,255,.7);
+      border-radius:18px; background:linear-gradient(135deg,rgba(30,64,175,.92),rgba(109,40,217,.92));
+      text-align:center; box-shadow:0 9px 24px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.25);
+      backdrop-filter:blur(8px);
     }
-    @keyframes arcadePulse { to { transform:scale(1.12) rotate(8deg); } }
+    .arcade-level-badge { display:inline-block; padding:3px 9px; border-radius:999px; background:#facc15; color:#713f12; font-size:.63rem; font-weight:1000; }
+    .arcade-problem { margin-top:5px; font-size:clamp(1.45rem,7vw,2.45rem); line-height:1.05; font-weight:1000; text-shadow:0 3px 0 rgba(0,0,0,.24); }
+    .arcade-answer-zone {
+      position:absolute; inset:36% 5% 6%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+      align-items:center; gap:clamp(9px,3vw,28px);
+    }
+    .arcade-answer-target {
+      position:relative; min-width:0; min-height:92px; border:3px solid rgba(255,255,255,.78);
+      border-radius:28px 42px 30px 46px; background:linear-gradient(145deg,var(--orb-light,#67e8f9),var(--orb-dark,#0891b2));
+      color:#fff; font-size:clamp(1.15rem,5vw,1.85rem); font-weight:1000; cursor:pointer;
+      box-shadow:0 10px 0 color-mix(in srgb,var(--orb-dark,#0891b2) 72%,#020617),0 0 28px rgba(103,232,249,.28);
+      text-shadow:0 2px 0 rgba(0,0,0,.24); animation:arcadeFloat 1.25s ease-in-out infinite alternate;
+      animation-delay:var(--float-delay,0s); touch-action:manipulation;
+    }
+    .arcade-answer-target::before { content:'✦'; position:absolute; top:8px; left:12px; opacity:.65; font-size:.75rem; }
+    .arcade-answer-target:active { transform:translateY(7px) scale(.96); box-shadow:0 3px 0 var(--orb-dark,#0891b2); }
+    .arcade-answer-target.is-correct { background:linear-gradient(145deg,#86efac,#16a34a); animation:arcadeCorrect .34s ease both; }
+    .arcade-answer-target.is-wrong { background:linear-gradient(145deg,#fca5a5,#dc2626); animation:arcadeWrong .32s ease both; }
+    @keyframes arcadeFloat { from { transform:translateY(7px) rotate(-2deg); } to { transform:translateY(-9px) rotate(2deg); } }
+    @keyframes arcadeCorrect { 55% { transform:scale(1.18) rotate(5deg); } to { transform:scale(0); opacity:0; } }
+    @keyframes arcadeWrong { 25%,75% { transform:translateX(-8px); } 50% { transform:translateX(8px); } }
+    .arcade-feedback {
+      position:absolute; z-index:8; left:50%; top:52%; transform:translate(-50%,-50%);
+      padding:9px 16px; border-radius:999px; background:rgba(15,23,42,.9); color:#fff;
+      font-size:clamp(1rem,4vw,1.35rem); font-weight:1000; pointer-events:none;
+      animation:arcadeFeedback .55s ease both;
+    }
+    @keyframes arcadeFeedback { from { opacity:0; transform:translate(-50%,-20%) scale(.7); } 35% { opacity:1; transform:translate(-50%,-50%) scale(1.12); } to { opacity:0; transform:translate(-50%,-95%) scale(1); } }
+    .arcade-pill.combo-hot { background:#c2410c; box-shadow:0 0 16px rgba(251,146,60,.8); animation:comboGlow .6s ease-in-out infinite alternate; }
+    @keyframes comboGlow { to { transform:scale(1.06); } }
     .arcade-start-card {
       position:absolute;
       left:50%; top:50%; transform:translate(-50%,-50%);
@@ -1087,8 +1109,10 @@
     }
     .arcade-start-card button { margin-top:10px; border:0; border-radius:12px; padding:11px 18px; background:#facc15; color:#78350f; font-weight:900; cursor:pointer; }
     @media (max-width:700px) {
-      .arcade-target { width:64px; height:64px; font-size:1.7rem; }
       .arcade-field { min-height:240px; }
+      .arcade-question-card { top:5%; padding:9px 12px; }
+      .arcade-answer-zone { inset:39% 4% 5%; gap:8px; }
+      .arcade-answer-target { min-height:78px; border-radius:22px 30px 24px 32px; }
     }
 
     /* ==============================================================
@@ -1513,7 +1537,10 @@
       .arcade-title { font-size:.8rem; }
       .arcade-stats { font-size:.55rem; }
       .arcade-field { min-height:0; margin-top:5px; border-radius:12px; }
-      .arcade-target { width:54px; height:54px; font-size:1.45rem; }
+      .arcade-question-card { top:3%; padding:6px 10px; }
+      .arcade-problem { margin-top:2px; font-size:1.25rem; }
+      .arcade-answer-zone { inset:38% 4% 4%; }
+      .arcade-answer-target { min-height:50px; font-size:.95rem; border-radius:16px 22px 18px 24px; }
       .arcade-start-card { width:min(70%,390px); padding:10px; }
     }
 
@@ -1999,25 +2026,31 @@
     </div>
 
     <!-- ==============================================================
-         SCREEN 5: ARKED TANGKAP BINTANG
+         SCREEN 5: ARKED MATH RUSH
          ============================================================== -->
     <div id="view-arcade">
       <div class="arcade-hud">
         <div>
-          <div class="arcade-title" data-i18n="arcadeTitle">🕹️ XP ARCADE: CATCH THE STAR</div>
+          <div class="arcade-title" data-i18n="arcadeTitle">🕹️ XP ARCADE: MATH RUSH</div>
           <div class="arcade-stats">
-            <span class="arcade-pill">⏱️ <span id="arcade-time">20</span>s</span>
-            <span class="arcade-pill">⭐ <span id="arcade-score">0</span> <span data-i18n="catches">catches</span></span>
+            <span class="arcade-pill">⏱️ <span id="arcade-time">30</span>s</span>
+            <span class="arcade-pill">✅ <span id="arcade-score">0</span> <span data-i18n="catches">correct</span></span>
+            <span class="arcade-pill" id="arcade-combo-pill">🔥 ×<span id="arcade-combo">1</span></span>
             <span class="arcade-pill">🏆 <span id="arcade-earned">0</span> XP</span>
           </div>
         </div>
         <button class="arcade-exit" onclick="exitMinigameToSandbox()" data-i18n="home">🏡 HOME</button>
       </div>
-      <div class="arcade-field" id="arcade-field" aria-label="Kawasan permainan Tangkap Bintang">
+      <div class="arcade-field" id="arcade-field" aria-label="Math Rush arcade game">
+        <div class="arcade-question-card" id="arcade-question-card" style="display:none">
+          <span class="arcade-level-badge" id="arcade-level-badge">MATH RUSH</span>
+          <div class="arcade-problem" id="arcade-problem">7 + 8 = ?</div>
+        </div>
+        <div class="arcade-answer-zone" id="arcade-answer-zone"></div>
         <div class="arcade-start-card" id="arcade-start-card">
-          <div style="font-size:2.4rem">🌟</div>
-          <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Tap the stars as quickly as you can!</div>
-          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Each star gives 10 XP and 2 coins. The round lasts 20 seconds.</div>
+          <div style="font-size:2.4rem">🚀➕</div>
+          <div style="font-size:1.05rem;font-weight:900;color:#fde047" data-i18n="arcadePrompt">Catch the moving correct answer!</div>
+          <div style="margin-top:5px;font-size:.72rem;color:#dbeafe" data-i18n="arcadeRules">Build a combo for more XP. Wrong answers cost 2 seconds. You have 30 seconds!</div>
           <button type="button" onclick="startArcadeRound()" data-i18n="startPlaying">🚀 START PLAYING</button>
         </div>
       </div>
@@ -2283,7 +2316,7 @@
         brandSubtitle:'Misi Bina Rumah Impian — Matematik Sekolah Rendah & Menengah', developerLabel:'👨‍💻 Pembangun Sistem:', communityGallery:'🏘️ Galeri Rumah Kawan-Kawan', communityAdd:'Tambah rumah kawan menggunakan ID MathBina', viewGallery:'Lihat Galeri →', copyId:'📋 Salin ID', deviceAccounts:'👥 Akaun Peranti', newAccount:'＋ Akaun Baharu', avatarBuilder:'Arkitek Cilik', avatarDesigner:'Pereka Rumah', avatarAgent:'Ejen Kripto', avatarRobot:'Mecha Builder', leaderboard:'📅 Papan Skor Kalendar', recordTemplate:'📄 Templat Semakan Rekod', teacherTools:'⚙️ Alat Guru', profile:'✏️ Profil', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ PUTAR BLOK', buildHelp:'Ketuk petak untuk bina • Seret untuk putar kamera • Cubit/skrol untuk zum', coinsUnit:'Syiling', blocksUnit:'Blok', levelUnit:'Aras', stageUnit:'Tahap', houseProgress:'Kemajuan rumah', yourHouse:'Rumah', visitHint:'Ketuk pulau terapung untuk melawat rumah kawan', nameRequired:'⚠️ Sila isi nama penuh anda terlebih dahulu!', fillName:'Isi nama dahulu. Selepas masuk, MathBina akan menjana satu ID pengguna kekal.', progressFound:'✅ Kemajuan lama ditemui: {blocks} blok akan dibuka semula.', idStable:'🪪 ID {id} kekal walaupun tahun, sekolah atau kelas diubah.', idWillGenerate:'🪪 ID pengguna akan dijana automatik selepas masuk.', welcomeBack:'✅ Selamat kembali {name}! Menyemak simpanan awan…', checkingHouse:'☁️ Menyemak rumah {name} dalam simpanan awan…',
         mathShooter:'CARI XP: MATH SHOOTER', mathWheel:'CARI XP: RODA SIFIR', arcade:'ARKED XP', shop:'KEDAI BLOK & LEGO', eraser:'ALAT PADAM', photo:'TANGKAP GAMBAR RUMAH', tools:'Alatan:', buyMore:'+ BELI LAGI BLOK', more:'LAGI', close:'TUTUP',
         shopTitle:'KEDAI BLOK & HIASAN RUMAH', structure:'🧱 Struktur Asas', house:'🏠 Rumah & Pintu', nature:'🌳 Taman & Alam', vehicles:'🚗 Kenderaan & Khas', owned:'Milik', sellValue:'Jual', buy:'Beli +1', sell:'Jual −1', confirmSell:'Sahkan jual', coins:'Syiling',
-        shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: TANGKAP BINTANG', catches:'tangkapan', home:'🏡 RUMAH', arcadePrompt:'Ketuk bintang secepat mungkin!', arcadeRules:'Setiap bintang memberikan 10 XP dan 2 syiling. Masa permainan ialah 20 saat.', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
+        shooterTitle:'CARI XP: MATH SHOOTER', shooterSubtitle:'Tembak belon dengan jawapan tepat untuk kumpul XP!', backHome:'🏡 KEMBALI KE RUMAH', mathOperation:'OPERASI MATEMATIK', wheelTitle:'🎡 RODA SIFIR & OPERASI KILAT', wheelSubtitle:'Putar roda dan selesaikan cabaran untuk kutip bonus +150 XP!', spinWheel:'🎲 PUTAR RODA SIFIR!', quickQuestion:'SOALAN KILAT', arcadeTitle:'🕹️ ARKED XP: SERBUAN MATEMATIK', catches:'betul', home:'🏡 RUMAH', arcadePrompt:'Tangkap jawapan betul yang sedang bergerak!', arcadeRules:'Bina kombo untuk lebih XP. Jawapan salah memotong 2 saat. Anda ada 30 saat!', startPlaying:'🚀 MULA BERMAIN', playAgain:'🔁 MAIN LAGI', balance:'🪙 Baki:', lowCoins:'Kurang syiling? Main Math Shooter untuk tambah duit!', earnXpNow:'⚡ CARI XP SEKARANG', namePreview:'Nama anda akan muncul di sini', idAfterEntry:'ID dijana selepas masuk',
         chatTitle:'💬 Chat Live MathBina', chatSubtitle:'Mesej rakan muncul secara langsung sambil anda bermain.', chatConnecting:'LIVE • Menyambung…', chatConnected:'LIVE • Dikemas kini sekarang', chatReconnecting:'LIVE • Menyambung semula…', chooseMessage:'Pilih mesej untuk dihantar:', chatSafety:'🛡️ Demi keselamatan murid, chat menggunakan ayat dan emoji selamat tanpa ruangan menaip bebas.', chatEmpty:'Belum ada mesej. Jadilah pemain pertama yang menyapa! 👋',
         hello:'Hai semua! 👋', nice_house:'Rumah kamu cantik! 🏡✨', great_build:'Binaan yang hebat! 🧱👏', lets_math:'Jom main Matematik! 🎯', good_luck:'Semoga berjaya! ⭐', thank_you:'Terima kasih! 😊', wow:'Wah, kreatifnya! 🌈', keep_going:'Teruskan membina! 💪'
       },
@@ -2293,7 +2326,7 @@
         brandSubtitle:'Dream House Building Mission — Primary & Secondary Mathematics', developerLabel:'👨‍💻 System Developer:', communityGallery:"🏘️ Friends' House Gallery", communityAdd:"Add a friend's house using a MathBina ID", viewGallery:'View Gallery →', copyId:'📋 Copy ID', deviceAccounts:'👥 Device Accounts', newAccount:'＋ New Account', avatarBuilder:'Junior Architect', avatarDesigner:'Home Designer', avatarAgent:'Crypto Agent', avatarRobot:'Mecha Builder', leaderboard:'📅 Calendar Leaderboard', recordTemplate:'📄 Record Review Template', teacherTools:'⚙️ Teacher Tools', profile:'✏️ Profile', undo:'↶ UNDO', redo:'↷ REDO', rotate:'↻ ROTATE BLOCK', buildHelp:'Tap a tile to build • Drag to rotate • Pinch/scroll to zoom', coinsUnit:'Coins', blocksUnit:'Blocks', levelUnit:'Level', stageUnit:'Level', houseProgress:'House progress', yourHouse:'House of', visitHint:"Tap a floating island to visit a friend's house", nameRequired:'⚠️ Please enter your full name first!', fillName:'Enter your name first. MathBina will create a permanent player ID when you enter.', progressFound:'✅ Previous progress found: {blocks} blocks will be restored.', idStable:'🪪 ID {id} stays the same when you change year, school or class.', idWillGenerate:'🪪 A player ID will be created automatically when you enter.', welcomeBack:'✅ Welcome back, {name}! Checking cloud save…', checkingHouse:'☁️ Checking {name}’s house in cloud save…',
         mathShooter:'EARN XP: MATH SHOOTER', mathWheel:'EARN XP: TIMES-TABLE WHEEL', arcade:'XP ARCADE', shop:'BLOCK & LEGO SHOP', eraser:'ERASER', photo:'TAKE A HOUSE PHOTO', tools:'Tools:', buyMore:'+ BUY MORE BLOCKS', more:'MORE', close:'CLOSE',
         shopTitle:'BLOCK & HOME DECOR SHOP', structure:'🧱 Basic Structure', house:'🏠 House & Doors', nature:'🌳 Garden & Nature', vehicles:'🚗 Vehicles & Special', owned:'Owned', sellValue:'Sell', buy:'Buy +1', sell:'Sell −1', confirmSell:'Confirm sale', coins:'Coins',
-        shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: CATCH THE STAR', catches:'catches', home:'🏡 HOME', arcadePrompt:'Tap the stars as quickly as you can!', arcadeRules:'Each star gives 10 XP and 2 coins. The round lasts 20 seconds.', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
+        shooterTitle:'EARN XP: MATH SHOOTER', shooterSubtitle:'Shoot the balloon with the correct answer to earn XP!', backHome:'🏡 BACK HOME', mathOperation:'MATH OPERATION', wheelTitle:'🎡 TIMES-TABLE & QUICK-MATH WHEEL', wheelSubtitle:'Spin the wheel and solve the challenge to earn a +150 XP bonus!', spinWheel:'🎲 SPIN THE WHEEL!', quickQuestion:'QUICK QUESTION', arcadeTitle:'🕹️ XP ARCADE: MATH RUSH', catches:'correct', home:'🏡 HOME', arcadePrompt:'Catch the moving correct answer!', arcadeRules:'Build a combo for more XP. Wrong answers cost 2 seconds. You have 30 seconds!', startPlaying:'🚀 START PLAYING', playAgain:'🔁 PLAY AGAIN', balance:'🪙 Balance:', lowCoins:'Need more coins? Play Math Shooter to earn more!', earnXpNow:'⚡ EARN XP NOW', namePreview:'Your name will appear here', idAfterEntry:'ID created after entry',
         chatTitle:'💬 MathBina Live Chat', chatSubtitle:'Friends’ messages appear live while you keep playing.', chatConnecting:'LIVE • Connecting…', chatConnected:'LIVE • Updated now', chatReconnecting:'LIVE • Reconnecting…', chooseMessage:'Choose a message to send:', chatSafety:'🛡️ For student safety, chat uses safe phrases and emojis without a free-text box.', chatEmpty:'No messages yet. Be the first player to say hello! 👋',
         hello:'Hello everyone! 👋', nice_house:'Your house is beautiful! 🏡✨', great_build:'Great build! 🧱👏', lets_math:'Let’s play Maths! 🎯', good_luck:'Good luck! ⭐', thank_you:'Thank you! 😊', wow:'Wow, so creative! 🌈', keep_going:'Keep building! 💪'
       },
@@ -2303,7 +2336,7 @@
         brandSubtitle:'梦想房屋建造任务 — 小学与中学数学', developerLabel:'👨‍💻 系统开发者：', communityGallery:'🏘️ 好友房屋画廊', communityAdd:'使用 MathBina ID 添加好友房屋', viewGallery:'查看画廊 →', copyId:'📋 复制 ID', deviceAccounts:'👥 设备账户', newAccount:'＋ 新账户', avatarBuilder:'小小建筑师', avatarDesigner:'房屋设计师', avatarAgent:'密码特工', avatarRobot:'机甲建造者', leaderboard:'📅 日历排行榜', recordTemplate:'📄 记录检查模板', teacherTools:'⚙️ 教师工具', profile:'✏️ 资料', undo:'↶ 撤销', redo:'↷ 重做', rotate:'↻ 旋转积木', buildHelp:'点击格子建造 • 拖动旋转 • 捏合/滚动缩放', coinsUnit:'金币', blocksUnit:'积木', levelUnit:'层', stageUnit:'等级', houseProgress:'房屋进度', yourHouse:'房屋', visitHint:'点击浮岛参观好友房屋', nameRequired:'⚠️ 请先输入你的全名！', fillName:'请先输入姓名。进入后，MathBina 会建立永久玩家 ID。', progressFound:'✅ 找到之前的进度：将恢复 {blocks} 个积木。', idStable:'🪪 更改年级、学校或班级后，ID {id} 保持不变。', idWillGenerate:'🪪 进入后会自动建立玩家 ID。', welcomeBack:'✅ 欢迎回来，{name}！正在检查云端存档…', checkingHouse:'☁️ 正在检查 {name} 的云端房屋…',
         mathShooter:'赚取 XP：数学射击', mathWheel:'赚取 XP：乘法转盘', arcade:'XP 街机', shop:'积木与乐高商店', eraser:'橡皮工具', photo:'拍摄房屋照片', tools:'工具：', buyMore:'+ 购买更多积木', more:'更多', close:'关闭',
         shopTitle:'积木与家居装饰商店', structure:'🧱 基础结构', house:'🏠 房屋与门', nature:'🌳 花园与自然', vehicles:'🚗 交通工具与特别物品', owned:'拥有', sellValue:'售价', buy:'购买 +1', sell:'出售 −1', confirmSell:'确认出售', coins:'金币',
-        shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：接住星星', catches:'次接住', home:'🏡 家园', arcadePrompt:'尽快点击星星！', arcadeRules:'每颗星星可得 10 XP 和 2 金币。每局 20 秒。', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
+        shooterTitle:'赚取 XP：数学射击', shooterSubtitle:'射中正确答案的气球来赚取 XP！', backHome:'🏡 返回家园', mathOperation:'数学运算', wheelTitle:'🎡 乘法与速算转盘', wheelSubtitle:'转动转盘并完成挑战，赢取 +150 XP 奖励！', spinWheel:'🎲 转动转盘！', quickQuestion:'快速问题', arcadeTitle:'🕹️ XP 街机：数学冲刺', catches:'题正确', home:'🏡 家园', arcadePrompt:'点击正在移动的正确答案！', arcadeRules:'连续答对可获得更多 XP。答错扣 2 秒。你有 30 秒！', startPlaying:'🚀 开始游戏', playAgain:'🔁 再玩一次', balance:'🪙 余额：', lowCoins:'金币不足？玩数学射击赚取更多！', earnXpNow:'⚡ 立即赚取 XP', namePreview:'你的名字会显示在这里', idAfterEntry:'进入后创建 ID',
         chatTitle:'💬 MathBina 实时聊天', chatSubtitle:'朋友的消息会在游戏时实时出现。', chatConnecting:'实时 • 正在连接…', chatConnected:'实时 • 刚刚更新', chatReconnecting:'实时 • 正在重新连接…', chooseMessage:'选择要发送的消息：', chatSafety:'🛡️ 为保障学生安全，聊天只使用安全短语和表情，不提供自由输入框。', chatEmpty:'还没有消息。成为第一个打招呼的玩家吧！👋',
         hello:'大家好！👋', nice_house:'你的房子真漂亮！🏡✨', great_build:'建得真棒！🧱👏', lets_math:'一起玩数学吧！🎯', good_luck:'祝你好运！⭐', thank_you:'谢谢！😊', wow:'哇，真有创意！🌈', keep_going:'继续建造！💪'
       },
@@ -2313,7 +2346,7 @@
         brandSubtitle:'கனவு வீடு கட்டும் பணி — தொடக்க மற்றும் இடைநிலை கணிதம்', developerLabel:'👨‍💻 அமைப்பு உருவாக்குநர்:', communityGallery:'🏘️ நண்பர்களின் வீட்டு காட்சியகம்', communityAdd:'MathBina ID மூலம் நண்பரின் வீட்டைச் சேர்க்கவும்', viewGallery:'காட்சியகத்தைப் பார்க்க →', copyId:'📋 ID நகலெடு', deviceAccounts:'👥 சாதனக் கணக்குகள்', newAccount:'＋ புதிய கணக்கு', avatarBuilder:'இளம் கட்டிடக் கலைஞர்', avatarDesigner:'வீட்டு வடிவமைப்பாளர்', avatarAgent:'கிரிப்டோ முகவர்', avatarRobot:'மெக்கா கட்டுநர்', leaderboard:'📅 நாள்காட்டி தரவரிசை', recordTemplate:'📄 பதிவு ஆய்வு வார்ப்புரு', teacherTools:'⚙️ ஆசிரியர் கருவிகள்', profile:'✏️ சுயவிவரம்', undo:'↶ செயல்தவிர்', redo:'↷ மீண்டும் செய்', rotate:'↻ கட்டையைச் சுழற்று', buildHelp:'கட்ட தட்டைத் தட்டவும் • சுழற்ற இழுக்கவும் • பெரிதாக்க கிள்ளவும்', coinsUnit:'நாணயங்கள்', blocksUnit:'கட்டைகள்', levelUnit:'நிலை', stageUnit:'நிலை', houseProgress:'வீட்டு முன்னேற்றம்', yourHouse:'வீடு', visitHint:'நண்பரின் வீட்டைக் காண மிதக்கும் தீவைத் தட்டவும்', nameRequired:'⚠️ முதலில் உங்கள் முழுப் பெயரை உள்ளிடவும்!', fillName:'முதலில் பெயரை உள்ளிடவும். நுழைந்ததும் நிரந்தர வீரர் ID உருவாகும்.', progressFound:'✅ முந்தைய முன்னேற்றம் கிடைத்தது: {blocks} கட்டைகள் மீட்கப்படும்.', idStable:'🪪 ஆண்டு, பள்ளி அல்லது வகுப்பை மாற்றினாலும் ID {id} மாறாது.', idWillGenerate:'🪪 நுழைந்ததும் வீரர் ID தானாக உருவாகும்.', welcomeBack:'✅ மீண்டும் வரவேற்கிறோம், {name}! மேகச் சேமிப்பைச் சரிபார்க்கிறது…', checkingHouse:'☁️ {name} வீட்டின் மேகச் சேமிப்பைச் சரிபார்க்கிறது…',
         mathShooter:'XP பெற: கணித சுடுதல்', mathWheel:'XP பெற: பெருக்கல் சக்கரம்', arcade:'XP ஆர்கேட்', shop:'கட்டைகள் மற்றும் LEGO கடை', eraser:'அழிக்கும் கருவி', photo:'வீட்டைப் படம் எடுக்கவும்', tools:'கருவிகள்:', buyMore:'+ மேலும் கட்டைகள் வாங்கவும்', more:'மேலும்', close:'மூடு',
         shopTitle:'கட்டைகள் மற்றும் வீட்டு அலங்காரக் கடை', structure:'🧱 அடிப்படை அமைப்பு', house:'🏠 வீடு மற்றும் கதவுகள்', nature:'🌳 தோட்டம் மற்றும் இயற்கை', vehicles:'🚗 வாகனங்கள் மற்றும் சிறப்புப் பொருட்கள்', owned:'உள்ளது', sellValue:'விற்பனை', buy:'வாங்கு +1', sell:'விற்பனை −1', confirmSell:'விற்பனையை உறுதிசெய்', coins:'நாணயங்கள்',
-        shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: நட்சத்திரத்தைப் பிடி', catches:'பிடிப்புகள்', home:'🏡 வீடு', arcadePrompt:'நட்சத்திரங்களை விரைவாகத் தட்டுங்கள்!', arcadeRules:'ஒவ்வொரு நட்சத்திரமும் 10 XP மற்றும் 2 நாணயங்கள் தரும். ஆட்டம் 20 வினாடிகள்.', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
+        shooterTitle:'XP பெற: கணித சுடுதல்', shooterSubtitle:'சரியான விடையுள்ள பலூனைச் சுட்டு XP பெறுங்கள்!', backHome:'🏡 வீட்டிற்குத் திரும்பு', mathOperation:'கணிதச் செயல்', wheelTitle:'🎡 பெருக்கல் மற்றும் விரைவு கணிதச் சக்கரம்', wheelSubtitle:'சக்கரத்தைச் சுழற்றி சவாலை முடித்து +150 XP பெறுங்கள்!', spinWheel:'🎲 சக்கரத்தைச் சுழற்று!', quickQuestion:'விரைவுக் கேள்வி', arcadeTitle:'🕹️ XP ஆர்கேட்: கணித வேகம்', catches:'சரி', home:'🏡 வீடு', arcadePrompt:'நகரும் சரியான விடையைத் தட்டுங்கள்!', arcadeRules:'தொடர்ந்து சரியாக விடையளித்து அதிக XP பெறுங்கள். தவறான விடைக்கு 2 வினாடிகள் குறையும். மொத்தம் 30 வினாடிகள்!', startPlaying:'🚀 விளையாடத் தொடங்கு', playAgain:'🔁 மீண்டும் விளையாடு', balance:'🪙 இருப்பு:', lowCoins:'மேலும் நாணயங்கள் வேண்டுமா? Math Shooter விளையாடுங்கள்!', earnXpNow:'⚡ இப்போது XP பெறுங்கள்', namePreview:'உங்கள் பெயர் இங்கே தோன்றும்', idAfterEntry:'நுழைந்ததும் ID உருவாகும்',
         chatTitle:'💬 MathBina நேரலை அரட்டை', chatSubtitle:'விளையாடும் போதே நண்பர்களின் செய்திகள் நேரலையில் தோன்றும்.', chatConnecting:'நேரலை • இணைக்கிறது…', chatConnected:'நேரலை • இப்போது புதுப்பிக்கப்பட்டது', chatReconnecting:'நேரலை • மீண்டும் இணைக்கிறது…', chooseMessage:'அனுப்ப வேண்டிய செய்தியைத் தேர்ந்தெடுக்கவும்:', chatSafety:'🛡️ மாணவர் பாதுகாப்பிற்காக அரட்டை பாதுகாப்பான சொற்றொடர்கள் மற்றும் emoji-களை மட்டும் பயன்படுத்தும்.', chatEmpty:'இன்னும் செய்தி இல்லை. முதலில் வணக்கம் சொல்லுங்கள்! 👋',
         hello:'அனைவருக்கும் வணக்கம்! 👋', nice_house:'உங்கள் வீடு அழகாக உள்ளது! 🏡✨', great_build:'அருமையான கட்டுமானம்! 🧱👏', lets_math:'கணிதம் விளையாடுவோம்! 🎯', good_luck:'வெற்றி பெற வாழ்த்துகள்! ⭐', thank_you:'நன்றி! 😊', wow:'ஆஹா, மிகவும் படைப்பாற்றல்! 🌈', keep_going:'தொடர்ந்து கட்டுங்கள்! 💪'
       }
@@ -2794,12 +2827,17 @@ const COMBAT_BANK = {
         currentQ: null
       },
 
-      // Arcade Tangkap Bintang
+      // Arcade Math Rush
       arcade: {
         running: false,
         score: 0,
         earned: 0,
-        seconds: 20,
+        coinsEarned: 0,
+        seconds: 30,
+        combo: 0,
+        bestCombo: 0,
+        currentQ: null,
+        locked: false,
         timerId: null,
         spawnId: null
       }
@@ -3735,7 +3773,7 @@ const COMBAT_BANK = {
     }
 
     /* ==============================================================
-       MINIGAME 3: ARKED TANGKAP BINTANG
+       MINIGAME 3: ARKED MATH RUSH
        ============================================================== */
     function launchArcadeGame() {
       saveCurrentStudentState();
@@ -3743,13 +3781,19 @@ const COMBAT_BANK = {
       STATE.arcade.running = false;
       STATE.arcade.score = 0;
       STATE.arcade.earned = 0;
-      STATE.arcade.seconds = 20;
+      STATE.arcade.coinsEarned = 0;
+      STATE.arcade.seconds = 30;
+      STATE.arcade.combo = 0;
+      STATE.arcade.bestCombo = 0;
+      STATE.arcade.currentQ = null;
+      STATE.arcade.locked = false;
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-arcade').style.display = 'flex';
       document.getElementById('arcade-start-card').style.display = 'block';
+      document.getElementById('arcade-question-card').style.display = 'none';
       updateArcadeHud();
-      clearArcadeTarget();
-      showToast(currentLanguage === 'ms' ? '🕹️ Ketuk bintang untuk kumpul XP!' : '🕹️ Tap the stars to earn XP!');
+      clearArcadeAnswers();
+      showToast(uiMessage('🕹️ Jawab pantas dan bina kombo XP!','🕹️ Answer fast and build an XP combo!','🕹️ 快速答题，累积 XP 连击！','🕹️ விரைவாகப் பதிலளித்து XP தொடர் பெறுங்கள்!'));
     }
 
     function startArcadeRound() {
@@ -3758,10 +3802,15 @@ const COMBAT_BANK = {
       STATE.arcade.running = true;
       STATE.arcade.score = 0;
       STATE.arcade.earned = 0;
-      STATE.arcade.seconds = 20;
+      STATE.arcade.coinsEarned = 0;
+      STATE.arcade.seconds = 30;
+      STATE.arcade.combo = 0;
+      STATE.arcade.bestCombo = 0;
+      STATE.arcade.locked = false;
       document.getElementById('arcade-start-card').style.display = 'none';
+      document.getElementById('arcade-question-card').style.display = 'block';
       updateArcadeHud();
-      spawnArcadeTarget();
+      nextArcadeQuestion();
       STATE.arcade.timerId = setInterval(() => {
         STATE.arcade.seconds -= 1;
         updateArcadeHud();
@@ -3769,50 +3818,99 @@ const COMBAT_BANK = {
       }, 1000);
     }
 
-    function spawnArcadeTarget() {
-      if (!STATE.arcade.running) return;
-      clearArcadeTarget();
-      const field = document.getElementById('arcade-field');
-      if (!field) return;
-      const target = document.createElement('button');
-      target.type = 'button';
-      target.className = 'arcade-target';
-      target.setAttribute('aria-label', 'Tangkap bintang');
-      target.textContent = '★';
-      const size = window.innerWidth <= 700 ? 64 : 72;
-      const maxX = Math.max(0, field.clientWidth - size - 8);
-      const maxY = Math.max(0, field.clientHeight - size - 8);
-      target.style.left = `${4 + Math.random() * maxX}px`;
-      target.style.top = `${4 + Math.random() * maxY}px`;
-      target.onclick = catchArcadeTarget;
-      field.appendChild(target);
-      const stayMs = STATE.age && STATE.age <= 9 ? 1250 : 900;
-      STATE.arcade.spawnId = setTimeout(spawnArcadeTarget, stayMs);
+    function getArcadeLevelLabel(grade) {
+      const number = grade <= 6 ? grade : grade - 6;
+      if (currentLanguage === 'ms') return grade <= 6 ? `Tahun ${number}` : `Tingkatan ${number}`;
+      if (currentLanguage === 'zh') return grade <= 6 ? `小学 ${number} 年级` : `中学 ${number} 年级`;
+      if (currentLanguage === 'ta') return grade <= 6 ? `ஆண்டு ${number}` : `படிவம் ${number}`;
+      return grade <= 6 ? `Year ${number}` : `Form ${number}`;
     }
 
-    function catchArcadeTarget(event) {
+    function nextArcadeQuestion() {
       if (!STATE.arcade.running) return;
-      event?.currentTarget?.remove();
       clearTimeout(STATE.arcade.spawnId);
-      STATE.arcade.score += 1;
-      STATE.arcade.earned += 10;
-      awardMathReward(10, 2);
-      audio.playChing();
+      clearArcadeAnswers();
+      STATE.arcade.locked = false;
+      const question = generateDynamicQuestion(STATE.grade);
+      STATE.arcade.currentQ = question;
+      document.getElementById('arcade-level-badge').textContent = `${question.tag} • ${getArcadeLevelLabel(STATE.grade)}`;
+      document.getElementById('arcade-problem').textContent = question.q;
+      const zone = document.getElementById('arcade-answer-zone');
+      const palette = [
+        ['#67e8f9','#0891b2'],
+        ['#c4b5fd','#7c3aed'],
+        ['#fda4af','#e11d48']
+      ];
+      question.opts.forEach((answer,index) => {
+        const target = document.createElement('button');
+        target.type = 'button';
+        target.className = 'arcade-answer-target';
+        target.textContent = answer;
+        target.setAttribute('aria-label', `${uiMessage('Jawapan','Answer','答案','பதில்')} ${answer}`);
+        target.style.setProperty('--orb-light',palette[index % palette.length][0]);
+        target.style.setProperty('--orb-dark',palette[index % palette.length][1]);
+        target.style.setProperty('--float-delay',`${index * -.31}s`);
+        target.onclick = () => chooseArcadeAnswer(index,target);
+        zone.appendChild(target);
+      });
+    }
+
+    function chooseArcadeAnswer(answerIndex, target) {
+      if (!STATE.arcade.running || STATE.arcade.locked || !STATE.arcade.currentQ) return;
+      STATE.arcade.locked = true;
+      const isCorrect = answerIndex === STATE.arcade.currentQ.ans;
+      let feedback = '';
+      if (isCorrect) {
+        STATE.arcade.combo += 1;
+        STATE.arcade.bestCombo = Math.max(STATE.arcade.bestCombo, STATE.arcade.combo);
+        STATE.arcade.score += 1;
+        const xpReward = 10 + Math.min(STATE.arcade.combo - 1,5) * 2;
+        const coinReward = 2 + Math.floor(STATE.arcade.combo / 3);
+        STATE.arcade.earned += xpReward;
+        STATE.arcade.coinsEarned += coinReward;
+        awardMathReward(xpReward,coinReward);
+        target.classList.add('is-correct');
+        feedback = `✅ +${xpReward} XP${STATE.arcade.combo >= 2 ? ` • 🔥 ×${STATE.arcade.combo}` : ''}`;
+        audio.playChing();
+      } else {
+        STATE.arcade.combo = 0;
+        STATE.arcade.seconds = Math.max(0,STATE.arcade.seconds - 2);
+        recordWrongMathAttempt();
+        target.classList.add('is-wrong');
+        feedback = uiMessage('❌ Salah • −2 saat','❌ Wrong • −2 seconds','❌ 错误 • −2 秒','❌ தவறு • −2 வினாடிகள்');
+        audio.playPop();
+      }
       updateArcadeHud();
-      spawnArcadeTarget();
+      showArcadeFeedback(feedback);
+      if (STATE.arcade.seconds <= 0) return finishArcadeRound();
+      STATE.arcade.spawnId = setTimeout(nextArcadeQuestion,isCorrect ? 380 : 600);
+    }
+
+    function showArcadeFeedback(message) {
+      document.querySelector('#arcade-field .arcade-feedback')?.remove();
+      const feedback = document.createElement('div');
+      feedback.className = 'arcade-feedback';
+      feedback.textContent = message;
+      document.getElementById('arcade-field').appendChild(feedback);
+      setTimeout(() => feedback.remove(),620);
     }
 
     function updateArcadeHud() {
       const time = document.getElementById('arcade-time');
       const score = document.getElementById('arcade-score');
       const earned = document.getElementById('arcade-earned');
+      const combo = document.getElementById('arcade-combo');
+      const comboPill = document.getElementById('arcade-combo-pill');
       if (time) time.textContent = Math.max(0, STATE.arcade.seconds);
       if (score) score.textContent = STATE.arcade.score;
       if (earned) earned.textContent = STATE.arcade.earned;
+      if (combo) combo.textContent = Math.max(1,STATE.arcade.combo);
+      comboPill?.classList.toggle('combo-hot',STATE.arcade.combo >= 3);
     }
 
-    function clearArcadeTarget() {
-      document.querySelector('#arcade-field .arcade-target')?.remove();
+    function clearArcadeAnswers() {
+      document.getElementById('arcade-answer-zone')?.replaceChildren();
+      document.querySelector('#arcade-field .arcade-feedback')?.remove();
     }
 
     function stopArcadeTimers() {
@@ -3823,26 +3921,29 @@ const COMBAT_BANK = {
         STATE.arcade.spawnId = null;
         STATE.arcade.running = false;
       }
-      clearArcadeTarget();
+      clearArcadeAnswers();
     }
 
     function finishArcadeRound() {
       if (!STATE.arcade.running) return;
-      const caught = STATE.arcade.score;
+      const correct = STATE.arcade.score;
       const earned = STATE.arcade.earned;
+      const coins = STATE.arcade.coinsEarned;
+      const bestCombo = STATE.arcade.bestCombo;
       stopArcadeTimers();
       saveCurrentStudentState();
+      document.getElementById('arcade-question-card').style.display = 'none';
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = currentLanguage === 'ms'
-        ? `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Hebat! ${caught} bintang ditangkap</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">Anda mendapat ${earned} XP dan ${caught * 2} syiling.</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`
-        : `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">Great! You caught ${caught} stars</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">You earned ${earned} XP and ${caught * 2} coins.</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`;
+      const resultTitle = uiMessage(`Hebat! ${correct} jawapan betul`,`Great! ${correct} correct answers`,`太棒了！答对 ${correct} 题`,`அருமை! ${correct} சரியான பதில்கள்`);
+      const resultDetail = uiMessage(`Anda mendapat ${earned} XP, ${coins} syiling • Kombo terbaik ×${bestCombo}.`,`You earned ${earned} XP, ${coins} coins • Best combo ×${bestCombo}.`,`你获得 ${earned} XP、${coins} 金币 • 最佳连击 ×${bestCombo}。`,`நீங்கள் ${earned} XP, ${coins} நாணயங்கள் பெற்றீர்கள் • சிறந்த தொடர் ×${bestCombo}.`);
+      card.innerHTML = `<div style="font-size:2.4rem">🏆</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${resultTitle}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${resultDetail}</div><button type="button" onclick="resetArcadeCardAndStart()">${t('playAgain')}</button>`;
       card.style.display = 'block';
       showToast(currentLanguage === 'ms' ? `🏆 Arked tamat! +${earned} XP.` : `🏆 Arcade complete! +${earned} XP.`);
     }
 
     function resetArcadeCardAndStart() {
       const card = document.getElementById('arcade-start-card');
-      card.innerHTML = `<div style="font-size:2.4rem">🌟</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
+      card.innerHTML = `<div style="font-size:2.4rem">🚀➕</div><div style="font-size:1.05rem;font-weight:900;color:#fde047">${t('arcadePrompt')}</div><div style="margin-top:5px;font-size:.72rem;color:#dbeafe">${t('arcadeRules')}</div><button type="button" onclick="startArcadeRound()">${t('startPlaying')}</button>`;
       startArcadeRound();
     }
 
@@ -4819,7 +4920,9 @@ const COMBAT_BANK = {
 
         cloudRestoreInProgress = true;
         const cloudState = house.state || {};
-        STATE.grade = Math.max(1, Math.min(11, Number(house.year) || STATE.grade));
+        // Umur yang dipilih dalam profil semasa sentiasa menentukan aras soalan.
+        // Tahun daripada rekod awan lama hanya digunakan jika profil belum mempunyai umur.
+        if (!STATE.age) STATE.grade = Math.max(1, Math.min(11, Number(house.year) || STATE.grade));
         STATE.avatar = house.avatar || STATE.avatar;
         STATE.voxels = Array.isArray(house.voxels) ? house.voxels : STATE.voxels;
         STATE.xp = Number.isFinite(Number(cloudState.xp)) ? Number(cloudState.xp) : STATE.xp;

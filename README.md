@@ -194,6 +194,14 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 
 ## 🌐 Pautan Rasmi & Deployment
 
+### V28 — Arked XP Math Rush
+
+- Arked XP kini permainan Matematik sebenar dengan soalan mengikut umur dan aras pemain.
+- Tiga jawapan bergerak perlu dipilih sebelum masa 30 saat tamat.
+- Jawapan berturut-turut membina kombo dan menaikkan ganjaran XP serta syiling.
+- Jawapan salah memutuskan kombo dan memotong dua saat.
+- Paparan keputusan menunjukkan jawapan betul, XP, syiling dan kombo terbaik.
+
 ### V27 — Indikator Putaran Lutsinar
 
 - Butang putar lama dikeluarkan daripada menu **Lagi**.
