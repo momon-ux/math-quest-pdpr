@@ -1489,17 +1489,25 @@
     .arcade-field {
       position: relative;
       flex: 1;
-      min-height: 300px;
+      min-height: 320px;
       margin-top: 10px;
       overflow: hidden;
-      border: 2px solid rgba(125,211,252,.8);
+      border: 2px solid rgba(56,189,248,.85);
       border-radius: 18px;
-      background:
-        radial-gradient(circle at 18% 24%,#fff 0 2px,transparent 3px),
-        radial-gradient(circle at 78% 18%,#fde68a 0 2px,transparent 3px),
-        radial-gradient(circle at 64% 72%,#fff 0 1px,transparent 2px),
-        radial-gradient(circle at 32% 82%,#bae6fd 0 2px,transparent 3px),
-        linear-gradient(180deg,rgba(30,64,175,.48),rgba(15,23,42,.72));
+      background: radial-gradient(circle at 50% 20%, #0c1222 0%, #020617 100%);
+      box-shadow: 0 0 24px rgba(2,132,199,0.3) inset, 0 10px 30px rgba(0,0,0,0.6);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: crosshair;
+    }
+    .arcade-space-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
     }
     .arcade-question-card {
       position:absolute; z-index:4; left:50%; top:3%; transform:translateX(-50%);
@@ -1511,47 +1519,64 @@
     .arcade-level-badge { display:inline-block; padding:3px 9px; border-radius:999px; background:#facc15; color:#713f12; font-size:.63rem; font-weight:1000; }
     .arcade-problem { margin-top:3px; font-size:clamp(1.25rem,6vw,2.2rem); line-height:1.05; font-weight:1000; text-shadow:0 3px 0 rgba(0,0,0,.24); }
     .arcade-answer-zone {
-      position:absolute; z-index:3; inset:25% 4% 36%;
+      position:absolute; z-index:3; inset:24% 4% 34%;
       pointer-events:none;
     }
     .arcade-answer-target {
-      position:absolute; left:var(--enemy-x,50%); top:var(--enemy-y,10%); width:clamp(76px,21vw,132px);
-      min-height:70px; padding:30px 7px 6px; border:2px solid rgba(255,255,255,.84);
-      border-radius:50% 50% 38% 38%; background:linear-gradient(145deg,var(--orb-light,#67e8f9),var(--orb-dark,#0891b2));
-      color:#fff; font-size:clamp(.9rem,4vw,1.35rem); font-weight:1000; cursor:crosshair;
-      box-shadow:0 0 0 3px rgba(34,211,238,.14),0 0 26px var(--orb-light,#67e8f9),inset 0 -8px 0 rgba(2,6,23,.22);
-      text-shadow:0 2px 0 rgba(0,0,0,.28); transform:translateX(-50%);
+      position:absolute; left:var(--enemy-x,50%); top:var(--enemy-y,10%); width:clamp(78px,21vw,128px);
+      min-height:72px; padding:30px 8px 8px; border:2px solid rgba(255,255,255,.9);
+      border-radius:18px; background:linear-gradient(145deg,var(--orb-light,#67e8f9),var(--orb-dark,#0891b2));
+      color:#fff; font-size:clamp(1.05rem,4.2vw,1.45rem); font-weight:1000; cursor:crosshair;
+      box-shadow:0 0 0 3px rgba(34,211,238,.3),0 0 25px var(--orb-light,#67e8f9),inset 0 -6px 0 rgba(2,6,23,.3);
+      text-shadow:0 2px 4px rgba(0,0,0,.5); transform:translateX(-50%);
       animation:enemyPatrol var(--patrol-speed,1.35s) ease-in-out infinite alternate;
       animation-delay:var(--float-delay,0s); touch-action:manipulation;
       pointer-events:auto; -webkit-tap-highlight-color:transparent;
+      transition:box-shadow .15s ease, filter .15s ease;
     }
-    .arcade-answer-target::before { content:'👾'; position:absolute; top:-19px; left:50%; transform:translateX(-50%); font-size:2.45rem; filter:drop-shadow(0 0 7px #fff); }
-    .arcade-answer-target::after { content:''; position:absolute; left:17%; right:17%; bottom:-8px; height:9px; border-radius:50%; background:linear-gradient(90deg,#22d3ee,#fff,#22d3ee); box-shadow:0 0 13px #67e8f9; }
-    .arcade-answer-target:active { filter:brightness(1.2); }
+    .arcade-answer-target::before { content:'🛸'; position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-size:2.3rem; filter:drop-shadow(0 0 8px #38bdf8); }
+    .arcade-answer-target::after { content:''; position:absolute; left:15%; right:15%; bottom:-6px; height:8px; border-radius:50%; background:linear-gradient(90deg,#22d3ee,#fff,#22d3ee); box-shadow:0 0 12px #67e8f9; }
+    .arcade-answer-target.locked-on {
+      box-shadow:0 0 0 3px #facc15, 0 0 32px #fde047, inset 0 0 12px rgba(254,240,138,.4);
+      filter:brightness(1.22);
+    }
+    .arcade-answer-target:active { filter:brightness(1.3); }
     .arcade-answer-target.is-correct { background:linear-gradient(145deg,#86efac,#16a34a); animation:arcadeCorrect .34s ease both; }
     .arcade-answer-target.is-wrong { background:linear-gradient(145deg,#fca5a5,#dc2626); animation:arcadeWrong .32s ease both; }
     @keyframes enemyPatrol { from { transform:translateX(calc(-50% - var(--drift,14px))) translateY(-5px) rotate(-3deg); } to { transform:translateX(calc(-50% + var(--drift,14px))) translateY(12px) rotate(3deg); } }
     @keyframes arcadeCorrect { 45% { transform:translateX(-50%) scale(1.28); filter:brightness(1.8); } to { transform:translateX(-50%) scale(0); opacity:0; } }
     @keyframes arcadeWrong { 25%,75% { transform:translateX(calc(-50% - 9px)); } 50% { transform:translateX(calc(-50% + 9px)); } }
     .arcade-player {
-      position:absolute; z-index:5; left:50%; bottom:66px; width:66px; height:66px;
-      transform:translateX(-50%); transition:left .09s linear; pointer-events:none;
-      filter:drop-shadow(0 0 13px rgba(56,189,248,.95));
+      position:absolute; z-index:5; left:50%; bottom:24px; width:76px; height:82px;
+      transform:translateX(-50%); pointer-events:none;
+      filter:drop-shadow(0 0 16px rgba(56,189,248,.95));
+      transition:transform .06s ease-out;
     }
-    .arcade-player-ship { position:absolute; inset:0; display:grid; place-items:center; font-size:3.55rem; transform:rotate(-45deg); }
-    .arcade-player::after { content:''; position:absolute; left:25px; top:52px; width:16px; height:30px; border-radius:50%; background:linear-gradient(#fff,#22d3ee,#22c55e,transparent); filter:blur(1px); animation:shipThruster .2s ease-in-out infinite alternate; }
-    @keyframes shipThruster { to { height:39px; opacity:.68; } }
+    .arcade-starfighter { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+    .starfighter-svg { width:100%; height:100%; overflow:visible; }
+    .sf-thrusters ellipse {
+      animation:thrusterPulse .12s ease-in-out infinite alternate;
+      transform-origin:center top;
+    }
+    @keyframes thrusterPulse { 0% { transform:scaleY(0.85); opacity:0.75; } 100% { transform:scaleY(1.35); opacity:1; } }
     .arcade-laser { position:absolute; z-index:4; width:7px; border-radius:999px; background:linear-gradient(#fff,#67e8f9,#22c55e); box-shadow:0 0 8px #fff,0 0 18px #22d3ee,0 0 28px #22c55e; pointer-events:none; transform-origin:bottom; animation:laserShot .2s ease-out both; }
     @keyframes laserShot { from { transform:scaleY(.05); opacity:.45; } 45% { opacity:1; } to { transform:scaleY(1); opacity:0; } }
-    .arcade-controls { position:absolute; z-index:7; left:50%; bottom:9px; transform:translateX(-50%); display:grid; grid-template-columns:64px minmax(112px,150px) 64px; gap:8px; width:min(94%,310px); }
+    .arcade-controls { position:absolute; z-index:7; left:50%; bottom:9px; transform:translateX(-50%); display:none; grid-template-columns:64px minmax(112px,150px) 64px; gap:8px; width:min(94%,310px); }
     .arcade-control { min-height:48px; border:2px solid rgba(255,255,255,.78); border-radius:14px; background:linear-gradient(#1e3a8a,#1e40af); color:#fff; font-size:1.1rem; font-weight:1000; box-shadow:0 5px 0 #172554; touch-action:none; cursor:pointer; }
     .arcade-control.fire { background:linear-gradient(#facc15,#f97316); color:#7c2d12; box-shadow:0 5px 0 #9a3412,0 0 18px rgba(250,204,21,.5); }
     .arcade-control:active { transform:translateY(4px); box-shadow:0 1px 0 #172554; }
-    .arcade-move-hint { position:absolute; z-index:2; left:50%; bottom:123px; transform:translateX(-50%); width:94%; text-align:center; color:#bae6fd; font-size:.62rem; font-weight:800; pointer-events:none; }
+    .arcade-move-hint {
+      position:absolute; z-index:6; left:50%; bottom:6px; transform:translateX(-50%);
+      width:min(94%,440px); text-align:center; color:#38bdf8;
+      background:rgba(15,23,42,.85); border:1px solid rgba(56,189,248,.45);
+      border-radius:999px; padding:4px 12px; font-size:.64rem; font-weight:800;
+      pointer-events:none; backdrop-filter:blur(4px); box-shadow:0 4px 12px rgba(0,0,0,.5);
+    }
     .arcade-feedback {
-      position:absolute; z-index:8; left:50%; top:52%; transform:translate(-50%,-50%);
-      padding:9px 16px; border-radius:999px; background:rgba(15,23,42,.9); color:#fff;
+      position:absolute; z-index:8; left:50%; top:50%; transform:translate(-50%,-50%);
+      padding:9px 16px; border-radius:999px; background:rgba(15,23,42,.92); color:#fff;
       font-size:clamp(1rem,4vw,1.35rem); font-weight:1000; pointer-events:none;
+      box-shadow:0 0 20px rgba(56,189,248,.4);
       animation:arcadeFeedback .55s ease both;
     }
     @keyframes arcadeFeedback { from { opacity:0; transform:translate(-50%,-20%) scale(.7); } 35% { opacity:1; transform:translate(-50%,-50%) scale(1.12); } to { opacity:0; transform:translate(-50%,-95%) scale(1); } }
@@ -1591,12 +1616,12 @@
       filter:brightness(1.1);
     }
     @media (max-width:700px) {
-      .arcade-field { min-height:240px; }
+      .arcade-field { min-height:260px; }
       .arcade-question-card { top:2%; padding:7px 10px; }
-      .arcade-answer-zone { inset:24% 2% 40%; }
-      .arcade-answer-target { width:clamp(72px,25vw,104px); min-height:61px; padding-top:25px; }
-      .arcade-answer-target::before { top:-17px; font-size:2.1rem; }
-      .arcade-player { bottom:65px; transform:translateX(-50%) scale(.9); }
+      .arcade-answer-zone { inset:23% 2% 38%; }
+      .arcade-answer-target { width:clamp(74px,25vw,104px); min-height:64px; padding-top:25px; }
+      .arcade-answer-target::before { top:-18px; font-size:2rem; }
+      .arcade-player { bottom:20px; width:68px; height:74px; }
     }
 
     /* ==============================================================
@@ -2935,13 +2960,72 @@
         <button class="arcade-exit" onclick="exitMinigameToSandbox()" data-i18n="home">🏡 HOME</button>
       </div>
       <div class="arcade-field" id="arcade-field" aria-label="Math Blaster shooting arcade game">
+        <canvas id="arcade-space-canvas" class="arcade-space-canvas"></canvas>
         <div class="arcade-question-card" id="arcade-question-card" style="display:none">
           <span class="arcade-level-badge" id="arcade-level-badge">MATH BLASTER</span>
           <div class="arcade-problem" id="arcade-problem">7 + 8 = ?</div>
         </div>
         <div class="arcade-answer-zone" id="arcade-answer-zone"></div>
-        <div class="arcade-player" id="arcade-player" aria-hidden="true"><div class="arcade-player-ship">🚀</div></div>
-        <div class="arcade-move-hint" id="arcade-move-hint">↔ Move your ship • Line up • Press FIRE</div>
+        <div class="arcade-player" id="arcade-player" aria-hidden="true">
+          <div class="arcade-starfighter">
+            <svg viewBox="0 0 100 110" class="starfighter-svg" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sf-hull" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="35%" stop-color="#0284c7"/>
+                  <stop offset="70%" stop-color="#0f172a"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+                <linearGradient id="sf-wing" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#0369a1"/>
+                  <stop offset="50%" stop-color="#0ea5e9"/>
+                  <stop offset="100%" stop-color="#0369a1"/>
+                </linearGradient>
+                <linearGradient id="sf-cockpit" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#e0f2fe"/>
+                  <stop offset="40%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+                <linearGradient id="sf-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="40%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="transparent"/>
+                </linearGradient>
+                <filter id="sf-neon" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+              <!-- Dual Thruster Flames -->
+              <g class="sf-thrusters">
+                <ellipse cx="38" cy="98" rx="5" ry="13" fill="url(#sf-glow)" opacity="0.95"/>
+                <ellipse cx="38" cy="94" rx="2.5" ry="7" fill="#ffffff"/>
+                <ellipse cx="62" cy="98" rx="5" ry="13" fill="url(#sf-glow)" opacity="0.95"/>
+                <ellipse cx="62" cy="94" rx="2.5" ry="7" fill="#ffffff"/>
+              </g>
+              <!-- Main Wings -->
+              <path d="M 50 15 L 75 75 L 94 82 L 86 92 L 64 86 L 50 82 L 36 86 L 14 92 L 6 82 L 25 75 Z" fill="url(#sf-wing)" stroke="#38bdf8" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Wing Cannons -->
+              <rect x="6" y="56" width="4" height="28" rx="2" fill="#0f172a" stroke="#22d3ee" stroke-width="1.2"/>
+              <circle cx="8" cy="54" r="3" fill="#22d3ee" filter="url(#sf-neon)"/>
+              <rect x="90" y="56" width="4" height="28" rx="2" fill="#0f172a" stroke="#22d3ee" stroke-width="1.2"/>
+              <circle cx="92" cy="54" r="3" fill="#22d3ee" filter="url(#sf-neon)"/>
+              <!-- Fuselage -->
+              <path d="M 50 8 L 60 45 L 62 84 L 50 90 L 38 84 L 40 45 Z" fill="url(#sf-hull)" stroke="#7dd3fc" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Panel Accents -->
+              <line x1="50" y1="12" x2="50" y2="40" stroke="#bae6fd" stroke-width="1.5" opacity="0.8"/>
+              <line x1="42" y1="62" x2="30" y2="78" stroke="#38bdf8" stroke-width="1.2" opacity="0.9"/>
+              <line x1="58" y1="62" x2="70" y2="78" stroke="#38bdf8" stroke-width="1.2" opacity="0.9"/>
+              <!-- Cockpit -->
+              <path d="M 50 24 Q 56 36 55 52 Q 50 56 50 56 Q 50 56 45 52 Q 44 36 50 24 Z" fill="url(#sf-cockpit)" stroke="#ffffff" stroke-width="1" filter="url(#sf-neon)"/>
+              <ellipse cx="49" cy="36" rx="2" ry="6" fill="#ffffff" opacity="0.65"/>
+              <!-- Thruster Nozzles -->
+              <rect x="34" y="85" width="8" height="6" rx="2" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
+              <rect x="58" y="85" width="8" height="6" rx="2" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="arcade-move-hint" id="arcade-move-hint">✨ Sentuh skrin untuk pandu kapal • Tembakan plasma laser automatik!</div>
         <div class="arcade-controls" id="arcade-controls" style="display:none">
           <button type="button" class="arcade-control" aria-label="Move left" onpointerdown="beginArcadeMove(-1,event)" onpointerup="endArcadeMove()" onpointercancel="endArcadeMove()" onpointerleave="endArcadeMove()">◀</button>
           <button type="button" class="arcade-control fire" aria-label="Fire laser" onclick="fireArcadeLaser()" onpointerdown="fireArcadeLaser()">🔥 FIRE</button>
@@ -3459,6 +3543,32 @@
           osc.start(t); osc.stop(t + 0.25);
         });
       }
+      playLaser() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(860, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.09);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.09);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.1);
+      }
+      playExplosion() {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(25, now + 0.35);
+        gain.gain.setValueAtTime(0.55, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + 0.36);
+      }
     }
     const audio = new ArcadeSound();
 
@@ -3867,10 +3977,14 @@ const COMBAT_BANK = {
         locked: false,
         shotInFlight: false,
         shipX: 50,
+        targetShipX: 50,
+        shipTilt: 0,
         moveTimer: null,
         controlsBound: false,
         timerId: null,
-        spawnId: null
+        spawnId: null,
+        autoFireInterval: null,
+        animFrameId: null
       }
     };
 
@@ -4970,8 +5084,349 @@ const COMBAT_BANK = {
     }
 
     /* ==============================================================
-       MINIGAME 3: ARKED MATH BLASTER
+       MINIGAME 3: ARKED MATH BLASTER (SPACE BATTLE HYPERDRIVE)
        ============================================================== */
+    let arcadeStars = [];
+    let arcadeLasers = [];
+    let arcadeSparks = [];
+    let arcadeExplosions = [];
+    let arcadeThrusterParticles = [];
+    let arcadeSpaceCanvas = null;
+    let arcadeSpaceCtx = null;
+    let arcadeCanvasWidth = 0;
+    let arcadeCanvasHeight = 0;
+
+    function initArcadeSpaceEngine() {
+      arcadeSpaceCanvas = document.getElementById('arcade-space-canvas');
+      if (!arcadeSpaceCanvas) return;
+      arcadeSpaceCtx = arcadeSpaceCanvas.getContext('2d');
+      resizeArcadeSpaceCanvas();
+      window.removeEventListener('resize', resizeArcadeSpaceCanvas);
+      window.addEventListener('resize', resizeArcadeSpaceCanvas);
+
+      if (!arcadeStars.length) {
+        const starColors = ['#ffffff', '#bae6fd', '#38bdf8', '#fef08a', '#c084fc'];
+        for (let i = 0; i < 140; i++) {
+          arcadeStars.push({
+            x: Math.random() * (arcadeCanvasWidth || 600),
+            y: Math.random() * (arcadeCanvasHeight || 400),
+            z: 1 + Math.random() * 4,
+            speed: 2 + Math.random() * 6,
+            length: 4 + Math.random() * 18,
+            size: 1 + Math.random() * 1.8,
+            color: starColors[Math.floor(Math.random() * starColors.length)]
+          });
+        }
+      }
+
+      if (!STATE.arcade.animFrameId) {
+        STATE.arcade.animFrameId = requestAnimationFrame(renderArcadeSpaceLoop);
+      }
+    }
+
+    function resizeArcadeSpaceCanvas() {
+      if (!arcadeSpaceCanvas) return;
+      const field = document.getElementById('arcade-field');
+      if (!field) return;
+      const rect = field.getBoundingClientRect();
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      arcadeCanvasWidth = rect.width;
+      arcadeCanvasHeight = rect.height;
+      arcadeSpaceCanvas.width = Math.floor(rect.width * dpr);
+      arcadeSpaceCanvas.height = Math.floor(rect.height * dpr);
+      if (arcadeSpaceCtx) {
+        arcadeSpaceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+    }
+
+    function renderArcadeSpaceLoop() {
+      if (document.getElementById('view-arcade')?.style.display === 'flex') {
+        renderArcadeSpaceFrame();
+        STATE.arcade.animFrameId = requestAnimationFrame(renderArcadeSpaceLoop);
+      } else {
+        STATE.arcade.animFrameId = null;
+      }
+    }
+
+    function renderArcadeSpaceFrame() {
+      if (!arcadeSpaceCtx || !arcadeCanvasWidth || !arcadeCanvasHeight) return;
+      const ctx = arcadeSpaceCtx;
+      const w = arcadeCanvasWidth;
+      const h = arcadeCanvasHeight;
+
+      // 1. Hyperspace cosmic background with motion blur
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.42)';
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Continuous Stars streaming downward at warp velocity
+      const flightSpeed = STATE.arcade.running ? 1.7 : 0.65;
+      for (let i = 0; i < arcadeStars.length; i++) {
+        const star = arcadeStars[i];
+        star.y += (star.speed * flightSpeed * 3) / star.z;
+        if (star.y > h + 20) {
+          star.y = -10;
+          star.x = Math.random() * w;
+        }
+        ctx.strokeStyle = star.color;
+        ctx.lineWidth = star.size;
+        ctx.beginPath();
+        const tailLen = star.length * flightSpeed;
+        ctx.moveTo(star.x, Math.max(0, star.y - tailLen));
+        ctx.lineTo(star.x, star.y);
+        ctx.stroke();
+      }
+
+      // 3. Smooth Starfighter Steering & Dynamic Banking (Lerp tracking)
+      const targetX = STATE.arcade.targetShipX ?? 50;
+      const currentX = STATE.arcade.shipX ?? 50;
+      const dx = targetX - currentX;
+      STATE.arcade.shipX = currentX + dx * 0.22;
+      const tilt = Math.max(-20, Math.min(20, dx * 2.6));
+      STATE.arcade.shipTilt = tilt;
+      const shipEl = document.getElementById('arcade-player');
+      if (shipEl) {
+        shipEl.style.left = `${STATE.arcade.shipX}%`;
+        shipEl.style.transform = `translateX(-50%) rotate(${tilt}deg)`;
+      }
+
+      // 4. Starfighter Thruster Particles (Ion exhaust trail)
+      if (shipEl && STATE.arcade.running) {
+        const field = document.getElementById('arcade-field');
+        if (field) {
+          const fieldRect = field.getBoundingClientRect();
+          const shipRect = shipEl.getBoundingClientRect();
+          const cx = shipRect.left + shipRect.width / 2 - fieldRect.left;
+          const ty = shipRect.top - fieldRect.top + 76;
+          arcadeThrusterParticles.push({
+            x: cx - 12 + (Math.random() - 0.5) * 4,
+            y: ty,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: 4 + Math.random() * 5,
+            life: 1,
+            decay: 0.08 + Math.random() * 0.05,
+            size: 2 + Math.random() * 3,
+            color: Math.random() > 0.4 ? '#38bdf8' : '#ffffff'
+          });
+          arcadeThrusterParticles.push({
+            x: cx + 12 + (Math.random() - 0.5) * 4,
+            y: ty,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: 4 + Math.random() * 5,
+            life: 1,
+            decay: 0.08 + Math.random() * 0.05,
+            size: 2 + Math.random() * 3,
+            color: Math.random() > 0.4 ? '#38bdf8' : '#ffffff'
+          });
+        }
+      }
+
+      for (let i = arcadeThrusterParticles.length - 1; i >= 0; i--) {
+        const p = arcadeThrusterParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+        if (p.life <= 0) {
+          arcadeThrusterParticles.splice(i, 1);
+          continue;
+        }
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.life * 0.8;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+      }
+
+      // 5. Plasma Laser Bolts & Target Collisions
+      const targets = [...document.querySelectorAll('.arcade-answer-target')];
+      const field = document.getElementById('arcade-field');
+      const fieldRect = field ? field.getBoundingClientRect() : null;
+
+      let closestTarget = null;
+      let minDistance = Infinity;
+      if (fieldRect && shipEl) {
+        const shipCenter = shipEl.getBoundingClientRect().left + shipEl.getBoundingClientRect().width / 2;
+        targets.forEach(t => {
+          const rect = t.getBoundingClientRect();
+          const dist = Math.abs(rect.left + rect.width / 2 - shipCenter);
+          if (dist < minDistance) {
+            minDistance = dist;
+            closestTarget = t;
+          }
+        });
+      }
+      targets.forEach(t => {
+        const isLocked = t === closestTarget && minDistance < Math.max(75, w * 0.16);
+        t.classList.toggle('locked-on', isLocked);
+      });
+
+      ctx.save();
+      for (let i = arcadeLasers.length - 1; i >= 0; i--) {
+        const bolt = arcadeLasers[i];
+        bolt.y += bolt.vy;
+
+        let hitTarget = null;
+        if (fieldRect) {
+          for (const target of targets) {
+            const tr = target.getBoundingClientRect();
+            const tx = tr.left - fieldRect.left;
+            const ty = tr.top - fieldRect.top;
+            if (bolt.x >= tx && bolt.x <= tx + tr.width && bolt.y >= ty && bolt.y <= ty + tr.height) {
+              hitTarget = { target, x: bolt.x, y: bolt.y };
+              break;
+            }
+          }
+        }
+
+        if (hitTarget) {
+          for (let s = 0; s < 5; s++) {
+            arcadeSparks.push({
+              x: hitTarget.x,
+              y: hitTarget.y,
+              vx: (Math.random() - 0.5) * 8,
+              vy: (Math.random() - 0.5) * 8,
+              life: 1,
+              decay: 0.12,
+              color: Math.random() > 0.5 ? '#facc15' : '#38bdf8'
+            });
+          }
+          arcadeLasers.splice(i, 1);
+          continue;
+        }
+
+        if (bolt.y < -30) {
+          arcadeLasers.splice(i, 1);
+          continue;
+        }
+
+        ctx.shadowColor = '#22d3ee';
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(bolt.x - 2, bolt.y, 4, 18, 2) : ctx.rect(bolt.x - 2, bolt.y, 4, 18);
+        ctx.fill();
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // 6. Sparks & Plasma Explosions
+      for (let i = arcadeSparks.length - 1; i >= 0; i--) {
+        const s = arcadeSparks[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life -= s.decay;
+        if (s.life <= 0) {
+          arcadeSparks.splice(i, 1);
+          continue;
+        }
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = s.life;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2.5 * s.life, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+      }
+
+      for (let i = arcadeExplosions.length - 1; i >= 0; i--) {
+        const ex = arcadeExplosions[i];
+        ex.radius += (ex.maxRadius - ex.radius) * 0.16;
+        ex.alpha -= 0.05;
+        if (ex.alpha <= 0) {
+          arcadeExplosions.splice(i, 1);
+          continue;
+        }
+        ctx.save();
+        ctx.strokeStyle = ex.color;
+        ctx.lineWidth = 3 * ex.alpha;
+        ctx.globalAlpha = ex.alpha;
+        ctx.shadowColor = ex.color;
+        ctx.shadowBlur = 20;
+        ctx.beginPath();
+        ctx.arc(ex.x, ex.y, ex.radius, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function spawnArcadeExplosion(targetEl) {
+      if (!targetEl) return;
+      const field = document.getElementById('arcade-field');
+      if (!field) return;
+      const fr = field.getBoundingClientRect();
+      const tr = targetEl.getBoundingClientRect();
+      const cx = tr.left + tr.width / 2 - fr.left;
+      const cy = tr.top + tr.height / 2 - fr.top;
+
+      arcadeExplosions.push({
+        x: cx,
+        y: cy,
+        radius: 10,
+        maxRadius: 85,
+        alpha: 1.0,
+        color: '#facc15'
+      });
+      arcadeExplosions.push({
+        x: cx,
+        y: cy,
+        radius: 5,
+        maxRadius: 65,
+        alpha: 1.0,
+        color: '#38bdf8'
+      });
+
+      for (let i = 0; i < 35; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 3 + Math.random() * 9;
+        arcadeSparks.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 1.0,
+          decay: 0.035 + Math.random() * 0.02,
+          color: i % 2 === 0 ? '#fde047' : '#38bdf8'
+        });
+      }
+    }
+
+    function startArcadeAutoFire() {
+      clearInterval(STATE.arcade.autoFireInterval);
+      let fireCount = 0;
+      STATE.arcade.autoFireInterval = setInterval(() => {
+        if (!STATE.arcade.running || STATE.arcade.locked) return;
+        const field = document.getElementById('arcade-field');
+        const ship = document.getElementById('arcade-player');
+        if (!field || !ship) return;
+        const fieldRect = field.getBoundingClientRect();
+        const shipRect = ship.getBoundingClientRect();
+        const shipCenterX = shipRect.left + shipRect.width / 2 - fieldRect.left;
+        const cannonY = shipRect.top - fieldRect.top + 8;
+        arcadeLasers.push({
+          x: shipCenterX - 25,
+          y: cannonY,
+          vy: -20,
+          w: 4,
+          h: 18,
+          color: '#38bdf8'
+        });
+        arcadeLasers.push({
+          x: shipCenterX + 25,
+          y: cannonY,
+          vy: -20,
+          w: 4,
+          h: 18,
+          color: '#38bdf8'
+        });
+        fireCount++;
+        if (fireCount % 3 === 0) {
+          audio.playLaser();
+        }
+      }, 120);
+    }
+
     function launchArcadeGame() {
       closeSafeChat();
       hideToast();
@@ -4988,6 +5443,8 @@ const COMBAT_BANK = {
       STATE.arcade.locked = false;
       STATE.arcade.shotInFlight = false;
       STATE.arcade.shipX = 50;
+      STATE.arcade.targetShipX = 50;
+      STATE.arcade.shipTilt = 0;
       document.getElementById('view-sandbox').style.display = 'none';
       document.getElementById('view-arcade').style.display = 'flex';
       document.getElementById('arcade-start-card').style.display = 'block';
@@ -4996,6 +5453,7 @@ const COMBAT_BANK = {
       document.getElementById('arcade-player').style.display = 'none';
       document.getElementById('arcade-move-hint').style.display = 'none';
       setArcadeShipPosition(50);
+      initArcadeSpaceEngine();
       initArcadeControls();
       updateArcadeHud();
       clearArcadeAnswers();
@@ -5014,14 +5472,17 @@ const COMBAT_BANK = {
       STATE.arcade.locked = false;
       STATE.arcade.shotInFlight = false;
       STATE.arcade.shipX = 50;
+      STATE.arcade.targetShipX = 50;
+      STATE.arcade.shipTilt = 0;
       document.getElementById('arcade-start-card').style.display = 'none';
       document.getElementById('arcade-question-card').style.display = 'block';
-      document.getElementById('arcade-controls').style.display = 'grid';
+      document.getElementById('arcade-controls').style.display = 'none';
       document.getElementById('arcade-player').style.display = 'block';
       document.getElementById('arcade-move-hint').style.display = 'block';
       setArcadeShipPosition(50);
       updateArcadeHud();
       nextArcadeQuestion();
+      startArcadeAutoFire();
       STATE.arcade.timerId = setInterval(() => {
         STATE.arcade.seconds -= 1;
         updateArcadeHud();
@@ -5088,16 +5549,32 @@ const COMBAT_BANK = {
       STATE.arcade.controlsBound = true;
       const field = document.getElementById('arcade-field');
       if (!field) return;
-      field.addEventListener('pointermove', event => {
-        if (!STATE.arcade.running || !(event.buttons & 1) || event.target.closest('button')) return;
+
+      const trackPointer = (clientX) => {
+        if (!STATE.arcade.running) return;
         const rect = field.getBoundingClientRect();
-        setArcadeShipPosition(((event.clientX - rect.left) / rect.width) * 100);
-      });
+        const percent = ((clientX - rect.left) / rect.width) * 100;
+        STATE.arcade.targetShipX = Math.max(8, Math.min(92, percent));
+      };
+
       field.addEventListener('pointerdown', event => {
-        if (!STATE.arcade.running || event.target.closest('button')) return;
-        const rect = field.getBoundingClientRect();
-        setArcadeShipPosition(((event.clientX - rect.left) / rect.width) * 100);
+        if (!STATE.arcade.running) return;
+        trackPointer(event.clientX);
+        if (!event.target.closest('button')) {
+          fireArcadeLaser();
+        }
       });
+
+      field.addEventListener('pointermove', event => {
+        if (!STATE.arcade.running) return;
+        trackPointer(event.clientX);
+      });
+
+      field.addEventListener('touchmove', event => {
+        if (!STATE.arcade.running || !event.touches.length) return;
+        trackPointer(event.touches[0].clientX);
+      }, { passive: true });
+
       window.addEventListener('keydown', event => {
         if (!STATE.arcade.running) return;
         if (event.key === 'ArrowLeft') { event.preventDefault(); moveArcadeShip(-1); }
@@ -5108,13 +5585,18 @@ const COMBAT_BANK = {
 
     function setArcadeShipPosition(percent) {
       STATE.arcade.shipX = Math.max(8,Math.min(92,Number(percent) || 50));
+      STATE.arcade.targetShipX = STATE.arcade.shipX;
       const ship = document.getElementById('arcade-player');
-      if (ship) ship.style.left = `${STATE.arcade.shipX}%`;
+      if (ship) {
+        ship.style.left = `${STATE.arcade.shipX}%`;
+        ship.style.transform = 'translateX(-50%) rotate(0deg)';
+      }
     }
 
     function moveArcadeShip(direction) {
       if (!STATE.arcade.running) return;
-      setArcadeShipPosition(STATE.arcade.shipX + direction * 6);
+      const target = (STATE.arcade.targetShipX ?? STATE.arcade.shipX) + direction * 8;
+      STATE.arcade.targetShipX = Math.max(8, Math.min(92, target));
     }
 
     function beginArcadeMove(direction,event) {
@@ -5136,8 +5618,8 @@ const COMBAT_BANK = {
       const fieldRect = field ? field.getBoundingClientRect() : { left: 0, width: window.innerWidth };
       const targetRect = target.getBoundingClientRect();
       const targetPercent = ((targetRect.left + targetRect.width / 2 - fieldRect.left) / fieldRect.width) * 100;
-      setArcadeShipPosition(targetPercent);
-      setTimeout(() => fireArcadeLaser(answerIndex,target), 50);
+      STATE.arcade.targetShipX = Math.max(8, Math.min(92, targetPercent));
+      setTimeout(() => fireArcadeLaser(answerIndex,target), 40);
     }
 
     function fireArcadeLaser(forcedIndex=null,forcedTarget=null) {
@@ -5181,7 +5663,7 @@ const COMBAT_BANK = {
       laser.style.bottom = `${fieldRect.bottom - shipRect.top - 6}px`;
       laser.style.height = `${Math.max(40,shipRect.top - (targetRect.top + targetRect.height / 2))}px`;
       field.appendChild(laser);
-      audio.playPop();
+      audio.playLaser();
       setTimeout(() => {
         laser.remove();
         chooseArcadeAnswer(answerIndex,target);
@@ -5203,8 +5685,10 @@ const COMBAT_BANK = {
         STATE.arcade.coinsEarned += coinReward;
         awardMathReward(xpReward,coinReward);
         target.classList.add('is-correct');
+        spawnArcadeExplosion(target);
         feedback = `✅ +${xpReward} XP${STATE.arcade.combo >= 2 ? ` • 🔥 ×${STATE.arcade.combo}` : ''}`;
         audio.playChing();
+        audio.playExplosion();
       } else {
         STATE.arcade.combo = 0;
         STATE.arcade.seconds = Math.max(0,STATE.arcade.seconds - 2);
@@ -5251,10 +5735,12 @@ const COMBAT_BANK = {
     function stopArcadeTimers() {
       clearInterval(STATE.arcade?.timerId);
       clearTimeout(STATE.arcade?.spawnId);
+      clearInterval(STATE.arcade?.autoFireInterval);
       endArcadeMove();
       if (STATE.arcade) {
         STATE.arcade.timerId = null;
         STATE.arcade.spawnId = null;
+        STATE.arcade.autoFireInterval = null;
         STATE.arcade.running = false;
         STATE.arcade.shotInFlight = false;
       }
