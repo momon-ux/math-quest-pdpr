@@ -134,8 +134,8 @@ assert.match(html, /STATE\.arcade\.seconds = Math\.max\(0,STATE\.arcade\.seconds
 assert.match(html, /STATE\.arcade\.seconds = 30/, 'pusingan Math Rush mesti berlangsung 30 saat');
 assert.match(html, /if \(!STATE\.age\) STATE\.grade = Math\.max\(1, Math\.min\(11, Number\(house\.year\)/, 'simpanan awan lama tidak boleh menimpa aras umur semasa');
 assert.match(html, /id: 'mega_treehouse'[\s\S]*footprint: \[3,3,4\]/, 'Rumah Pokok Impian mesti menggunakan tapak dan ketinggian sebenar');
-assert.match(html, /id: 'mega_robot'[\s\S]*price: 1800[\s\S]*footprint: \[2,2,4\]/, 'Robot gergasi mesti menjadi hadiah mahal berbilang aras');
-assert.match(html, /id: 'mini_castle'[\s\S]*price: 2500[\s\S]*footprint: \[4,3,4\]/, 'Istana mini mesti menjadi item sasaran paling mahal');
+assert.match(html, /id: 'mega_robot'[\s\S]*price: 5400[\s\S]*footprint: \[2,2,4\]/, 'Robot gergasi mesti menjadi hadiah mahal berbilang aras');
+assert.match(html, /id: 'mini_castle'[\s\S]*price: 7500[\s\S]*footprint: \[4,3,4\]/, 'Istana mini mesti menjadi item sasaran paling mahal');
 assert.match(html, /function occupiedCellsForVoxel/, 'Item Mega mesti menempah semua petak dan aras yang digunakannya');
 assert.match(html, /function validateVoxelPlacement/, 'Item Mega mesti diperiksa supaya tidak bertindih atau terkeluar dari tapak');
 assert.match(html, /id="tab-cat-mega"/, 'kedai mesti mempunyai kategori Item Mega');
