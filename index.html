@@ -2536,12 +2536,18 @@
           <div class="form-group">
             <label class="form-label" data-i18n="schoolClassLabel">2. SEKOLAH & KELAS:</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-              <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
-              <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
+              <input type="text" id="input-school-name" class="student-name-input" maxlength="80" placeholder="Nama sekolah (cth: SK Ranggu)" data-i18n-placeholder="schoolPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
+              <input type="text" id="input-class-name" class="student-name-input" maxlength="40" placeholder="Nama kelas (cth: 6 Jayyid)" data-i18n-placeholder="classPlaceholder" oninput="updateSchoolClassInput()" onclick="handleLockedSchoolClassClick()">
             </div>
             <div id="school-class-lock-notice" style="display:none;"></div>
+            <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center;">
+              <span style="font-size: 0.65rem; color: #0284c7; font-weight: 900;">⚡ Pilihan Pantas:</span>
+              <button type="button" class="quick-chip-btn" onclick="quickSelectSKRanggu('6 Jayyid', 12)" style="background:#e0f2fe; border:1.5px solid #38bdf8; color:#0369a1; border-radius:999px; padding:3px 10px; font-size:0.65rem; font-weight:900; cursor:pointer;">🏫 SK Ranggu • 6 Jayyid</button>
+              <button type="button" class="quick-chip-btn" onclick="quickSelectSKRanggu('6 Khoir', 12)" style="background:#f0fdf4; border:1.5px solid #4ade80; color:#15803d; border-radius:999px; padding:3px 10px; font-size:0.65rem; font-weight:900; cursor:pointer;">6 Khoir</button>
+              <button type="button" class="quick-chip-btn" onclick="quickSelectSKRanggu('5 Amal', 11)" style="background:#fef3c7; border:1.5px solid #facc15; color:#854d0e; border-radius:999px; padding:3px 10px; font-size:0.65rem; font-weight:900; cursor:pointer;">5 Amal</button>
+            </div>
             <div style="margin-top: 5px; font-size: 0.62rem; color: #475569; font-weight: 800; display: flex; align-items: center; gap: 4px;">
-              <span>🌐</span> <span>Terbuka untuk semua murid sekolah rendah & menengah di seluruh Malaysia.</span>
+              <span>🌐</span> <span>Boleh taip apa jua nama sekolah & kelas anda secara bebas.</span>
             </div>
           </div>
         </div>
@@ -4326,11 +4332,6 @@ const COMBAT_BANK = {
     }
 
     function selectLobbyAge(value) {
-      if ((STATE.schoolName || STATE.classLabel) && !isProfileEditAllowed(STATE.userId) && STATE.age) {
-        showToast(`🔒 Aras umur/tahun dikunci bersama profil anda. Hubungi Guru dengan ID ${STATE.userId || ''} untuk pindaan.`);
-        toggleAgePicker(false);
-        return;
-      }
       const age = Number(value) || 0;
       STATE.age = age >= 7 && age <= 17 ? age : 0;
       STATE.grade = STATE.age ? Math.max(1, Math.min(11, STATE.age - 6)) : 1;
@@ -4457,9 +4458,8 @@ const COMBAT_BANK = {
     }
 
     function isProfileEditAllowed(userId = STATE.userId) {
-      if (!userId) return false;
-      const normalized = normalizeUserId(userId);
-      return getUnlockedProfiles().includes(normalized);
+      // Sentiasa benarkan murid memasukkan dan mengedit nama sekolah, kelas dan profil sendiri
+      return true;
     }
 
     function setProfileEditAllowed(userId, allowed) {
@@ -4484,31 +4484,27 @@ const COMBAT_BANK = {
       const lockNotice = document.getElementById('school-class-lock-notice');
       const hudBtnProfile = document.getElementById('hud-btn-profile');
 
-      const hasSchoolOrClass = Boolean((STATE.schoolName && STATE.schoolName.trim()) || (STATE.classLabel && STATE.classLabel.trim()));
-      const isUnlocked = isProfileEditAllowed(STATE.userId);
-      const shouldLock = hasSchoolOrClass && !isUnlocked;
-
+      // Murid sentiasa boleh menaip & mengemas kini sekolah & kelas
       if (schoolInput) {
-        schoolInput.readOnly = shouldLock;
-        schoolInput.style.backgroundColor = shouldLock ? '#f8fafc' : '#fff';
-        schoolInput.style.cursor = shouldLock ? 'default' : 'text';
-        schoolInput.style.color = shouldLock ? '#334155' : '#0f172a';
+        schoolInput.readOnly = false;
+        schoolInput.style.backgroundColor = '#fff';
+        schoolInput.style.cursor = 'text';
+        schoolInput.style.color = '#0f172a';
         schoolInput.title = '';
       }
 
       if (classInput) {
-        classInput.readOnly = shouldLock;
-        classInput.style.backgroundColor = shouldLock ? '#f8fafc' : '#fff';
-        classInput.style.cursor = shouldLock ? 'default' : 'text';
-        classInput.style.color = shouldLock ? '#334155' : '#0f172a';
+        classInput.readOnly = false;
+        classInput.style.backgroundColor = '#fff';
+        classInput.style.cursor = 'text';
+        classInput.style.color = '#0f172a';
         classInput.title = '';
       }
 
       if (nameInput) {
-        const lockName = shouldLock && Boolean(STATE.studentName && STATE.studentName.length >= 3);
-        nameInput.readOnly = lockName;
-        nameInput.style.backgroundColor = lockName ? '#f8fafc' : '#fff';
-        nameInput.style.cursor = lockName ? 'default' : 'text';
+        nameInput.readOnly = false;
+        nameInput.style.backgroundColor = '#fff';
+        nameInput.style.cursor = 'text';
         nameInput.title = '';
       }
 
@@ -4518,33 +4514,29 @@ const COMBAT_BANK = {
       }
 
       if (hudBtnProfile) {
-        hudBtnProfile.style.display = isUnlocked ? 'inline-flex' : 'none';
+        hudBtnProfile.style.display = 'inline-flex';
       }
     }
 
     function handleLockedSchoolClassClick() {
-      // Tidak perlu memberitahu atau memaparkan notis kunci
+      // Input sentiasa aktif dan boleh diedit
     }
 
     function handleLockedStudentNameClick() {
-      // Tidak perlu memberitahu atau memaparkan notis kunci
+      // Input sentiasa aktif dan boleh diedit
     }
 
     function cleanOptionalProfileText(value, limit) {
-      return String(value || '').replace(/[<>]/g, '').replace(/\s+/g, ' ').trimStart().slice(0, limit).trim();
+      // Jangan potong ruang kosong di hujung semasa menaip agar murid boleh menaip jarak antara perkataan
+      return String(value || '').replace(/[<>]/g, '').slice(0, limit);
     }
 
     function updateSchoolClassInput() {
       const schoolInput = document.getElementById('input-school-name');
       const classInput = document.getElementById('input-class-name');
-      if (schoolInput?.readOnly && classInput?.readOnly && !isProfileEditAllowed(STATE.userId)) {
-        return;
-      }
       STATE.schoolName = cleanOptionalProfileText(schoolInput?.value, 80);
       STATE.classLabel = cleanOptionalProfileText(classInput?.value, 40);
-      if (schoolInput && schoolInput.value !== STATE.schoolName) schoolInput.value = STATE.schoolName;
-      if (classInput && classInput.value !== STATE.classLabel) classInput.value = STATE.classLabel;
-      STATE.className = [STATE.age ? ageLabel() : '', STATE.classLabel, STATE.schoolName].filter(Boolean).join(' • ');
+      STATE.className = [STATE.age ? ageLabel() : '', STATE.classLabel.trim(), STATE.schoolName.trim()].filter(Boolean).join(' • ');
       persistDeviceProfile();
       updateProfilePreview();
       updateStudentSaveStatus();
@@ -4563,16 +4555,8 @@ const COMBAT_BANK = {
     }
 
     function updateStudentNameInput(value) {
-      if ((STATE.schoolName || STATE.classLabel) && !isProfileEditAllowed(STATE.userId) && STATE.studentName && STATE.studentName.length >= 3 && value !== STATE.studentName) {
-        const input = document.getElementById('input-student-name');
-        if (input) input.value = STATE.studentName;
-        showToast(`🔒 Nama murid telah didaftarkan. Hubungi Guru dengan ID ${STATE.userId || ''} untuk pindaan.`);
-        return;
-      }
-      const clean = value.replace(/[<>]/g, '').replace(/\s+/g, ' ').trimStart().slice(0, 80);
-      const input = document.getElementById('input-student-name');
-      if (input && input.value !== clean) input.value = clean;
-      STATE.studentName = clean.trim();
+      const clean = cleanOptionalProfileText(value, 80);
+      STATE.studentName = clean;
       persistDeviceProfile();
       updateStudentSaveStatus();
       updateProfilePreview();
@@ -4666,13 +4650,10 @@ const COMBAT_BANK = {
     }
 
     function editPlayerProfile() {
-      if ((STATE.schoolName || STATE.classLabel) && !isProfileEditAllowed(STATE.userId)) {
-        return showToast(`🔒 Profil (Sekolah & Kelas) telah dikunci. Berikan ID ${STATE.userId || ''} kepada Guru.`);
-      }
       returnToLobby();
-      const ageTrigger = document.getElementById('age-picker-trigger');
-      if (ageTrigger) ageTrigger.focus();
-      showToast(uiMessage('✏️ Anda dibenarkan mengedit profil oleh Guru.','✏️ Profile edit permitted by Teacher.','✏️ 教师已允许修改资料。','✏️ ஆசிரியர் சுயவிவர மாற்றத்தை அனுமதித்துள்ளார்.'));
+      const schoolInput = document.getElementById('input-school-name');
+      if (schoolInput) schoolInput.focus();
+      showToast(uiMessage('✏️ Sila kemas kini nama, sekolah & kelas anda di lobi.','✏️ Please update your name, school & class in the lobby.','✏️ 请在主界面更新姓名、学校和班级。','✏️ தயவுசெய்து உங்கள் பெயர், பள்ளி மற்றும் வகுப்பைப் புதுப்பிக்கவும்.'));
     }
 
     async function copyUserId() {
