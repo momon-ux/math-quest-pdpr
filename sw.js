@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v33-reciprocal-friends';
+const CACHE_NAME = 'mathbina-v34-friend-network-repair';
 const APP_SHELL = [
   './',
   './index.html',

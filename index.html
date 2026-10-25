@@ -2319,6 +2319,9 @@
           <input id="friend-user-id" maxlength="14" inputmode="text" placeholder="Contoh: MB-7K4P-9Q2X" onkeydown="if(event.key==='Enter') addFriendHouseById()">
           <button onclick="addFriendHouseById()">➕ Tambah Rumah</button>
         </div>
+        <div id="friend-network-status" style="font-size:.67rem;font-weight:900;color:#0369a1;text-align:center;padding:3px 8px;">
+          ☁️ Menyemak rangkaian kawan MathBina…
+        </div>
         <div class="community-gallery-grid" id="community-gallery-grid"></div>
       </div>
     </div>
@@ -5168,14 +5171,14 @@ const COMBAT_BANK = {
     }
 
     function scheduleCloudSave(delay = 4200) {
-      if (cloudRestoreInProgress || !STATE.userId || !STATE.ownerSecret || !(STATE.voxels || []).length) return;
+      if (cloudRestoreInProgress || !STATE.userId || !STATE.ownerSecret) return;
       clearTimeout(cloudSaveTimer);
       cloudSaveTimer = setTimeout(syncStudentToCloud, delay);
     }
 
     async function syncStudentToCloud() {
       const identity = await getCloudIdentity();
-      if (!identity || !(STATE.voxels || []).length) return false;
+      if (!identity) return false;
       try {
         const auth = await ensureCloudAuth();
         const response = await fetch(cloudHouseUrl(identity.lookupKey, auth.idToken), {
@@ -6583,6 +6586,10 @@ const COMBAT_BANK = {
       communityGalleryIndex = Math.min(communityGalleryIndex, COMMUNITY_GALLERY.length - 1);
       renderCommunitySpotlight();
       refreshNeighborhoodIslands();
+      const networkStatus = document.getElementById('friend-network-status');
+      if (networkStatus) networkStatus.textContent = friends.length
+        ? `🤝 ${friends.length} rumah kawan terhubung melalui awan.`
+        : '☁️ Belum ada hubungan diterima. Kawan lama perlu membuka MathBina versi terkini sekali untuk menyelaraskan ID mereka.';
       clearInterval(communityGalleryTimer);
       if (COMMUNITY_GALLERY.length > 1) communityGalleryTimer = setInterval(()=>{
         if (document.getElementById('view-lobby')?.style.display === 'none') return;
@@ -6607,7 +6614,8 @@ const COMBAT_BANK = {
       }
     }
 
-    function openCommunityGallery(focusId = '') {
+    async function openCommunityGallery(focusId = '') {
+      if (!focusId) await loadCommunityGallery(true);
       const modal = document.getElementById('modal-community-gallery');
       const grid = document.getElementById('community-gallery-grid');
       if (!modal || !grid) return;

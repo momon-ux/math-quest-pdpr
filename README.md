@@ -224,6 +224,14 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 
 ## 🌐 Pautan Rasmi & Deployment
 
+### V34 — Pembaikan Rangkaian Kawan Firebase
+
+- Galeri menyemak semula hubungan awan setiap kali dibuka supaya rumah baharu tidak terlepas akibat cache lama.
+- Profil dan ID MathBina kini disimpan ke awan walaupun rumah masih kosong; kawan boleh menemui pemilik sebelum blok pertama dibina.
+- Status rangkaian dalam galeri menunjukkan bilangan rumah kawan yang benar-benar berjaya diterima.
+- Hubungan lama dipulihkan apabila pemilik senarai lama membuka MathBina versi terkini sekurang-kurangnya sekali.
+- Peraturan Firebase membenarkan rekod `friendships` hanya untuk pengguna yang disahkan dan memeriksa struktur setiap rekod.
+
 ### V33 — Persahabatan Dua Hala Automatik
 
 - Apabila seorang pemain menambah ID MathBina kawan, kedua-dua akaun terus terhubung secara automatik.
