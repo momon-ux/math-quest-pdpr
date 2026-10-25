@@ -4,7 +4,7 @@
       "$lookupKey": {
         ".read": true,
         ".write": "auth != null && ((!data.exists() && newData.child('ownerUid').val() == auth.uid) || data.child('ownerUid').val() == auth.uid)",
-        ".validate": "newData.hasChildren(['ownerUid','displayName','year','avatar','voxels','state','updatedAt']) && newData.child('ownerUid').isString() && newData.child('displayName').isString() && newData.child('displayName').val().length <= 40 && newData.child('year').isNumber() && newData.child('year').val() >= 1 && newData.child('year').val() <= 11 && newData.child('avatar').isString() && newData.child('updatedAt').isString()"
+        ".validate": "newData.hasChildren(['ownerUid','displayName','year','avatar','state','updatedAt']) && newData.child('ownerUid').isString() && newData.child('displayName').isString() && newData.child('displayName').val().length <= 40 && newData.child('year').isNumber() && newData.child('year').val() >= 1 && newData.child('year').val() <= 11 && newData.child('avatar').isString() && newData.child('updatedAt').isString()"
       }
     },
     "friendships": {
