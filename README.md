@@ -4,14 +4,12 @@
 
 ---
 
-## 🏆 Versi V32 — Butang Pelan Rumah Starter, Kawalan Kamera 3D, Pilihan Pantas SK Ranggu & Sijil Arkitek
+## 🧭 Versi V32 — Kawalan Blok Nipis & Padam Pantas
 
-- **Butang Pelan Rumah Starter:** Butang `🏡 PELAN RUMAH` kini tersedia pada bar tindakan untuk membina 8 fasa rumah Reddit starter house menggunakan syiling/XP atau auto-build.
-- **Kawalan Pantas Kamera 3D:** Butang `👁️ Depan`, `📐 Isometrik`, `🔝 Atas`, dan `🔄 360°` ditambah pada kanvas untuk menukar sudut pandangan atau memutar 360° secara automatik.
-- **Pilihan Pantas Kelas SK Ranggu Tawau:** Butang cip pantas disediakan di lobi untuk kelas `5 Khoir`, `5 Mumtaz`, `5 Jayyid`, `5 Iltizam`, `6 Khoir`, `6 Mumtaz`, `6 Jayyid`, dan `6 Iltizam`.
-- **Suis Kualiti Grafik (Bateri & Kelancaran):** Suis `⚡ Mod Lancar (60 FPS)` vs `✨ Mod Cantik (Bayang Penuh)` membolehkan telefon bajet bermain dengan lancar tanpa lag atau pemanasan bateri.
-- **Penjana Sijil Penghargaan Digital:** Murid boleh menjana dan memuat turun imej sijil penghargaan rasmi yang memaparkan nama murid, kelas, gambar 3D rumah mereka, dan tandatangan Cikgu Mohammad Fikrey bin Abdul Gapar.
-- **Pautan Terus Lawatan Rumah Kawan:** Butang `🔗 Kongsi Pautan Rumah` membolehkan kawan membuka pulau rumah secara terus melalui pautan `?visit=ID`.
+- Panel arah besar diganti dengan bar kawalan mendatar yang nipis supaya peta rumah kekal jelas.
+- Putaran kiri/kanan, empat arah gerakan dan aras berada dalam satu bar yang boleh ditatal.
+- Blok terpilih boleh dipadam terus melalui butang **🗑️** tanpa membuka menu alat.
+- Blok yang tersalah dipadam masih boleh dikembalikan menggunakan **Undo**.
 
 ---
 
@@ -225,6 +223,21 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 ---
 
 ## 🌐 Pautan Rasmi & Deployment
+
+### V33 — Persahabatan Dua Hala Automatik
+
+- Apabila seorang pemain menambah ID MathBina kawan, kedua-dua akaun terus terhubung secara automatik.
+- Rumah pemain yang menambah akan muncul semula dalam galeri pemilik rumah tanpa pemilik perlu menaip ID tersebut.
+- Hubungan disimpan di awan berdasarkan ID unik, jadi ia turut tersedia pada peranti lain.
+- Senarai kawan versi lama dipindahkan ke hubungan dua hala apabila pengguna membuka versi baharu.
+- Senarai tempatan kini diasingkan bagi setiap akaun pada peranti yang sama.
+- Lawatan rumah kawan kekal selamat dalam mod lihat sahaja; binaan pemilik tidak boleh diubah.
+
+### V32 — Kawalan Blok Ringkas
+
+- Kawalan arah besar diganti dengan bar lutsinar nipis di bahagian bawah peta.
+- Blok yang dipilih boleh dialih, diputar atau dipadam terus tanpa menutup ruang binaan.
+- Butang padam hanya muncul apabila blok sebenar dipilih dan tindakan boleh dibuat asal melalui Undo.
 
 ### V29 — Item Mega Pelbagai Petak & Aras
 

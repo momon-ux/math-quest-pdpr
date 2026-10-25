@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v31-easy-block-edit';
+const CACHE_NAME = 'mathbina-v33-reciprocal-friends';
 const APP_SHELL = [
   './',
   './index.html',
