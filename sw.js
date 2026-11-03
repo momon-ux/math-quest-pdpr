@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mathbina-v34-friend-network-repair';
+const CACHE_NAME = 'mathbina-v35-full-game-restore';
 const APP_SHELL = [
   './',
   './index.html',

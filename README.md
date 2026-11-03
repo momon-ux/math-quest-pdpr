@@ -224,6 +224,13 @@ Versi terbaharu memperkenalkan mod binaan **Pelan Rumah Starter Minecraft (Berda
 
 ## 🌐 Pautan Rasmi & Deployment
 
+### V35 — Pemulihan Versi Permainan Penuh
+
+- Memulihkan Pusat Semua Game, Math Shooter bergrafik penuh, Roda Sifir, Carta Sifir 1–12 dan Arked Math Blaster hyperdrive.
+- Memulihkan kawalan kamera 3D, pilihan kualiti grafik, pelan rumah, chat bebas, perkongsian rumah dan alat profil guru.
+- Mengekalkan persahabatan dua hala Firebase, galeri rumah kawan, simpanan profil rumah kosong dan peraturan keselamatan V34.
+- Memulihkan semakan automatik bagi ciri-ciri lengkap supaya pengurangan fungsi secara tidak sengaja dapat dikesan sebelum diterbitkan.
+
 ### V34 — Pembaikan Rangkaian Kawan Firebase
 
 - Galeri menyemak semula hubungan awan setiap kali dibuka supaya rumah baharu tidak terlepas akibat cache lama.

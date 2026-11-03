@@ -277,5 +277,15 @@ assert.equal(fakeDeduct(300), 0, '150 XP tolak 300 XP mesti clamped pada 0 XP (t
 assert.equal(fakeDeduct(300), 0, '0 XP tolak 300 XP mesti kekal 0 XP');
 assert.equal(mockState.mathStats.total, 4, 'jumlah soalan salah mesti bertambah');
 
-console.log('Semua semakan smoke MathBina V32 lulus.');
+assert.match(html, /function cloudFriendshipsUrl/, 'alamat rangkaian kawan Firebase mesti tersedia');
+assert.match(html, /function publishFriendConnectionsToCloud/, 'hubungan kawan mesti diterbitkan ke awan');
+assert.match(html, /updates\[`\$\{ownerKey\}\/\$\{targetKey\}`\]/, 'hubungan pemilik kepada kawan mesti disimpan');
+assert.match(html, /updates\[`\$\{targetKey\}\/\$\{ownerKey\}`\]/, 'hubungan kawan mesti disimpan semula secara dua hala');
+assert.match(html, /function fetchIncomingFriendUserIds/, 'pemilik mesti menerima ID pengguna yang menambah rumahnya');
+assert.match(html, /function getConnectedFriendUserIds/, 'galeri mesti menggabungkan hubungan keluar dan masuk');
+assert.match(html, /function friendHousesStorageKey/, 'senarai kawan mesti diasingkan mengikut akaun peranti');
+assert.match(html, /id="friend-network-status"/, 'status rangkaian kawan mesti dipaparkan');
+assert.match(html, /if \(cloudRestoreInProgress \|\| !STATE\.userId \|\| !STATE\.ownerSecret\) return;/, 'profil dan rumah kosong mesti boleh disimpan ke awan');
+
+console.log('Semua semakan smoke MathBina V35 lulus.');
 
